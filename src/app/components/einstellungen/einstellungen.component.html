@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-lg-6">
+    <nb-card>
+      <nb-card-header>Datenbank</nb-card-header>
+      <nb-card-body>
+
+        <div *ngFor="let schema of formSchema" class="form-group row">
+          <label for="db-input-{{schema.member}}" class="col-md-3 col-form-label">{{schema.name}}</label>
+          <div class="col-md-9">
+            <input class="form-control" type="text" [(ngModel)]="config[schema.member]" id="db-input-{{schema.member}}">
+          </div>
+        </div>
+
+        <button hero status="success" nbButton (click)="saveConfig()" class="btn-block">speichern</button>
+
+        <nb-alert *ngIf="message != null" status="success">
+          {{message}}
+        </nb-alert>
+
+      </nb-card-body>
+    </nb-card>
+
+  </div>
+
+  <div class="col-lg-6">
+    <!-- placeholder -->
+  </div>
+</div>

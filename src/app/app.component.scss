@@ -1,0 +1,14 @@
+:host {
+    nb-layout-header a {
+    font-size: 2rem;
+    text-decoration: none;
+
+    }
+    nb-layout-column {
+    min-height: 50vw;
+    height: 100%;
+        :first-child {
+        background: #f4f4f7;
+        }
+    }
+}
