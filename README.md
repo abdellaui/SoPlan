@@ -10,7 +10,7 @@
 
 ## run for init projekt
 ```
-git clone https://git.sahin.uk/abdullah/SoPlan.git
+git clone https://github.com/abdellaui/SoPlan.git
 cd SoPlan/
 npm i -g @angular/cli
 npm i --save
