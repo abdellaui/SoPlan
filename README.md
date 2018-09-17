@@ -1,6 +1,6 @@
 # SoPlan
 
-## insall tools
+## install tools
 - nodejs
 - git
 - sourcetree  (gui for git)
