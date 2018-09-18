@@ -25,3 +25,9 @@ export function send(event: any, channel: string, args?: Object): any {
         return event.sender.send(channel, args);
     }
 }
+
+export function end(event: any) {
+    if (expressServer) {
+        return event.end();
+    }
+}

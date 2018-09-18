@@ -50,6 +50,8 @@ export function init() {
     on('get/channel/name', (event: any, arg: any) => {
         // doSmth();
         send(event, 'get/channel/name', arg);
+
+        // end(event);
     });
     
     // ...

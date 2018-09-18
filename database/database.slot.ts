@@ -1,5 +1,5 @@
 import * as Settings from 'electron-settings';
-import { on, send } from './slots';
+import { on, send, end } from './slots';
 
 export function init() {
     on('get/database/config', (event: any, arg: any) => {
@@ -7,8 +7,7 @@ export function init() {
     });
 
     on('post/database/config', (event: any, arg: any) => {
-        console.log(arg);
-        // Settings.set('dbconfig', ...arg);
-        send(event, 'get/database/config', arg);
+        Settings.set('dbconfig', arg);
+        end(event);
     });
 }

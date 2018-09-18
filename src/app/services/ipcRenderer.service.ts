@@ -12,10 +12,10 @@ export class IpcRendererService {
 
   constructor(private electronService: ElectronService, private httpClient: HttpClient) {
     if (this.electronService.isElectronApp) {
-      console.log('application runs outside of electron!');
+      console.log('application runs on electron!');
     } else {
       this.mockService = new Subject();
-      console.log('application runs on electron!');
+      console.log('application runs outside of electron!');
     }
   }
 
