@@ -2,6 +2,15 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "src",
+    "paths": {
+      "typeorm": [
+        "../node_modules/typeorm/typeorm-class-transformer-shim.js"
+      ],
+      "@entity/*": [
+        "../database/entity/*"
+      ]
+    },
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -19,11 +28,11 @@
     ]
   },
   "include": [
-    "main.ts",
-    "database/**/*",
-    "src/**/*"
+    "src/**/*",
+    "database/**/*.entity.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.slot.ts",
   ]
 }
