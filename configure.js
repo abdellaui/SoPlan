@@ -3,12 +3,14 @@ const glob = require('glob');
 
 
 const f_angular = 'node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js';
+const f_typeorm = 'node_modules/typeorm/typeorm-class-transformer-shim.js';
 const f_datbase = 'database/autoload.ts';
 const args = process.argv.slice(1);
 const isElectronConfigure = args.some(val => val === '--electron');
 const isWebConfigure = args.some(val => val === '--web');
 const isClearConfigure = args.some(val => val === '--clear');
 const isDatabaseAutoload = args.some(val => val === '--dbauto');
+
 
 
 if (isClearConfigure) {
@@ -49,6 +51,30 @@ if (isDatabaseAutoload) {
 
 // Allow angular using electron module (native node modules)
 if (isElectronConfigure || isWebConfigure) {
+
+  // add BaseEntity to typeorm-model-shim
+  const search = `exports.Entity = Entity;
+
+/* export */`;
+
+  const toPlace = `exports.Entity = Entity;
+
+exports.BaseEntity = null;
+
+/* export */`;
+
+  fs.readFile(f_typeorm, 'utf8', function (err, data) {
+    if (err) return console.log(err);
+
+    var result = data.replace(search, toPlace);
+
+    fs.writeFile(f_typeorm, result, 'utf8', function (err) {
+      if (err) return console.log(err);
+    });
+  });
+
+  // end add BaseEntity to typeorm-model-shim
+
   fs.readFile(f_angular, 'utf8', function (err, data) {
     if (err) return console.log(err);
 
@@ -67,4 +93,6 @@ if (isElectronConfigure || isWebConfigure) {
       if (err) return console.log(err);
     });
   });
+
+
 }
