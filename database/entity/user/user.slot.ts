@@ -3,15 +3,15 @@ import { on, send } from './../../slots';
 
 export function init() {
 
-    on('entity/user/create', (event: any, arg: any) => {
-        const newUser = new User();
-        newUser.lastName = 'test';
-        newUser.firstName = 'mockbock';
-        newUser.age = 12;
-
-        newUser.save();
-
-        send(event, 'entity/user/create', 'ok');
+    on('entity/user/create', (event: any, arg: User[]) => {
+        console.log('entity/user/create', arg, typeof arg);
+        arg.forEach((element: User) => {
+            const curr = User.create(element);
+            curr.save().then((user: User) => {
+                console.log(user);
+            });
+        });
+        send(event, 'entity/user/create', arg);
     });
 
 }

@@ -37,10 +37,12 @@
     "ng:serve:o": "ng serve -o",
     "ng:test": "ng test",
     "ng:e2e": "ng e2e",
-    "ng:web": "npm-run-all -s configure:web electron:tsc && npm-run-all -p mock:serve ng:serve:o",
-    "test": "npm-run-all -s configure:web electron:tsc && npm-run-all -p mock:serve ng:test",
-    "e2e": "npm-run-all -s configure:web electron:tsc && npm-run-all -p mock:serve ng:e2e",
-    "mock:serve": "electron . --test"
+    "ng:web": "npm run mock:build && npm-run-all -p mock:serve ng:serve:o",
+    "test": "npm run mock:build && npm-run-all -p mock:serve ng:test",
+    "e2e": "npm run mock:build && npm-run-all -p mock:serve ng:e2e",
+    "mock:build": "npm-run-all -s configure:web electron:tsc",
+    "mock:serve": "electron . --test",
+    "mock:run": "npm-run-all -s mock:build mock:serve"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

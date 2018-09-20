@@ -8,6 +8,7 @@ import { setExpressServer } from './database/slots';
 import { Database } from './database/database';
 
 let mainWindow: any = null;
+let database: Database;
 
 // detect mode
 const args: any = process.argv.slice(1);
@@ -25,10 +26,9 @@ const testDatabaseConfigs: Object = {
 
 function init(): void {
 
-    const shouldQuit = makeSingleInstance();
-    if (shouldQuit) { return app.quit(); }
-
-    if (test) {
+    if (makeSingleInstance()) {
+        return app.quit();
+    } else if (test) {
         return createMockServer();
     } else {
         return createWindow();
@@ -38,8 +38,7 @@ function init(): void {
 
 function createWindow(): void {
 
-
-    Database.initialize();
+    database = new Database();
 
     mainWindow = new BrowserWindow({ width: 1000, height: 800, backgroundColor: '#2e2c29', show: false });
 
@@ -70,6 +69,7 @@ function createWindow(): void {
 
     mainWindow.on('closed', () => {
         mainWindow = null;
+        database.close();
     });
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();
@@ -77,8 +77,8 @@ function createWindow(): void {
 }
 
 function createMockServer(): void {
-    const expressApp = express();
-    expressApp.use(bodyParser.json());
+    const expressApp: any = express();
+    expressApp.use(<any>bodyParser.json());
     expressApp.use((req: any, res: any, next: any) => {
         console.log(req.method, req.url, req.body);
         res.header('Content-Type', 'application/json');
@@ -88,11 +88,16 @@ function createMockServer(): void {
     });
 
     setExpressServer(expressApp);
-    Database.initialize(testDatabaseConfigs);
+    database = new Database(testDatabaseConfigs);
 
     expressApp.listen(mockPort, () => {
         console.log(`mock server is running on http://localhost:${mockPort}/`);
     });
+
+    expressApp.close(() => {
+        database.close();
+    });
+
     mainWindow = true;
 }
 
@@ -106,6 +111,7 @@ function makeSingleInstance(): boolean {
         }
     });
 }
+
 try {
 
     // This method will be called when Electron has finished
@@ -118,6 +124,7 @@ try {
         // On OS X it is common for applications and their menu bar
         // to stay active until the user quits explicitly with Cmd + Q
         if (process.platform !== 'darwin') {
+            database.close();
             app.quit();
         }
     });

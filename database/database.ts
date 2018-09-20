@@ -7,6 +7,7 @@ import * as Settings from 'electron-settings';
 
 export class Database {
 
+    private connection: Connection;
     private options: ConnectionOptions;
 
     constructor(config?: Object) {
@@ -44,16 +45,20 @@ export class Database {
 
 
         createConnection(this.options).then((conn: Connection) => {
+            this.connection = conn;
             this.slots();
+
         }).catch((e: Error) => {
             this.installationsQuit();
             console.log(e);
         });
 
     }
-    static initialize(config?: Object): Database {
-        return new Database(config);
+
+    close(): void {
+        if (this.connection) { this.connection.close(); }
     }
+
 
     installationsQuit(): any {
         const settingsFilePath = Settings.file();
