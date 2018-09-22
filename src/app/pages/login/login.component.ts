@@ -9,9 +9,9 @@ import { AuthenticationGuard } from './../../guards/authentication/authenticatio
 })
 export class LoginComponent implements OnInit {
 
-  private username: string;
-  private password: string;
-  private remember = true;
+  username: string;
+  password: string;
+  remember = true;
 
   constructor(private auth: AuthenticationGuard) { }
 
