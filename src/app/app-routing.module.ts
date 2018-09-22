@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'admin'
+    redirectTo: 'logged'
   }
 ];
 
