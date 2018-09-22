@@ -27,6 +27,7 @@ npm start
 ## libaries
 **Please** read the apis of following frameworks/libs:
 * typescript (javascript)
+    * rx/js
 * angular
     * testing languages:
         * jasmine
