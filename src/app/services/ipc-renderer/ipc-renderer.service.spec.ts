@@ -1,9 +1,10 @@
 /* tslint:disable:no-unused-variable */
-
-import { TestBed, async, inject } from '@angular/core/testing';
-import { IpcRendererService } from './ipcRenderer.service';
-import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
+import { inject, TestBed } from '@angular/core/testing';
+import { ElectronService, NgxElectronModule } from 'ngx-electron';
+
+import { IpcRendererService } from './ipc-renderer.service';
+
 
 describe('Service: IpcRenderer', () => {
   beforeEach(() => {

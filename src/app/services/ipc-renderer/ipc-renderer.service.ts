@@ -19,9 +19,9 @@ export class IpcRendererService {
     }
   }
 
-  init(channel: string, callback: Function): any {
-    this.once(channel, callback);
-    this.send(channel);
+  init(channel: string, callback: Function, args?: Object): any {
+    this.send(channel, args);
+    return this.once(channel, callback);
   }
 
   on(channel: string, callback: Function): any {
@@ -59,7 +59,7 @@ export class IpcRendererService {
     if (this.electronService.isElectronApp) {
       return this.electronService.ipcRenderer.send(channel, args);
     } else {
-      this.httpClient.post('http://localhost:3030/' + channel, args,
+      return this.httpClient.post('http://localhost:3030/' + channel, args,
         {
           headers: { 'Content-Type': 'application/json' },
           responseType: 'json'
@@ -72,9 +72,4 @@ export class IpcRendererService {
     }
   }
 
-  remove(channel?: string) {
-    if (this.electronService.isElectronApp) {
-      return this.electronService.ipcRenderer.removeAllListeners(channel);
-    }
-  }
 }

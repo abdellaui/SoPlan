@@ -8,7 +8,15 @@
 - mysqlworkbranch (gui for mysql)
 (perhaps we'll use postresql)
 
-## run for init projekt
+## features for vscode
+- Angular Files ^1.6.2
+- Debugger for Chrome ^4.10.1
+- EditorConfig for VS Code ^0.12.4
+- TSLint ^1.0.39
+- TypeScript Hero ^2.3.2
+- TypeScript Import ^1.17.0
+
+## run for init project
 ```
 git clone https://github.com/abdellaui/SoPlan.git
 cd SoPlan/
@@ -18,16 +26,19 @@ npm start
 ```
 ## libaries
 **Please** read the apis of following frameworks/libs:
-* typescript
+* typescript (javascript)
 * angular
     * testing languages:
         * jasmine
         * protractor
 * electron
+    * testing:
+        * spectron
 * typeorm
     * decorators:
         * relation
         * validation
+* bootstrap
 * nebular (ui-kit)
     * theme: components
 
@@ -70,7 +81,7 @@ export function init() {
 
 electron starts at `main.ts`. On `serve mode` it will just wrap `http://localhost:4200`, on `build mode` it will wrap and include `/dist`.
 
-you can desactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
+you can disactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 library imported in `main.ts` (electron) should be installed per npm dependencies (not devDependencies) with `npm install --save`. It will be loaded by electron during build phase and added to the final package.
 

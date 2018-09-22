@@ -1,12 +1,12 @@
 /* tslint:disable:no-unused-variable */
+import { APP_BASE_HREF } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By, BrowserModule } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { NbMenuModule, NbThemeModule } from '@nebular/theme';
 
 import { SidemenuComponent } from './sidemenu.component';
-import { NbMenuModule, NbThemeModule } from '@nebular/theme';
-import { RouterModule } from '@angular/router'
-import { APP_BASE_HREF } from '@angular/common';
 
 describe('SidemenuComponent', () => {
   let component: SidemenuComponent;
@@ -20,6 +20,10 @@ describe('SidemenuComponent', () => {
         RouterModule.forRoot([]),
         NbThemeModule.forRoot({ name: 'default' }),
         NbMenuModule.forRoot(),
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }]
     }).compileComponents();

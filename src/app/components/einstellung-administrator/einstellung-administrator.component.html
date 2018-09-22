@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header>Administrator</nb-card-header>
+  <nb-card-body>
+
+    <div class="form-group row">
+      <label for="db-input-username" class="col-md-4 col-form-label">Benutzername</label>
+      <div class="col-md-8">
+        <input class="form-control" type="text" [(ngModel)]="username" id="db-input-username">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label for="db-input-password" class="col-md-4 col-form-label">Aktueller Passwort</label>
+      <div class="col-md-8">
+        <input class="form-control" type="password" [(ngModel)]="password" id="db-input-password">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label for="db-input-newpsw" class="col-md-4 col-form-label">Neues Passwort</label>
+      <div class="col-md-8">
+        <input class="form-control" type="password" [(ngModel)]="newpsw" id="db-input-newpsw">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <label for="db-input-newpsw2" class="col-md-4 col-form-label">Neues Passwort wdh.</label>
+      <div class="col-md-8">
+        <input class="form-control" type="password" [(ngModel)]="newpsw2" id="db-input-newpsw2">
+      </div>
+    </div>
+
+    <button hero status="success" nbButton (click)="saveConfig()" class="btn-block">speichern</button>
+
+  </nb-card-body>
+</nb-card>

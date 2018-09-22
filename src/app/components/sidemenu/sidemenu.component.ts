@@ -13,7 +13,7 @@ export class SidemenuComponent implements OnInit {
     {
       title: 'Einstellungen',
       icon: 'fa fa-cog',
-      link: '/einstellungen',
+      link: '/logged/einstellungen',
       home: true
     }
   ];

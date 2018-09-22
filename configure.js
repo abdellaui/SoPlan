@@ -24,10 +24,11 @@ if (isDatabaseAutoload) {
   var importString = '';
   var executeString = '';
 
-  glob(__dirname + '/database/**/*.slot.ts', {}, (err, files) => {
+  glob(__dirname + '/database//**/*.slot.ts', {}, (err, files) => {
     files.forEach((file) => {
       let fileRelPath = file.replace(__dirname + '/database', '');
       fileRelPath = fileRelPath.replace('.ts', '');
+      if (fileRelPath === '/database.slot') { return; }
       let fileName = fileRelPath.replace('.slot', '');
       fileName = 'slot' + fileName.replace(/\//g, '_');
 
