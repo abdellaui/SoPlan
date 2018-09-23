@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 
@@ -11,28 +9,23 @@ import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.ser
 })
 export class DatabaseGuard implements CanActivate {
 
-  private resolve: Subject<boolean> = new Subject<boolean>();
 
   constructor(private router: Router, private toastr: ToastrService, private ipc: IpcRendererService) {
-
-    this.ipc.on('get/database/connection', (event: any, arg: any) => {
-      this.resolve.next(arg);
-    });
-
   }
 
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    this.ipc.send('get/database/connection');
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
 
-    return this.resolve.pipe(map((next: boolean) => {
+    return this.ipc.get('get/database/connection').then((next: boolean) => {
       if (next) {
+        localStorage.setItem('databaseConnection', 'true');
         return true;
       } else {
+        localStorage.removeItem('databaseConnection');
         this.toastr.error('Bitte zuerst Datenbankverbindung konfigurieren!');
-        this.router.navigate(['databaseConnection'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['/databaseConnection'], { queryParams: { returnUrl: state.url } });
         return false;
       }
-    }));
+    });
   }
 }

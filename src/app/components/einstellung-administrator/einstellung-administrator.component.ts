@@ -57,8 +57,8 @@ export class EinstellungAdministratorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ipc.init('get/administrator', (event: any, arg: any) => {
-      this.setConfig(arg);
+    this.ipc.get('get/administrator').then((result: any) => {
+      this.setConfig(result);
     });
   }
 

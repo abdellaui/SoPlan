@@ -4,22 +4,17 @@ import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 import { init as initSlots } from './autoload';
 import { init as initDatabaseSlots } from './database.slot';
 import { User } from './entity/user/user.entity';
+import { slotException } from './slots';
 
 export class Database {
 
-  private connection: Connection;
   private options: ConnectionOptions;
-
+  private connection: Connection = null;
   constructor(config?: Object) {
 
     initDatabaseSlots();
 
-    let dbConfig: any;
-    if (config) {
-      dbConfig = config;
-    } else {
-      dbConfig = Settings.get('dbconfig');
-    }
+    const dbConfig: any = (config) ? config : Settings.get('dbconfig');
 
     this.options = {
       name: 'default',
@@ -34,19 +29,19 @@ export class Database {
       logging: false,
     };
 
-
     createConnection(this.options).then((conn: Connection) => {
       this.connection = conn;
       this.slots();
     }).catch((e: Error) => {
-      console.log(e, this.connection);
-      throw e;
+      slotException(e, true, true);
     });
-
   }
 
   close(): void {
-    if (this.connection) { this.connection.close(); }
+    if (this.connection) {
+      this.connection.close();
+    }
+
   }
 
   private slots(): void {
@@ -54,7 +49,6 @@ export class Database {
       initSlots();
     } catch (e) {
       console.log(e);
-      throw e;
     }
   }
 }

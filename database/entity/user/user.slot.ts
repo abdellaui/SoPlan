@@ -1,4 +1,4 @@
-import { on, send } from './../../slots';
+import { on, send, slotException } from './../../slots';
 import { User } from './user.entity';
 
 export function init() {
@@ -9,9 +9,12 @@ export function init() {
       const curr = User.create(element);
       curr.save().then((user: User) => {
         console.log(user);
+      }).catch((e: Error) => {
+        slotException(e);
       });
     });
     send(event, 'entity/user/create', arg);
   });
 
 }
+

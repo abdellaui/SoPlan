@@ -1,5 +1,6 @@
-import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 
 @Component({
@@ -40,8 +41,8 @@ export class EinstellungDatenbankComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ipc.init('get/database/config', (event: any, arg: any) => {
-      this.setConfig(arg);
+    this.ipc.get('get/database/config').then((result: any) => {
+      this.setConfig(result);
     });
   }
 

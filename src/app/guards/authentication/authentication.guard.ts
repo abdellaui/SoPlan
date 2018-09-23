@@ -39,14 +39,11 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (localStorage.getItem('administrator')) {
+    if (localStorage.getItem('administrator') && localStorage.getItem('databaseConnection')) {
       return true;
     } else {
-
-      this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return false;
     }
   }
-
-
 }

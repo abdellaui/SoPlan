@@ -24,11 +24,12 @@ export function init() {
   if (!Settings.has('admin')) {
     Settings.set('admin', defaultAdminLogin);
   }
+
+
   // slots
   on('get/database/connection', (event: any, arg: any) => {
-    send(event, 'get/database/connection', getConnection().isConnected);
+    send(event, 'get/database/connection', getConnection('default').isConnected);
   });
-
 
   on('get/database/config', (event: any, arg: any) => {
     send(event, 'get/database/config', Settings.get('dbconfig'));
@@ -41,12 +42,11 @@ export function init() {
 
   on('check/administrator', (event: any, arg: any) => {
     const admin = Settings.get('admin');
-
+    let accepted = false;
     if (arg.username === admin.username && arg.password === admin.password) {
-      send(event, 'check/administrator', admin);
-    } else {
-      send(event, 'check/administrator', false);
+      accepted = true;
     }
+    send(event, 'check/administrator', (accepted) ? admin : false);
   });
 
   on('post/administrator', (event: any, arg: any) => {

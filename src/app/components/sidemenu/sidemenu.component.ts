@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
@@ -12,7 +12,7 @@ export class SidemenuComponent implements OnInit {
   items: NbMenuItem[] = [
     {
       title: 'Einstellungen',
-      icon: 'fa fa-cog',
+      icon: 'nb-gear',
       link: '/logged/einstellungen',
       home: true
     }
@@ -22,5 +22,4 @@ export class SidemenuComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

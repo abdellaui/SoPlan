@@ -1,18 +1,6 @@
 <nb-layout>
-  <nb-layout-header fixed>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-3">
-          <a href="#" (click)="toggle()"><i class="nb-menu"></i></a>
-        </div>
-        <div class="col-md-9 text-right">
-          sss
-        </div>
-      </div>
-    </div>
-  </nb-layout-header>
-
-  <nb-sidebar>
+  <nb-sidebar state="compacted">
+    <a href="#" (click)="toggle()"><i class="nb-menu"></i></a>
     <app-sidemenu></app-sidemenu>
   </nb-sidebar>
 

@@ -46,16 +46,13 @@ function createWindow(): void {
     height: 800,
     minWidth: 640,
     minHeight: 360,
-    backgroundColor: '#2e2c29',
+    backgroundColor: '#ebeff5',
     show: false,
     webPreferences: { experimentalFeatures: true }
   });
 
   if (serve) {
     // get dynamic version from localhost:4200
-    require('electron-reload')(__dirname, {
-      electron: require(path.join(__dirname, '../', '/node_modules/electron'))
-    });
     mainWindow.loadURL('http://localhost:4200');
   } else {
     // load the dist folder from Angular
@@ -124,10 +121,10 @@ function makeSingleInstance(): boolean {
 }
 
 try {
-
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
+
   app.on('ready', init);
 
   // Quit when all windows are closed.
