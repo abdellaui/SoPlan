@@ -79,6 +79,7 @@ function createWindow(): void {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
   });
+
 }
 
 function createMockServer(): void {
@@ -98,13 +99,10 @@ function createMockServer(): void {
   setExpressServer(expressApp);
   database = new Database(testDatabaseConfigs);
 
-  const server = expressApp.listen(mockPort, () => {
+  expressApp.listen(mockPort, () => {
     console.log(`mock server is running on http://localhost:${mockPort}/`);
   });
 
-  server.close(() => {
-    database.close();
-  });
 
   mainWindow = true;
 }

@@ -97,12 +97,13 @@ note that you can't use electron or nodejs native libraries in this case inside 
 |`npm start`| Execute the app (electron on `serve mode`) |
 |`npm run electron:local`| Execute the app (electron on `build mode`) |
 |`npm run ng:web`| Execute the app in the browser |
-|`npm run clear`|  Removes `/.out-tsc` `/release` `/dist` folders |
+|`npm run clear`|  Removes `/out-tsc` `/release` `/dist` folders |
 |`npm run test`| Runs angular unit-testing |
 |`npm run e2e`|  Rungs angular end-to-end testing |
 |`npm run compile:linux`| Builds your application and creates an app consumable on linux system |
 |`npm run compile:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
 |`npm run compile:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Mac |
+
 ** Application is optimised. Only `/dist` folder and node dependencies are included in the executable.**
 
 ## keep calm

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NbSidebarService } from '@nebular/theme';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +8,7 @@ import { NbSidebarService } from '@nebular/theme';
 
 export class AppComponent {
 
-  constructor(private sidebarService: NbSidebarService) {
+  constructor() {
   }
 
-  public toggle(): boolean {
-    this.sidebarService.toggle(true);
-    return false;
-  }
 }

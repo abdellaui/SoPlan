@@ -6,9 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgxElectronModule } from 'ngx-electron';
 import { ToastrModule } from 'ngx-toastr';
 
-import { DatabaseConnectionComponent } from '../../pages/database-connection/database-connection.component';
-import { EinstellungenComponent } from '../../pages/einstellungen/einstellungen.component';
-import { LoginComponent } from '../../pages/login/login.component';
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank.component';
 

@@ -1,26 +1,18 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ComponentsModule } from './components/components.module';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 import { DatabaseGuard } from './guards/database/database.guard';
 import { DatabaseConnectionComponent } from './pages/database-connection/database-connection.component';
-import { EinstellungenComponent } from './pages/einstellungen/einstellungen.component';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {
     path: 'logged',
-    canActivate: [AuthenticationGuard],
-    children: [
-      {
-        path: '',
-        component: EinstellungenComponent,
-      },
-      {
-        path: 'einstellungen',
-        component: EinstellungenComponent
-      }
-    ]
+    canLoad: [AuthenticationGuard],
+    loadChildren: './pages/logged/logged.module#LoggedModule'
   },
   {
     path: 'login',
@@ -38,8 +30,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+  declarations: [
+    LoginComponent,
+    DatabaseConnectionComponent
+  ],
+  imports: [
+    FormsModule,
+    RouterModule.forRoot(routes, { useHash: true }),
+    ComponentsModule
+  ],
+  exports: [
+    RouterModule
+  ]
 })
 export class AppRoutingModule {
 }
