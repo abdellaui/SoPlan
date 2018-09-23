@@ -22,7 +22,7 @@ export class EinstellungAdministratorComponent implements OnInit {
   constructor(private ipc: IpcRendererService, private toastr: ToastrService, private auth: AuthenticationGuard) {
   }
   private setConfig(config: any): void {
-    console.log('setConfig', config);
+
     if (config) {
       this.username = config.username;
       this.secret = config.password;
@@ -32,6 +32,7 @@ export class EinstellungAdministratorComponent implements OnInit {
       this.newpsw = this.password;
       this.newpsw2 = this.password;
     }
+
   }
   saveConfig(): void {
 

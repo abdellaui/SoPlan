@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
-  remember = true;
+  remember = false;
 
   constructor(private auth: AuthenticationGuard) { }
 
