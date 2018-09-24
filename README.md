@@ -47,7 +47,7 @@ npm start
 angular is just a client-side framework, but we want to use native resources etc. So we need a bridge between backend and fronted.
 We are communicating on ipc (inter-process-communication), which is a module of electron api. Electron is not aviable on the browser.
 The communication is between `ipcRendererServices` (inside angular) and `**/*.slot.ts` files.
-`./database/slot.ts` shows adaptering the ipcMain to a http-server (express).
+`./backend/slot.ts` shows adaptering the ipcMain to a http-server (express).
 `./src/app/services/ipcRendererServices.ts` shows adaptering the ipcRenderer to a http-client.
 
 Why we not use http always? so, we want to create a standalone executable application, which doesnt only wrap a webpage into a webview and we wont let run a ghost server which listen always to a port, and how we can know to handle with taken ports? 

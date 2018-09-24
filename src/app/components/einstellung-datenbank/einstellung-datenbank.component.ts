@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DatabaseConfig } from '@models/databaseConfig.class';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-
-import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 
 @Component({
   selector: 'app-einstellung-datenbank',
@@ -18,7 +18,7 @@ export class EinstellungDatenbankComponent implements OnInit {
     { name: 'Database', member: 'database' },
   ];
 
-  config: any = {
+  config: DatabaseConfig = {
     host: '',
     port: '',
     username: '',
@@ -30,7 +30,7 @@ export class EinstellungDatenbankComponent implements OnInit {
 
   }
 
-  private setConfig(config: any): void {
+  private setConfig(config: DatabaseConfig): void {
     if (config) {
       this.config = config;
     }
@@ -41,7 +41,7 @@ export class EinstellungDatenbankComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ipc.get('get/database/config').then((result: any) => {
+    this.ipc.get('get/database/config').then((result: DatabaseConfig) => {
       this.setConfig(result);
     });
   }

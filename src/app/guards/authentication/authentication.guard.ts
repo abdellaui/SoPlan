@@ -8,9 +8,9 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
+import { AdminLogin } from '@models/adminLogin.class';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-
-import { IpcRendererService } from './../../services/ipc-renderer/ipc-renderer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,18 +27,18 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     }
   }
 
-  login(_username: string, _password: string, _remember: boolean): void {
-
-    this.ipc.init('check/administrator', (event: any, arg: any) => {
-      if (arg) {
-        arg.remember = _remember;
-        localStorage.setItem('administrator', JSON.stringify(arg));
+  login(admin: AdminLogin, _remember: boolean): void {
+    admin.password = window.btoa(admin.password);
+    this.ipc.get('check/administrator', admin).then((result: any) => {
+      if (result) {
+        result.remember = _remember;
+        localStorage.setItem('administrator', JSON.stringify(result));
         this.toastr.success('Erfolgreich angemeldet!');
         this.router.navigate(['/logged']);
       } else {
         this.toastr.error('Anmeldedaten falsch!');
       }
-    }, { username: _username, password: _password });
+    });
   }
 
   logout(): void {

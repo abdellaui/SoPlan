@@ -6,8 +6,9 @@ import * as express from 'express';
 import * as path from 'path';
 import * as url from 'url';
 
-import { Database } from './database/database';
-import { setExpressServer } from './database/slots';
+import { Database } from './backend/database';
+import { DatabaseConfig } from './backend/models/databaseConfig.class';
+import { setExpressServer } from './backend/slots';
 
 let mainWindow: any = null;
 let database: Database;
@@ -18,9 +19,10 @@ const serve: boolean = args.some(val => val === '--serve');
 const test: boolean = args.some(val => val === '--test');
 
 const mockPort: Number = 3030;
-const testDatabaseConfigs: Object = {
+
+const testDatabaseConfigs: DatabaseConfig = {
   host: 'localhost',
-  port: '3306',
+  port: 3306,
   username: 'root',
   password: '666666',
   database: 'tests'

@@ -4,7 +4,7 @@ const glob = require('glob');
 
 const f_angular = 'node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js';
 const f_typeorm = 'node_modules/typeorm/typeorm-class-transformer-shim.js';
-const f_datbase = 'database/autoload.ts';
+const f_datbase = 'backend/autoload.ts';
 const args = process.argv.slice(1);
 const isElectronConfigure = args.some(val => val === '--electron');
 const isWebConfigure = args.some(val => val === '--web');
@@ -24,20 +24,20 @@ if (isDatabaseAutoload) {
   var importString = '';
   var executeString = '';
 
-  glob(__dirname + '/database//**/*.slot.ts', {}, (err, files) => {
+  glob(__dirname + '/backend/**/*.slot.ts', {}, (err, files) => {
     files.forEach((file) => {
-      let fileRelPath = file.replace(__dirname + '/database', '');
+      let fileRelPath = file.replace(__dirname + '/backend', '');
       fileRelPath = fileRelPath.replace('.ts', '');
       if (fileRelPath === '/database.slot') { return; }
       let fileName = fileRelPath.replace('.slot', '');
       fileName = 'slot' + fileName.replace(/\//g, '_');
 
       importString += `import { init as ${fileName} } from '.${fileRelPath}';\n`;
-      executeString += `    ${fileName}();\n`;
+      executeString += `  ${fileName}();\n`;
     });
 
-    importString = `<import>\n${importString}// </import>`;
-    executeString = `<execute>\n${executeString}    // </execute>`;
+    importString = `<import>\n${importString}\n// </import>`;
+    executeString = `<execute>\n${executeString}  // </execute>`;
     fs.readFile(f_datbase, 'utf8', function (err, data) {
       if (err) return console.log(err);
       var result = data.replace(/<import>(.*?)<\/import>/s, importString);

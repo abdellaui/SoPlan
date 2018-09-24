@@ -1,10 +1,12 @@
 import * as Settings from 'electron-settings';
 import { getConnection } from 'typeorm';
 
+import { AdminLogin } from './models/adminLogin.class';
+import { DatabaseConfig } from './models/databaseConfig.class';
 import { end, on, send } from './slots';
 
 export function init() {
-  const defaultDatabaseConfigs: Object = {
+  const defaultDatabaseConfigs: DatabaseConfig = {
     host: 'localhost',
     port: '3306',
     username: 'root',
@@ -12,15 +14,16 @@ export function init() {
     database: 'database'
   };
 
-  const defaultAdminLogin: Object = {
+  const defaultAdminLogin: AdminLogin = {
     username: 'admin',
-    password: 'password' // TODO: store sha256 hashed strings
+    password: 'cGFzc3dvcmQ=' // => base64('password')
   };
 
   // store default connection settings
   if (!Settings.has('dbconfig')) {
     Settings.set('dbconfig', defaultDatabaseConfigs);
   }
+
   if (!Settings.has('admin')) {
     Settings.set('admin', defaultAdminLogin);
   }
@@ -32,29 +35,12 @@ export function init() {
   });
 
   on('get/database/config', (event: any, arg: any) => {
-    send(event, 'get/database/config', Settings.get('dbconfig'));
+    send(event, 'get/database/config', <DatabaseConfig>Settings.get('dbconfig'));
   });
 
-  on('post/database/config', (event: any, arg: any) => {
+  on('post/database/config', (event: any, arg: DatabaseConfig) => {
     Settings.set('dbconfig', arg);
     end(event);
   });
 
-  on('check/administrator', (event: any, arg: any) => {
-    const admin = Settings.get('admin');
-    let accepted = false;
-    if (arg.username === admin.username && arg.password === admin.password) {
-      accepted = true;
-    }
-    send(event, 'check/administrator', (accepted) ? admin : false);
-  });
-
-  on('post/administrator', (event: any, arg: any) => {
-    Settings.set('admin', arg);
-    end(event);
-  });
-
-  on('get/administrator', (event: any, arg: any) => {
-    send(event, 'get/administrator', Settings.get('admin'));
-  });
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-
-import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 
 @Injectable({
   providedIn: 'root'

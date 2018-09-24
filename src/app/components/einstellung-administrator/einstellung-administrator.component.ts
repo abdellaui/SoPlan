@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
+import { AdminLogin } from '@models/adminLogin.class';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-
-import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
-import { AuthenticationGuard } from './../../guards/authentication/authentication.guard';
-
 
 @Component({
   selector: 'app-einstellung-administrator',
@@ -21,22 +20,25 @@ export class EinstellungAdministratorComponent implements OnInit {
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService, private auth: AuthenticationGuard) {
   }
-  private setConfig(config: any): void {
+  private setConfig(config: AdminLogin): void {
 
     if (config) {
       this.username = config.username;
       this.secret = config.password;
 
       // restore
-      this.password = '**********';
-      this.newpsw = this.password;
-      this.newpsw2 = this.password;
+      const stars = '**********';
+      this.password = stars + '1';
+      this.newpsw = stars + '2';
+      this.newpsw2 = stars + '3';
     }
 
   }
   saveConfig(): void {
 
-    if (this.secret !== this.password) {
+    // window.btoa(string) => base64.encode(string)
+
+    if (this.secret !== window.btoa(this.password)) {
       this.toastr.error('Aktuelles Passwort ist falsch!');
       return;
     }
@@ -52,13 +54,13 @@ export class EinstellungAdministratorComponent implements OnInit {
       this.toastr.error('Benutzername muss mind. 3 Zeichen enthalten!');
       return;
     }
-    this.ipc.send('post/administrator', { username: this.username, password: this.newpsw });
+    this.ipc.send('post/administrator', <AdminLogin>{ username: this.username, password: window.btoa(this.newpsw) });
     this.toastr.info('Ihre Benutzerdaten sind ab der nächsten Sitzung aktiv!', 'Erfolgreich gespeichert!');
     this.auth.logout();
   }
 
   ngOnInit() {
-    this.ipc.get('get/administrator').then((result: any) => {
+    this.ipc.get('get/administrator').then((result: AdminLogin) => {
       this.setConfig(result);
     });
   }

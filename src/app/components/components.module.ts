@@ -17,11 +17,13 @@ import { EinstellungAdministratorComponent } from './einstellung-administrator/e
 import { EinstellungDatenbankComponent } from './einstellung-datenbank/einstellung-datenbank.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
+
 const declarations = [
   EinstellungAdministratorComponent,
   EinstellungDatenbankComponent,
   SidemenuComponent
 ];
+
 const nebularModules = [
   NbLayoutModule,
   NbSidebarModule,
@@ -31,6 +33,7 @@ const nebularModules = [
   NbAlertModule,
   NbActionsModule
 ];
+
 @NgModule({
   declarations: [
     ...declarations,

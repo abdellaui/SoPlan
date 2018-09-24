@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { AuthenticationGuard } from './../../guards/authentication/authentication.guard';
+import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
+import { AdminLogin } from '@models/adminLogin.class';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +9,7 @@ import { AuthenticationGuard } from './../../guards/authentication/authenticatio
 })
 export class LoginComponent implements OnInit {
 
-  username: string;
-  password: string;
+  admin: AdminLogin = new AdminLogin();
   remember = false;
 
   constructor(private auth: AuthenticationGuard) { }
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.auth.login(this.username, this.password, this.remember);
+    this.auth.login(this.admin, this.remember);
   }
 
 }

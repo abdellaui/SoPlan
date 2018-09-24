@@ -8,8 +8,23 @@
         "../node_modules/typeorm/typeorm-class-transformer-shim.js"
       ],
       "@entity/*": [
-        "../database/entity/*"
-      ]
+        "../backend/entity/*"
+      ],
+      "@models/*": [
+        "../backend/models/*"
+      ],
+      "@components/*": [
+        "./app/components/*"
+      ],
+      "@guards/*": [
+        "./app/guards/*"
+      ],
+      "@pages/*": [
+        "./app/pages/*"
+      ],
+      "@services/*": [
+        "./app/services/*"
+      ],
     },
     "sourceMap": true,
     "declaration": false,
@@ -29,7 +44,7 @@
   },
   "include": [
     "src/**/*",
-    "database/**/*.entity.ts"
+    "backend/**/*.entity.ts"
   ],
   "exclude": [
     "node_modules",
