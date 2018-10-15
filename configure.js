@@ -30,6 +30,7 @@ if (isDatabaseAutoload) {
       fileRelPath = fileRelPath.replace('.ts', '');
       if (fileRelPath === '/database.slot') { return; }
       let fileName = fileRelPath.replace('.slot', '');
+      fileName = fileName.replace(':', '');
       fileName = 'slot' + fileName.replace(/\//g, '_');
 
       importString += `import { init as ${fileName} } from '.${fileRelPath}';\n`;
