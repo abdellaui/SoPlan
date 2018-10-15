@@ -1,4 +1,4 @@
-* Windows tool dependencies installation
+# Windows tool dependencies installation
 
 firstly run **one** of this code lines on depending command prompt -- always as admin
 ![wait for image](1-admincmd.png "admin cmd image")
