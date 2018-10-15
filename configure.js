@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const glob = require('glob');
-
+const path = require('path');
 
 const f_angular = 'node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js';
 const f_typeorm = 'node_modules/typeorm/typeorm-class-transformer-shim.js';
@@ -26,11 +26,11 @@ if (isDatabaseAutoload) {
 
   glob(__dirname + '/backend/**/*.slot.ts', {}, (err, files) => {
     files.forEach((file) => {
-      let fileRelPath = file.replace(__dirname + '/backend', '');
+      const pfad = path.join(__dirname, '/backend').replace(/\\/g, '/');
+      let fileRelPath = file.replace(pfad, '');
       fileRelPath = fileRelPath.replace('.ts', '');
       if (fileRelPath === '/database.slot') { return; }
       let fileName = fileRelPath.replace('.slot', '');
-      fileName = fileName.replace(':', '');
       fileName = 'slot' + fileName.replace(/\//g, '_');
 
       importString += `import { init as ${fileName} } from '.${fileRelPath}';\n`;
