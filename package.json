@@ -27,7 +27,7 @@
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
     "electron:tsc": "node configure --dbauto && tsc -p electron-tsconfig.json",
-    "electron:watch": "onchange 'database/**/*.ts' 'main.ts' -e 'database/autoload.ts' -d 100 -i -v -- npm run electron:serve",
+    "electron:watch": "onchange 'backend/**/*.ts' 'main.ts' -e 'backend/autoload.ts' -d 100 -i -v -- npm run electron:serve",
     "electron:serve": "npm run electron:tsc && wait-on http-get://localhost:4200/ && electron . --serve",
     "electron:local": "npm run build:prod && electron .",
     "compile:linux": "npm run build:prod && npx electron-builder build --linux",
