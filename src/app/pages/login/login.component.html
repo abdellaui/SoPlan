@@ -4,7 +4,7 @@
       <div class="row justify-content-md-center">
         <nb-card>
           <nb-card-header>Login</nb-card-header>
-          <nb-card-body>
+          <nb-card-body (keydown.enter)="login()">
 
             <div class="form-group row">
               <label for="db-input-username" class="col-md-4 col-form-label">Benutzername:</label>
