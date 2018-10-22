@@ -1,9 +1,14 @@
+/**
+ * all slots except this slot will load after database connection was succesfull
+ */
 import * as Settings from 'electron-settings';
 import { getConnection } from 'typeorm';
 
 import { AdminLogin } from './../models/adminLogin.class';
 import { DatabaseConfig } from './../models/databaseConfig.class';
 import { end, on, send } from './../slots';
+
+
 
 export function init() {
   const defaultDatabaseConfigs: DatabaseConfig = {

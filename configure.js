@@ -29,7 +29,7 @@ if (isDatabaseAutoload) {
       const pfad = path.join(__dirname, '/backend').replace(/\\/g, '/');
       let fileRelPath = file.replace(pfad, '');
       fileRelPath = fileRelPath.replace('.ts', '');
-      if (fileRelPath === '/database.slot') { return; }
+      if (fileRelPath === '/slots/database.slot') { return; }
       let fileName = fileRelPath.replace('.slot', '');
       fileName = 'slot' + fileName.replace(/\//g, '_');
 

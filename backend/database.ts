@@ -2,7 +2,7 @@ import * as Settings from 'electron-settings';
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 
 import { init as initSlots } from './autoload';
-import { init as initDatabaseSlots } from './database.slot';
+import { init as initDatabaseSlots } from './slots/database.slot';
 import { User } from './entity/user/user.entity';
 import { DatabaseConfig } from './models/databaseConfig.class';
 import { slotException } from './slots';
