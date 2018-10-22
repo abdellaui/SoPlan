@@ -14,6 +14,8 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import { LoggedModule } from '@pages/logged/logged.module';
 
 
 @NgModule({
@@ -24,6 +26,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
 
     // route
     AppRoutingModule,

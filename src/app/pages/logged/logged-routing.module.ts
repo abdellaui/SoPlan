@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { LoggedComponent } from './logged.component';
+import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'einstellungen',
         component: EinstellungenComponent
+      },
+      {
+        path: 'veranstaltungen',
+        component: VeranstaltungenComponent
       }
     ]
   }

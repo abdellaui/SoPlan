@@ -11,6 +11,11 @@ export class SidemenuComponent implements OnInit {
 
   items: NbMenuItem[] = [
     {
+      title: 'Veranstaltungen',
+      icon: 'nb-paper-plane',
+      link: '/logged/veranstaltungen'
+    },
+    {
       title: 'Einstellungen',
       icon: 'nb-gear',
       link: '/logged/einstellungen',

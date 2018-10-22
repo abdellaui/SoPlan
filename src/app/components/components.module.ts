@@ -11,16 +11,20 @@ import {
   NbMenuModule,
   NbSidebarModule,
   NbThemeModule,
+  NbUserModule,
+  NbListModule
 } from '@nebular/theme';
 
 import { EinstellungAdministratorComponent } from './einstellung-administrator/einstellung-administrator.component';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank/einstellung-datenbank.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { EinstellungMailComponent } from '@components/einstellung-mail/einstellung-mail.component';
 
 
 const declarations = [
   EinstellungAdministratorComponent,
   EinstellungDatenbankComponent,
+  EinstellungMailComponent,
   SidemenuComponent
 ];
 
@@ -31,7 +35,9 @@ const nebularModules = [
   NbCheckboxModule,
   NbButtonModule,
   NbAlertModule,
-  NbActionsModule
+  NbActionsModule,
+  NbUserModule,
+  NbListModule
 ];
 
 @NgModule({
