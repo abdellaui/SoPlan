@@ -4,6 +4,7 @@
 import * as Settings from 'electron-settings';
 import { getConnection } from 'typeorm';
 
+import { MailConfig } from '../models/mailConfig.class';
 import { AdminLogin } from './../models/adminLogin.class';
 import { DatabaseConfig } from './../models/databaseConfig.class';
 import { end, on, send } from './../slots';
@@ -24,6 +25,13 @@ export function init() {
     password: 'cGFzc3dvcmQ=' // => base64('password')
   };
 
+  const defaultMailConfig: MailConfig = {
+    host: '',
+    port: null,
+    user: '',
+    pass: ''
+  };
+
   // store default connection settings
   if (!Settings.has('dbconfig')) {
     Settings.set('dbconfig', defaultDatabaseConfigs);
@@ -33,6 +41,9 @@ export function init() {
     Settings.set('admin', defaultAdminLogin);
   }
 
+  if (!Settings.has('mailconfig')) {
+    Settings.set('mailconfig', defaultMailConfig);
+  }
 
   // slots
   on('get/database/connection', (event: any, arg: any) => {

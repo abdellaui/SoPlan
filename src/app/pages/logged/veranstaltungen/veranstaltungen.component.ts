@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CustomEMail } from '@models/customEMail.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -7,7 +9,13 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './veranstaltungen.component.html',
   styleUrls: ['./veranstaltungen.component.scss']
 })
+
+
+
 export class VeranstaltungenComponent implements OnInit {
+
+  disableSendButton = false;
+
   formSchema: any = [
     { name: 'From', member: 'from', type: 'text' },
     { name: 'To', member: 'to', type: 'text' },
@@ -16,23 +24,39 @@ export class VeranstaltungenComponent implements OnInit {
     { name: 'Html', member: 'html', type: 'text' }
   ];
 
-  public mailOptions = {
-    from: 'Tolga Akkiraz <rounderskillz@gmail.de>',
-    to: 'rhz82581@awsoo.com',
-    subject: `Testing nodemail - ${new Date().toString()}`,
-    text: 'im sending with nodemailer. it works!', // plain text body
-    html: '<p>im sending with nodemailer. it works!</p>', // html body,
-  };
+
+  public mailOptions: CustomEMail = new CustomEMail();
 
 
-  constructor(private ipc: IpcRendererService, private toastr: ToastrService) { }
+  constructor(private ipc: IpcRendererService, private toastr: ToastrService) {
+    this.mailOptions.from = 'Tolga Akkiraz <rounderskillz@gmail.com>';
+    this.mailOptions.to = 'a-sahin@hotmail.de';
+    this.mailOptions.subject = `Testing nodemail - ${new Date().toString()}`;
+    this.mailOptions.text = 'im sending with nodemailer. it works!'; // plain text body
+    this.mailOptions.html = '<p>im sending with nodemailer. it works!</p>'; // html body,
+  }
 
   sendMail(): void {
-    if (this.mailOptions) {
-      this.ipc.send('post/mail/send', this.mailOptions);
-      this.toastr.info('Die Nachricht wurde erfolgreich verschickt');
-    }
-    // this.toastr.error('Bitte füllen Sie alle Felder aus!');
+    this.disableSendButton = true;
+
+    validate(this.mailOptions).then(errors => {
+      if (errors.length > 0) {
+        this.toastr.error('Bitte füllen Sie alle Felder aus!');
+        this.disableSendButton = false;
+      } else {
+        console.log(errors);
+        this.ipc.get<boolean>('post/mail/send', this.mailOptions).then(result => {
+          if (result) {
+            this.toastr.info('Die Nachricht wurde erfolgreich verschickt');
+          } else {
+            this.toastr.error('Die Nachricht wurde nicht verschickt!');
+          }
+          this.disableSendButton = false;
+        });
+
+      }
+    });
+
   }
 
   ngOnInit() {

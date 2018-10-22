@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <button hero status="success" nbButton (click)="sendMail()" class="btn-block">senden</button>
+    <button [disabled]="disableSendButton" hero status="success" nbButton (click)="sendMail()" class="btn-block">senden</button>
 
   </nb-card-body>
 </nb-card>

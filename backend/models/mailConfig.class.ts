@@ -1,8 +1,15 @@
-export class MailConfig {
-  host: string;
-  port: number | string;
-  user: string; // username
-  pass: string; // password
-  secure?: boolean; // true for 465(TLS), false for other ports
+import { IsNotEmpty } from 'class-validator';
 
+export class MailConfig {
+  @IsNotEmpty()
+  host: string;
+
+  @IsNotEmpty()
+  port: number;
+
+  @IsNotEmpty()
+  user: string; // username
+
+  @IsNotEmpty()
+  pass: string; // password
 }

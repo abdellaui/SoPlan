@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MailConfig } from '@models/mailConfig.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -17,24 +18,26 @@ export class EinstellungMailComponent implements OnInit {
     { name: 'Password', member: 'pass', type: 'password' }
   ];
 
-  config: MailConfig = {
-    host: '',
-    port: '',
-    user: '', // username
-    pass: '' // password
-  };
+  config: MailConfig = new MailConfig();
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) { }
 
   setConfig(config: MailConfig): void {
     if (config) {
-      this.config = config;
+      this.config = Object.assign(this.config, config);
     }
   }
 
   saveConfig(): void {
-    this.ipc.send('post/mail/config', this.config);
-    this.toastr.info('Mail wurde erfolgreich konfiguriert!');
+
+    validate(this.config).then(errors => {
+      if (errors.length > 0) {
+        this.toastr.error(`Fehler: ${JSON.stringify(errors)}`);
+      } else {
+        this.ipc.send('post/mail/config', this.config);
+        this.toastr.info('SMTP-Daten wurde erfolgreich konfiguriert!');
+      }
+    });
   }
 
 

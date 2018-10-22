@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseConfig } from '@models/databaseConfig.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,13 +19,7 @@ export class EinstellungDatenbankComponent implements OnInit {
     { name: 'Database', member: 'database' },
   ];
 
-  config: DatabaseConfig = {
-    host: '',
-    port: '',
-    username: '',
-    password: '',
-    database: ''
-  };
+  config: DatabaseConfig = new DatabaseConfig();
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) {
 
@@ -32,12 +27,19 @@ export class EinstellungDatenbankComponent implements OnInit {
 
   private setConfig(config: DatabaseConfig): void {
     if (config) {
-      this.config = config;
+      this.config = Object.assign(this.config, config);
     }
   }
+
   saveConfig(): void {
-    this.ipc.send('post/database/config', this.config);
-    this.toastr.info('Konfiguration erfordert Neustart!', 'Erfolgreich gespeichert!');
+    validate(this.config).then(errors => {
+      if (errors.length > 0) {
+        this.toastr.error(`Fehler: ${JSON.stringify(errors)}`);
+      } else {
+        this.ipc.send('post/database/config', this.config);
+        this.toastr.info('Konfiguration erfordert Neustart!', 'Erfolgreich gespeichert!');
+      }
+    });
   }
 
   ngOnInit() {
