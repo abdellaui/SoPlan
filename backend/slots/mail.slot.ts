@@ -10,7 +10,6 @@ function setTransporter(mailconfig: MailConfig): void {
   /**
    * Setting secure to false does not mean that you would not use an encrypted connection.
    */
-  nodemailer.createTransport();
   __Transporter = nodemailer.createTransport({
     host: mailconfig.host,
     port: mailconfig.port,
@@ -33,7 +32,6 @@ export function init() {
 
   on('get/mail/config', (event: any, arg: any) => {
     const configs: MailConfig = Settings.get('mailconfig');
-    setTransporter(configs);
     send(event, 'get/mail/config', configs);
   });
 
