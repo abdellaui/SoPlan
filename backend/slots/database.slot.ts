@@ -17,7 +17,6 @@ export function init() {
     port: '3306',
     username: 'root',
     password: 'password',
-    database: 'database'
   };
 
   const defaultAdminLogin: AdminLogin = {

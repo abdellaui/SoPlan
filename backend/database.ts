@@ -4,6 +4,10 @@ import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 import { init as initSlots } from './autoload';
 import { init as initDatabaseSlots } from './slots/database.slot';
 import { User } from './entity/user/user.entity';
+import { Person } from './entity/person/person.entity';
+import { Venue } from './entity/venue/venue.entity';
+import { Bedroom } from './entity/venue/bedroom.entity';
+import { Classroom } from './entity/venue/classroom.entity';
 import { DatabaseConfig } from './models/databaseConfig.class';
 import { slotException } from './slots';
 
@@ -25,7 +29,7 @@ export class Database {
       username: dbConfig.username,
       password: dbConfig.password,
       database: dbConfig.database,
-      entities: [User],
+      entities: [User, Person, Venue, Bedroom, Classroom],
       synchronize: true,
       logging: false,
     };
