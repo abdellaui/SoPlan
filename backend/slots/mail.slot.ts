@@ -38,11 +38,10 @@ function getTransporter(): any {
 
 export function init() {
 
+  setTransporter(Settings.get('mailconfig'));
 
   on('get/mail/config', (event: any, arg: any) => {
-    const config: MailConfig = Settings.get('mailconfig');
-    setTransporter(config);
-    send(event, 'get/mail/config', config);
+    send(event, 'get/mail/config', <MailConfig>Settings.get('mailconfig'));
   });
 
   on('post/mail/config', (event: any, config: MailConfig) => {
