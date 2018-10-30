@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
+import { School } from '@entity/school/school.entity';
 
 @Entity()
 export class Person {
@@ -16,7 +17,7 @@ export class Person {
   // Vorname
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'firstname'
   })
   firstname: string;
@@ -24,7 +25,7 @@ export class Person {
   // Nachname
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'lastname'
   })
   lastname: string;
@@ -33,7 +34,7 @@ export class Person {
   // (m,w,d = männlich, weiblich, divers)
   @Column({
     type: 'varchar',
-    length: 1,
+    length: 255,
     name: 'gender'
   })
   gender: string;
@@ -48,7 +49,7 @@ export class Person {
   // Telefonnummer
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'phone'
   })
   phone: string;
@@ -56,7 +57,7 @@ export class Person {
   // Handynummer
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'mobile'
   })
   mobile: string;
@@ -64,7 +65,7 @@ export class Person {
   // E-Mail Adresse
   @Column({
     type: 'varchar',
-    length: 40,
+    length: 255,
     name: 'mail'
   })
   mail: string;
@@ -73,7 +74,7 @@ export class Person {
   // Umfasst auch Vegetarisch, Vegan, Halal
   @Column({
     type: 'varchar',
-    length: 50,
+    length: 255,
     name: 'food_intolerance'
   })
   food_intolerance: string;
@@ -81,7 +82,7 @@ export class Person {
   // Straße
   @Column({
     type: 'varchar',
-    length: 40,
+    length: 255,
     name: 'street'
   })
   street: string;
@@ -89,7 +90,7 @@ export class Person {
   // Hausnummer
   @Column({
     type: 'varchar',
-    length: 6,
+    length: 255,
     name: 'hnr'
   })
   hnr: string;
@@ -97,7 +98,7 @@ export class Person {
   // PLZ
   @Column({
     type: 'varchar',
-    length: 10,
+    length: 255,
     name: 'plz'
   })
   plz: string;
@@ -105,7 +106,7 @@ export class Person {
   // Ort
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'city'
   })
   city: string;
@@ -113,40 +114,20 @@ export class Person {
   // Land
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'country',
     default: 'Deutschland'
   })
   country: string;
 
   // Schule
-  @Column({
-    type: 'varchar',
-    length: 30,
-    name: 'school'
-  })
-  school: string;
-
-  // PLZ Schule
-  @Column({
-    type: 'varchar',
-    length: 10,
-    name: 'school_plz'
-  })
-  school_plz: string;
-
-  // Ort Schule
-  @Column({
-    type: 'varchar',
-    length: 30,
-    name: 'school_city'
-  })
-  school_city: string;
+  @ManyToOne(type => School, school => school.schools)
+  school: School;
 
   // Bemerkungen
   @Column({
     type: 'varchar',
-    length: 256,
+    length: 2048,
     name: 'comment'
   })
   comment: string;

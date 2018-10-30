@@ -47,3 +47,9 @@ package-lock.json
 # System Files
 .DS_Store
 Thumbs.db
+doc/projectbook/document.toc
+doc/projectbook/document.synctex.gz
+doc/projectbook/document.pdf
+doc/projectbook/document.out
+doc/projectbook/document.log
+doc/projectbook/document.aux

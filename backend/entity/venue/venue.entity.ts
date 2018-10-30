@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
-import {Bedroom} from './bedroom.entity';
-import {Classroom} from './classroom.entity';
+import {Bedroom} from '../bedroom/bedroom.entity';
+import {Classroom} from '../classroom/classroom.entity';
 
 @Entity()
 export class Venue {
@@ -18,7 +18,7 @@ export class Venue {
   // Name
   @Column({
     type: 'varchar',
-    length: 50,
+    length: 255,
     name: 'name'
   })
   name: string;
@@ -26,7 +26,7 @@ export class Venue {
   // Ansprechpartner
   @Column({
     type: 'varchar',
-    length: 50,
+    length: 255,
     name: 'contactperson'
   })
   contactperson: string;
@@ -34,7 +34,7 @@ export class Venue {
   // Straße
   @Column({
     type: 'varchar',
-    length: 40,
+    length: 255,
     name: 'street'
   })
   street: string;
@@ -42,7 +42,7 @@ export class Venue {
   // Hausnummer
   @Column({
     type: 'varchar',
-    length: 6,
+    length: 255,
     name: 'hnr'
   })
   hnr: string;
@@ -50,7 +50,7 @@ export class Venue {
   // PLZ
   @Column({
     type: 'varchar',
-    length: 10,
+    length: 255,
     name: 'plz'
   })
   plz: string;
@@ -58,7 +58,7 @@ export class Venue {
   // Ort
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'city'
   })
   city: string;
@@ -66,7 +66,7 @@ export class Venue {
   // Land
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'country',
     default: 'Deutschland'
   })
@@ -75,7 +75,7 @@ export class Venue {
   // Telefonnummer
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'phone'
   })
   phone: string;
@@ -83,7 +83,7 @@ export class Venue {
   // Handynummer
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'mobile'
   })
   mobile: string;

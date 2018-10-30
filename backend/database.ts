@@ -6,8 +6,8 @@ import { init as initDatabaseSlots } from './slots/database.slot';
 import { User } from './entity/user/user.entity';
 import { Person } from './entity/person/person.entity';
 import { Venue } from './entity/venue/venue.entity';
-import { Bedroom } from './entity/venue/bedroom.entity';
-import { Classroom } from './entity/venue/classroom.entity';
+import { Bedroom } from './entity/bedroom/bedroom.entity';
+import { Classroom } from './entity/classroom/classroom.entity';
 import { DatabaseConfig } from './models/databaseConfig.class';
 import { slotException } from './slots';
 

@@ -1,5 +1,5 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
-import {Venue} from './venue.entity';
+import {Venue} from '../venue/venue.entity';
 
 @Entity()
 export class Classroom {
@@ -17,7 +17,7 @@ export class Classroom {
   // Etage
   @Column({
     type: 'varchar',
-    length: 5,
+    length: 255,
     name: 'floor'
   })
   floor: string;
@@ -25,7 +25,7 @@ export class Classroom {
   // Flur
   @Column({
     type: 'varchar',
-    length: 15,
+    length: 255,
     name: 'corridor'
   })
   corridor: string;
@@ -33,7 +33,7 @@ export class Classroom {
   // Nummer
   @Column({
     type: 'varchar',
-    length: 15,
+    length: 255,
     name: 'room_number'
   })
   room_number: number;
@@ -41,7 +41,7 @@ export class Classroom {
   // Name
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 255,
     name: 'name'
   })
   name: string;
@@ -50,7 +50,7 @@ export class Classroom {
   // Alle Räumen bekommen zusätzliche Namen...
   @Column({
     type: 'varchar',
-    length: 20,
+    length: 255,
     name: 'new_name'
   })
   new_name: string;
@@ -65,7 +65,7 @@ export class Classroom {
   // Kommentar
   @Column({
     type: 'varchar',
-    length: 256,
+    length: 255,
     name: 'comment'
   })
   comment: string;
