@@ -1,95 +1,30 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
-import {Bedroom} from '../bedroom/bedroom.entity';
-import {Classroom} from '../classroom/classroom.entity';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Communication } from '../_communication/communicaton.entity';
+import { Location } from '../_location/location.entity';
+import { Bedroom } from '../bedroom/bedroom.entity';
+import { Classroom } from '../classroom/classroom.entity';
 
 @Entity()
-export class Venue {
+export class Venue extends BaseEntity {
 
-  @Column({
-    type: 'int',    // Typ Integer
-    primary: true,  // Primärschlüssel
-    unique: true,   // Der Wert ist unique (durch Primary eigentlich bereits sicher...)
-    readonly: true, // Der Wert kann nach dem Einfügen nicht mehr verändert werden
-    name: 'lid'     // Tabellenzeile (in der MySql Tabelle) heißt 'pid'
-  })
-  @Generated('increment')
-  lid: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  // Name
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'name'
-  })
+  @Column()
   name: string;
 
-  // Ansprechpartner
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'contactperson'
-  })
-  contactperson: string;
+  @Column()
+  contactPerson: string;
 
-  // Straße
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'street'
-  })
-  street: string;
+  @Column(type => Location)
+  location: Location;
 
-  // Hausnummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'hnr'
-  })
-  hnr: string;
-
-  // PLZ
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'plz'
-  })
-  plz: string;
-
-  // Ort
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'city'
-  })
-  city: string;
-
-  // Land
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'country',
-    default: 'Deutschland'
-  })
-  country: string;
-
-  // Telefonnummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'phone'
-  })
-  phone: string;
-
-  // Handynummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'mobile'
-  })
-  mobile: string;
+  @Column(type => Communication)
+  communication: Communication;
 
   @OneToMany(type => Bedroom, bedroom => bedroom.venue)
-    bedrooms: Bedroom[];
+  bedrooms: Bedroom[];
 
   @OneToMany(type => Classroom, classroom => classroom.venue)
   classrooms: Classroom[];

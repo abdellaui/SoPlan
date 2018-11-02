@@ -1,135 +1,47 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
-import { School } from '@entity/school/school.entity';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Communication } from '../_communication/communicaton.entity';
+import { Location } from '../_location/location.entity';
+import { School } from '../school/school.entity';
+
+export enum PersonGender {
+  MALE = 'm',
+  FEMALE = 'w',
+  DIVERSE = 'd'
+}
 
 @Entity()
-export class Person {
+export class Person extends BaseEntity {
 
-  @Column({
-    type: 'int',    // Typ Integer
-    primary: true,  // Primärschlüssel
-    unique: true,   // Der Wert ist unique (durch Primary eigentlich bereits sicher...)
-    readonly: true, // Der Wert kann nach dem Einfügen nicht mehr verändert werden
-    name: 'pid'     // Tabellenzeile (in der MySql Tabelle) heißt 'pid'
-  })
-  @Generated('increment')
-  pid: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  // Vorname
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'firstname'
-  })
+  @Column()
   firstname: string;
 
-  // Nachname
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'lastname'
-  })
-  lastname: string;
+  @Column()
+  surname: string;
 
-  // Geschlecht
-  // (m,w,d = männlich, weiblich, divers)
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'gender'
-  })
-  gender: string;
+  @Column({ type: 'enum', enum: PersonGender })
+  gender: PersonGender;
 
-  // Geburtsdatum
-  @Column({
-    type: 'date',
-    name: 'birth_date'
-  })
-  birth_date: Date;
+  @Column()
+  birthDate: Date;
 
-  // Telefonnummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'phone'
-  })
-  phone: string;
-
-  // Handynummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'mobile'
-  })
-  mobile: string;
-
-  // E-Mail Adresse
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'mail'
-  })
-  mail: string;
+  @Column(type => Communication)
+  communication: Communication;
 
   // Lebensmittelausschlüsse
   // Umfasst auch Vegetarisch, Vegan, Halal
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'food_intolerance'
-  })
-  food_intolerance: string;
+  @Column()
+  foodIntolerance: string;
 
-  // Straße
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'street'
-  })
-  street: string;
+  @Column(type => Location)
+  location: Location;
 
-  // Hausnummer
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'hnr'
-  })
-  hnr: string;
-
-  // PLZ
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'plz'
-  })
-  plz: string;
-
-  // Ort
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'city'
-  })
-  city: string;
-
-  // Land
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'country',
-    default: 'Deutschland'
-  })
-  country: string;
-
-  // Schule
-  @ManyToOne(type => School, school => school.schools)
-  school: School;
-
-  // Bemerkungen
-  @Column({
-    type: 'varchar',
-    length: 2048,
-    name: 'comment'
-  })
+  @Column()
   comment: string;
 
+  @ManyToOne(type => School, school => school.students)
+  school: School;
 }

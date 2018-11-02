@@ -1,44 +1,21 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Generated, OneToMany, ManyToOne } from 'typeorm';
-import {Person} from '../person/person.entity';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Location } from '../_location/location.entity';
+import { Person } from '../person/person.entity';
 
 @Entity()
-export class School {
+export class School extends BaseEntity {
 
-  @Column({
-    type: 'int',    // Typ Integer
-    primary: true,  // Primärschlüssel
-    unique: true,   // Der Wert ist unique (durch Primary eigentlich bereits sicher...)
-    readonly: true, // Der Wert kann nach dem Einfügen nicht mehr verändert werden
-    name: 'lid'     // Tabellenzeile (in der MySql Tabelle) heißt 'pid'
-  })
-  @Generated('increment')
-  lid: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  // Schule
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'school'
-  })
-  school: string;
+  @Column()
+  name: string;
 
-  // PLZ Schule
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'school_plz'
-  })
-  school_plz: string;
+  @Column(type => Location)
+  location: Location;
 
-  // Ort Schule
-  @Column({
-    type: 'varchar',
-    length: 255,
-    name: 'school_city'
-  })
-  school_city: string;
-
-  @OneToMany(type => School, school => school.venue)
-    schools: School[];
+  @OneToMany(type => Person, person => person.school)
+  students: Person[];
 
 }

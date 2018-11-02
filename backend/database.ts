@@ -2,14 +2,18 @@ import * as Settings from 'electron-settings';
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 
 import { init as initSlots } from './autoload';
-import { init as initDatabaseSlots } from './slots/database.slot';
-import { User } from './entity/user/user.entity';
-import { Person } from './entity/person/person.entity';
-import { Venue } from './entity/venue/venue.entity';
+import { Communication } from './entity/_communication/communicaton.entity';
+import { Location } from './entity/_location/location.entity';
+import { Room } from './entity/_room/room.entity';
 import { Bedroom } from './entity/bedroom/bedroom.entity';
 import { Classroom } from './entity/classroom/classroom.entity';
+import { Person } from './entity/person/person.entity';
+import { School } from './entity/school/school.entity';
+import { Venue } from './entity/venue/venue.entity';
 import { DatabaseConfig } from './models/databaseConfig.class';
 import { slotException } from './slots';
+import { init as initDatabaseSlots } from './slots/database.slot';
+
 
 export class Database {
 
@@ -29,9 +33,18 @@ export class Database {
       username: dbConfig.username,
       password: dbConfig.password,
       database: dbConfig.database,
-      entities: [User, Person, Venue, Bedroom, Classroom],
+      entities: [
+        Room,
+        Location,
+        Communication,
+        Venue,
+        School,
+        Person,
+        Classroom,
+        Bedroom,
+      ],
       synchronize: true,
-      logging: false,
+      logging: true,
     };
 
     createConnection(this.options).then((conn: Connection) => {
