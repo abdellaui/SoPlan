@@ -20,6 +20,6 @@ export class Room {
   name: string;
 
   @Column()
-  size: number;
+  capacity: number;
 
 }

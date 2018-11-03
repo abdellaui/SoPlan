@@ -1,7 +1,9 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
+import { Comment } from '../comment/comment.entity';
+import { Participant } from '../participant/participant.entity';
 import { School } from '../school/school.entity';
 
 export enum PersonGender {
@@ -39,9 +41,14 @@ export class Person extends BaseEntity {
   @Column(type => Location)
   location: Location;
 
-  @Column()
-  comment: string;
+
+  @ManyToMany(type => Comment)
+  @JoinTable()
+  comments: Comment[];
 
   @ManyToOne(type => School, school => school.students)
   school: School;
+
+  @OneToMany(type => Participant, participant => participant.person)
+  participantes: Participant[];
 }

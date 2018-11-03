@@ -7,6 +7,10 @@ import { Location } from './entity/_location/location.entity';
 import { Room } from './entity/_room/room.entity';
 import { Bedroom } from './entity/bedroom/bedroom.entity';
 import { Classroom } from './entity/classroom/classroom.entity';
+import { Comment } from './entity/comment/comment.entity';
+import { Event } from './entity/event/event.entity';
+import { Group } from './entity/group/group.entity';
+import { Participant } from './entity/participant/participant.entity';
 import { Person } from './entity/person/person.entity';
 import { School } from './entity/school/school.entity';
 import { Venue } from './entity/venue/venue.entity';
@@ -42,6 +46,10 @@ export class Database {
         Person,
         Classroom,
         Bedroom,
+        Event,
+        Participant,
+        Group,
+        Comment,
       ],
       synchronize: true,
       logging: true,

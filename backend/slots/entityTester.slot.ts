@@ -3,11 +3,19 @@ import { Location } from '../entity/_location/location.entity';
 import { Room } from '../entity/_room/room.entity';
 import { Bedroom, BedroomTypes } from '../entity/bedroom/bedroom.entity';
 import { Classroom } from '../entity/classroom/classroom.entity';
+import { Comment } from '../entity/comment/comment.entity';
+import { Event } from '../entity/event/event.entity';
+import { Group } from '../entity/group/group.entity';
+import { Participant, ParticipantRole } from '../entity/participant/participant.entity';
 import { Person, PersonGender } from '../entity/person/person.entity';
 import { School } from '../entity/school/school.entity';
 import { Venue } from '../entity/venue/venue.entity';
 
 export async function init() {
+
+  const comment = new Comment();
+  comment.content = 'its just a test';
+  const commentInstance = await comment.save();
 
   const location = new Location();
   location.city = 'Bochum';
@@ -26,6 +34,7 @@ export async function init() {
   venue.name = 'Am Stiepel';
   venue.location = location;
   venue.communication = communication;
+  venue.comments = [commentInstance];
 
   const venueInstance = await venue.save();
 
@@ -34,20 +43,21 @@ export async function init() {
   room.floor = 'unterbrücke';
   room.name = 'kp';
   room.number = 23;
-  room.size = 50;
+  room.capacity = 50;
 
   const bedroom = new Bedroom();
   bedroom.type = BedroomTypes.DOZENT;
   bedroom.venue = venueInstance;
+  bedroom.comments = [commentInstance];
   bedroom.room = room;
-  bedroom.save();
+  const bedroomInstance = await bedroom.save();
 
   const classroom = new Classroom();
   classroom.identifier = 'NA 04/444';
   classroom.room = room; // chill its just for example
   classroom.venue = venueInstance;
-  classroom.comment = 'Brudo war hier!';
-  classroom.save();
+  classroom.comments = [commentInstance];
+  const classroomInstance = await classroom.save();
 
   const school = new School();
   school.name = 'Goethe Schule';
@@ -59,11 +69,47 @@ export async function init() {
   person.surname = 'Salamanda';
   person.gender = PersonGender.DIVERSE;
   person.birthDate = new Date('1995-07-16');
-  person.comment = 'authistisch veranlagt';
+  person.comments = [commentInstance];
   person.location = location; // chill
   person.school = schoolInstance;
   person.communication = communication; // chill
   person.foodIntolerance = 'none';
-  person.save();
+  const personInstance = await person.save();
+
+
+  // STATICS ENDS
+
+  const event = new Event();
+  event.name = 'Salamanders!';
+  event.hosting = venueInstance;
+  event.comments = [commentInstance];
+  const eventInstance = await event.save();
+
+  const group = new Group();
+  group.name = 'krabelgruppe';
+  group.capacity = 5;
+  group.classroom = classroomInstance;
+  group.event = eventInstance;
+  group.comments = [commentInstance];
+  const groupInstance = await group.save();
+
+  const participant = new Participant();
+  participant.person = personInstance;
+  participant.bedroom = bedroomInstance;
+  participant.comments = [commentInstance];
+  participant.group = groupInstance;
+  participant.event = eventInstance;
+  participant.role = ParticipantRole.SCHUELER;
+  const participantInstance = await participant.save();
+
+  const participant2 = new Participant();
+  participant2.person = personInstance; // chill
+  participant2.bedroom = bedroomInstance;
+  participant2.comments = [commentInstance];
+  participant2.group = groupInstance;
+  participant2.event = eventInstance;
+  participant2.role = ParticipantRole.DOZENT;
+  participant2.wantsToBeWith = [participantInstance];
+  participant2.save();
 
 }
