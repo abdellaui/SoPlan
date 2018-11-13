@@ -92,7 +92,7 @@ const PersonSchema: FormElement[] = [
   {
     name: 'Geburtsdatum',
     member: 'birthDate',
-    element: new DatePicker('dd.MM.yyyy')
+    element: new DatePicker()
   },
   {
     name: 'Alergien',

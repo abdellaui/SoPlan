@@ -100,13 +100,13 @@ export class DatePicker extends Element {
 
   /**
    * Erzeugt einn DatePicker
-   * @param dateFormat Default DD-MM-YYYY
+   * @param dateFormat Default MM/dd/yyyy
    * @param readonly gibt an ob Wert manipulierbar ist
    * @param placeholder Platzhalter
    */
   constructor(dateFormat?: string, readonly?: boolean, placeholder?: string) {
     super(ElementTypes.DatePicker, readonly);
-    this.dateFormat = (dateFormat) ? dateFormat : 'dd.MM.yyyy';
+    this.dateFormat = (dateFormat) ? dateFormat : 'MM/dd/yyyy';
     this.placeholder = (placeholder) ? placeholder : '';
   }
 

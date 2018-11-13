@@ -5,6 +5,7 @@ import { EinstellungMailComponent } from '@components/einstellung-mail/einstellu
 import {
   NbActionsModule,
   NbAlertModule,
+  NbBadgeModule,
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
@@ -17,6 +18,7 @@ import {
   NbSelectModule,
   NbSidebarModule,
   NbThemeModule,
+  NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
 
@@ -30,7 +32,6 @@ import { RadiobuttonComponent } from './form-builder/radiobutton/radiobutton.com
 import { SelectboxComponent } from './form-builder/selectbox/selectbox.component';
 import { TextareaComponent } from './form-builder/textarea/textarea.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-
 
 const declarations = [
   EinstellungAdministratorComponent,
@@ -50,11 +51,8 @@ const nebularModules = [
   NbLayoutModule,
   NbSidebarModule,
   NbCheckboxModule,
-  NbButtonModule,
   NbSelectModule,
   NbCardModule,
-  NbCheckboxModule,
-  NbButtonModule,
   NbAlertModule,
   NbRadioModule,
   NbActionsModule,
@@ -62,6 +60,9 @@ const nebularModules = [
   NbInputModule,
   NbListModule,
   NbDatepickerModule,
+  NbButtonModule,
+  NbTooltipModule,
+  NbBadgeModule
 ];
 
 @NgModule({

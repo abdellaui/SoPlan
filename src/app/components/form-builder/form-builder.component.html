@@ -2,11 +2,10 @@
   <nb-card-header>{{settings.header}}</nb-card-header>
   <nb-card-body>
     <div *ngFor="let schemata of schema">
-      <nb-alert *ngIf="getError(schemata.member)" status="danger">
-        {{showError(schemata.member)}}
-      </nb-alert>
       <div class="form-group row">
-        <label class="col-{{settings.paddings.left}} col-form-label">{{schemata.name}}</label>
+        <label class="col-{{settings.paddings.left}} col-form-label">{{schemata.name}}
+          <span *ngIf="getError(schemata.member)" class="badge badge-danger" [nbTooltip]="showError(schemata.member)">?</span>
+        </label>
         <div class="col-{{settings.paddings.right}}" [ngSwitch]="schemata.element.getElementType()">
 
 

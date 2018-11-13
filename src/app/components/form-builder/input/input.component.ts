@@ -14,7 +14,6 @@ export class InputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log({ InputComponent: this.error });
   }
 
   emitChange(): void {

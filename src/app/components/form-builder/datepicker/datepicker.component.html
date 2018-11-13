@@ -1,5 +1,5 @@
 <div *ngIf="element.isReadOnly()">
-  <input readonly nbInput [status]="(error)?'danger':''" class="form-control" [ngModel]="formatDate(value)"
+  <input readonly nbInput [status]="(error)?'danger':''" class="form-control" ngModel="{{value | date:element.getDateFormat() }}"
     [placeholder]="element.getPlaceholder()">
 </div>
 <div *ngIf="!element.isReadOnly()">
