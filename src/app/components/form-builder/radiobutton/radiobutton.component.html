@@ -1,0 +1,5 @@
+<nb-alert [status]="(error)?'danger':'disabled'">
+  <nb-radio-group [disabled]="element.isReadOnly()" [value]="value" (valueChange)="emitChange($event)">
+    <nb-radio *ngFor="let option of element.getOptions()" [value]="option.value">{{option.label}}</nb-radio>
+  </nb-radio-group>
+</nb-alert>

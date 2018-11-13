@@ -8,7 +8,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AdminLogin } from '@models/adminLogin.class';
+import { AdminLogin } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -28,8 +28,10 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   }
 
   login(admin: AdminLogin, _remember: boolean): void {
-    admin.password = window.btoa(admin.password);
-    this.ipc.get('check/administrator', admin).then((result: any) => {
+    const currAdmin = admin;
+    currAdmin.password = window.btoa(admin.password);
+
+    this.ipc.get('check/administrator', currAdmin).then((result: any) => {
       if (result) {
         result.remember = _remember;
         localStorage.setItem('administrator', JSON.stringify(result));

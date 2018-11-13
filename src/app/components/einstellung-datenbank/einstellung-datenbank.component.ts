@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseConfig } from '@models/databaseConfig.class';
+import { DatabaseConfig } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';

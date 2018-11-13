@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CustomEMail } from '@models/customEMail.class';
+import { CustomEMail } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
@@ -27,7 +27,6 @@ export class VeranstaltungenComponent implements OnInit {
 
   public mailOptions: CustomEMail = new CustomEMail();
 
-
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) {
     this.mailOptions.from = 'Tolga Akkiraz <rounderskillz@gmail.com>';
     this.mailOptions.to = 'a-sahin@hotmail.de';
@@ -35,6 +34,7 @@ export class VeranstaltungenComponent implements OnInit {
     this.mailOptions.text = 'im sending with nodemailer. it works!'; // plain text body
     this.mailOptions.html = '<p>im sending with nodemailer. it works!</p>'; // html body,
   }
+
 
   sendMail(): void {
     this.disableSendButton = true;
@@ -62,4 +62,7 @@ export class VeranstaltungenComponent implements OnInit {
   ngOnInit() {
   }
 
+  finishPerson(event: any) {
+    console.log({ finishedPerson: event });
+  }
 }

@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as url from 'url';
 
 import { Database } from './backend/database';
-import { DatabaseConfig } from './backend/models/databaseConfig.class';
+import { DatabaseConfig } from './backend/models/configs.class';
 import { setExpressServer } from './backend/slots';
 
 let mainWindow: any = null;

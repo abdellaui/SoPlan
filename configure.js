@@ -61,10 +61,9 @@ if (isElectronConfigure || isWebConfigure) {
 
   const toPlace = `exports.Entity = Entity;
 
-exports.BaseEntity = null;
+exports.BaseEntity = function(){};
 
 /* export */`;
-
   fs.readFile(f_typeorm, 'utf8', function (err, data) {
     if (err) return console.log(err);
 

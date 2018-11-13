@@ -2,7 +2,7 @@ import * as Settings from 'electron-settings';
 import * as Nodemailer from 'nodemailer';
 import { Options } from 'nodemailer/lib/smtp-transport';
 
-import { MailConfig } from '../models/mailConfig.class';
+import { MailConfig } from '../models/configs.class';
 import { end, on, send } from './../slots';
 
 let __Transporter: any = null;

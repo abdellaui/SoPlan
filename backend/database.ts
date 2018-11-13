@@ -14,7 +14,7 @@ import { Participant } from './entity/participant/participant.entity';
 import { Person } from './entity/person/person.entity';
 import { School } from './entity/school/school.entity';
 import { Venue } from './entity/venue/venue.entity';
-import { DatabaseConfig } from './models/databaseConfig.class';
+import { DatabaseConfig } from './models/configs.class';
 import { slotException } from './slots';
 import { init as initDatabaseSlots } from './slots/database.slot';
 

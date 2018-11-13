@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
-import { AdminLogin } from '@models/adminLogin.class';
+import { AdminLogin } from '@models/configs.class';
 
 @Component({
   selector: 'app-login',

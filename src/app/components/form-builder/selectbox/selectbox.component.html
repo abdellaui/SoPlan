@@ -1,0 +1,4 @@
+<nb-select fullWidth [disabled]="element.isReadOnly()" [status]="(error)?'danger':'success'" (onChange)="emitChange()"
+  [placeholder]="element.getPlaceholder()" [(ngModel)]="value">
+  <nb-option *ngFor="let option of element.getOptions()" [value]="option.value">{{option.label}}</nb-option>
+</nb-select>

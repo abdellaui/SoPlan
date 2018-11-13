@@ -1,0 +1,9 @@
+<div *ngIf="element.isReadOnly()">
+  <input readonly nbInput [status]="(error)?'danger':''" class="form-control" [ngModel]="formatDate(value)"
+    [placeholder]="element.getPlaceholder()">
+</div>
+<div *ngIf="!element.isReadOnly()">
+  <input nbInput [status]="(error)?'danger':''" class="form-control" [(ngModel)]="value" [placeholder]="element.getPlaceholder()"
+    (ngModelChange)="emitChange()" [nbDatepicker]="datepicker">
+</div>
+<nb-datepicker [format]="element.getDateFormat()" #datepicker></nb-datepicker>

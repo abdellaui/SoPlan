@@ -1,0 +1,2 @@
+<input [readonly]="element.isReadOnly()" nbInput [status]="(error)?'danger':''" class="form-control" type="element.getType()"
+  [(ngModel)]="value" [placeholder]="element.getPlaceholder()" (ngModelChange)="emitChange()">

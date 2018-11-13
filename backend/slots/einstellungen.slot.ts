@@ -1,6 +1,6 @@
 import * as Settings from 'electron-settings';
 
-import { AdminLogin } from '../models/adminLogin.class';
+import { AdminLogin } from '../models/configs.class';
 import { end, on, send } from './../slots';
 
 export function init() {

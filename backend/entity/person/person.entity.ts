@@ -1,5 +1,7 @@
+import { IsDate, IsEnum, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
 import { Comment } from '../comment/comment.entity';
@@ -18,15 +20,18 @@ export class Person extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsNotEmpty()
   @Column()
   firstname: string;
 
   @Column()
   surname: string;
 
+  @IsEnum(PersonGender)
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
+  @IsDate()
   @Column()
   birthDate: Date;
 
@@ -41,7 +46,6 @@ export class Person extends BaseEntity {
   @Column(type => Location)
   location: Location;
 
-
   @ManyToMany(type => Comment)
   @JoinTable()
   comments: Comment[];
@@ -52,3 +56,55 @@ export class Person extends BaseEntity {
   @OneToMany(type => Participant, participant => participant.person)
   participantes: Participant[];
 }
+
+
+const PersonSchema: FormElement[] = [
+  {
+    name: 'Vorname',
+    member: 'firstname',
+    element: new Input('text')
+  },
+  {
+    name: 'Nachname',
+    member: 'surname',
+    element: new Input('text')
+  },
+
+  {
+    name: 'Geschlecht',
+    member: 'gender',
+    element: new RadioButton([
+      new Option('männlich', PersonGender.MALE),
+      new Option('weiblich', PersonGender.FEMALE),
+      new Option('diverse', PersonGender.DIVERSE),
+    ])
+  },
+  /*
+  {
+    name: 'Geschlecht',
+    member: 'gender',
+    element: new SelectBox([
+      new Option('männlich', PersonGender.MALE),
+      new Option('weiblich', PersonGender.FEMALE),
+      new Option('diverse', PersonGender.DIVERSE),
+    ], true)
+  },*/
+  {
+    name: 'Geburtsdatum',
+    member: 'birthDate',
+    element: new DatePicker('dd.MM.yyyy')
+  },
+  {
+    name: 'Alergien',
+    member: 'foodIntolerance',
+    element: new TextArea(false, '(optional)')
+  }
+  /*{
+    name: 'Alergien',
+    member: 'foodIntolerance',
+    element: new CheckBox(true)
+  }*/
+];
+export { PersonSchema };
+
+

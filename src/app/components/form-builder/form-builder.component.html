@@ -1,0 +1,46 @@
+<nb-card>
+  <nb-card-header>{{settings.header}}</nb-card-header>
+  <nb-card-body>
+    <div *ngFor="let schemata of schema">
+      <nb-alert *ngIf="getError(schemata.member)" status="danger">
+        {{showError(schemata.member)}}
+      </nb-alert>
+      <div class="form-group row">
+        <label class="col-{{settings.paddings.left}} col-form-label">{{schemata.name}}</label>
+        <div class="col-{{settings.paddings.right}}" [ngSwitch]="schemata.element.getElementType()">
+
+
+          <!--
+            ElementTypes {
+              Input = 1,
+              CheckBox = 2,
+              RadioButton = 4,
+              TextArea = 8,
+              DatePicker = 16,
+              SelectBox = 32
+            }
+          -->
+          <app-input *ngSwitchCase="1" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-input>
+          <app-checkbox *ngSwitchCase="2" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-checkbox>
+          <app-radiobutton *ngSwitchCase="4" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-radiobutton>
+          <app-textarea *ngSwitchCase="8" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-textarea>
+          <app-datepicker *ngSwitchCase="16" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-datepicker>
+          <app-selectbox *ngSwitchCase="32" [element]="schemata.element" [value]="write[schemata.member]" [error]="getError(schemata.member)"
+            (valueChanged)="changeValue($event, schemata.member)"></app-selectbox>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="settings.buttons">
+      <button hero status="success" nbButton (click)="save()" class="btn-block">speichern</button>
+    </div>
+
+  </nb-card-body>
+</nb-card>

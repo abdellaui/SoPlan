@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MailConfig } from '@models/mailConfig.class';
+import { MailConfig } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';

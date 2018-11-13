@@ -16,6 +16,11 @@ export class SidemenuComponent implements OnInit {
       link: '/logged/veranstaltungen'
     },
     {
+      title: 'Person-Editor',
+      icon: 'nb-person',
+      link: '/logged/person-editor'
+    },
+    {
       title: 'Einstellungen',
       icon: 'nb-gear',
       link: '/logged/einstellungen',

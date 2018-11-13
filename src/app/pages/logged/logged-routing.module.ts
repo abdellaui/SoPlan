@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
 
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { LoggedComponent } from './logged.component';
-import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
+import { PersonEditorComponent } from './person-editor/person-editor.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'veranstaltungen',
         component: VeranstaltungenComponent
+      },
+      {
+        path: 'person-editor',
+        component: PersonEditorComponent
       }
     ]
   }

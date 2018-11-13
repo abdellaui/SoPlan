@@ -1,0 +1,2 @@
+<textarea nbInput [readonly]="element.isReadOnly()" [status]="(error)?'danger':''" class="form-control" [(ngModel)]="value"
+  [placeholder]="element.getPlaceholder()" (ngModelChange)="emitChange()"></textarea>
