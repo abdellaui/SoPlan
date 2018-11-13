@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseConfig } from '@models/configs.class';
+import { DatabaseConfig, DatabaseConfigSchema } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
@@ -11,24 +11,23 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EinstellungDatenbankComponent implements OnInit {
 
-  formSchema: any = [
-    { name: 'Host', member: 'host' },
-    { name: 'Port', member: 'port' },
-    { name: 'Username', member: 'username' },
-    { name: 'Password', member: 'password' },
-    { name: 'Database', member: 'database' },
-  ];
 
-  config: DatabaseConfig = new DatabaseConfig();
+
+  public loadingFinished = false;
+  public config: DatabaseConfig = new DatabaseConfig();
+  public form_schema = DatabaseConfigSchema;
+  public form_settings = { header: 'Datenbank konfiguration', buttons: true };
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) {
 
   }
 
   private setConfig(config: DatabaseConfig): void {
+
     if (config) {
       this.config = Object.assign(this.config, config);
     }
+    this.loadingFinished = true;
   }
 
   saveConfig(): void {

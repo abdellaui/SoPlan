@@ -17,7 +17,6 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
-  NbThemeModule,
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -62,7 +61,8 @@ const nebularModules = [
   NbDatepickerModule,
   NbButtonModule,
   NbTooltipModule,
-  NbBadgeModule
+  NbBadgeModule,
+  NbMenuModule,
 ];
 
 @NgModule({
@@ -70,9 +70,6 @@ const nebularModules = [
     ...declarations,
   ],
   imports: [
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbDatepickerModule.forRoot(),
-    NbMenuModule.forRoot(),
     CommonModule,
     FormsModule,
     ...nebularModules

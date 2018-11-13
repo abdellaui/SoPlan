@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-body>
+    <button routerLink="/logged/person-editor/0" nbButton>neue Person anlegen</button>
+    <br>es ist nur ein Beispiel! im ideal fall baut man hier smart-table ein!
+    <br>klicke auf ein eintrag
+  </nb-card-body>
+</nb-card>
+<nb-card>
+  <nb-list>
+    <nb-list-item *ngFor="let person of personListe">
+
+      <nb-user routerLink="/logged/person-editor/{{person.id}}" name="{{person.firstname}} {{person.surname}}" title="ID: #{{person.id}}">
+      </nb-user>
+
+    </nb-list-item>
+  </nb-list>
+</nb-card>

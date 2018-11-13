@@ -38,7 +38,7 @@
     </div>
 
     <div *ngIf="settings.buttons">
-      <button hero status="success" nbButton (click)="save()" class="btn-block">speichern</button>
+      <button [disabled]="!hasErrors()" hero status="success" nbButton (click)="save()" class="btn-block">speichern</button>
     </div>
 
   </nb-card-body>

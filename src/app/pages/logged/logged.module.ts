@@ -8,6 +8,7 @@ import { EinstellungenComponent } from './einstellungen/einstellungen.component'
 import { LoggedRoutingModule } from './logged-routing.module';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person-editor/person-editor.component';
+import { PersonListeComponent } from './person-liste/person-liste.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { PersonEditorComponent } from './person-editor/person-editor.component';
     EinstellungenComponent,
     VeranstaltungenComponent,
     PersonEditorComponent,
+    PersonListeComponent,
   ],
   imports: [
     CommonModule,

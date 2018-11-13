@@ -1,6 +1,7 @@
 // this file will be generated automaticly
 // do not remove </import> / </execute> tags
 // <import>
+import { init as slot_entity_person_person } from './entity/person/person.slot';
 import { init as slot_slots_einstellungen } from './slots/einstellungen.slot';
 import { init as slot_slots_entityTester } from './slots/entityTester.slot';
 import { init as slot_slots_mail } from './slots/mail.slot';
@@ -11,6 +12,7 @@ import { init as slot_slots_printer } from './slots/printer.slot';
 export function init(): any {
 
   // <execute>
+  slot_entity_person_person();
   slot_slots_einstellungen();
   slot_slots_entityTester();
   slot_slots_mail();

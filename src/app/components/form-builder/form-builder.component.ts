@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormElement } from '@models/formBuilder.class';
 import { validate, ValidationError } from 'class-validator';
 
@@ -7,7 +7,7 @@ import { validate, ValidationError } from 'class-validator';
   templateUrl: './form-builder.component.html',
   styleUrls: ['./form-builder.component.scss']
 })
-export class FormBuilderComponent implements OnInit {
+export class FormBuilderComponent implements OnInit, OnChanges {
   @Input() write: any;
   @Input() schema: FormElement[];
   @Input() settings: {
@@ -22,6 +22,10 @@ export class FormBuilderComponent implements OnInit {
   errorLookupTable: Object = {};
 
   constructor() { }
+
+  ngOnChanges() {
+    this.ngOnInit();
+  }
 
   ngOnInit() {
     // default grids (look @ bootstrap)
@@ -102,8 +106,11 @@ export class FormBuilderComponent implements OnInit {
   }
 
 
+  hasErrors(): boolean {
+    return (JSON.stringify(this.errorHistory) === '{}');
+  }
   reportReadyStatus(): void {
-    this.finished.emit(this.errorHistory);
+    this.finished.emit(this.hasErrors());
   }
 
   save(): void {
