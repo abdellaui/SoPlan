@@ -4,6 +4,8 @@ import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Venue } from '../venue/venue.entity';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { Input, FormElement } from '../../models/formBuilder.class';
 
 @Entity()
 export class Classroom extends BaseEntity {
@@ -15,6 +17,7 @@ export class Classroom extends BaseEntity {
   room: Room;
 
   // interne Bezeichung des Zimmers
+  @IsOptional()
   @Column()
   identifier: string;
 
@@ -28,3 +31,17 @@ export class Classroom extends BaseEntity {
   @OneToOne(type => Group, group => group.classroom)
   group: Group;
 }
+
+const ClassroomSchema: FormElement[] = [
+  {
+    name: 'Bezeichnung',
+    member: 'identifier',
+    element: new Input('text')
+  }
+];
+
+export { ClassroomSchema };
+
+
+
+

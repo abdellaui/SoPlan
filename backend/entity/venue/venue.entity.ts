@@ -6,6 +6,8 @@ import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
+import { IsAlpha, IsAscii } from 'class-validator';
+import { FormElement, Input } from '../../models/formBuilder.class';
 
 @Entity()
 export class Venue extends BaseEntity {
@@ -13,9 +15,11 @@ export class Venue extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsAscii()
   @Column()
   name: string;
 
+  @IsAlpha()
   @Column()
   contactPerson: string;
 
@@ -39,3 +43,18 @@ export class Venue extends BaseEntity {
   hosts: Event[];
 
 }
+
+const VenueSchema: FormElement[] = [
+  {
+    name: 'Ort',
+    member: 'name',
+    element: new Input('text')
+  },
+  {
+    name: 'Kontaktperson',
+    member: 'contact',
+    element: new Input('text')
+  },
+];
+
+export { VenueSchema };

@@ -15,6 +15,8 @@ import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Participant } from '../participant/participant.entity';
+import { IsNotEmpty, MaxLength } from 'class-validator';
+import { FormElement, Input } from '../../models/formBuilder.class';
 
 @Entity()
 export class Group extends BaseEntity {
@@ -22,9 +24,12 @@ export class Group extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsNotEmpty()
+  @MaxLength(50)
   @Column()
   name: string;
 
+  @IsNotEmpty()
   @Column()
   capacity: number;
 
@@ -43,3 +48,19 @@ export class Group extends BaseEntity {
   @ManyToOne(type => Event, event => event.groups)
   event: Event;
 }
+
+const GroupSchema: FormElement[] = [
+  {
+    name: 'Gruppenname',
+    member: 'name',
+    element: new Input('text')
+  },
+  {
+    name: 'Kapazität',
+    member: 'capacity',
+    element: new Input('number')
+  }
+];
+
+export { GroupSchema };
+

@@ -5,6 +5,8 @@ import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Group } from '../group/group.entity';
 import { Person } from '../person/person.entity';
+import { IsNotEmpty } from 'class-validator';
+import { FormElement, RadioButton, Option } from '../../models/formBuilder.class';
 
 export enum ParticipantRole {
   SCHUELER = 's',
@@ -18,6 +20,7 @@ export class Participant extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @IsNotEmpty()
   @Column({ type: 'enum', enum: ParticipantRole })
   role: ParticipantRole;
 
@@ -41,3 +44,17 @@ export class Participant extends BaseEntity {
   @JoinTable()
   wantsToBeWith: Participant[];
 }
+
+const ParticipantSchema: FormElement[] = [
+  {
+    name: 'Rolle',
+    member: 'role',
+    element: new RadioButton([
+      new Option('schueler', ParticipantRole.SCHUELER),
+      new Option('dozent', ParticipantRole.DOZENT),
+      new Option('gesperrt', ParticipantRole.SCHUELERDOZENT),
+    ])
+  }
+];
+
+export { ParticipantSchema };

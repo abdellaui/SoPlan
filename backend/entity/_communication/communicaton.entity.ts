@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional } from 'class-validator';
+import { IsEmail, IsOptional, IsNumberString } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -10,10 +10,12 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Communication {
 
+  @IsNumberString()
   @IsOptional()
   @Column()
   phone: string;
 
+  @IsNumberString()
   @IsOptional()
   @Column()
   mobile: string;

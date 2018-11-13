@@ -1,6 +1,7 @@
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { IsNotEmpty, IsAlphanumeric, IsNumberString, IsAlpha } from 'class-validator';
 
 /**
  * This is an embedded entity
@@ -9,19 +10,28 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Location {
 
+  @IsNotEmpty()
   @Column()
   street: string;
 
   // Hausnummer
+  @IsNotEmpty()
+  @IsAlphanumeric()
   @Column()
   subThoroughfare: string;
 
+  @IsNotEmpty()
+  @IsNumberString()
   @Column()
   postalcode: string;
 
+  @IsAlpha()
+  @IsNotEmpty()
   @Column()
   city: string;
 
+  @IsNotEmpty()
+  @IsAlpha()
   @Column({ default: 'Deutschland' })
   country: string;
 }

@@ -4,6 +4,8 @@ import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
+import { IsNotEmpty } from 'class-validator';
+import { FormElement, Input, RadioButton, CheckBox, SelectBox, Option } from '../../models/formBuilder.class';
 
 export enum BedroomTypes {
   SCHUELER = 's',
@@ -20,6 +22,7 @@ export class Bedroom extends BaseEntity {
   @Column(type => Room)
   room: Room;
 
+  @IsNotEmpty()
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
 
@@ -34,3 +37,18 @@ export class Bedroom extends BaseEntity {
   roommates: Participant[];
 
 }
+
+const BedroomSchema: FormElement[] = [
+  {
+    name: 'Typ',
+    member: 'type',
+    element: new RadioButton([
+      new Option('schueler', BedroomTypes.SCHUELER),
+      new Option('dozent', BedroomTypes.DOZENT),
+      new Option('gesperrt', BedroomTypes.GESPERRT),
+    ])
+  }
+];
+
+export { BedroomSchema };
+
