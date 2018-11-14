@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
+import { School } from '@entity/school/school.entity';
+import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,32 +23,55 @@ export class PersonEditorComponent implements OnInit {
 
   public form_personInstance: Person;
   public form_personSchema = PersonSchema;
-  public form_personSettings = { header: 'Zur Person', buttons: false, paddings: { left: 'md-12', right: 'md-12' } };
+  public form_personSettings: FormBuilderSettings = <FormBuilderSettings>{
+    header: 'Zur Person',
+    buttons: false,
+    paddings: { left: 'md-12', right: 'md-12' }
+  };
 
 
   public form_comInstance: Communication;
   public form_comSchema = CommunicationSchema;
-  public form_comSettings = { header: 'Kommunikation', buttons: false };
+  public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
+    header: 'Kommunikation',
+    buttons: false
+  };
 
   public form_locInstance: Location;
   public form_locSchema = LocationSchema;
-  public form_locSettings = { header: 'Anschrift', buttons: false };
+  public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
+    header: 'Anschrift',
+    buttons: false
+  };
 
+  public selection_selectedIds = [1, 2];
+  public selection_setttins: EntitySelectSettings = <EntitySelectSettings>{
+    getUrl: 'get/school/all',
+    listNameMembers: ['name'],
+    listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
+    header: 'Schule',
+    maxSelection: 1
+  };
 
   public isLoaded = false;
-  constructor(private route: ActivatedRoute,
+
+
+  constructor(
+    private route: ActivatedRoute,
     private ipc: IpcRendererService,
     private toastr: ToastrService) {
   }
 
+  regenarate(): void {
+    this.form_personInstance = new Person();
+    this.form_comInstance = new Communication();
+    this.form_locInstance = new Location();
+    this.isLoaded = false;
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.form_personInstance = new Person();
-      this.form_comInstance = new Communication();
-      this.form_locInstance = new Location();
-      this.isLoaded = false;
-
+      this.regenarate();
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/person/by/id', { id: params['id'] }).then((result: any) => {
 
@@ -79,6 +104,11 @@ export class PersonEditorComponent implements OnInit {
 
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
     this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0);
+  }
+
+  selectionSelected(event: number[]): void {
+    console.log(event);
+    this.form_personInstance.school = (event && event.length) ? <School>{ id: event[0] } : null;
   }
 
   save(): void {

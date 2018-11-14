@@ -15,7 +15,6 @@ export class PersonListeComponent implements OnInit {
   ngOnInit() {
     this.ipc.get('get/person/all').then((result: any) => {
       if (result !== 0) {
-        console.log(result);
         this.personListe = result;
       }
     });

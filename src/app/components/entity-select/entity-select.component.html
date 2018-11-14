@@ -1,0 +1,38 @@
+<nb-flip-card [flipped]="selectedElements.length">
+  <nb-card-front>
+    <nb-card size="medium">
+      <nb-card-header style="position: relative;">
+        {{settings.header}}
+      </nb-card-header>
+      <nb-card-header>
+        <input [(ngModel)]="inputValue" (ngModelChange)="search()" type="text" nbInput fullWidth shape="round"
+          placeholder="Suche">
+
+      </nb-card-header>
+      <nb-list>
+        <nb-list-item *ngFor="let element of elements" (click)="select(element)" [class.selected]="containsId(element)">
+          <nb-user [name]="element.name" [title]="element.title">
+          </nb-user>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </nb-card-front>
+  <!-- BACK -->
+  <nb-card-back>
+    <nb-card>
+      <nb-card-header style="position: relative;">
+        {{settings.header}} (Auswahl)
+        <nb-badge text="{{selectedElements.length}} / {{settings.maxSelection}}" status="info" position="top right">
+        </nb-badge>
+      </nb-card-header>
+
+      <nb-card-body *ngIf="!selectedElements.length"><i>keine.</i></nb-card-body>
+      <nb-list>
+        <nb-list-item *ngFor="let element of selectedElements" (click)="select(element)" class="selected">
+          <nb-user [name]="element.name" [title]="element.title">
+          </nb-user>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>

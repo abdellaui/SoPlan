@@ -18,12 +18,12 @@ export class SidemenuComponent implements OnInit {
     {
       title: 'Person-Editor',
       icon: 'nb-person',
-      link: '/logged/person-editor/0'
+      link: '/logged/person/editor/0'
     },
     {
       title: 'Person-Liste',
       icon: 'nb-list',
-      link: '/logged/person-list'
+      link: '/logged/person/list'
     },
     {
       title: 'Einstellungen',

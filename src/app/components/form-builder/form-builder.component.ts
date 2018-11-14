@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormBuilderSettings } from '@models/componentInput.class';
 import { FormElement } from '@models/formBuilder.class';
 import { validate, ValidationError } from 'class-validator';
 
@@ -10,11 +11,7 @@ import { validate, ValidationError } from 'class-validator';
 export class FormBuilderComponent implements OnInit, OnChanges {
   @Input() write: any;
   @Input() schema: FormElement[];
-  @Input() settings: {
-    header?: string;
-    buttons?: boolean;
-    paddings?: { left: string, right: string };
-  };
+  @Input() settings: FormBuilderSettings;
 
   @Output() finished: EventEmitter<any> = new EventEmitter();
   @Output() saveButtonClicked: EventEmitter<any> = new EventEmitter();

@@ -35,7 +35,6 @@ import { AppComponent } from './app.component';
     NbDatepickerModule.forRoot(),
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
-
     // toastr
     ToastrModule.forRoot({
       timeOut: 10000,
