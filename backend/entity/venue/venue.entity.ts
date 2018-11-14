@@ -1,13 +1,13 @@
+import { IsAlpha, MaxLength } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { FormElement, Input } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
-import { IsAlpha, IsAscii } from 'class-validator';
-import { FormElement, Input } from '../../models/formBuilder.class';
 
 @Entity()
 export class Venue extends BaseEntity {
@@ -15,11 +15,13 @@ export class Venue extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsAscii()
+  @IsAlpha()
+  @MaxLength(255)
   @Column()
   name: string;
 
   @IsAlpha()
+  @MaxLength(255)
   @Column()
   contactPerson: string;
 

@@ -1,7 +1,7 @@
+import { IsAlpha, IsNotEmpty, IsNumberString, MaxLength } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
-import { IsNotEmpty, IsAlphanumeric, IsNumberString, IsAlpha } from 'class-validator';
 
 /**
  * This is an embedded entity
@@ -11,27 +11,31 @@ import { IsNotEmpty, IsAlphanumeric, IsNumberString, IsAlpha } from 'class-valid
 export class Location {
 
   @IsNotEmpty()
+  @MaxLength(255)
   @Column()
   street: string;
 
   // Hausnummer
   @IsNotEmpty()
-  @IsAlphanumeric()
+  @MaxLength(255)
   @Column()
   subThoroughfare: string;
 
   @IsNotEmpty()
   @IsNumberString()
+  @MaxLength(5)
   @Column()
   postalcode: string;
 
-  @IsAlpha()
   @IsNotEmpty()
+  @IsAlpha()
+  @MaxLength(255)
   @Column()
   city: string;
 
   @IsNotEmpty()
   @IsAlpha()
+  @MaxLength(255)
   @Column({ default: 'Deutschland' })
   country: string;
 }

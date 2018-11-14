@@ -20,6 +20,7 @@ export class EntitySelectComponent implements OnInit {
   constructor(private ipc: IpcRendererService) { }
 
   ngOnInit() {
+
     // defaults for optional arguments
     this.selectedIds = (this.selectedIds) ? this.selectedIds : [];
     this.settings.listTitleMembers = (this.settings.listTitleMembers) ? this.settings.listTitleMembers : [];
@@ -73,7 +74,7 @@ export class EntitySelectComponent implements OnInit {
 
   private selectSelectedIds(): void {
     this.elements
-      .filter(el => (this.selectedIds.indexOf(el.id) > 0))
+      .filter(el => (this.selectedIds.indexOf(el.id) > -1))
       .forEach(el => this.select(el));
   }
 
@@ -97,6 +98,7 @@ export class EntitySelectComponent implements OnInit {
   }
 
   select(element: any): void {
+    console.log(element);
     const possibleIndex = this.getIndexOfId(element);
     // doubleclick => remove
     if (possibleIndex > -1) {

@@ -1,9 +1,9 @@
+import { IsAlpha, IsNotEmpty, MaxLength } from 'class-validator';
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { FormElement, Input } from '../../models/formBuilder.class';
 import { Location } from '../_location/location.entity';
 import { Person } from '../person/person.entity';
-import { IsAscii, IsNotEmpty } from 'class-validator';
-import { FormElement, Input } from '../../models/formBuilder.class';
 
 @Entity()
 export class School extends BaseEntity {
@@ -12,7 +12,8 @@ export class School extends BaseEntity {
   id: number;
 
   @IsNotEmpty()
-  @IsAscii()
+  @MaxLength(255)
+  @IsAlpha()
   @Column()
   name: string;
 

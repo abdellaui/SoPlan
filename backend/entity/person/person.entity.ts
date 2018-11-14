@@ -1,5 +1,15 @@
-import { IsDate, IsEnum, IsNotEmpty, IsAlpha, MaxLength, IsAscii, IsOptional } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsAlpha, IsDate, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
@@ -22,18 +32,17 @@ export class Person extends BaseEntity {
 
   @IsNotEmpty()
   @IsAlpha()
-  @MaxLength(50)
+  @MaxLength(255)
   @Column()
   firstname: string;
 
   @IsNotEmpty()
-  @IsAscii()
-  @MaxLength(50)
+  @IsAlpha()
+  @MaxLength(255)
   @Column()
   surname: string;
 
   @IsNotEmpty()
-  @IsEnum(PersonGender)
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
@@ -47,7 +56,8 @@ export class Person extends BaseEntity {
   // Lebensmittelausschlüsse
   // Umfasst auch Vegetarisch, Vegan, Halal
   @IsOptional()
-  @Column()
+  @MaxLength(255)
+  @Column({ nullable: true })
   foodIntolerance: string;
 
   @Column(type => Location)
@@ -59,6 +69,8 @@ export class Person extends BaseEntity {
 
   @ManyToOne(type => School, school => school.students)
   school: School;
+  @RelationId((person: Person) => person.school)
+  schoolId: number;
 
   @OneToMany(type => Participant, participant => participant.person)
   participantes: Participant[];
@@ -86,16 +98,6 @@ const PersonSchema: FormElement[] = [
       new Option('diverse', PersonGender.DIVERSE),
     ])
   },
-  /*
-  {
-    name: 'Geschlecht',
-    member: 'gender',
-    element: new SelectBox([
-      new Option('männlich', PersonGender.MALE),
-      new Option('weiblich', PersonGender.FEMALE),
-      new Option('diverse', PersonGender.DIVERSE),
-    ], true)
-  },*/
   {
     name: 'Geburtsdatum',
     member: 'birthDate',
@@ -106,11 +108,6 @@ const PersonSchema: FormElement[] = [
     member: 'foodIntolerance',
     element: new TextArea(false, '(optional)')
   }
-  /*{
-    name: 'Alergien',
-    member: 'foodIntolerance',
-    element: new CheckBox(true)
-  }*/
 ];
 export { PersonSchema };
 

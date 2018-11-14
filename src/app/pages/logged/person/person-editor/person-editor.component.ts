@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
-import { School } from '@entity/school/school.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -44,7 +43,7 @@ export class PersonEditorComponent implements OnInit {
     buttons: false
   };
 
-  public selection_selectedIds = [1, 2];
+  public selection_selectedIds: number[] = [];
   public selection_setttins: EntitySelectSettings = <EntitySelectSettings>{
     getUrl: 'get/school/all',
     listNameMembers: ['name'],
@@ -52,6 +51,7 @@ export class PersonEditorComponent implements OnInit {
     header: 'Schule',
     maxSelection: 1
   };
+
 
   public isLoaded = false;
 
@@ -96,6 +96,7 @@ export class PersonEditorComponent implements OnInit {
     this.form_personInstance = Object.assign(this.form_personInstance, person);
     this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, person.location);
+    this.selection_selectedIds = [this.form_personInstance.schoolId];
   }
 
   checkFinished(event: any, member: string) {
@@ -107,8 +108,7 @@ export class PersonEditorComponent implements OnInit {
   }
 
   selectionSelected(event: number[]): void {
-    console.log(event);
-    this.form_personInstance.school = (event && event.length) ? <School>{ id: event[0] } : null;
+    this.form_personInstance.schoolId = (event && event.length) ? event[0] : null;
   }
 
   save(): void {

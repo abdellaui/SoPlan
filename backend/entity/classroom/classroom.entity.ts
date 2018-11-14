@@ -1,11 +1,21 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { IsOptional, MaxLength } from 'class-validator';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from 'typeorm';
 
+import { FormElement, Input } from '../../models/formBuilder.class';
 import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Venue } from '../venue/venue.entity';
-import { IsNotEmpty, IsOptional } from 'class-validator';
-import { Input, FormElement } from '../../models/formBuilder.class';
 
 @Entity()
 export class Classroom extends BaseEntity {
@@ -18,7 +28,8 @@ export class Classroom extends BaseEntity {
 
   // interne Bezeichung des Zimmers
   @IsOptional()
-  @Column()
+  @MaxLength(255)
+  @Column({ nullable: true })
   identifier: string;
 
   @ManyToMany(type => Comment)
@@ -27,6 +38,8 @@ export class Classroom extends BaseEntity {
 
   @ManyToOne(type => Venue, venue => venue.classrooms)
   venue: Venue;
+  @RelationId((class_room: Classroom) => class_room.venue)
+  venueId: number;
 
   @OneToOne(type => Group, group => group.classroom)
   group: Group;

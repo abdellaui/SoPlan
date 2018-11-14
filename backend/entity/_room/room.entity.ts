@@ -1,5 +1,6 @@
+import { IsAscii, IsNotEmpty, IsOptional, IsPositive } from 'class-validator';
 import { Column } from 'typeorm';
-import { IsNotEmpty, IsAlphanumeric, IsOptional } from 'class-validator';
+
 import { FormElement, Input } from '../../models/formBuilder.class';
 
 /**
@@ -10,12 +11,12 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 export class Room {
 
   @IsNotEmpty()
-  @IsAlphanumeric()
+  @IsAscii()
   @Column()
   floor: string;
 
   @IsOptional()
-  @Column()
+  @Column({ nullable: true })
   corridor: string;
 
   @IsNotEmpty()
@@ -23,10 +24,11 @@ export class Room {
   number: number;
 
   @IsOptional()
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
   @IsNotEmpty()
+  @IsPositive()
   @Column()
   capacity: number;
 
@@ -58,8 +60,8 @@ const RoomSchema: FormElement[] = [
   },
   {
     name: 'Kapazität',
-    member: 'cpacity',
-    element: new Input('text')
+    member: 'capacity',
+    element: new Input('number')
   },
 
 

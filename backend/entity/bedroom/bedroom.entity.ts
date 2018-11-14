@@ -1,11 +1,21 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from 'typeorm';
 
+import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
 import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
-import { IsNotEmpty } from 'class-validator';
-import { FormElement, Input, RadioButton, CheckBox, SelectBox, Option } from '../../models/formBuilder.class';
 
 export enum BedroomTypes {
   SCHUELER = 's',
@@ -32,6 +42,8 @@ export class Bedroom extends BaseEntity {
 
   @ManyToOne(type => Venue, venue => venue.bedrooms)
   venue: Venue;
+  @RelationId((bed_room: Bedroom) => bed_room.venue)
+  venueId: number;
 
   @OneToMany(type => Participant, participant => participant.bedroom)
   roommates: Participant[];
@@ -43,9 +55,9 @@ const BedroomSchema: FormElement[] = [
     name: 'Typ',
     member: 'type',
     element: new RadioButton([
-      new Option('schueler', BedroomTypes.SCHUELER),
-      new Option('dozent', BedroomTypes.DOZENT),
-      new Option('gesperrt', BedroomTypes.GESPERRT),
+      new Option('Schüler', BedroomTypes.SCHUELER),
+      new Option('Dozent', BedroomTypes.DOZENT),
+      new Option('<i>gesperrt</i>', BedroomTypes.GESPERRT),
     ])
   }
 ];

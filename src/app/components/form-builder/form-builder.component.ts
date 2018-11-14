@@ -34,7 +34,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
 
   showError(member: string): string {
 
-    return this.errorHistory[member].replace(member, '');
+    return this.errorHistory[member];
   }
   getError(member: string): boolean {
     return this.errorLookupTable[member];
