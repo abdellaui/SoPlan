@@ -1,0 +1,9 @@
+/*******************************************************************************
+TODO
+*******************************************************************************/
+
+07/11/2018, ro-be @later
+  Rahmenprogramm wiederherstellen
+  Alle Datenbankrelationen Unidirektional machen.
+  Rahmenprogramm mit Event verbinden.
+  Rahmenprogramm Teilnehmerentität erstellen mit Attribut Leiter (boolean)

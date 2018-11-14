@@ -19,6 +19,7 @@ Wichtige Links:
 
 # Doku:
   * TypeOrm: https://github.com/typeorm/typeorm/tree/master/docs
+  * TypeOrm: http://typeorm.io/#/embedded-entities
   * MySQL: https://dev.mysql.com/doc/
   * Electron: https://github.com/electron/electron/tree/v2.0.9/docs#readme
 
@@ -42,6 +43,20 @@ TimeLine
 ================================================================================
 What we've learned
 ================================================================================
+
+# 07/11/2018, ro-be
+
+
+# 07/11/2018, ro-be
+Erzeugen eines EER Diagramm aus MySQL Datenbank mittels MySQL Workbench
+(1) Zur gewünschten Instanz verbinden
+(2) Im oberen Menu auswählen
+> Database > Reverse Engineer (Strg + R)
+(3) Es öffnet sich ein Fenster
+> mehrfach "Weiter" klicken, dabei:
+* Im Reiter Datenbank die gewünschte Datenbank (i.d.R. soplan) wählen
+> Fertigstellen.
+Damit ist die Erstellung abgeschlossen.
 
 # 24/10/2018, ro-be
 Es gibt Zimmer, die sich ein Badezimmer teilen müssen (und dadurch nur
