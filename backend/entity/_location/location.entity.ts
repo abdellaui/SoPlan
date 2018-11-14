@@ -1,7 +1,7 @@
 import { Column } from 'typeorm';
 
-import { FormElement, Input } from '../../models/formBuilder.class';
-import { IsNotEmpty, IsAlphanumeric, IsNumberString, IsAlpha } from 'class-validator';
+import { FormElement, Input, TextArea } from '../../models/formBuilder.class';
+import { IsNotEmpty, IsAlphanumeric, IsNumberString, IsAlpha, IsOptional } from 'class-validator';
 
 /**
  * This is an embedded entity
@@ -32,6 +32,7 @@ export class Location {
 
   @IsNotEmpty()
   @IsAlpha()
+  @IsOptional()
   @Column({ default: 'Deutschland' })
   country: string;
 }
@@ -60,7 +61,7 @@ const LocationSchema: FormElement[] = [
   {
     name: 'Land',
     member: 'country',
-    element: new Input('text')
+    element: new TextArea(false, 'Deutschland')
   },
 ];
 export { LocationSchema };

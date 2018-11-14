@@ -47,7 +47,9 @@ export class Person extends BaseEntity {
   // Lebensmittelausschlüsse
   // Umfasst auch Vegetarisch, Vegan, Halal
   @IsOptional()
-  @Column()
+  @Column({
+    default: 'Keine Angaben.'
+  })
   foodIntolerance: string;
 
   @Column(type => Location)
@@ -99,10 +101,10 @@ const PersonSchema: FormElement[] = [
   {
     name: 'Geburtsdatum',
     member: 'birthDate',
-    element: new DatePicker()
+    element: new DatePicker('dd.MM.yyyy')
   },
   {
-    name: 'Alergien',
+    name: 'Allergien',
     member: 'foodIntolerance',
     element: new TextArea(false, '(optional)')
   }

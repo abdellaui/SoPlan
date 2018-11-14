@@ -2,6 +2,14 @@
 TODO
 *******************************************************************************/
 
+14/11/2018
+  * Sonderzeichen erlauben.
+  Fehler: Bei Stadt kann kein Sonderzeichen eingegeben werden, ohne dass die Stadt
+  rot markiert wird.
+  * Telefonnummer erlaubt keine Leerzeichen (SUPER), in den Teststrings sind aber welche enthalten
+  * Hausnummer muss Leerzeichen erlauben
+
+
 07/11/2018, ro-be @later
   Rahmenprogramm wiederherstellen
   Alle Datenbankrelationen Unidirektional machen.

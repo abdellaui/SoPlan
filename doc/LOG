@@ -44,8 +44,15 @@ TimeLine
 What we've learned
 ================================================================================
 
-# 07/11/2018, ro-be
-
+# 14/11/2018, ro-be
+Datenbankfelder die leer bleiben können (in der GUI nicht vom User ausgefüllt
+werden, MÜSSEN ein default-Wert enthalten)
+  Beispiel:
+    @IsOptional()
+      @Column({
+       default: ''
+      })
+      mobile: string;
 
 # 07/11/2018, ro-be
 Erzeugen eines EER Diagramm aus MySQL Datenbank mittels MySQL Workbench

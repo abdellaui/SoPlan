@@ -12,29 +12,35 @@ export class Communication {
 
   @IsNumberString()
   @IsOptional()
-  @Column()
+  @Column({
+    default: ''
+  })
   phone: string;
 
   @IsNumberString()
   @IsOptional()
-  @Column()
+  @Column({
+    default: ''
+  })
   mobile: string;
 
   @IsOptional()
   @IsEmail()
-  @Column()
+  @Column({
+    default: ''
+  })
   mail: string;
 
 }
 
 const CommunicationSchema: FormElement[] = [
   {
-    name: 'Festnetz',
+    name: 'Telefonnummer',
     member: 'phone',
     element: new Input('text')
   },
   {
-    name: 'Telefonnummer',
+    name: 'Handynummer',
     member: 'mobile',
     element: new Input('text')
   },
