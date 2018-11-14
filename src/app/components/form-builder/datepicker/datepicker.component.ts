@@ -22,17 +22,8 @@ export class DatepickerComponent implements OnInit {
 
 
   emitChange(): void {
+    console.log(this.value);
     this.valueChanged.emit(this.value);
   }
 
-  formatDate(date: Date): string {
-    let month = '' + (this.value.getMonth() + 1);
-    let day = '' + this.value.getDate();
-    const year = this.value.getFullYear();
-
-    if (month.length < 2) { month = '0' + month; }
-    if (day.length < 2) { day = '0' + day; }
-
-    return [day, month, year].join('.');
-  }
 }

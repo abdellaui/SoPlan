@@ -2,7 +2,8 @@
   <!-- Person -->
   <div class="col-lg-6">
 
-    <app-form-builder [write]="form_personInstance" [schema]="form_personSchema" [settings]="form_personSettings"></app-form-builder>
+    <app-form-builder [write]="form_personInstance" [schema]="form_personSchema" [settings]="form_personSettings"
+      (finished)="checkFinished($event, 'person')"></app-form-builder>
 
   </div>
 
@@ -11,14 +12,14 @@
     <!-- Communication -->
     <div class="col-lg-12">
 
-      <app-form-builder [write]="form_comInstance" [schema]="form_comSchema" [settings]="form_comSettings"></app-form-builder>
+      <app-form-builder [write]="form_comInstance" [schema]="form_comSchema" [settings]="form_comSettings" (finished)="checkFinished($event, 'communication')"></app-form-builder>
 
 
     </div>
     <!-- Location -->
     <div class="col-lg-12">
 
-      <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings"></app-form-builder>
+      <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
 
 
     </div>
@@ -90,7 +91,7 @@
 <nb-card>
   <nb-card-body>
 
-    <button hero status="success" nbButton class="btn-block" (click)="save()">speichern</button>
+    <button [disabled]="!readyToSave" hero status="success" nbButton class="btn-block" (click)="save()">speichern</button>
 
 
   </nb-card-body>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
+<<<<<<< HEAD
 import { Person, PersonGender, PersonSchema } from '@entity/person/person.entity';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema, BedroomTypes } from '@entity/bedroom/bedroom.entity';
@@ -10,6 +11,9 @@ import { EventSchema, Event } from '@entity/event/event.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
+=======
+import { Person, PersonSchema } from '@entity/person/person.entity';
+>>>>>>> b2b2c556c3cc95c705f45d5bbe8be4bd30b882aa
 
 @Component({
   selector: 'app-person-editor',
@@ -18,10 +22,16 @@ import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 })
 export class PersonEditorComponent implements OnInit {
 
+  public readyToSave = false;
+  public rememberReadyStatus = {
+    person: false,
+    communication: false,
+    location: false
+  };
 
   public form_personInstance: Person = new Person();
   public form_personSchema = PersonSchema;
-  public form_personSettings = { header: 'Zur Person', buttons: false };
+  public form_personSettings = { header: 'Zur Person', buttons: false, paddings: { left: 'md-12', right: 'md-12' } };
 
 
   public form_comInstance: Communication = new Communication();
@@ -69,6 +79,7 @@ export class PersonEditorComponent implements OnInit {
 
 
   constructor() {
+<<<<<<< HEAD
     this.form_comInstance.mail = 'max.muster@web.de';
     this.form_comInstance.mobile = '00000000000';
     this.form_comInstance.phone = '11111111111';
@@ -107,12 +118,31 @@ export class PersonEditorComponent implements OnInit {
 
     this.form_schoolInstance.name = 'Musterschule';
 
+=======
+    /*this.form_personInstance.surname = 'a';
+    this.form_personInstance.birthDate = new Date();
+    this.form_personInstance.gender = PersonGender.DIVERSE;*/
+>>>>>>> b2b2c556c3cc95c705f45d5bbe8be4bd30b882aa
   }
 
   ngOnInit() {
   }
 
+  checkFinished(event: any, member: string) {
+    // wenns kein error gibt => event = leeres Object
+    this.rememberReadyStatus[member] = (JSON.stringify(event) === '{}');
+
+    // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0);
+    console.log(this.rememberReadyStatus);
+  }
+
   save(): void {
+    if (!this.readyToSave) {
+      return;
+    }
+
+
     this.form_personInstance.communication = this.form_comInstance;
     this.form_personInstance.location = this.form_locInstance;
   }

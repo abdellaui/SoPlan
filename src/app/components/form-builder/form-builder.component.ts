@@ -16,7 +16,8 @@ export class FormBuilderComponent implements OnInit {
     paddings?: { left: string, right: string };
   };
 
-  @Output() finished: EventEmitter<Boolean> = new EventEmitter();
+  @Output() finished: EventEmitter<any> = new EventEmitter();
+  @Output() saveButtonClicked: EventEmitter<any> = new EventEmitter();
   errorHistory: Object = {};
   errorLookupTable: Object = {};
 
@@ -27,10 +28,12 @@ export class FormBuilderComponent implements OnInit {
     this.settings.paddings = (this.settings.paddings) ? this.settings.paddings : { left: 'md-4', right: 'md-8' };
 
     this.clearErrors();
+    this.check(false);
   }
 
   showError(member: string): string {
-    return this.errorHistory[member];
+
+    return this.errorHistory[member].replace(member, '');
   }
   getError(member: string): boolean {
     return this.errorLookupTable[member];
@@ -42,39 +45,69 @@ export class FormBuilderComponent implements OnInit {
     }
   }
 
+
   /**
-   * TODO: this methods should only show errors on edited inputs
-   * needs to forget history
+   * Speichert die Fehler in interne Lookup-Tables etc. um im HTML darauf zu reagieren
+   * @param errors enthält die Errors
+   * @param member begrenzt die Fehlerbehandlung auf ein Attribut
    */
   handleErrors(errors: ValidationError[], member?: string): void {
-    this.errorHistory = {};
+
+    const currentErros = {};
+
     for (const error of errors) {
       this.errorHistory[error.property] = Object.values(error.constraints).join(', ');
+      currentErros[error.property] = true;
+    }
 
-      if (member && error.property !== member) {
+    for (const key of Object.keys(this.errorLookupTable)) {
+      if (member && key !== member) {
         continue;
       }
 
-      this.errorLookupTable[error.property] = true;
+      this.errorLookupTable[key] = (currentErros[key]) ? true : false;
     }
+
   }
 
+  /**
+   * ändert den Wert des write-Instanzes
+   * @param event enthält das neue Wert
+   * @param member gibt den Attributnamen
+   */
   changeValue(event: any, member: string): void {
     this.write[member] = event;
-    this.check(member);
+    this.check(false, member);
   }
 
-  check(member?: string): void {
+  /**
+   * prüft auf Validierungskonflikt, falls keine vorhanden, so wird der parent benachrichtigt
+   * @param ignore ignoriert die Error anzeige
+   * @param member begrenzt die Validierung auf ein bestimmtes Attribut
+   */
+  check(ignore?: boolean, member?: string): void {
+    this.errorHistory = {};
     validate(this.write).then((error: ValidationError[]) => {
       if (error.length > 0) {
-        this.handleErrors(error, member);
+        if (!ignore) {
+          this.handleErrors(error, member);
+          this.reportReadyStatus();
+        }
+      } else {
+        this.clearErrors();
+        this.reportReadyStatus();
       }
     }).catch(e => console.log(e));
 
   }
 
+
+  reportReadyStatus(): void {
+    this.finished.emit(this.errorHistory);
+  }
+
   save(): void {
-    this.finished.emit(true);
+    this.saveButtonClicked.emit(true);
   }
 
 }
