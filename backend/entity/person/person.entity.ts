@@ -56,14 +56,8 @@ export class Person extends BaseEntity {
   // Lebensmittelausschlüsse
   // Umfasst auch Vegetarisch, Vegan, Halal
   @IsOptional()
-<<<<<<< HEAD
   @MaxLength(255)
   @Column({ nullable: true })
-=======
-  @Column({
-    default: 'Keine Angaben.'
-  })
->>>>>>> 20c9a2fe7203c31fbd556ff8147b050ec66d5061
   foodIntolerance: string;
 
   @Column(type => Location)
