@@ -1,16 +1,2 @@
-<nb-card>
-  <nb-card-header>Mail</nb-card-header>
-  <nb-card-body>
-
-    <div *ngFor="let schema of formSchema" class="form-group row">
-      <label for="mail-input-{{schema.member}}" class="col-md-4 col-form-label">{{schema.name}}</label>
-      <div class="col-md-8">
-        <input class="form-control" type="{{schema.type}}" [(ngModel)]="config[schema.member]" id="mail-input-{{schema.member}}"
-          [placeholder]="schema.name">
-      </div>
-    </div>
-
-    <button hero status="success" nbButton (click)="saveConfig()" class="btn-block">speichern</button>
-
-  </nb-card-body>
-</nb-card>
+<app-form-builder *ngIf="loadingFinished" [write]="config" [schema]="form_schema" [settings]="form_settings" (finished)="checkFinished($event)"
+  (saveButtonClicked)="saveConfig()"></app-form-builder>

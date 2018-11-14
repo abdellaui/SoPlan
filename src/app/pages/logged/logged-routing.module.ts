@@ -5,7 +5,8 @@ import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veransta
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { LoggedComponent } from './logged.component';
-import { PersonEditorComponent } from './person-editor/person-editor.component';
+import { PersonEditorComponent } from './person/person-editor/person-editor.component';
+import { PersonListeComponent } from './person/person-liste/person-liste.component';
 
 const routes: Routes = [
   {
@@ -23,8 +24,12 @@ const routes: Routes = [
         component: VeranstaltungenComponent
       },
       {
-        path: 'person-editor',
+        path: 'person/editor/:id',
         component: PersonEditorComponent
+      },
+      {
+        path: 'person/list',
+        component: PersonListeComponent
       }
     ]
   }

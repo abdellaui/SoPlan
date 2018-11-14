@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from '@components/components.module';
-import { NbSidebarService } from '@nebular/theme';
+import { NbDatepickerModule, NbMenuModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -31,6 +31,10 @@ import { AppComponent } from './app.component';
     // route
     AppRoutingModule,
 
+    NbThemeModule.forRoot({ name: 'default' }),
+    NbDatepickerModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbSidebarModule.forRoot(),
     // toastr
     ToastrModule.forRoot({
       timeOut: 10000,

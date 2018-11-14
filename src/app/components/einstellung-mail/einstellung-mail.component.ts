@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MailConfig } from '@models/configs.class';
+import { MailConfig, MailConfigSchema } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
-import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,14 +10,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EinstellungMailComponent implements OnInit {
 
-  formSchema: any = [
-    { name: 'Host', member: 'host', type: 'text' },
-    { name: 'Port', member: 'port', type: 'text' },
-    { name: 'Username', member: 'user', type: 'text' },
-    { name: 'Password', member: 'pass', type: 'password' }
-  ];
+  public loadingFinished = false;
+  public config: MailConfig = new MailConfig();
+  public form_schema = MailConfigSchema;
+  public form_settings = { header: 'Mail', buttons: true };
 
-  config: MailConfig = new MailConfig();
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) { }
 
@@ -26,18 +22,14 @@ export class EinstellungMailComponent implements OnInit {
     if (config) {
       this.config = Object.assign(this.config, config);
     }
+    this.loadingFinished = true;
   }
 
   saveConfig(): void {
 
-    validate(this.config).then(errors => {
-      if (errors.length > 0) {
-        this.toastr.error(`Fehler: ${JSON.stringify(errors)}`);
-      } else {
-        this.ipc.send('post/mail/config', this.config);
-        this.toastr.info('SMTP-Daten wurde erfolgreich konfiguriert!');
-      }
-    });
+    this.ipc.send('post/mail/config', this.config);
+    this.toastr.info('SMTP-Daten wurde erfolgreich konfiguriert!');
+
   }
 
 

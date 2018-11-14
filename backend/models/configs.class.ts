@@ -1,5 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
 
+import { FormElement, Input } from './formBuilder.class';
+
 export class AdminLogin {
   username: string;
   password: string;
@@ -38,6 +40,35 @@ export class DatabaseConfig {
   database: string;
 }
 
+const DatabaseConfigSchema: FormElement[] = [
+  {
+    name: 'Host',
+    member: 'host',
+    element: new Input('text')
+  },
+  {
+    name: 'Port',
+    member: 'port',
+    element: new Input('text')
+  },
+  {
+    name: 'Benutzername',
+    member: 'username',
+    element: new Input('text')
+  },
+  {
+    name: 'Passwort',
+    member: 'password',
+    element: new Input('password')
+  },
+  {
+    name: 'Datenbank',
+    member: 'database',
+    element: new Input('text')
+  }
+];
+export { DatabaseConfigSchema };
+
 export class MailConfig {
   @IsNotEmpty()
   host: string;
@@ -51,3 +82,26 @@ export class MailConfig {
   @IsNotEmpty()
   pass: string; // password
 }
+const MailConfigSchema: FormElement[] = [
+  {
+    name: 'Host',
+    member: 'host',
+    element: new Input('text')
+  },
+  {
+    name: 'Port',
+    member: 'port',
+    element: new Input('text')
+  },
+  {
+    name: 'Benutzer',
+    member: 'user',
+    element: new Input('text')
+  },
+  {
+    name: 'Passwort',
+    member: 'pass',
+    element: new Input('password')
+  }
+];
+export { MailConfigSchema };
