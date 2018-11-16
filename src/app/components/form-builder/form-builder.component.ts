@@ -18,18 +18,20 @@ export class FormBuilderComponent implements OnInit, OnChanges {
   errorHistory: Object = {};
   errorLookupTable: Object = {};
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnChanges() {
     this.ngOnInit();
   }
 
   ngOnInit() {
+    this.settings.buttonText = (this.settings.buttonText) ? this.settings.buttonText : 'speichern';
     // default grids (look @ bootstrap)
     this.settings.paddings = (this.settings.paddings) ? this.settings.paddings : { left: 'md-4', right: 'md-8' };
 
     this.clearErrors();
-    this.check(false);
+    this.check();
   }
 
   showError(member: string): string {
@@ -65,7 +67,9 @@ export class FormBuilderComponent implements OnInit, OnChanges {
       if (member && key !== member) {
         continue;
       }
-
+      if (this.settings.initialWarningsIgnore) {
+        return;
+      }
       this.errorLookupTable[key] = (currentErros[key]) ? true : false;
     }
 
@@ -77,8 +81,9 @@ export class FormBuilderComponent implements OnInit, OnChanges {
    * @param member gibt den Attributnamen
    */
   changeValue(event: any, member: string): void {
+    this.settings.initialWarningsIgnore = false;
     this.write[member] = event;
-    this.check(false, member);
+    this.check(member);
   }
 
   /**
@@ -86,14 +91,14 @@ export class FormBuilderComponent implements OnInit, OnChanges {
    * @param ignore ignoriert die Error anzeige
    * @param member begrenzt die Validierung auf ein bestimmtes Attribut
    */
-  check(ignore?: boolean, member?: string): void {
+  check(member?: string): void {
     this.errorHistory = {};
     validate(this.write).then((error: ValidationError[]) => {
       if (error.length > 0) {
-        if (!ignore) {
-          this.handleErrors(error, member);
-          this.reportReadyStatus();
-        }
+
+        this.handleErrors(error, member);
+        this.reportReadyStatus();
+
       } else {
         this.clearErrors();
         this.reportReadyStatus();

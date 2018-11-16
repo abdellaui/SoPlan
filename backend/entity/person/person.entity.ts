@@ -63,11 +63,16 @@ export class Person extends BaseEntity {
   @Column(type => Location)
   location: Location;
 
-  @ManyToMany(type => Comment)
+
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.persons, { eager: true })
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => School, school => school.students)
+  @ManyToOne(type => School, school => school.students, { eager: true })
   school: School;
   @RelationId((person: Person) => person.school)
   schoolId: number;

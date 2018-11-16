@@ -10,10 +10,9 @@ import { CurrentEventService } from '@services/current-event/current-event.servi
   styleUrls: ['./sidemenu.component.scss']
 })
 export class SidemenuComponent implements OnInit {
-
   items: NbMenuItem[] = [
     {
-      title: 'Orte',
+      title: 'Ort',
       icon: 'nb-location',
       children: [
         {
@@ -22,7 +21,7 @@ export class SidemenuComponent implements OnInit {
         },
         {
           title: 'Liste',
-          link: '/logged/person/list',
+          link: '/logged/venue/list',
         }]
 
     },
@@ -50,7 +49,7 @@ export class SidemenuComponent implements OnInit {
         },
         {
           title: 'Liste',
-          link: '/logged/person/list',
+          link: '/logged/school/list',
         }]
 
     },
@@ -61,36 +60,31 @@ export class SidemenuComponent implements OnInit {
       children: [
         {
           title: 'Editor',
-          link: '/logged/school/editor/0',
+          link: '/logged/event/editor/0',
         },
         {
           title: 'Liste',
-          link: '/logged/person/list',
+          link: '/logged/event/list',
         }]
 
     }
   ];
 
+
   constructor(private currentEventService: CurrentEventService) {
     this.currentEventService.currentEventChanged.subscribe((event: Event) => {
-      if (event) {
-        this.items.push({
-          title: 'Einstellungen',
-          icon: 'nb-gear',
-          link: '/logged/einstellungen',
-          home: true
-        });
-      }
+      // TODO: if event is selected than show more menu items
     });
+
 
     this.items.push({
       title: 'Einstellungen',
       icon: 'nb-gear',
       link: '/logged/einstellungen',
       home: true
+
     });
   }
-
   ngOnInit() {
   }
 }

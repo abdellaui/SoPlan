@@ -24,6 +24,7 @@ import {
 
 import { EinstellungAdministratorComponent } from './einstellung-administrator/einstellung-administrator.component';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank/einstellung-datenbank.component';
+import { EntityCommentComponent } from './entity-comment/entity-comment.component';
 import { EntitySelectComponent } from './entity-select/entity-select.component';
 import { CheckboxComponent } from './form-builder/checkbox/checkbox.component';
 import { DatepickerComponent } from './form-builder/datepicker/datepicker.component';
@@ -46,7 +47,8 @@ const declarations = [
   RadiobuttonComponent,
   SelectboxComponent,
   TextareaComponent,
-  EntitySelectComponent
+  EntitySelectComponent,
+  EntityCommentComponent
 ];
 
 const nebularModules = [

@@ -24,26 +24,30 @@ export class Participant extends BaseEntity {
   @Column({ type: 'enum', enum: ParticipantRole })
   role: ParticipantRole;
 
-  @ManyToMany(type => Comment)
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.participants, { eager: true })
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => Person, person => person.participantes)
+  @ManyToOne(type => Person, person => person.participantes, { eager: true })
   person: Person;
   @RelationId((participant: Participant) => participant.person)
   personId: number;
 
-  @ManyToOne(type => Group, group => group.members)
+  @ManyToOne(type => Group, group => group.members, { eager: true })
   group: Group;
   @RelationId((participant: Participant) => participant.group)
   groupId: number;
 
-  @ManyToOne(type => Bedroom, bedroom => bedroom.roommates)
+  @ManyToOne(type => Bedroom, bedroom => bedroom.roommates, { eager: true })
   bedroom: Bedroom;
   @RelationId((participant: Participant) => participant.bedroom)
   bedroomId: number;
 
-  @ManyToOne(type => Event, event => event.participantes)
+  @ManyToOne(type => Event, event => event.participantes, { eager: true })
   event: Event;
   @RelationId((participant: Participant) => participant.event)
   eventId: number;

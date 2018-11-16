@@ -1,14 +1,19 @@
 <div *ngIf="isLoaded">
   <div class="row">
-    <!-- School -->
+    <!-- Person -->
     <div class="col-lg-6">
 
-      <app-form-builder [write]="form_schoolInstance" [schema]="form_schoolSchema" [settings]="form_schoolSettings"
-        (finished)="checkFinished($event, 'school')"></app-form-builder>
+      <app-form-builder [write]="form_venueInstance" [schema]="form_venueSchema" [settings]="form_venueSettings"
+        (finished)="checkFinished($event, 'venue')"></app-form-builder>
 
     </div>
 
     <div class="col-lg-6">
+
+      <!-- Communication -->
+
+      <app-form-builder [write]="form_comInstance" [schema]="form_comSchema" [settings]="form_comSettings" (finished)="checkFinished($event, 'communication')"></app-form-builder>
+
 
       <!-- Location -->
 
@@ -23,7 +28,6 @@
     <nb-card-body>
 
       <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
-
 
     </nb-card-body>
   </nb-card>

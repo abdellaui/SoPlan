@@ -8,6 +8,7 @@ import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
+import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
       {
         path: 'school/editor/:id',
         component: SchoolEditorComponent
+      },
+      {
+        path: 'venue/editor/:id',
+        component: VenueEditorComponent
       }
     ]
   }

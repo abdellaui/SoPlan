@@ -11,7 +11,7 @@ import { CurrentEventService } from '@services/current-event/current-event.servi
 export class LoggedComponent implements OnInit {
   items: Event[];
   currentItem: Event;
-
+  defaultEvent = <Event>{ name: 'keine Veranstaltung', hosting: { name: 'bitte wähle eine Veranstaltung' } };
   constructor(
     private nbMenuService: NbMenuService,
     @Inject(NB_WINDOW) private window,
@@ -27,16 +27,20 @@ export class LoggedComponent implements OnInit {
   updateItems(): void {
     this.items = this.currentEventsService.getEvents();
 
-    if (this.currentEventsService.getEvent()) {
-      this.currentItem = this.currentEventsService.getEvent();
-    } else {
-      this.currentItem = <Event>{ name: 'keine Veranstaltung', hosting: { name: 'bitte wähle eine Veranstaltung' } };
-    }
+    this.setCurrentEvent(this.currentEventsService.getEvent(), true);
+
   }
 
-  setCurrentEvent(event: Event): void {
-    this.currentItem = event;
-    this.currentEventsService.setEvent(this.currentItem);
+  setCurrentEvent(event: Event, initial?: boolean): void {
+    if (event) {
+      this.currentItem = event;
+    } else {
+      this.currentItem = this.defaultEvent;
+    }
+    if (!initial) {
+      this.currentEventsService.setEvent(this.currentItem);
+      this.toggleRight();
+    }
   }
   ngOnInit() {
 

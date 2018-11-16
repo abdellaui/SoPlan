@@ -1,8 +1,9 @@
 import { IsAlpha, IsNotEmpty, MaxLength } from 'class-validator';
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Location } from '../_location/location.entity';
+import { Comment } from '../comment/comment.entity';
 import { Person } from '../person/person.entity';
 
 @Entity()
@@ -19,6 +20,14 @@ export class School extends BaseEntity {
 
   @Column(type => Location)
   location: Location;
+
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.schools, { eager: true })
+  @JoinTable()
+  comments: Comment[];
 
   @OneToMany(type => Person, person => person.school)
   students: Person[];

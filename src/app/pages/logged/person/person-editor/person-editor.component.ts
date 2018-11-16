@@ -99,7 +99,7 @@ export class PersonEditorComponent implements OnInit {
     this.selection_selectedIds = [this.form_personInstance.schoolId];
   }
 
-  checkFinished(event: any, member: string) {
+  public checkFinished(event: any, member: string) {
     // error gibt an obs error hat
     this.rememberReadyStatus[member] = event;
 

@@ -4,6 +4,7 @@ export interface EntitySelectOption {
   title: string;
 }
 
+
 export interface EntitySelectSettings {
   getUrl: string;
   listNameMembers: any[];
@@ -19,4 +20,6 @@ export interface FormBuilderSettings {
   header?: string;
   buttons?: boolean;
   paddings?: { left: string, right: string };
+  buttonText?: string;
+  initialWarningsIgnore?: boolean;
 }

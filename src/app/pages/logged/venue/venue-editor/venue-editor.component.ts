@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
-import { School, SchoolSchema } from '@entity/school/school.entity';
+import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-school-editor',
-  templateUrl: './school-editor.component.html',
-  styleUrls: ['./school-editor.component.scss']
+  selector: 'app-venue-editor',
+  templateUrl: './venue-editor.component.html',
+  styleUrls: ['./venue-editor.component.scss']
 })
-export class SchoolEditorComponent implements OnInit {
-
+export class VenueEditorComponent implements OnInit {
 
   public readyToSave = false;
   public rememberReadyStatus = {
+    venue: false,
     location: false,
-    school: false
+    communication: false
   };
 
 
-  public form_schoolInstance: School;
-  public form_schoolSchema = SchoolSchema;
-  public form_schoolSettings: FormBuilderSettings = <FormBuilderSettings>{
+  public form_venueInstance: Venue;
+  public form_venueSchema = VenueSchema;
+  public form_venueSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Information',
     buttons: false
   };
@@ -33,6 +34,13 @@ export class SchoolEditorComponent implements OnInit {
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Anschrift',
+    buttons: false
+  };
+
+  public form_comInstance: Communication;
+  public form_comSchema = CommunicationSchema;
+  public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
+    header: 'Kommunikation',
     buttons: false
   };
 
@@ -46,7 +54,8 @@ export class SchoolEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_schoolInstance = new School();
+    this.form_venueInstance = new Venue();
+    this.form_comInstance = new Communication();
     this.form_locInstance = new Location();
     this.isLoaded = false;
   }
@@ -55,10 +64,10 @@ export class SchoolEditorComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.regenarate();
       if (params && params['id'] && params['id'] > 0) {
-        this.ipc.get('get/school/by/id', { id: params['id'] }).then((result: any) => {
+        this.ipc.get('get/venue/by/id', { id: params['id'] }).then((result: any) => {
 
           if (result !== 0) {
-            this.reassignSchool(result);
+            this.reassignVenue(result);
           }
           this.isLoaded = true;
         });
@@ -68,9 +77,10 @@ export class SchoolEditorComponent implements OnInit {
     });
   }
 
-  reassignSchool(school: School): void {
-    this.form_schoolInstance = Object.assign(this.form_schoolInstance, school);
-    this.form_locInstance = Object.assign(this.form_locInstance, school.location);
+  reassignVenue(venue: Venue): void {
+    this.form_venueInstance = Object.assign(this.form_venueInstance, venue);
+    this.form_comInstance = Object.assign(this.form_comInstance, venue.communication);
+    this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
   }
 
   public checkFinished(event: any, member: string) {
@@ -86,17 +96,19 @@ export class SchoolEditorComponent implements OnInit {
       return;
     }
 
-    this.form_schoolInstance.location = this.form_locInstance;
+    this.form_venueInstance.communication = this.form_comInstance;
+    this.form_venueInstance.location = this.form_locInstance;
 
 
-    this.ipc.get('post/school', this.form_schoolInstance).then((result: any) => {
+    this.ipc.get('post/venue', this.form_venueInstance).then((result: any) => {
       if (result !== 0) {
-        this.toastr.info('SChule wurde erfolgreich gespeichert!');
-        this.reassignSchool(result);
+        this.toastr.info('Venue wurde erfolgreich gespeichert!');
+        this.reassignVenue(result);
       } else {
         this.toastr.error(`Fehler!`);
       }
     });
 
   }
+
 }

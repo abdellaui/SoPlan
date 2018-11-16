@@ -3,12 +3,10 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   RelationId,
 } from 'typeorm';
@@ -35,19 +33,23 @@ export class Group extends BaseEntity {
   @Column()
   capacity: number;
 
+  /**
+   * RELATIONS
+   */
 
-  @ManyToMany(type => Comment)
+  @ManyToMany(type => Comment, comment => comment.groups, { eager: true })
   @JoinTable()
   comments: Comment[];
 
-  @OneToOne(type => Classroom, classroom => classroom.group)
-  @JoinColumn()
+  @ManyToOne(type => Classroom, classroom => classroom.groups, { eager: true })
   classroom: Classroom;
+  @RelationId((group: Group) => group.classroom)
+  classroomId: number;
 
   @OneToMany(type => Participant, participant => participant.group)
   members: Participant[];
 
-  @ManyToOne(type => Event, event => event.groups)
+  @ManyToOne(type => Event, event => event.groups, { eager: true })
   event: Event;
   @RelationId((group: Group) => group.event)
   eventId: number;

@@ -1,6 +1,5 @@
 <nb-layout>
   <nb-sidebar tag="left" state="compacted">
-    <a href="#" (click)="toggleLeft()"><i class="nb-menu"></i></a>
     <app-sidemenu></app-sidemenu>
   </nb-sidebar>
 
@@ -10,12 +9,26 @@
         <nb-user (click)="setCurrentEvent(item)" [name]="item.name" [title]="item.hosting.name">
         </nb-user>
       </nb-list-item>
+
+      <nb-list-item [class.selected]="currentItem === defaultEvent">
+        <nb-user (click)="setCurrentEvent(null)" name="Keine" title="...">
+        </nb-user>
+      </nb-list-item>
     </nb-list>
   </nb-sidebar>
 
-  <nb-layout-header subheader>
-    <nb-user [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
-    </nb-user>
+  <nb-layout-header fixed>
+    <div class="header-container">
+
+      <div class="header-row left">
+
+        <a href="#" class="menuToggle" (click)="toggleLeft()"><i class="nb-menu"></i></a>
+      </div>
+      <div class="header-row right">
+        <nb-user [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
+        </nb-user>
+      </div>
+    </div>
   </nb-layout-header>
 
   <nb-layout-column>
