@@ -9,6 +9,8 @@ import { LoggedRoutingModule } from './logged-routing.module';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
+import { TableComponent } from '@components/table/table.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   entryComponents: [
@@ -23,12 +25,14 @@ import { PersonListeComponent } from './person/person-liste/person-liste.compone
     VeranstaltungenComponent,
     PersonEditorComponent,
     PersonListeComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,
     LoggedRoutingModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
+    Ng2SmartTableModule,
   ]
 })
 export class LoggedModule { }

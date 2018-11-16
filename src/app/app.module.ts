@@ -13,7 +13,7 @@ import { ComponentsModule } from '@components/components.module';
 import { NbDatepickerModule, NbMenuModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { ToastrModule } from 'ngx-toastr';
-
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -27,7 +27,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-
+    Ng2SmartTableModule,
     // route
     AppRoutingModule,
 
