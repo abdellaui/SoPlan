@@ -7,6 +7,7 @@ import { EinstellungenComponent } from './einstellungen/einstellungen.component'
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
+import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'person/list',
         component: PersonListeComponent
+      },
+      {
+        path: 'school/editor/:id',
+        component: SchoolEditorComponent
       }
     ]
   }

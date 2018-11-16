@@ -9,13 +9,16 @@ import { LoggedRoutingModule } from './logged-routing.module';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
+import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 
 @NgModule({
   entryComponents: [
-    PersonEditorComponent
+    PersonEditorComponent,
+    SchoolEditorComponent
   ],
   exports: [
-    PersonEditorComponent
+    PersonEditorComponent,
+    SchoolEditorComponent
   ],
   declarations: [
     LoggedComponent,
@@ -23,6 +26,7 @@ import { PersonListeComponent } from './person/person-liste/person-liste.compone
     VeranstaltungenComponent,
     PersonEditorComponent,
     PersonListeComponent,
+    SchoolEditorComponent
   ],
   imports: [
     CommonModule,
