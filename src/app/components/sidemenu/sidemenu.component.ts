@@ -30,7 +30,18 @@ export class SidemenuComponent implements OnInit {
       icon: 'nb-gear',
       link: '/logged/einstellungen',
       home: true
-    }
+    },
+    {
+      title: 'Schul-Editor',
+      icon: 'nb-location',
+      link: '/logged/school/editor/0'
+    },
+    {
+      title: 'Tagungsort-Editor',
+      icon: 'nb-location',
+      link: '/logged/venue/editor/0'
+    },
+
   ];
 
   constructor() { }
