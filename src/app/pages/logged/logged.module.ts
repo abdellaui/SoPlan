@@ -10,15 +10,18 @@ import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
+import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 
 @NgModule({
   entryComponents: [
     PersonEditorComponent,
-    SchoolEditorComponent
+    SchoolEditorComponent,
+    VenueEditorComponent
   ],
   exports: [
     PersonEditorComponent,
-    SchoolEditorComponent
+    SchoolEditorComponent,
+    VenueEditorComponent
   ],
   declarations: [
     LoggedComponent,
@@ -26,7 +29,8 @@ import { SchoolEditorComponent } from './school/school-editor/school-editor.comp
     VeranstaltungenComponent,
     PersonEditorComponent,
     PersonListeComponent,
-    SchoolEditorComponent
+    SchoolEditorComponent,
+    VenueEditorComponent
   ],
   imports: [
     CommonModule,
