@@ -9,6 +9,7 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
+  NbContextMenuModule,
   NbDatepickerModule,
   NbInputModule,
   NbLayoutModule,
@@ -65,6 +66,7 @@ const nebularModules = [
   NbTooltipModule,
   NbBadgeModule,
   NbMenuModule,
+  NbContextMenuModule,
 ];
 
 @NgModule({

@@ -32,7 +32,7 @@ export class Event extends BaseEntity {
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => Venue, venue => venue.hosts)
+  @ManyToOne(type => Venue, venue => venue.hosts, { eager: true })
   hosting: Venue;
   @RelationId((event: Event) => event.hosting)
   hostingId: number;

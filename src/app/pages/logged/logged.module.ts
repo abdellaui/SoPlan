@@ -12,14 +12,6 @@ import { PersonListeComponent } from './person/person-liste/person-liste.compone
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 
 @NgModule({
-  entryComponents: [
-    PersonEditorComponent,
-    SchoolEditorComponent
-  ],
-  exports: [
-    PersonEditorComponent,
-    SchoolEditorComponent
-  ],
   declarations: [
     LoggedComponent,
     EinstellungenComponent,

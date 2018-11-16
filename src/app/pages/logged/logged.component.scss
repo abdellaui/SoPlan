@@ -23,4 +23,12 @@
             }
         }
     }
+    nb-layout-header /deep/ nav {
+        justify-content: flex-end;
+    }
+    nb-list-item {
+        &.selected {
+            background: #ebeef2;
+        }
+    }
 }
