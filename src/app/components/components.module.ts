@@ -34,6 +34,7 @@ import { RadiobuttonComponent } from './form-builder/radiobutton/radiobutton.com
 import { SelectboxComponent } from './form-builder/selectbox/selectbox.component';
 import { TextareaComponent } from './form-builder/textarea/textarea.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const declarations = [
   EinstellungAdministratorComponent,
@@ -78,7 +79,8 @@ const nebularModules = [
   imports: [
     CommonModule,
     FormsModule,
-    ...nebularModules
+    ...nebularModules,
+    Ng2SmartTableModule,
   ],
   exports: [
     ...nebularModules,

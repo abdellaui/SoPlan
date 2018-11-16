@@ -9,6 +9,8 @@ import { LoggedRoutingModule } from './logged-routing.module';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
+import { TableComponent } from '@components/table/table.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 
@@ -19,6 +21,7 @@ import { VenueEditorComponent } from './venue/venue-editor/venue-editor.componen
     VeranstaltungenComponent,
     PersonEditorComponent,
     PersonListeComponent,
+    TableComponent,
     SchoolEditorComponent,
     VenueEditorComponent
   ],
@@ -26,7 +29,8 @@ import { VenueEditorComponent } from './venue/venue-editor/venue-editor.componen
     CommonModule,
     LoggedRoutingModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
+    Ng2SmartTableModule,
   ]
 })
 export class LoggedModule { }
