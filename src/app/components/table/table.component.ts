@@ -29,40 +29,6 @@ export class TableComponent implements OnInit {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        editable: false,
-        width: '30px'
-      },
-      firstname: {
-        title: 'Vorname'
-      },
-      surname: {
-        title: 'Nachname'
-      },
-      gender: {
-        title: 'Geschlecht'
-      },
-      mail: {
-        title: 'Mail'
-      },
-      mobile: {
-        title: 'Handynummer'
-      },
-      phone: {
-        title: 'Tel.-Nr'
-      },
-      street: {
-        title: 'Straße'
-      },
-      city: {
-        title: 'Stadt'
-      },
-      postalcode: {
-        title: 'PLZ'
-      }
     }
   };
 
