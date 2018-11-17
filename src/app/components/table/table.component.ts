@@ -241,6 +241,7 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.ipc.get(this.slotSettings.getUrl).then((result: any) => {
       if (result !== 0) {
+        console.log(result);
         this.data = result.map(obj => {
           return this.entityToData(obj);
         });
