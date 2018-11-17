@@ -6,6 +6,8 @@ import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 
+import { DateRendererComponent } from './date-renderer/date-renderer.component';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -16,23 +18,23 @@ export class TableComponent implements OnInit {
 
   settings = {
     actions: {
-      add: false,
-      columnTitle: ''
+      position: 'right',
+      columnTitle: '',
+      add: false
+    },
+    edit: {
+      confirmSave: true,
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
     },
     delete: {
       confirmDelete: true,
       deleteButtonContent: '<i class="nb-trash"></i>',
     },
-    edit: {
-      confirmSave: true,
-      confirmEdit: true,
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    }
   };
 
-  public data: any[];
+  public data: any[] = [];
   // backup
   private idToEntityMap = {};
   // lookup table
@@ -42,6 +44,8 @@ export class TableComponent implements OnInit {
 
   // TODO: am besten als input
   public slotSettings = {
+    header: 'Personenliste',
+    buttonText: 'Neue Person',
     getUrl: 'get/person/all',
     postUrl: 'post/person',
     deleteUrl: 'delete/person',
@@ -57,7 +61,16 @@ export class TableComponent implements OnInit {
     {
       prefix: '',
       schema: PersonSchema,
-      members: ['firstname', 'gender']
+      members: [
+        'firstname',
+        'gender',
+        'birthDate'
+      ],
+      extendedSettings: {
+        gender: {
+          width: '10px'
+        }
+      }
     },
     {
       prefix: 'location@',
@@ -78,10 +91,13 @@ export class TableComponent implements OnInit {
 
       for (const formElement of item.schema) {
         if (item.members.indexOf(formElement.member) > -1) {
-          const currConfig = {};
+          const currConfig = (item.extendedSettings && item.extendedSettings[formElement.member])
+            ? item.extendedSettings[formElement.member]
+            : {};
+
           const currEditorConfig = {};
           currConfig['title'] = formElement.name;
-          currConfig['editable'] = !formElement.element.isReadOnly();
+          currConfig['editable'] = (currConfig.editable !== undefined) ? currConfig.editable : !formElement.element.isReadOnly();
           switch (formElement.element.getElementType()) {
             case ElementTypes.CheckBox:
               currEditorConfig['type'] = 'checkbox';
@@ -103,6 +119,11 @@ export class TableComponent implements OnInit {
 
             case ElementTypes.TextArea:
               currEditorConfig['type'] = 'textarea';
+              break;
+
+            case ElementTypes.DatePicker:
+              currConfig['type'] = 'custom';
+              currConfig['renderComponent'] = DateRendererComponent;
               break;
 
             default:
@@ -168,6 +189,9 @@ export class TableComponent implements OnInit {
       return this.goInsideEntity(currentData, path.slice(1));
     }
   }
+
+
+
 
   public onDeleteConfirm(event) {
     if (window.confirm('Sind sie sicher?')) {

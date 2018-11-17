@@ -31,7 +31,7 @@ export class SidemenuComponent implements OnInit {
       children: [
         {
           title: 'Editor',
-          link: '/logged/person/editor/0',
+          link: '/logged/person/editor/0'
         },
         {
           title: 'Liste',
