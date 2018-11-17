@@ -21,6 +21,7 @@ import {
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { EinstellungAdministratorComponent } from './einstellung-administrator/einstellung-administrator.component';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank/einstellung-datenbank.component';
@@ -34,7 +35,7 @@ import { RadiobuttonComponent } from './form-builder/radiobutton/radiobutton.com
 import { SelectboxComponent } from './form-builder/selectbox/selectbox.component';
 import { TextareaComponent } from './form-builder/textarea/textarea.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { DateRendererComponent } from './table/date-renderer/date-renderer.component';
 
 const declarations = [
   EinstellungAdministratorComponent,
@@ -49,7 +50,8 @@ const declarations = [
   SelectboxComponent,
   TextareaComponent,
   EntitySelectComponent,
-  EntityCommentComponent
+  EntityCommentComponent,
+  DateRendererComponent
 ];
 
 const nebularModules = [
@@ -73,6 +75,9 @@ const nebularModules = [
 ];
 
 @NgModule({
+  entryComponents: [
+    DateRendererComponent
+  ],
   declarations: [
     ...declarations,
   ],
