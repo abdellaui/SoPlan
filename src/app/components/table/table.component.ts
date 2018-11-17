@@ -10,13 +10,15 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 export class TableComponent implements OnInit {
 
   settings = {
+    actions: {
+      add: false,
+      columnTitle: ''
+    },
     delete: {
       confirmDelete: true
     },
-    add: {
-      confirmAdd: true
-    },
     edit: {
+      confirmSave: true,
       confirmEdit: true
     },
     columns: {
@@ -31,17 +33,26 @@ export class TableComponent implements OnInit {
       surname: {
         title: 'Nachname'
       },
+      gender: {
+        title: 'Geschlecht'
+      },
       mail: {
         title: 'Mail'
       },
       mobile: {
         title: 'Handynummer'
       },
+      phone: {
+        title: 'Tel.-Nr'
+      },
       street: {
         title: 'Straße'
       },
       city: {
         title: 'Stadt'
+      },
+      postalcode: {
+        title: 'PLZ'
       }
     }
   };
@@ -50,9 +61,9 @@ export class TableComponent implements OnInit {
 
   constructor(private ipc: IpcRendererService) { }
 
+  // TODO: Fürs Löschen einen Slot implementieren
   onDeleteConfirm(event) {
-    if (window.confirm('Sind sie sicher?')) {
-      console.log(event);
+    if (window.confirm('Es wird zurzeit nicht gelöscht')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -61,7 +72,19 @@ export class TableComponent implements OnInit {
 
   onEditConfirm(event) {
     if (window.confirm('Sind sie sicher?')) {
-      console.log(event);
+      this.ipc.get('post/person', {
+        id: event.newData.id,
+        firstname: event.newData.firstname,
+        surname: event.newData.surname,
+        communication: {
+          mail: event.newData.mail,
+          mobile: event.newData.mobile,
+        },
+        location: {
+          street: event.newData.street,
+          city: event.newData.city
+        }
+      });
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -71,6 +94,19 @@ export class TableComponent implements OnInit {
   onSaveConfirm(event) {
     if (window.confirm('Sind sie sicher?')) {
       console.log(event);
+      this.ipc.get('post/person', {
+        id: event.newData.id,
+        firstname: event.newData.firstname,
+        surname: event.newData.surname,
+        communication: {
+          mail: event.newData.mail,
+          mobile: event.newData.mobile,
+        },
+        location: {
+          street: event.newData.street,
+          city: event.newData.city
+        }
+      });
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -80,21 +116,19 @@ export class TableComponent implements OnInit {
   ngOnInit() {
     this.ipc.get('get/person/all').then((result: any) => {
       if (result !== 0) {
+        console.log(result);
         this.data = result.map(obj => {
-          // let rObj = {
-          //   id: obj.id,
-          //   firstname: obj.firstname,
-          //   surname: obj.surname,
-          //   mail: obj.communication.mail
-          // };
           return {
             id: obj.id,
             firstname: obj.firstname,
             surname: obj.surname,
+            gender: (obj.gender === 'm') ? 'männlich' : ((obj.gender === 'w') ? 'weiblich' : 'diverse'),
             mail: obj.communication.mail,
             mobile: obj.communication.mobile,
+            phone: obj.communication.phone,
             street: obj.location.street,
-            city: obj.location.city
+            city: obj.location.city,
+            postalcode: obj.location.postalcode
           };
         });
       }
