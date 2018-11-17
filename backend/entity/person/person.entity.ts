@@ -1,4 +1,4 @@
-import { IsAlpha, IsDate, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsAlpha, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 import {
   BaseEntity,
   Column,
@@ -46,7 +46,7 @@ export class Person extends BaseEntity {
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
-  @IsDate()
+  @IsNotEmpty()
   @Column()
   birthDate: Date;
 

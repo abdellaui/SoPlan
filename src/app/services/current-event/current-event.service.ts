@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Comment } from '@entity/comment/comment.entity';
 import { Event } from '@entity/event/event.entity';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { Subject } from 'rxjs';
@@ -22,15 +21,6 @@ export class CurrentEventService {
         this.currentAviableEvents = <Event[]>arg;
         this.newEvents.next(true);
       }
-      console.log(this.currentAviableEvents);
-
-
-      this.currentAviableEvents[0].comments.push(<Comment>{ content: 'asdsa' });
-      console.log(this.currentAviableEvents[0]);
-      console.log('send');
-      this.ipc.get('post/event', this.currentAviableEvents[0]).then(r => {
-        console.log('sss', r);
-      });
     });
 
     this.ipc.on('get/event/by/id', (event: any, arg: any) => {
