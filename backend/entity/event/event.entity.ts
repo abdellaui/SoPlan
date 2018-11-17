@@ -28,11 +28,15 @@ export class Event extends BaseEntity {
   @IsNotEmpty()
   name: string;
 
-  @ManyToMany(type => Comment)
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.events, { eager: true })
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => Venue, venue => venue.hosts)
+  @ManyToOne(type => Venue, venue => venue.hosts, { eager: true })
   hosting: Venue;
   @RelationId((event: Event) => event.hosting)
   hostingId: number;

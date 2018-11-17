@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { School, SchoolSchema } from '@entity/school/school.entity';
 import { ActivatedRoute } from '@angular/router';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
+import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -24,7 +24,7 @@ export class SchoolEditorComponent implements OnInit {
   public form_schoolInstance: School;
   public form_schoolSchema = SchoolSchema;
   public form_schoolSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Schulname',
+    header: 'Information',
     buttons: false
   };
 
@@ -73,7 +73,7 @@ export class SchoolEditorComponent implements OnInit {
     this.form_locInstance = Object.assign(this.form_locInstance, school.location);
   }
 
-  checkFinished(event: any, member: string) {
+  public checkFinished(event: any, member: string) {
     // error gibt an obs error hat
     this.rememberReadyStatus[member] = event;
 

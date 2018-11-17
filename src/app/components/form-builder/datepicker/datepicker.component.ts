@@ -22,7 +22,6 @@ export class DatepickerComponent implements OnInit {
 
 
   emitChange(): void {
-    console.log(this.value);
     this.valueChanged.emit(this.value);
   }
 

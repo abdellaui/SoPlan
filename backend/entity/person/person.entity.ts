@@ -1,4 +1,4 @@
-import { IsAlpha, IsDate, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsAlpha, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 import {
   BaseEntity,
   Column,
@@ -46,7 +46,7 @@ export class Person extends BaseEntity {
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
-  @IsDate()
+  @IsNotEmpty()
   @Column()
   birthDate: Date;
 
@@ -63,11 +63,16 @@ export class Person extends BaseEntity {
   @Column(type => Location)
   location: Location;
 
-  @ManyToMany(type => Comment)
+
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.persons, { eager: true })
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => School, school => school.students)
+  @ManyToOne(type => School, school => school.students, { eager: true })
   school: School;
   @RelationId((person: Person) => person.school)
   schoolId: number;

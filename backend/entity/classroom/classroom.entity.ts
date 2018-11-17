@@ -6,7 +6,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   RelationId,
 } from 'typeorm';
@@ -32,17 +32,21 @@ export class Classroom extends BaseEntity {
   @Column({ nullable: true })
   identifier: string;
 
-  @ManyToMany(type => Comment)
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.classrooms, { eager: true })
   @JoinTable()
   comments: Comment[];
 
   @ManyToOne(type => Venue, venue => venue.classrooms)
   venue: Venue;
-  @RelationId((class_room: Classroom) => class_room.venue)
+  @RelationId((classroom: Classroom) => classroom.venue)
   venueId: number;
 
-  @OneToOne(type => Group, group => group.classroom)
-  group: Group;
+  @OneToMany(type => Group, group => group.classroom)
+  groups: Group[];
 }
 
 const ClassroomSchema: FormElement[] = [

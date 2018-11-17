@@ -1,3 +1,3 @@
-<ng2-smart-table [settings]="settings" [source]="data" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="onCreateConfirm($event)"
-  (editConfirm)="onEditConfirm($event)">
+<ng2-smart-table mode="inline" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
+  (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
 </ng2-smart-table>

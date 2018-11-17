@@ -1,8 +1,35 @@
 <nb-layout>
-  <nb-sidebar state="compacted">
-    <a href="#" (click)="toggle()"><i class="nb-menu"></i></a>
+  <nb-sidebar tag="left" state="compacted">
     <app-sidemenu></app-sidemenu>
   </nb-sidebar>
+
+  <nb-sidebar right tag="right" state="collapsed">
+    <nb-list>
+      <nb-list-item *ngFor="let item of items" [class.selected]="currentItem === item">
+        <nb-user (click)="setCurrentEvent(item)" [name]="item.name" [title]="item.hosting.name">
+        </nb-user>
+      </nb-list-item>
+
+      <nb-list-item [class.selected]="currentItem === defaultEvent">
+        <nb-user (click)="setCurrentEvent(null)" name="Keine" title="...">
+        </nb-user>
+      </nb-list-item>
+    </nb-list>
+  </nb-sidebar>
+
+  <nb-layout-header fixed>
+    <div class="header-container">
+
+      <div class="header-row left">
+
+        <a href="#" class="menuToggle" (click)="toggleLeft()"><i class="nb-menu"></i></a>
+      </div>
+      <div class="header-row right">
+        <nb-user [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
+        </nb-user>
+      </div>
+    </div>
+  </nb-layout-header>
 
   <nb-layout-column>
     <router-outlet></router-outlet>

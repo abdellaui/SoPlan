@@ -31,7 +31,11 @@ export class Venue extends BaseEntity {
   @Column(type => Communication)
   communication: Communication;
 
-  @ManyToMany(type => Comment)
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.venues, { eager: true })
   @JoinTable()
   comments: Comment[];
 

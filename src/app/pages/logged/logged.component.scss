@@ -1,4 +1,13 @@
 :host {
+    .menuToggle {
+        font-size: 3rem;
+        width: 3rem;
+        display: block;
+        text-align: left;
+        text-decoration: none;
+        color: #a4abb3;
+        margin-left: -1rem;
+    }
     nb-layout-column {
         min-height: 50vw;
         height: 100%;
@@ -6,20 +15,32 @@
             background: #f4f4f7;
         }
     }
-    nb-sidebar {
-        a {
-            font-size: 2.5rem;
-            width: 2.5rem;
-            display: block;
-            text-align: left;
-            text-decoration: none;
-            color: #a4abb3;
-            margin-left: -0.25rem;
+    nb-list-item {
+        &.selected {
+            background: #ebeef2;
         }
-        &.compacted {
-            a {
-                margin-left: -0.5rem;
-                color: black;
+    }
+    nb-sidebar /deep/ .scrollable {
+        padding: 0rem 1.25rem;
+    }
+    nb-layout-header {
+        .header-container {
+            display: flex;
+            width: 100%;
+            .left {
+                display: flex;
+                width: 100%;
+                order: 0;
+                flex-direction: row;
+            }
+            .right {
+                order: 1;
+                flex-direction: row-reverse;
+            }
+            .header-row {
+                display: flex;
+                align-items: center;
+                width: 100%;
             }
         }
     }

@@ -37,7 +37,8 @@ export class Location {
   @IsAlpha()
   @MaxLength(255)
   @Column({ default: 'Deutschland' })
-  country: string;
+  // tslint:disable-next-line:no-inferrable-types
+  country: string = 'Deutschland';
 }
 
 const LocationSchema: FormElement[] = [

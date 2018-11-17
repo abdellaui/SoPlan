@@ -15,16 +15,6 @@ import { SchoolEditorComponent } from './school/school-editor/school-editor.comp
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 
 @NgModule({
-  entryComponents: [
-    PersonEditorComponent,
-    SchoolEditorComponent,
-    VenueEditorComponent
-  ],
-  exports: [
-    PersonEditorComponent,
-    SchoolEditorComponent,
-    VenueEditorComponent
-  ],
   declarations: [
     LoggedComponent,
     EinstellungenComponent,

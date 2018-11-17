@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Event } from '@entity/event/event.entity';
 import { NbMenuItem } from '@nebular/theme';
+import { CurrentEventService } from '@services/current-event/current-event.service';
 
 @Component({
   selector: 'app-sidemenu',
@@ -8,44 +10,81 @@ import { NbMenuItem } from '@nebular/theme';
   styleUrls: ['./sidemenu.component.scss']
 })
 export class SidemenuComponent implements OnInit {
-
   items: NbMenuItem[] = [
     {
-      title: 'Veranstaltungen',
-      icon: 'nb-paper-plane',
-      link: '/logged/veranstaltungen'
+      title: 'Ort',
+      icon: 'nb-location',
+      children: [
+        {
+          title: 'Editor',
+          link: '/logged/venue/editor/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/venue/list',
+        }]
+
     },
     {
-      title: 'Person-Editor',
+      title: 'Person',
       icon: 'nb-person',
-      link: '/logged/person/editor/0'
+      children: [
+        {
+          title: 'Editor',
+          link: '/logged/person/editor/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/person/list',
+        }]
+
     },
     {
-      title: 'Person-Liste',
-      icon: 'nb-list',
-      link: '/logged/person/list'
+      title: 'Schule',
+      icon: 'nb-home',
+      children: [
+        {
+          title: 'Editor',
+          link: '/logged/school/editor/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/school/list',
+        }]
+
     },
+
     {
+      title: 'Veranstaltung',
+      icon: 'nb-layout-default',
+      children: [
+        {
+          title: 'Editor',
+          link: '/logged/event/editor/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/event/list',
+        }]
+
+    }
+  ];
+
+
+  constructor(private currentEventService: CurrentEventService) {
+    this.currentEventService.currentEventChanged.subscribe((event: Event) => {
+      // TODO: if event is selected than show more menu items
+    });
+
+
+    this.items.push({
       title: 'Einstellungen',
       icon: 'nb-gear',
       link: '/logged/einstellungen',
       home: true
-    },
-    {
-      title: 'Schul-Editor',
-      icon: 'nb-location',
-      link: '/logged/school/editor/0'
-    },
-    {
-      title: 'Tagungsort-Editor',
-      icon: 'nb-location',
-      link: '/logged/venue/editor/0'
-    },
 
-  ];
-
-  constructor() { }
-
+    });
+  }
   ngOnInit() {
   }
 }

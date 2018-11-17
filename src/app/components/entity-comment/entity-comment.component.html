@@ -1,0 +1,20 @@
+<div *ngIf="showThis">
+  <!--maybe smarttable but first:-->
+  <nb-card size="medium">
+    <nb-card-header>
+      Bemerkungen
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let comment of entity.comments">
+        {{comment.content}} - {{comment.createdDate}}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+
+
+
+
+  <app-form-builder [write]="form_commentInstance" [schema]="form_commentSchema" [settings]="form_commentSettings"
+    (finished)="checkFinished($event)" (saveButtonClicked)="onSave($event)"></app-form-builder>
+
+</div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { ActivatedRoute } from '@angular/router';
+import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
+import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 
 @Component({
   selector: 'app-venue-editor',
@@ -25,7 +25,7 @@ export class VenueEditorComponent implements OnInit {
   public form_venueInstance: Venue;
   public form_venueSchema = VenueSchema;
   public form_venueSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Tagungsort',
+    header: 'Information',
     buttons: false
   };
 
@@ -83,7 +83,7 @@ export class VenueEditorComponent implements OnInit {
     this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
   }
 
-  checkFinished(event: any, member: string) {
+  public checkFinished(event: any, member: string) {
     // error gibt an obs error hat
     this.rememberReadyStatus[member] = event;
 

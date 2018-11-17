@@ -36,7 +36,12 @@ export class Bedroom extends BaseEntity {
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
 
-  @ManyToMany(type => Comment)
+
+  /**
+   * RELATIONS
+   */
+
+  @ManyToMany(type => Comment, comment => comment.bedrooms, { eager: true })
   @JoinTable()
   comments: Comment[];
 

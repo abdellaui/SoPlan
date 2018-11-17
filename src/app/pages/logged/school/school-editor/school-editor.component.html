@@ -11,12 +11,9 @@
     <div class="col-lg-6">
 
       <!-- Location -->
-      <div class="col-lg-12">
 
-        <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
+      <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
 
-
-      </div>
 
     </div>
 
@@ -25,7 +22,7 @@
   <nb-card>
     <nb-card-body>
 
-      <button [disabled]="!readyToSave" hero status="success" nbButton class="btn-block" (click)="save()">speichern</button>
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
 
 
     </nb-card-body>

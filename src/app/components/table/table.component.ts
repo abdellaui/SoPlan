@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location, LocationSchema } from '@entity/_location/location.entity';
+import { Person, PersonSchema } from '@entity/person/person.entity';
+import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { validate, ValidationError } from 'class-validator';
 
 @Component({
   selector: 'app-table',
@@ -15,11 +20,15 @@ export class TableComponent implements OnInit {
       columnTitle: ''
     },
     delete: {
-      confirmDelete: true
+      confirmDelete: true,
+      deleteButtonContent: '<i class="nb-trash"></i>',
     },
     edit: {
       confirmSave: true,
-      confirmEdit: true
+      confirmEdit: true,
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
     },
     columns: {
       id: {
@@ -57,80 +66,196 @@ export class TableComponent implements OnInit {
     }
   };
 
-  data;
+  public data: any[];
+  // backup
+  private idToEntityMap = {};
+  // lookup table
+  public columnConfig = {};
+  public lastClick = new Date();
 
-  constructor(private ipc: IpcRendererService) { }
 
-  // TODO: Fürs Löschen einen Slot implementieren
-  onDeleteConfirm(event) {
-    if (window.confirm('Es wird zurzeit nicht gelöscht')) {
-      event.confirm.resolve();
+  // TODO: am besten als input
+  public slotSettings = {
+    getUrl: 'get/person/all',
+    postUrl: 'post/person',
+    deleteUrl: 'delete/person',
+    editorUrl: '/logged/person/editor/'
+  };
+
+  public instanceList = {
+    '': new Person(),
+    'location': new Location()
+  };
+
+  public memberList = [
+    {
+      prefix: '',
+      schema: PersonSchema,
+      members: ['firstname', 'gender']
+    },
+    {
+      prefix: 'location@',
+      schema: LocationSchema,
+      members: ['city']
+    }
+  ];
+
+
+  constructor(private ipc: IpcRendererService, private router: Router) {
+    this.memberListToConfig();
+  }
+
+
+  memberListToConfig(): void {
+
+    for (const item of this.memberList) {
+
+      for (const formElement of item.schema) {
+        if (item.members.indexOf(formElement.member) > -1) {
+          const currConfig = {};
+          const currEditorConfig = {};
+          currConfig['title'] = formElement.name;
+          currConfig['editable'] = !formElement.element.isReadOnly();
+          switch (formElement.element.getElementType()) {
+            case ElementTypes.CheckBox:
+              currEditorConfig['type'] = 'checkbox';
+              currEditorConfig['config'] = {
+                true: 'Ja',
+                false: 'Nein',
+              };
+              break;
+            case ElementTypes.SelectBox:
+            case ElementTypes.RadioButton:
+              const element = <RadioButton>formElement.element;
+              currEditorConfig['type'] = 'list';
+              currEditorConfig['config'] = {
+                list: element.getOptions().map((el: Option) => {
+                  return { value: el.value, title: el.label };
+                })
+              };
+              break;
+
+            case ElementTypes.TextArea:
+              currEditorConfig['type'] = 'textarea';
+              break;
+
+            default:
+              break;
+
+          }
+          currConfig['editor'] = currEditorConfig;
+
+          this.columnConfig[`${item.prefix}${formElement.member}`] = currConfig;
+
+        }
+      }
+    }
+    this.settings['columns'] = this.columnConfig;
+  }
+
+  entityToData(data: any): any {
+    if (data && data.id) {
+      this.idToEntityMap[data.id] = data;
+    }
+
+    const returnData = {};
+    returnData['id'] = this.goInsideEntity(data, ['id']);
+    Object.keys(this.columnConfig).forEach(column => {
+      returnData[column] = this.goInsideEntity(data, column.split('@'));
+    });
+    return returnData;
+  }
+
+  dataToEntity(column: any): any {
+    let returnEntity = this.idToEntityMap[column.id];
+    Object.keys(column).forEach(key => {
+      returnEntity = Object.assign(returnEntity, this.goInsideData(column, key, key.split('@')));
+    });
+
+
+    // assign to instances
+    Object.keys(this.instanceList).forEach(keys => {
+      if (keys === '') {
+        returnEntity = Object.assign(this.instanceList[keys], returnEntity);
+      } else {
+        returnEntity[keys] = Object.assign(this.instanceList[keys], returnEntity[keys]);
+      }
+    });
+    return returnEntity;
+  }
+
+  goInsideData(data: any, key: string, path: string[]): any {
+    const returnEntity = {};
+    if (path.length === 1) {
+      returnEntity[path[0]] = data[key];
     } else {
-      event.confirm.reject();
+      returnEntity[path[0]] = this.goInsideData(data, key, path.slice(1));
+    }
+    return returnEntity;
+  }
+
+  goInsideEntity(entity: any, path: string[]): any {
+    const currentData = entity[path[0]];
+    if (path.length === 1) {
+      return currentData;
+    } else {
+      return this.goInsideEntity(currentData, path.slice(1));
     }
   }
 
-  onEditConfirm(event) {
+  public onDeleteConfirm(event) {
     if (window.confirm('Sind sie sicher?')) {
-      this.ipc.get('post/person', {
-        id: event.newData.id,
-        firstname: event.newData.firstname,
-        surname: event.newData.surname,
-        communication: {
-          mail: event.newData.mail,
-          mobile: event.newData.mobile,
-        },
-        location: {
-          street: event.newData.street,
-          city: event.newData.city
+      this.ipc.get(this.slotSettings.deleteUrl, this.dataToEntity(event.data)).then((result: number) => {
+        if (result === 1) {
+          event.confirm.resolve();
+        } else {
+          event.confirm.reject();
         }
       });
-      event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
   }
 
-  onSaveConfirm(event) {
-    if (window.confirm('Sind sie sicher?')) {
-      console.log(event);
-      this.ipc.get('post/person', {
-        id: event.newData.id,
-        firstname: event.newData.firstname,
-        surname: event.newData.surname,
-        communication: {
-          mail: event.newData.mail,
-          mobile: event.newData.mobile,
-        },
-        location: {
-          street: event.newData.street,
-          city: event.newData.city
-        }
-      });
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
+  public onSaveConfirm(event) {
+    const newEntity = this.dataToEntity(event.newData);
+    console.log(newEntity);
+    validate(newEntity).then((errors: ValidationError[]) => {
+      if (errors.length === 0) {
+        this.saveEntity(newEntity);
+        event.confirm.resolve();
+      } else {
+        window.alert(JSON.stringify(errors)); // TODO: validierung besser anzeigen
+        event.confirm.reject();
+      }
+    });
+
+
   }
 
+  saveEntity(entity: any): void {
+    this.ipc.send(this.slotSettings.postUrl, entity);
+  }
+  onMouseOver(event: any): void {
+    console.log(event);
+  }
+  onSelectRow(event: any): void {
+    // console.log(event); // TODO: selection eventuell merken?
+
+    if (!event.isSelected && ((new Date()).getTime() - this.lastClick.getTime()) < 500) { // doppelt klick
+      this.router.navigateByUrl(this.slotSettings.editorUrl + String(event.data.id));
+    } else {
+      this.lastClick = new Date();
+    }
+  }
   ngOnInit() {
-    this.ipc.get('get/person/all').then((result: any) => {
+    this.ipc.get(this.slotSettings.getUrl).then((result: any) => {
       if (result !== 0) {
         console.log(result);
         this.data = result.map(obj => {
-          return {
-            id: obj.id,
-            firstname: obj.firstname,
-            surname: obj.surname,
-            gender: (obj.gender === 'm') ? 'männlich' : ((obj.gender === 'w') ? 'weiblich' : 'diverse'),
-            mail: obj.communication.mail,
-            mobile: obj.communication.mobile,
-            phone: obj.communication.phone,
-            street: obj.location.street,
-            city: obj.location.city,
-            postalcode: obj.location.postalcode
-          };
+          return this.entityToData(obj);
         });
+        this.dataToEntity(this.data[0]);
       }
     });
   }
