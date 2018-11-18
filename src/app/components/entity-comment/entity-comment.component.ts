@@ -31,9 +31,12 @@ export class EntityCommentComponent implements OnInit {
 
   constructor(private ipc: IpcRendererService, public toastr: ToastrService) { }
 
+  getShow(): boolean {
+    return (this.entityPostUrl && this.entity && this.entity.id);
+  }
   ngOnInit() {
     // zeige dies nur falls entität existiert
-    this.showThis = (this.entityPostUrl && this.entity && this.entity.id);
+
   }
 
   public checkFinished(event: boolean): void {

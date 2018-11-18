@@ -272,9 +272,12 @@ export class TableComponent implements OnInit {
   handleErrors(errors: ValidationError[]): void {
 
     // entferne alte
-    document.querySelectorAll('.validationErrorBorder').forEach(el => {
-      el.classList.remove('validationErrorBorder');
-    });
+    const elements = document.querySelectorAll('.validationErrorBorder');
+
+    for (let i = 0; i < elements.length; ++i) {
+      elements[i].classList.remove('validationErrorBorder');
+    }
+
 
     for (const error of errors) {
       document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
