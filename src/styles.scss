@@ -6,42 +6,35 @@
 * {
     -webkit-user-select: none;
 }
-html,body{
-    background:transparent;
 
-
-
-@-webkit-keyframes spin {
+html,
+body {
+    background: transparent;
+    @-webkit-keyframes spin {
         0% {
-          transform: rotate(0)
+            transform: rotate(0)
         }
-
         100% {
-          transform: rotate(360deg)
+            transform: rotate(360deg)
         }
-      }
-
-      @-moz-keyframes spin {
+    }
+    @-moz-keyframes spin {
         0% {
-          -moz-transform: rotate(0)
+            -moz-transform: rotate(0)
         }
-
         100% {
-          -moz-transform: rotate(360deg)
+            -moz-transform: rotate(360deg)
         }
-      }
-
-      @keyframes spin {
+    }
+    @keyframes spin {
         0% {
-          transform: rotate(0)
+            transform: rotate(0)
         }
-
         100% {
-          transform: rotate(360deg)
+            transform: rotate(360deg)
         }
-      }
-
-      .spinner {
+    }
+    .spinner {
         position: fixed;
         top: 0;
         left: 0;
@@ -50,9 +43,8 @@ html,body{
         z-index: 1003;
         background: transparent;
         overflow: hidden
-      }
-
-      .spinner div:first-child {
+    }
+    .spinner div:first-child {
         display: block;
         position: relative;
         left: 50%;
@@ -64,16 +56,14 @@ html,body{
         box-shadow: 0 3px 3px 0 rgba(255, 56, 106, 1);
         transform: translate3d(0, 0, 0);
         animation: spin 2s linear infinite
-      }
-
-      .spinner div:first-child:after,
-      .spinner div:first-child:before {
+    }
+    .spinner div:first-child:after,
+    .spinner div:first-child:before {
         content: '';
         position: absolute;
         border-radius: 50%
-      }
-
-      .spinner div:first-child:before {
+    }
+    .spinner div:first-child:before {
         top: 5px;
         left: 5px;
         right: 5px;
@@ -81,15 +71,35 @@ html,body{
         box-shadow: 0 3px 3px 0 rgb(255, 228, 32);
         -webkit-animation: spin 3s linear infinite;
         animation: spin 3s linear infinite
-      }
-
-      .spinner div:first-child:after {
+    }
+    .spinner div:first-child:after {
         top: 15px;
         left: 15px;
         right: 15px;
         bottom: 15px;
         box-shadow: 0 3px 3px 0 rgba(61, 175, 255, 1);
         animation: spin 1.5s linear infinite
-      }
-
+    }
+    .validationErrorBorder {
+        border: 2px solid red !important;
+    }
+    .header-container {
+        display: flex;
+        width: 100%;
+        .left {
+            display: flex;
+            width: 100%;
+            order: 0;
+            flex-direction: row;
+        }
+        .right {
+            order: 1;
+            flex-direction: row-reverse;
+        }
+        .header-row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+    }
 }

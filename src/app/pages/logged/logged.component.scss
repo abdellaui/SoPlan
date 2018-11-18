@@ -23,25 +23,4 @@
     nb-sidebar /deep/ .scrollable {
         padding: 0rem 1.25rem;
     }
-    nb-layout-header {
-        .header-container {
-            display: flex;
-            width: 100%;
-            .left {
-                display: flex;
-                width: 100%;
-                order: 0;
-                flex-direction: row;
-            }
-            .right {
-                order: 1;
-                flex-direction: row-reverse;
-            }
-            .header-row {
-                display: flex;
-                align-items: center;
-                width: 100%;
-            }
-        }
-    }
 }

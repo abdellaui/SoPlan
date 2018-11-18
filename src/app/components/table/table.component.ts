@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
@@ -17,7 +17,14 @@ import { DateRendererComponent } from './date-renderer/date-renderer.component';
 export class TableComponent implements OnInit {
 
   settings = {
+    selectMode: 'multi',
     actions: {
+      custom: [
+        {
+          name: 'gotoEditor',
+          title: '<i class="nb-compose"></i> ',
+        },
+      ],
       position: 'right',
       columnTitle: '',
       add: false
@@ -32,20 +39,37 @@ export class TableComponent implements OnInit {
       confirmDelete: true,
       deleteButtonContent: '<i class="nb-trash"></i>',
     },
+    noDataMessage: 'Keine Daten vorhanden!',
+    pager: {
+      display: false  // sonst wählt multi select by all nur die jenigen die auf der seite zusehen sind
+    }
   };
 
+  /**
+   *
+   * TODO: multi select checkbox zentieren via css
+   * custom action (goto editor) eventuell versuchen über id
+   * als column anzuzeigen da nicht jede tabelle
+   */
   public data: any[] = [];
   // backup
   private idToEntityMap = {};
   // lookup table
   public columnConfig = {};
-  public lastClick = new Date();
+  public selectedData: any[] = [];
 
+  @Output() action: EventEmitter<any> = new EventEmitter();
 
   // TODO: am besten als input
+  public actionSettings = {
+    showCreateButton: true,
+    createButtonText: 'Neue Person',
+    customActions: [
+      { name: 'onPrint', icon: 'nb-play', tooltip: 'Markierte Drucken' }
+    ]
+  };
   public slotSettings = {
     header: 'Personenliste',
-    buttonText: 'Neue Person',
     getUrl: 'get/person/all',
     postUrl: 'post/person',
     deleteUrl: 'delete/person',
@@ -81,9 +105,20 @@ export class TableComponent implements OnInit {
 
 
   constructor(private ipc: IpcRendererService, private router: Router) {
-    this.memberListToConfig();
   }
 
+  ngOnInit() {
+    this.memberListToConfig();
+    this.ipc.get(this.slotSettings.getUrl).then((result: any) => {
+      if (result !== 0) {
+        console.log(result);
+        this.data = result.map(obj => {
+          return this.entityToData(obj);
+        });
+        this.dataToEntity(this.data[0]);
+      }
+    });
+  }
 
   memberListToConfig(): void {
 
@@ -209,13 +244,12 @@ export class TableComponent implements OnInit {
 
   public onSaveConfirm(event) {
     const newEntity = this.dataToEntity(event.newData);
-    console.log(newEntity);
     validate(newEntity).then((errors: ValidationError[]) => {
       if (errors.length === 0) {
         this.saveEntity(newEntity);
         event.confirm.resolve();
       } else {
-        window.alert(JSON.stringify(errors)); // TODO: validierung besser anzeigen
+        this.handleErrors(errors);
         event.confirm.reject();
       }
     });
@@ -223,31 +257,49 @@ export class TableComponent implements OnInit {
 
   }
 
+  public onCustomClicked(event) {
+    console.log(event);
+    if (event.action === 'gotoEditor') {
+
+      this.router.navigateByUrl(this.slotSettings.editorUrl + event.data.id);
+    }
+  }
+
+  public onSelectRow(event: any): void {
+    console.log(event);
+    this.selectedData = event.selected;
+  }
+  handleErrors(errors: ValidationError[]): void {
+
+    // entferne alte
+    document.querySelectorAll('.validationErrorBorder').forEach(el => {
+      el.classList.remove('validationErrorBorder');
+    });
+
+    for (const error of errors) {
+      document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
+    }
+  }
   saveEntity(entity: any): void {
     this.ipc.send(this.slotSettings.postUrl, entity);
   }
-  onMouseOver(event: any): void {
-    console.log(event);
-  }
-  onSelectRow(event: any): void {
-    // console.log(event); // TODO: selection eventuell merken?
 
-    if (!event.isSelected && ((new Date()).getTime() - this.lastClick.getTime()) < 500) { // doppelt klick
-      this.router.navigateByUrl(this.slotSettings.editorUrl + String(event.data.id));
-    } else {
-      this.lastClick = new Date();
+  deleteAllSelected(): void {
+
+    if (window.confirm('Sind sie sicher?')) {
+      for (const data of this.selectedData) {
+        this.ipc.get(this.slotSettings.deleteUrl, this.dataToEntity(data)).then((result: number) => {
+          if (result === 0) {
+            window.alert(data); // could not delete
+          }
+        });
+      }
     }
   }
-  ngOnInit() {
-    this.ipc.get(this.slotSettings.getUrl).then((result: any) => {
-      if (result !== 0) {
-        console.log(result);
-        this.data = result.map(obj => {
-          return this.entityToData(obj);
-        });
-        this.dataToEntity(this.data[0]);
-      }
-    });
+
+  onCustomActionClicked(name: string) {
+    this.action.emit({ action: name, data: this.selectedData });
   }
+
 
 }
