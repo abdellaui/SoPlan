@@ -15,6 +15,8 @@ import { SchoolEditorComponent } from './school/school-editor/school-editor.comp
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 import { CertificateComponent } from './certificate/certificate.component';
 import { NbStepperModule } from '@nebular/theme';
+import { BedroomEditorComponent } from './bedroom/bedroom-editor/bedroom-editor.component';
+import { BedroomListeComponent } from './bedroom/bedroom-liste/bedroom-liste.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { NbStepperModule } from '@nebular/theme';
     SchoolEditorComponent,
     VenueEditorComponent,
     CertificateComponent,
+    BedroomEditorComponent,
+    BedroomListeComponent
   ],
   imports: [
     CommonModule,

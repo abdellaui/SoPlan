@@ -1,4 +1,4 @@
-import { IsAscii, IsNotEmpty, IsOptional, IsPositive } from 'class-validator';
+import { IsAscii, IsNotEmpty, IsOptional, IsPositive, IsMongoId, Min } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -28,7 +28,6 @@ export class Room {
   name: string;
 
   @IsNotEmpty()
-  @IsPositive()
   @Column()
   capacity: number;
 

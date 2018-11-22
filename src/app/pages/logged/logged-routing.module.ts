@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
 
@@ -10,6 +10,8 @@ import { PersonListeComponent } from './person/person-liste/person-liste.compone
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 import { CertificateComponent } from './certificate/certificate.component';
+import { BedroomEditorComponent } from './bedroom/bedroom-editor/bedroom-editor.component';
+import { BedroomListeComponent } from './bedroom/bedroom-liste/bedroom-liste.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
       {
         path: 'venue/editor/:id',
         component: VenueEditorComponent
+      },
+      {
+        path: 'bedroom/editor/:id',
+        component: BedroomEditorComponent
+      },
+      {
+        path: 'bedroom/list',
+        component: BedroomListeComponent
       },
       {
         path: 'certificate',

@@ -1,0 +1,38 @@
+<div *ngIf="isLoaded">
+  <div class="row">
+    <!-- Bedroom -->
+    <div class="col-lg-6">
+
+      <app-form-builder [write]="form_bedroomInstance" [schema]="form_bedroomSchema" [settings]="form_bedroomSettings"
+        (finished)="checkFinished($event, 'bedroom')"></app-form-builder>
+
+      <app-entity-comment entityPostUrl="post/bedroom" [entity]="form_bedroomInstance"></app-entity-comment>
+    </div>
+
+    <div class="col-lg-6">
+
+      <!-- Room -->
+
+
+      <app-form-builder [write]="form_roomInstance" [schema]="form_roomSchema" [settings]="form_roomSettings"
+        (finished)="checkFinished($event, 'room')"></app-form-builder>
+
+
+
+      <!-- Venue -->
+
+      <app-entity-select (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
+
+    </div>
+
+
+  </div>
+  <nb-card>
+    <nb-card-body>
+
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
+
+
+    </nb-card-body>
+  </nb-card>
+</div>
