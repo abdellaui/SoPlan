@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EinstellungMailComponent } from '@components/einstellung-mail/einstellung-mail.component';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 import {
   NbActionsModule,
   NbAlertModule,
@@ -86,10 +87,11 @@ const nebularModules = [
     FormsModule,
     ...nebularModules,
     Ng2SmartTableModule,
+    NbDateFnsDateModule,
   ],
   exports: [
     ...nebularModules,
     ...declarations
-  ],
+  ]
 })
 export class ComponentsModule { }

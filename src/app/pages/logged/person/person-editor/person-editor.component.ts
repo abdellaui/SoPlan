@@ -93,6 +93,7 @@ export class PersonEditorComponent implements OnInit {
    */
   reassignPerson(person: Person): void {
     person.birthDate = new Date(person.birthDate);
+    console.log(person);
     this.form_personInstance = Object.assign(this.form_personInstance, person);
     this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, person.location);

@@ -1,17 +1,16 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Event -->
-    <div class="col-lg-6">
+    <div class="{{this.form_eventInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
       <app-form-builder [write]="form_eventInstance" [schema]="form_eventSchema" [settings]="form_eventSettings"
         (finished)="checkFinished($event, 'event')"></app-form-builder>
-
+      <app-entity-select [hasError]="!this.form_eventInstance.hostingId" (selected)="selectionSelected($event)"
+        [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
     </div>
 
     <div class="col-lg-6">
-
-      <app-entity-select (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
-
+      <app-entity-comment entityPostUrl="post/event" [entity]="form_eventInstance"></app-entity-comment>
     </div>
 
 

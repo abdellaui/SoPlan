@@ -80,20 +80,23 @@ export class SidemenuComponent implements OnInit {
         }]
 
     },
-
     {
       title: 'Veranstaltung',
       icon: 'nb-layout-default',
       children: [
         {
           title: 'Editor',
-          link: '/logged/event/editor/0',
+          link: '/logged/event/editor/0'
         },
         {
           title: 'Liste',
           link: '/logged/event/list',
         }]
-
+    },
+    {
+      title: 'Certificate',
+      icon: 'nb-lightbulb',
+      link: '/logged/certificate',
     }
   ];
 

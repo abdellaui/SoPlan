@@ -15,13 +15,13 @@ export class DatepickerComponent implements OnInit {
   /**
    * optimize dateformat etc. but its still not important
    *  */
-  constructor() { }
 
   ngOnInit() {
   }
 
 
   emitChange(): void {
+    console.log(this.value);
     this.valueChanged.emit(this.value);
   }
 

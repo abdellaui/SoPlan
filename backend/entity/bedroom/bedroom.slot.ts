@@ -39,6 +39,4 @@ export function init() {
       send(event, 'post/bedroom', 0);
     });
   });
-
-
 }

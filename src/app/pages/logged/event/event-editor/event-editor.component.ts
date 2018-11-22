@@ -78,11 +78,16 @@ export class EventEditorComponent implements OnInit {
     this.rememberReadyStatus[member] = event;
 
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0);
+    this.updateReadyToSave();
   }
 
+  updateReadyToSave(): void {
+    // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_eventInstance.hostingId > 0);
+  }
   selectionSelected(event: number[]): void {
     this.form_eventInstance.hostingId = (event && event.length) ? event[0] : null;
+    this.updateReadyToSave();
   }
   save(): void {
     if (!this.readyToSave) {

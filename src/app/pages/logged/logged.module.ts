@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '@components/components.module';
 import { TableComponent } from '@components/table/table.component';
+import { NbStepperModule } from '@nebular/theme';
 import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
+import { CertificateComponent } from './certificate/certificate.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
@@ -39,7 +41,8 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     BedroomEditorComponent,
     BedroomListeComponent,
     ClassroomEditorComponent,
-    ClassroomListeComponent
+    ClassroomListeComponent,
+    CertificateComponent
   ],
   imports: [
     CommonModule,
@@ -47,6 +50,8 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     ComponentsModule,
     FormsModule,
     Ng2SmartTableModule,
+    NbStepperModule,
+    ReactiveFormsModule,
   ]
 })
 export class LoggedModule { }

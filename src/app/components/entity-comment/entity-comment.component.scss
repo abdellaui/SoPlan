@@ -1,0 +1,30 @@
+:host /deep/ .ng2-smart-action-multiple-select {
+    input[type="checkbox"] {
+        width: 20px;
+        margin: 0px auto;
+    }
+}
+
+:host /deep/ a {
+    &.ng2-smart-action {
+        display: inline !important;
+    }
+}
+
+:host /deep/ ng2-st-tbody-edit-delete {
+    display: inline !important;
+}
+
+:host /deep/ .ng2-smart-action-custom-custom {
+    &:hover {
+        color: #3d7bcc !important;
+    }
+    &:last-child {
+        border-right: 1px solid #ebeef2;
+    }
+}
+
+:host /deep/ .ng2-smart-titles th:first-child {
+    padding: 0px !important;
+    text-align: center;
+}

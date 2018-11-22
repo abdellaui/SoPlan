@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
+import { CertificateComponent } from './certificate/certificate.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
@@ -76,6 +77,10 @@ const routes: Routes = [
         path: 'event/list',
         component: EventListeComponent
       },
+      {
+        path: 'certificate',
+        component: CertificateComponent
+      }
     ]
   }
 ];

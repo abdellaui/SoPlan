@@ -29,16 +29,29 @@ const testDatabaseConfigs: DatabaseConfig = {
 };
 
 function init(): void {
+  const gotTheLock = app.requestSingleInstanceLock();
 
-  if (makeSingleInstance()) {
-    return app.quit();
-  } else if (test) {
-    return createMockServer();
+  if (!gotTheLock) {
+    app.quit(); // Quit second instance
   } else {
-    return createWindow();
+    if (test) { createMockServer(); } else { createWindow(); }
   }
-
 }
+
+/**
+ * If someone tries to run a new instance, but we already have one, bring it to the front
+ */
+app.on('second-instance', (event, commandLine, workingDirectory) => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+      }
+    mainWindow.focus();
+  }
+});
+
+app.on('ready', () => {
+});
 
 function createWindow(): void {
 
@@ -107,17 +120,6 @@ function createMockServer(): void {
 
 
   mainWindow = true;
-}
-
-function makeSingleInstance(): boolean {
-  if (process.mas) { return false; }
-
-  return app.makeSingleInstance(() => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) { mainWindow.restore(); }
-      mainWindow.focus();
-    }
-  });
 }
 
 try {
