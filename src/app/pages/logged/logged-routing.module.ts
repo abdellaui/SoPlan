@@ -9,6 +9,7 @@ import { PersonEditorComponent } from './person/person-editor/person-editor.comp
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
+import { CertificateComponent } from './certificate/certificate.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'venue/editor/:id',
         component: VenueEditorComponent
+      },
+      {
+        path: 'certificate',
+        component: CertificateComponent
       }
     ]
   }

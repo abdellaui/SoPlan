@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '@components/components.module';
 import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
 
@@ -13,6 +13,8 @@ import { TableComponent } from '@components/table/table.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
+import { CertificateComponent } from './certificate/certificate.component';
+import { NbStepperModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { VenueEditorComponent } from './venue/venue-editor/venue-editor.componen
     PersonListeComponent,
     TableComponent,
     SchoolEditorComponent,
-    VenueEditorComponent
+    VenueEditorComponent,
+    CertificateComponent,
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,8 @@ import { VenueEditorComponent } from './venue/venue-editor/venue-editor.componen
     ComponentsModule,
     FormsModule,
     Ng2SmartTableModule,
+    NbStepperModule,
+    ReactiveFormsModule,
   ]
 })
 export class LoggedModule { }

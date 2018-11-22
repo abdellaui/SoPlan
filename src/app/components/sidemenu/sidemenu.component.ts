@@ -67,6 +67,12 @@ export class SidemenuComponent implements OnInit {
           link: '/logged/event/list',
         }]
 
+    },
+
+    {
+      title: 'Certificate',
+      icon: 'nb-lightbulb',
+      link: '/logged/certificate',
     }
   ];
 
