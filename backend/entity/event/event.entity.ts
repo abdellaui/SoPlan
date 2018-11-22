@@ -11,7 +11,7 @@ import {
   RelationId,
 } from 'typeorm';
 
-import { FormElement, Input } from '../../models/formBuilder.class';
+import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Participant } from '../participant/participant.entity';
@@ -28,6 +28,13 @@ export class Event extends BaseEntity {
   @IsNotEmpty()
   name: string;
 
+  @IsNotEmpty()
+  @Column()
+  startsDate: Date = new Date();
+
+  @IsNotEmpty()
+  @Column()
+  endsDate: Date = new Date();
   /**
    * RELATIONS
    */
@@ -53,7 +60,17 @@ const EventSchema: FormElement[] = [
     name: 'Eventname',
     member: 'name',
     element: new Input('text')
-  }
+  },
+  {
+    name: 'Startet',
+    member: 'startsDate',
+    element: new DatePicker()
+  },
+  {
+    name: 'Endet',
+    member: 'endsDate',
+    element: new DatePicker()
+  },
 ];
 
 export { EventSchema };

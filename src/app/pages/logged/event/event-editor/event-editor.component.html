@@ -1,0 +1,27 @@
+<div *ngIf="isLoaded">
+  <div class="row">
+    <!-- Event -->
+    <div class="col-lg-6">
+
+      <app-form-builder [write]="form_eventInstance" [schema]="form_eventSchema" [settings]="form_eventSettings"
+        (finished)="checkFinished($event, 'event')"></app-form-builder>
+
+    </div>
+
+    <div class="col-lg-6">
+
+      <app-entity-select (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
+
+    </div>
+
+
+  </div>
+  <nb-card>
+    <nb-card-body>
+
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
+
+
+    </nb-card-body>
+  </nb-card>
+</div>

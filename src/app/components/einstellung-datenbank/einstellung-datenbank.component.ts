@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseConfig, DatabaseConfigSchema } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
-import { validate } from 'class-validator';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -31,14 +30,8 @@ export class EinstellungDatenbankComponent implements OnInit {
   }
 
   saveConfig(): void {
-    validate(this.config).then(errors => {
-      if (errors.length > 0) {
-        this.toastr.error(`Fehler: ${JSON.stringify(errors)}`);
-      } else {
-        this.ipc.send('post/database/config', this.config);
-        this.toastr.info('Konfiguration erfordert Neustart!', 'Erfolgreich gespeichert!');
-      }
-    });
+    this.ipc.send('post/database/config', this.config);
+    this.toastr.info('Konfiguration erfordert Neustart!', 'Erfolgreich gespeichert!');
   }
 
   ngOnInit() {

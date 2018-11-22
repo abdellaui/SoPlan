@@ -3,7 +3,7 @@
     <nb-badge text="{{data.length}}" status="info" position="top right"></nb-badge>
     <div class="header-container">
       <div class="header-row left">
-        {{slotSettings.header}}
+        {{config.settings.header}}
       </div>
       <div class="header-row right">
 
@@ -13,18 +13,18 @@
             (click)="selectedData.length  && deleteAllSelected()">
           </nb-action>
 
-          <nb-action *ngFor="let action of actionSettings.customActions" [disabled]="!selectedData.length" [icon]="action.icon"
+          <nb-action *ngFor="let action of config.customActions" [disabled]="!selectedData.length" [icon]="action.icon"
             [nbTooltip]="action.tooltip" nbTooltipPlacement="left" (click)="selectedData.length && onCustomActionClicked(action.name)"></nb-action>
 
           <!-- if settings allow to create new instance-->
-          <nb-action *ngIf="actionSettings.showCreateButton" [nbTooltip]="actionSettings.createButtonText"
-            nbTooltipPlacement="left" routerLink="{{slotSettings.editorUrl}}0" icon="nb-plus-circled"></nb-action>
+          <nb-action *ngIf="config.settings.showCreateButton" [nbTooltip]="config.settings.createButtonText"
+            nbTooltipPlacement="left" routerLink="{{config.slotUrls.editorUrl}}0" icon="nb-plus-circled"></nb-action>
         </nb-actions>
       </div>
     </div>
   </nb-card-header>
   <nb-card-body>
-    <ng2-smart-table (custom)="onCustomClicked($event)" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
+    <ng2-smart-table (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
       (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>

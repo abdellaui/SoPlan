@@ -1,62 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
-import { Person, PersonSchema } from '@entity/person/person.entity';
+import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
 
 @Component({
-  selector: 'app-person-liste',
-  templateUrl: './person-liste.component.html',
-  styleUrls: ['./person-liste.component.scss']
+  selector: 'app-venue-liste',
+  templateUrl: './venue-liste.component.html',
+  styleUrls: ['./venue-liste.component.scss']
 })
-export class PersonListeComponent implements OnInit {
-
+export class VenueListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Personenliste',
+      header: 'Orteliste',
       showCreateButton: true,
-      createButtonText: 'Neue Person'
+      createButtonText: 'Neue Ort'
     },
     slotUrls: {
-      getUrl: 'get/person/all',
-      postUrl: 'post/person',
-      deleteUrl: 'delete/person',
-      editorUrl: '/logged/person/editor/'
+      getUrl: 'get/venue/all',
+      postUrl: 'post/venue',
+      deleteUrl: 'delete/venue',
+      editorUrl: '/logged/venue/editor/'
     },
     instanceMap: {
-      '': new Person(),
+      '': new Venue(),
       'location': new Location(),
       'communication': new Communication()
     },
     memberList: [
       {
         prefix: '',
-        schema: PersonSchema,
+        schema: VenueSchema,
         members: [
-          'firstname',
-          'surname',
-          'gender',
-          'birthDate'
-        ],
-        extendedSettings: {
-          gender: {
-            width: '10px'
-          }
-        }
+          'name',
+          'contactPerson'
+        ]
       },
       {
         prefix: 'location@',
         schema: LocationSchema,
-        members: ['city']
+        members: ['street', 'city']
       },
       {
         prefix: 'communication@',
         schema: CommunicationSchema,
-        members: ['mail']
-      },
+        members: ['phone', 'mail', 'mobile']
+      }
     ]
   };
-
   constructor() { }
 
   ngOnInit() {

@@ -49,9 +49,9 @@ export class CurrentEventService {
   }
 
   refreshEvents(): void {
-    this.ipc.send('get/event/all');
     if (this.currentId > 0) {
       this.ipc.send('get/event/by/id', { id: this.currentId });
     }
+    this.ipc.send('get/event/all');
   }
 }

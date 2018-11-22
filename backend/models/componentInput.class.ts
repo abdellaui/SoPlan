@@ -23,3 +23,45 @@ export interface FormBuilderSettings {
   buttonText?: string;
   initialWarningsIgnore?: boolean;
 }
+
+export interface SmartTableCustomAction {
+  name: string;
+  icon: string;
+  tooltip: string;
+}
+
+export interface SmartTableCustomListAction {
+  name: string;
+  title: string;
+}
+
+export interface SmartTableMemberList {
+  /**
+   * prefix (außer root) sollte mit @ enden. z.B.
+   * Object{created: {day: 12, ... }, ... }
+   * => created@ und members [day]
+   */
+  prefix: string;
+  schema: any;
+  members: string[];
+  extendedSettings?: Object;
+}
+
+export interface SmartTableConfig {
+  settings: {
+    header: string,
+    createButtonText?: string,
+    showCreateButton?: boolean,
+  };
+  slotUrls: {
+    getUrl: string,
+    postUrl: string,
+    deleteUrl: string,
+    editorUrl?: string
+  };
+  memberList: SmartTableMemberList[];
+  instanceMap: Object;
+  customActions?: SmartTableCustomAction[];
+  customListAction?: SmartTableCustomListAction[];
+
+}

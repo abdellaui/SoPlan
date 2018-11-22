@@ -58,7 +58,7 @@ const VenueSchema: FormElement[] = [
   },
   {
     name: 'Kontaktperson',
-    member: 'contact',
+    member: 'contactPerson',
     element: new Input('text')
   },
 ];
