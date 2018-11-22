@@ -2,6 +2,7 @@ import { ViewChild, OnInit, ElementRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NbStepperComponent } from '@nebular/theme';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-certificate',
@@ -16,7 +17,7 @@ export class CertificateComponent implements OnInit {
   stepThreeForm: FormGroup;
   stepper: NbStepperComponent;
 
-  constructor(private fb: FormBuilder, private toastrServ: ToastrService) {
+  constructor(private fb: FormBuilder, private toastrServ: ToastrService, private electronService: ElectronService) {
   }
 
   ngOnInit() {
@@ -82,8 +83,7 @@ export class CertificateComponent implements OnInit {
    * @returns BrowserWindow: Fenster
    */
   createUrlBrowserWindow(urlToLoad, showWindow) {
-    const electron = require('electron');
-    const broswerWindow = new electron.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow });
+    const broswerWindow = new this.electronService.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow });
     broswerWindow.loadURL(urlToLoad);
     return broswerWindow;
   }
@@ -95,8 +95,7 @@ export class CertificateComponent implements OnInit {
    * @returns BrowserWindow: Fenster
    */
   createFileBrowserWindow(fileToLoad, showWindow) {
-    const electron = require('electron');
-    const broswerWindow = new electron.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow  });
+    const broswerWindow = new this.electronService.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow  });
     broswerWindow.loadFile(fileToLoad);
     return broswerWindow;
   }
