@@ -92,7 +92,7 @@ export class TableComponent implements OnInit {
     this.memberListToConfig();
 
     // get data
-    this.ipc.get(this.config.slotUrls.getUrl).then((result: any) => {
+    this.ipc.get(this.config.slotUrls.getUrl, this.config.slotUrls.getParam).then((result: any) => {
       if (result !== 0) {
         this.data = result.map(obj => {
           return this.entityToData(obj);

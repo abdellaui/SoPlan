@@ -15,6 +15,10 @@ import { PersonEditorComponent } from './person/person-editor/person-editor.comp
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
 import { SchoolEditorComponent } from './school/school-editor/school-editor.component';
 import { SchoolListeComponent } from './school/school-liste/school-liste.component';
+import { BedroomEditorComponent } from './venue/bedroom/bedroom-editor/bedroom-editor.component';
+import { BedroomListeComponent } from './venue/bedroom/bedroom-liste/bedroom-liste.component';
+import { ClassroomEditorComponent } from './venue/classroom/classroom-editor/classroom-editor.component';
+import { ClassroomListeComponent } from './venue/classroom/classroom-liste/classroom-liste.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
 
@@ -32,6 +36,10 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     VenueListeComponent,
     EventListeComponent,
     EventEditorComponent,
+    BedroomEditorComponent,
+    BedroomListeComponent,
+    ClassroomEditorComponent,
+    ClassroomListeComponent
   ],
   imports: [
     CommonModule,

@@ -22,7 +22,34 @@ export class SidemenuComponent implements OnInit {
         {
           title: 'Liste',
           link: '/logged/venue/list',
-        }]
+        },
+        {
+          title: 'Schlafzimmer',
+          children: [
+            {
+              title: 'Editor',
+              link: '/logged/venue/bedroom/editor/0/0',
+            },
+            {
+              title: 'Liste',
+              link: '/logged/venue/bedroom/list',
+            }
+          ],
+        },
+        {
+          title: 'Klassenzimmer',
+          children: [
+            {
+              title: 'Editor',
+              link: '/logged/venue/classroom/editor/0/1',
+            },
+            {
+              title: 'Liste',
+              link: '/logged/venue/classroom/list',
+            }
+          ],
+        },
+      ]
 
     },
     {

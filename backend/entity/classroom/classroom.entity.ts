@@ -40,7 +40,7 @@ export class Classroom extends BaseEntity {
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => Venue, venue => venue.classrooms)
+  @ManyToOne(type => Venue, venue => venue.classrooms, { eager: true })
   venue: Venue;
   @RelationId((classroom: Classroom) => classroom.venue)
   venueId: number;

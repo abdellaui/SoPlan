@@ -1,6 +1,6 @@
 <nb-flip-card [flipped]="selectedElements.length">
   <nb-card-front>
-    <nb-card size="medium">
+    <nb-card size="medium" [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
         {{settings.header}}
       </nb-card-header>
@@ -19,7 +19,7 @@
   </nb-card-front>
   <!-- BACK -->
   <nb-card-back>
-    <nb-card>
+    <nb-card [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
         {{settings.header}} (Auswahl)
         <nb-badge text="{{selectedElements.length}} / {{settings.maxSelection}}" status="info" position="top right">

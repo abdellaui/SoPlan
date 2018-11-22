@@ -10,6 +10,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 export class EntitySelectComponent implements OnInit {
   @Input() selectedIds: number[];
   @Input() settings: EntitySelectSettings;
+  @Input() hasError: boolean;
   @Output() selected: EventEmitter<number[]> = new EventEmitter();
 
   public inputValue: string;

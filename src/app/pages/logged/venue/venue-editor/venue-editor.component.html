@@ -1,14 +1,10 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Person -->
-    <div class="col-lg-6">
+    <div class="{{this.form_venueInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
       <app-form-builder [write]="form_venueInstance" [schema]="form_venueSchema" [settings]="form_venueSettings"
         (finished)="checkFinished($event, 'venue')"></app-form-builder>
-
-    </div>
-
-    <div class="col-lg-6">
 
       <!-- Communication -->
 
@@ -19,10 +15,19 @@
 
       <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
 
+    </div>
+
+    <div class="col-lg-6">
+
+      <app-entity-comment entityPostUrl="post/venue" [entity]="form_venueInstance"></app-entity-comment>
 
     </div>
 
-
+    <!-- room lists-->
+    <div *ngIf="this.form_venueInstance.id" class="col-lg-12">
+      <app-table [config]="st_bed_config"></app-table>
+      <app-table [config]="st_class_config"></app-table>
+    </div>
   </div>
   <nb-card>
     <nb-card-body>

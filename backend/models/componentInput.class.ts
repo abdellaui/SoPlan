@@ -57,7 +57,8 @@ export interface SmartTableConfig {
     getUrl: string,
     postUrl: string,
     deleteUrl: string,
-    editorUrl?: string
+    editorUrl?: string,
+    getParam?: Object
   };
   memberList: SmartTableMemberList[];
   instanceMap: Object;

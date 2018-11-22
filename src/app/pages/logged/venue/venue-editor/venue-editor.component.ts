@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
+import { Room, RoomSchema } from '@entity/_room/room.entity';
+import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
+import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
-import { FormBuilderSettings } from '@models/componentInput.class';
+import { FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./venue-editor.component.scss']
 })
 export class VenueEditorComponent implements OnInit {
+
 
   public readyToSave = false;
   public rememberReadyStatus = {
@@ -45,7 +49,66 @@ export class VenueEditorComponent implements OnInit {
   };
 
   public isLoaded = false;
-
+  public st_bed_config: SmartTableConfig = {
+    settings: {
+      header: 'Schlafzimmer',
+      showCreateButton: true,
+      createButtonText: 'Neue Ort'
+    },
+    slotUrls: {
+      getUrl: 'get/bedroom/by/venueId',
+      postUrl: 'post/bedroom',
+      deleteUrl: 'delete/bedroom',
+      editorUrl: '/logged/venue/bedroom/editor/0/',
+      getParam: 0
+    },
+    instanceMap: {
+      '': new Bedroom(),
+      'room': new Room()
+    },
+    memberList: [
+      {
+        prefix: '',
+        schema: BedroomSchema,
+        members: ['type']
+      },
+      {
+        prefix: 'room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name', 'capacity']
+      },
+    ]
+  };
+  public st_class_config: SmartTableConfig = {
+    settings: {
+      header: 'Classenliste',
+      showCreateButton: true,
+      createButtonText: 'Neue Ort'
+    },
+    slotUrls: {
+      getUrl: 'get/classroom/by/venueId',
+      postUrl: 'post/classroom',
+      deleteUrl: 'delete/classroom',
+      editorUrl: '/logged/venue/classroom/editor/0/',
+      getParam: 0
+    },
+    instanceMap: {
+      '': new Classroom(),
+      'room': new Room()
+    },
+    memberList: [
+      {
+        prefix: '',
+        schema: ClassroomSchema,
+        members: ['identifier']
+      },
+      {
+        prefix: 'room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name', 'capacity']
+      }
+    ]
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -81,6 +144,14 @@ export class VenueEditorComponent implements OnInit {
     this.form_venueInstance = Object.assign(this.form_venueInstance, venue);
     this.form_comInstance = Object.assign(this.form_comInstance, venue.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
+
+    const appendingId = (this.form_venueInstance.id) ? this.form_venueInstance.id : 0;
+
+    this.st_bed_config.slotUrls.getParam = appendingId;
+    this.st_bed_config.slotUrls.editorUrl = `/logged/venue/bedroom/editor/${appendingId}/`;
+
+    this.st_class_config.slotUrls.getParam = appendingId;
+    this.st_class_config.slotUrls.editorUrl = `/logged/venue/classroom/editor/${appendingId}/`;
   }
 
   public checkFinished(event: any, member: string) {

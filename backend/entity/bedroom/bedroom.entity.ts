@@ -45,8 +45,9 @@ export class Bedroom extends BaseEntity {
   @JoinTable()
   comments: Comment[];
 
-  @ManyToOne(type => Venue, venue => venue.bedrooms)
+  @ManyToOne(type => Venue, venue => venue.bedrooms, { eager: true })
   venue: Venue;
+
   @RelationId((bed_room: Bedroom) => bed_room.venue)
   venueId: number;
 
