@@ -97,7 +97,6 @@ export class TableComponent implements OnInit {
         this.data = result.map(obj => {
           return this.entityToData(obj);
         });
-        this.dataToEntity(this.data[0]);
       }
     });
   }
@@ -223,8 +222,8 @@ export class TableComponent implements OnInit {
    * @param path der pfad vom member
    */
   goInsideEntity(entity: any, path: string[]): any {
-    const currentData = entity[path[0]];
-    if (path.length === 1) {
+    const currentData = entity[path[0]] || null;
+    if (path.length === 1 || currentData === null) {
       return currentData;
     } else {
       return this.goInsideEntity(currentData, path.slice(1));

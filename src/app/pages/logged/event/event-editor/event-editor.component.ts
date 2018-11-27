@@ -33,7 +33,9 @@ export class EventEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Ort',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/venue/editor/',
   };
 
 
@@ -69,6 +71,8 @@ export class EventEditorComponent implements OnInit {
   }
 
   reassignEvent(event: Event): void {
+    /** TODO: fix entity-selector */
+    event = Object.assign(event, { comments: [] }); // fallback for comments
     this.form_eventInstance = Object.assign(this.form_eventInstance, event);
     this.selection_selectedIds = [this.form_eventInstance.hostingId];
   }
@@ -95,9 +99,11 @@ export class EventEditorComponent implements OnInit {
     }
 
 
+    console.log(this.form_eventInstance);
 
     this.ipc.get('post/event', this.form_eventInstance).then((result: any) => {
       if (result !== 0) {
+        console.log(result);
         this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
         this.reassignEvent(result);
         this.currentEventService.refreshEvents();

@@ -49,7 +49,9 @@ export class PersonEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Schule',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/school/editor/',
   };
 
 
@@ -92,8 +94,8 @@ export class PersonEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignPerson(person: Person): void {
+    person = Object.assign(person, { comments: [] }); // fallback for comments
     person.birthDate = new Date(person.birthDate);
-    console.log(person);
     this.form_personInstance = Object.assign(this.form_personInstance, person);
     this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, person.location);

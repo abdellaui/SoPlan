@@ -47,8 +47,7 @@ export class Bedroom extends BaseEntity {
 
   @ManyToOne(type => Venue, venue => venue.bedrooms, { eager: true })
   venue: Venue;
-
-  @RelationId((bed_room: Bedroom) => bed_room.venue)
+  @RelationId((bedroom: Bedroom) => bedroom.venue)
   venueId: number;
 
   @OneToMany(type => Participant, participant => participant.bedroom)
@@ -63,7 +62,7 @@ const BedroomSchema: FormElement[] = [
     element: new RadioButton([
       new Option('Schüler', BedroomTypes.SCHUELER),
       new Option('Dozent', BedroomTypes.DOZENT),
-      new Option('<i>gesperrt</i>', BedroomTypes.GESPERRT),
+      new Option('gesperrt', BedroomTypes.GESPERRT),
     ])
   }
 ];

@@ -41,7 +41,9 @@ export class BedroomEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Ort',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/venue/editor/',
   };
 
   public isLoaded = false;
@@ -84,6 +86,7 @@ export class BedroomEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignBedroom(bedroom: Bedroom): void {
+    bedroom = Object.assign(bedroom, { comments: [] }); // fallback for comments
     this.form_bedroomInstance = Object.assign(this.form_bedroomInstance, bedroom);
     this.form_roomInstance = Object.assign(this.form_roomInstance, bedroom.room);
     this.selection_selectedIds = [this.form_bedroomInstance.venueId];

@@ -44,7 +44,6 @@ export class VeranstaltungenComponent implements OnInit {
         this.toastr.error('Bitte füllen Sie alle Felder aus!');
         this.disableSendButton = false;
       } else {
-        console.log(errors);
         this.ipc.get<boolean>('post/mail/send', this.mailOptions).then(result => {
           if (result) {
             this.toastr.info('Die Nachricht wurde erfolgreich verschickt');

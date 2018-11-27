@@ -69,6 +69,7 @@ export class SchoolEditorComponent implements OnInit {
   }
 
   reassignSchool(school: School): void {
+    school = Object.assign(school, { comments: [] }); // fallback for comments
     this.form_schoolInstance = Object.assign(this.form_schoolInstance, school);
     this.form_locInstance = Object.assign(this.form_locInstance, school.location);
   }

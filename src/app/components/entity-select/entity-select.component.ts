@@ -29,6 +29,18 @@ export class EntitySelectComponent implements OnInit {
     this.settings.seperatorName = (this.settings.seperatorName) ? this.settings.seperatorName : ' ';
     this.settings.seperatorTitle = (this.settings.seperatorTitle) ? this.settings.seperatorTitle : ' - ';
 
+    this.settings.editorUrl = (this.settings.editorUrl)
+      ? this.settings.editorUrl
+      : '';
+
+    this.settings.showCreateButton = (this.settings.showCreateButton)
+      ? this.settings.showCreateButton
+      : false;
+
+    this.settings.createButtonText = (this.settings.createButtonText)
+      ? this.settings.createButtonText
+      : this.settings.header + ' hinzufügen';
+
     this.getElements();
   }
 
@@ -99,7 +111,6 @@ export class EntitySelectComponent implements OnInit {
   }
 
   select(element: any): void {
-    console.log(element);
     const possibleIndex = this.getIndexOfId(element);
     // doubleclick => remove
     if (possibleIndex > -1) {

@@ -42,7 +42,9 @@ export class ClassroomEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Ort',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/venue/editor/',
   };
 
 
@@ -84,6 +86,7 @@ export class ClassroomEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignClassroom(classroom: Classroom): void {
+    classroom = Object.assign(classroom, { comments: [] }); // fallback for comments
     this.form_classroomInstance = Object.assign(this.form_classroomInstance, classroom);
     this.form_roomInstance = Object.assign(this.form_roomInstance, classroom.room);
     this.selection_selectedIds = [this.form_classroomInstance.venueId];

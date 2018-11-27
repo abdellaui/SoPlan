@@ -11,6 +11,10 @@ import { CertificateComponent } from './certificate/certificate.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
+import { GroupEditorComponent } from './event/group/group-editor/group-editor.component';
+import { GroupListeComponent } from './event/group/group-liste/group-liste.component';
+import { ParticipantEditorComponent } from './event/participant/participant-editor/participant-editor.component';
+import { ParticipantListeComponent } from './event/participant/participant-liste/participant-liste.component';
 import { LoggedRoutingModule } from './logged-routing.module';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
@@ -42,7 +46,11 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     BedroomListeComponent,
     ClassroomEditorComponent,
     ClassroomListeComponent,
-    CertificateComponent
+    CertificateComponent,
+    ParticipantEditorComponent,
+    ParticipantListeComponent,
+    GroupEditorComponent,
+    GroupListeComponent
   ],
   imports: [
     CommonModule,

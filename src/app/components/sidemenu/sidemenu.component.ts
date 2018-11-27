@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Event } from '@entity/event/event.entity';
 import { NbMenuItem } from '@nebular/theme';
-import { CurrentEventService } from '@services/current-event/current-event.service';
 
 @Component({
   selector: 'app-sidemenu',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.scss']
 })
@@ -41,7 +39,7 @@ export class SidemenuComponent implements OnInit {
           children: [
             {
               title: 'Editor',
-              link: '/logged/venue/classroom/editor/0/1',
+              link: '/logged/venue/classroom/editor/0/0',
             },
             {
               title: 'Liste',
@@ -91,7 +89,34 @@ export class SidemenuComponent implements OnInit {
         {
           title: 'Liste',
           link: '/logged/event/list',
-        }]
+        },
+        {
+          title: 'Gruppen',
+          children: [
+            {
+              title: 'Editor',
+              link: '/logged/event/group/editor/0/0',
+            },
+            {
+              title: 'Liste',
+              link: '/logged/event/group/list',
+            }
+          ],
+        },
+        {
+          title: 'Teilnehmer',
+          children: [
+            {
+              title: 'Editor',
+              link: '/logged/event/participant/editor/0/0',
+            },
+            {
+              title: 'Liste',
+              link: '/logged/event/participant/list',
+            }
+          ],
+        },
+      ]
     },
     {
       title: 'Certificate',
@@ -101,10 +126,7 @@ export class SidemenuComponent implements OnInit {
   ];
 
 
-  constructor(private currentEventService: CurrentEventService) {
-    this.currentEventService.currentEventChanged.subscribe((event: Event) => {
-      // TODO: if event is selected than show more menu items
-    });
+  constructor() {
 
 
     this.items.push({

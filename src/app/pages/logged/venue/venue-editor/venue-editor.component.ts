@@ -141,6 +141,7 @@ export class VenueEditorComponent implements OnInit {
   }
 
   reassignVenue(venue: Venue): void {
+    venue = Object.assign(venue, { comments: [] }); // fallback for comments
     this.form_venueInstance = Object.assign(this.form_venueInstance, venue);
     this.form_comInstance = Object.assign(this.form_comInstance, venue.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
@@ -173,6 +174,7 @@ export class VenueEditorComponent implements OnInit {
 
     this.ipc.get('post/venue', this.form_venueInstance).then((result: any) => {
       if (result !== 0) {
+        console.log(result);
         this.toastr.info('Venue wurde erfolgreich gespeichert!');
         this.reassignVenue(result);
       } else {
