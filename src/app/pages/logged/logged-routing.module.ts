@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
 import { CertificateComponent } from './certificate/certificate.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
     canActivateChild: [AuthenticationGuard],
     children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
       {
         path: 'einstellungen',
         component: EinstellungenComponent
@@ -100,7 +105,11 @@ const routes: Routes = [
       {
         path: 'certificate',
         component: CertificateComponent
-      }
+      },
+      {
+        path: '**',
+        redirectTo: 'dashboard'
+      },
     ]
   }
 ];

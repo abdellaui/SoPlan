@@ -35,7 +35,6 @@ export class CurrentEventService {
   setEvent(event: Event): void {
     this.currentId = (event) ? event.id : 0;
     this.currentEvent = event;
-
     this.currentEventChanged.next(this.currentEvent);
     // maybe store
   }

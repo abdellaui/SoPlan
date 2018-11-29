@@ -1,3 +1,36 @@
-<p>
-  group-editor works!
-</p>
+<div *ngIf="isLoaded">
+  <div class="row">
+    <!-- Group -->
+    <div class="{{this.form_groupInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+
+      <app-form-builder [write]="form_groupInstance" [schema]="form_groupSchema" [settings]="form_groupSettings"
+        (finished)="checkFinished($event, 'group')"></app-form-builder>
+
+
+      <!-- Event -->
+
+      <app-entity-select (selected)="eventSelected($event)" [selectedIds]="event_selectedIds" [settings]="selection_event_settings"
+        [hasError]="!this.form_groupInstance.event.id"></app-entity-select>
+
+      <!-- Classroom -->
+
+      <app-entity-select *ngIf="this.form_groupInstance.event.id" (selected)="classroomSelected($event)" [selectedIds]="classroom_selectedIds"
+        [settings]="selection_classroom_settings" [hasError]="!this.form_groupInstance.classroom.id"></app-entity-select>
+
+    </div>
+
+    <div class="col-lg-6">
+      <app-entity-comment entityPostUrl="post/group" [entity]="form_groupInstance"></app-entity-comment>
+    </div>
+
+
+  </div>
+  <nb-card>
+    <nb-card-body>
+
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
+
+
+    </nb-card-body>
+  </nb-card>
+</div>

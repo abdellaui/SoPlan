@@ -1,17 +1,9 @@
 import { IsNotEmpty, MaxLength } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
+import { Bedroom } from '../bedroom/bedroom.entity';
+import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Participant } from '../participant/participant.entity';
@@ -45,14 +37,38 @@ export class Event extends BaseEntity {
 
   @ManyToOne(type => Venue, venue => venue.hosts, { eager: true })
   hosting: Venue;
-  @RelationId((event: Event) => event.hosting)
-  hostingId: number;
 
   @OneToMany(type => Participant, participant => participant.event)
   participantes: Participant[];
 
   @OneToMany(type => Group, group => group.event)
   groups: Group[];
+
+  /**
+   * METHODS
+   */
+  static async getAllClassrooms(eventId: number) {
+    try {
+      // (this as any) fallback
+      const ev = await (this as any).findOne({ id: eventId });
+      return Classroom.getByVenue(ev.hosting.id);
+    } catch (e) {
+      return Promise.reject();
+    }
+  }
+
+  static async getAllBedrooms(eventId: number) {
+    try {
+      // (this as any) fallback
+      const ev = await (this as any).findOne({ id: eventId });
+      return Bedroom.getByVenue(ev.hosting.id);
+    } catch (e) {
+      return Promise.reject();
+    }
+  }
+  static getAllGroups(eventId: number) {
+    return (Group as any).find({ where: { event: { id: eventId } } });
+  }
 }
 
 const EventSchema: FormElement[] = [

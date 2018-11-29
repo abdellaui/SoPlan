@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
@@ -34,23 +34,15 @@ export class Participant extends BaseEntity {
 
   @ManyToOne(type => Person, person => person.participantes, { eager: true })
   person: Person;
-  @RelationId((participant: Participant) => participant.person)
-  personId: number;
 
   @ManyToOne(type => Group, group => group.members, { eager: true })
   group: Group;
-  @RelationId((participant: Participant) => participant.group)
-  groupId: number;
 
   @ManyToOne(type => Bedroom, bedroom => bedroom.roommates, { eager: true })
   bedroom: Bedroom;
-  @RelationId((participant: Participant) => participant.bedroom)
-  bedroomId: number;
 
   @ManyToOne(type => Event, event => event.participantes, { eager: true })
   event: Event;
-  @RelationId((participant: Participant) => participant.event)
-  eventId: number;
 
   @ManyToMany(type => Participant, participant => participant.wantsToBeWith)
   @JoinTable()

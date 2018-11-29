@@ -20,23 +20,24 @@ export function init() {
     });
   });
 
-  on('get/bedroom/by/venueId', (event: any, arg: number) => {
-    Bedroom.getRepository()
-      .createQueryBuilder('bedroom')
-      .where('bedroom.venueId = :id', { id: arg })
-      .getMany().then((result: Bedroom[]) => {
-        send(event, 'get/bedroom/by/venueId', result);
-      }).catch(e => {
-        send(event, 'get/bedroom/by/venueId', 0);
-      });
-  });
-
 
   on('post/bedroom', (event: any, arg: any) => {
     Bedroom.create(arg).save().then((result: Bedroom) => {
       send(event, 'post/bedroom', result);
     }).catch(e => {
       send(event, 'post/bedroom', 0);
+    });
+  });
+
+  /**
+   * END DEFAULT SLOTS
+   */
+
+  on('get/bedroom/by/venueId', (event: any, arg: number) => {
+    Bedroom.getByVenue(arg).then((result: Bedroom[]) => {
+      send(event, 'get/bedroom/by/venueId', result);
+    }).catch(e => {
+      send(event, 'get/bedroom/by/venueId', 0);
     });
   });
 }

@@ -14,7 +14,7 @@ import { DateRendererComponent } from './date-renderer/date-renderer.component';
 })
 
 export class TableComponent implements OnInit {
-
+  loadedFirstTime = false;
   settings = {
     selectMode: 'multi',
     actions: {
@@ -97,8 +97,12 @@ export class TableComponent implements OnInit {
         this.data = result.map(obj => {
           return this.entityToData(obj);
         });
+
+        this.loadedFirstTime = true;
       }
     });
+
+
   }
 
   /**

@@ -8,6 +8,7 @@ import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veransta
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { CertificateComponent } from './certificate/certificate.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
@@ -50,7 +51,8 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     ParticipantEditorComponent,
     ParticipantListeComponent,
     GroupEditorComponent,
-    GroupListeComponent
+    GroupListeComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

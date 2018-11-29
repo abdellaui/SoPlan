@@ -10,6 +10,11 @@ import { NbMenuItem } from '@nebular/theme';
 export class SidemenuComponent implements OnInit {
   items: NbMenuItem[] = [
     {
+      title: 'Dashboard',
+      icon: 'nb-grid-a-outline',
+      link: '/logged/dashboard',
+    },
+    {
       title: 'Ort',
       icon: 'nb-location',
       children: [
@@ -23,6 +28,8 @@ export class SidemenuComponent implements OnInit {
         },
         {
           title: 'Schlafzimmer',
+
+          icon: 'nb-chevron-right-outline',
           children: [
             {
               title: 'Editor',
@@ -56,7 +63,8 @@ export class SidemenuComponent implements OnInit {
       children: [
         {
           title: 'Editor',
-          link: '/logged/person/editor/0'
+          link: '/logged/person/editor/0',
+          pathMatch: 'partial'
         },
         {
           title: 'Liste',

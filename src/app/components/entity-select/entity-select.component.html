@@ -1,4 +1,4 @@
-<nb-flip-card [flipped]="selectedElements.length">
+<nb-flip-card [flipped]="readonly || selectedElements.length" [showToggleButton]="!readonly">
   <nb-card-front>
     <nb-card size="medium" [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
@@ -8,7 +8,7 @@
           </div>
           <div class="header-row right">
             <nb-actions size="medium">
-              <nb-action *ngIf="settings.showCreateButton" [nbTooltip]="settings.createButtonText" nbTooltipPlacement="left"
+              <nb-action *ngIf="settings.showCreateButton" [nbPopover]="settings.createButtonText" nbPopoverMode="hover"
                 routerLink="{{settings.editorUrl}}0" icon="nb-plus-circled"></nb-action>
             </nb-actions>
           </div>

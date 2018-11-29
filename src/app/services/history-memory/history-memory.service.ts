@@ -13,6 +13,7 @@ export class HistoryMemoryService {
 
   constructor(private router: Router, private location: AngularLocation) {
 
+    // listet router changes
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationStart)
@@ -37,11 +38,16 @@ export class HistoryMemoryService {
       });
 
   }
-
+  /**
+   * prüft und gibt an ob man nach vorne navigieren kann
+   */
   public getForwardState(): boolean {
     return this.distanceToCurrentStatePoint > 0;
   }
 
+  /**
+   * navigiert nach vorne
+   */
   public goForward(): void {
     if (!this.getForwardState()) {
       return;
@@ -50,10 +56,17 @@ export class HistoryMemoryService {
     this.goBackwards = false;
     this.location.forward();
   }
+
+  /**
+   * prüft und gibt an ob man nach hinten navigieren kann
+   */
   public getBackwardState(): boolean {
     return this.heightOfStateTree > 0;
   }
 
+  /**
+   * navigiert nach hinten
+   */
   public goBackward(): void {
     if (!this.getBackwardState()) {
       return;

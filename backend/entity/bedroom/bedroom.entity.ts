@@ -1,15 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
 import { Room } from '../_room/room.entity';
@@ -47,12 +37,19 @@ export class Bedroom extends BaseEntity {
 
   @ManyToOne(type => Venue, venue => venue.bedrooms, { eager: true })
   venue: Venue;
-  @RelationId((bedroom: Bedroom) => bedroom.venue)
-  venueId: number;
 
   @OneToMany(type => Participant, participant => participant.bedroom)
   roommates: Participant[];
 
+  /**
+   * METHODS
+   */
+  static getByVenue(searchId: number) {
+    // (this as any) fallback
+    return (this as any).createQueryBuilder('bedroom')
+      .where('bedroom.venueId = :id', { id: searchId })
+      .getMany();
+  }
 }
 
 const BedroomSchema: FormElement[] = [

@@ -1,15 +1,5 @@
 import { IsAlpha, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
@@ -74,8 +64,6 @@ export class Person extends BaseEntity {
 
   @ManyToOne(type => School, school => school.students, { eager: true })
   school: School;
-  @RelationId((person: Person) => person.school)
-  schoolId: number;
 
   @OneToMany(type => Participant, participant => participant.person)
   participantes: Participant[];

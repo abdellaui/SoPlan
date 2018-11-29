@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
@@ -52,11 +52,12 @@ export class ClassroomEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   regenarate(): void {
-    this.form_classroomInstance = new Classroom();
+    this.form_classroomInstance = Object.assign(new Classroom(), { venue: { id: null }, comments: [] });
     this.form_roomInstance = new Room();
     this.isLoaded = false;
   }
@@ -86,15 +87,14 @@ export class ClassroomEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignClassroom(classroom: Classroom): void {
-    classroom = Object.assign(classroom, { comments: [] }); // fallback for comments
     this.form_classroomInstance = Object.assign(this.form_classroomInstance, classroom);
     this.form_roomInstance = Object.assign(this.form_roomInstance, classroom.room);
-    this.selection_selectedIds = [this.form_classroomInstance.venueId];
+    this.selection_selectedIds = [this.form_classroomInstance.venue.id];
   }
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_classroomInstance.venueId > 0);
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_classroomInstance.venue.id > 0);
   }
 
   checkFinished(event: any, member: string) {
@@ -105,7 +105,7 @@ export class ClassroomEditorComponent implements OnInit {
 
 
   selectionSelected(event: number[]): void {
-    this.form_classroomInstance.venueId = (event && event.length) ? event[0] : null;
+    this.form_classroomInstance.venue.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
 
@@ -120,7 +120,7 @@ export class ClassroomEditorComponent implements OnInit {
     this.ipc.get('post/classroom', this.form_classroomInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
-        this.reassignClassroom(result);
+        this.router.navigateByUrl('/logged/classroom/editor/0/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

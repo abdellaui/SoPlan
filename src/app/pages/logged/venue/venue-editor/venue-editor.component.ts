@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
@@ -113,11 +113,12 @@ export class VenueEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   regenarate(): void {
-    this.form_venueInstance = new Venue();
+    this.form_venueInstance = Object.assign(new Venue(), { comments: [] }); // fallback
     this.form_comInstance = new Communication();
     this.form_locInstance = new Location();
     this.isLoaded = false;
@@ -141,7 +142,6 @@ export class VenueEditorComponent implements OnInit {
   }
 
   reassignVenue(venue: Venue): void {
-    venue = Object.assign(venue, { comments: [] }); // fallback for comments
     this.form_venueInstance = Object.assign(this.form_venueInstance, venue);
     this.form_comInstance = Object.assign(this.form_comInstance, venue.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
@@ -174,9 +174,8 @@ export class VenueEditorComponent implements OnInit {
 
     this.ipc.get('post/venue', this.form_venueInstance).then((result: any) => {
       if (result !== 0) {
-        console.log(result);
         this.toastr.info('Venue wurde erfolgreich gespeichert!');
-        this.reassignVenue(result);
+        this.router.navigateByUrl('/logged/venue/editor/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

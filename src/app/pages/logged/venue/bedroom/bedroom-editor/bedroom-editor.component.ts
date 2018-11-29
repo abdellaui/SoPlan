@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
@@ -52,11 +52,12 @@ export class BedroomEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   regenarate(): void {
-    this.form_bedroomInstance = new Bedroom();
+    this.form_bedroomInstance = Object.assign(new Bedroom(), { venue: { id: null }, comments: [] }); // fallback
     this.form_roomInstance = new Room();
     this.isLoaded = false;
   }
@@ -86,15 +87,14 @@ export class BedroomEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignBedroom(bedroom: Bedroom): void {
-    bedroom = Object.assign(bedroom, { comments: [] }); // fallback for comments
     this.form_bedroomInstance = Object.assign(this.form_bedroomInstance, bedroom);
     this.form_roomInstance = Object.assign(this.form_roomInstance, bedroom.room);
-    this.selection_selectedIds = [this.form_bedroomInstance.venueId];
+    this.selection_selectedIds = [this.form_bedroomInstance.venue.id];
   }
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_bedroomInstance.venueId > 0);
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_bedroomInstance.venue.id > 0);
   }
 
   checkFinished(event: any, member: string) {
@@ -105,7 +105,7 @@ export class BedroomEditorComponent implements OnInit {
 
 
   selectionSelected(event: number[]): void {
-    this.form_bedroomInstance.venueId = (event && event.length) ? event[0] : null;
+    this.form_bedroomInstance.venue.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
 
@@ -120,7 +120,7 @@ export class BedroomEditorComponent implements OnInit {
     this.ipc.get('post/bedroom', this.form_bedroomInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
-        this.reassignBedroom(result);
+        this.router.navigateByUrl('/logged/venue/editor/0/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

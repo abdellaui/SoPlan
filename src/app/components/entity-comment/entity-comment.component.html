@@ -13,7 +13,7 @@
         <div class="header-row right">
 
           <nb-actions size="medium">
-            <nb-action [disabled]="!selectedData.length" nbTooltip="Makierte Löschen" nbTooltipPlacement="left" icon="nb-trash"
+            <nb-action [disabled]="!selectedData.length" nbPopover="Makierte Löschen" nbPopoverMode="hover" icon="nb-trash"
               (click)="selectedData.length  && deleteAllSelected()">
             </nb-action>
           </nb-actions>

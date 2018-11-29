@@ -11,8 +11,10 @@ export class EntitySelectComponent implements OnInit {
   @Input() selectedIds: number[];
   @Input() settings: EntitySelectSettings;
   @Input() hasError: boolean;
+  @Input() readonly: boolean;
   @Output() selected: EventEmitter<number[]> = new EventEmitter();
 
+  private initialized = false;
   public inputValue: string;
   public backUpElements: any[];
   public elements: EntitySelectOption[];
@@ -89,12 +91,15 @@ export class EntitySelectComponent implements OnInit {
     this.elements
       .filter(el => (this.selectedIds.indexOf(el.id) > -1))
       .forEach(el => this.select(el));
+    this.initialized = true;
   }
 
   private getIndexOfId(element: any): number {
     return this.selectedElements.indexOf(element);
   }
 
+
+  // for html
   private containsId(element: any): boolean {
     return (this.getIndexOfId(element) > -1);
   }
@@ -102,15 +107,23 @@ export class EntitySelectComponent implements OnInit {
 
   search() {
 
+    /**
+     * TODO: better search engine
+     */
     this.transferToListItem(
       this.backUpElements.filter(element => {
-        return JSON.stringify(element).toLowerCase().includes(this.inputValue.toLowerCase());
+        return this.extractInformation(element, this.settings.listNameMembers)
+          .concat(
+            this.extractInformation(element, this.settings.listTitleMembers)
+          )
+          .join('').toLowerCase().includes(this.inputValue.toLowerCase());
       })
     );
 
   }
 
   select(element: any): void {
+    if (this.readonly && this.initialized) { return; }
     const possibleIndex = this.getIndexOfId(element);
     // doubleclick => remove
     if (possibleIndex > -1) {
