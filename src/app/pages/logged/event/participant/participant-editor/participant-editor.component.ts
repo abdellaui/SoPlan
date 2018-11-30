@@ -90,14 +90,14 @@ export class ParticipantEditorComponent implements OnInit {
   reassignGroup(bedroom: Bedroom): void {
     this.form_participantInstance = Object.assign(this.form_participantInstance, bedroom);
     this.event_selectedIds = [this.form_participantInstance.event.id];
-    this.classroom_selectedIds = [this.form_participantInstance.classroom.id];
+    this.classroom_selectedIds = [this.form_participantInstance.bedroom.id];
   }
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
     this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0
       && this.form_participantInstance.event.id > 0
-      && this.form_participantInstance.classroom.id > 0);
+      && this.form_participantInstance.bedroom.id > 0);
   }
 
   checkFinished(event: any, member: string) {
