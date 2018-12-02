@@ -13,12 +13,11 @@ export class Group extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   capacity: number;
 

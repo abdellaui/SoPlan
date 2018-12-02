@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
+import { IsAlpha, IsNotEmpty, IsOptional, MaxLength, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
@@ -20,23 +20,21 @@ export class Person extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
-  @IsAlpha()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsString({ message: 'Der Vorname ist nicht gültig' })
   @Column()
   firstname: string;
 
-  @IsNotEmpty()
-  @IsAlpha()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsString({ message: 'Der Name ist nicht gültig' })
   @Column()
   surname: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   birthDate: Date;
 
@@ -46,7 +44,6 @@ export class Person extends BaseEntity {
   // Lebensmittelausschlüsse
   // Umfasst auch Vegetarisch, Vegan, Halal
   @IsOptional()
-  @MaxLength(255)
   @Column({ nullable: true })
   foodIntolerance: string;
 

@@ -16,15 +16,14 @@ export class Event extends BaseEntity {
   id: number;
 
   @Column()
-  @MaxLength(255)
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   startsDate: Date = new Date();
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   endsDate: Date = new Date();
   /**

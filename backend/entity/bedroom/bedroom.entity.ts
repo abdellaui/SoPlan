@@ -22,7 +22,7 @@ export class Bedroom extends BaseEntity {
   @Column(type => Room)
   room: Room;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
 

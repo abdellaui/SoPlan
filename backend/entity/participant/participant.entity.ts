@@ -20,7 +20,7 @@ export class Participant extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ type: 'enum', enum: ParticipantRole })
   role: ParticipantRole;
 

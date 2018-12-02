@@ -18,7 +18,6 @@ export class Classroom extends BaseEntity {
 
   // interne Bezeichung des Zimmers
   @IsOptional()
-  @MaxLength(255)
   @Column({ nullable: true })
   identifier: string;
 
@@ -41,7 +40,7 @@ export class Classroom extends BaseEntity {
    */
 
   static getByVenue(searchId: number) {
-        // (this as any) fallback
+    // (this as any) fallback
     return (this as any).createQueryBuilder('classroom')
       .where('classroom.venueId = :id', { id: searchId })
       .getMany();

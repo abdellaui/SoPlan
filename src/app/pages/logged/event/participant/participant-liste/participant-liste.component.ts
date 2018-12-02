@@ -17,7 +17,7 @@ export class ParticipantListeComponent implements OnInit {
     settings: {
       header: 'Participant',
       showCreateButton: true,
-      createButtonText: 'Neue Bedroom'
+      createButtonText: 'Teilnehmer hinzufügen'
     },
     slotUrls: {
       getUrl: 'get/participant/all',
