@@ -1,8 +1,10 @@
 import { ViewChild, OnInit, ElementRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { PugToPdfConfig, PdfConfig } from '@models/configs.class';
 import { NbStepperComponent } from '@nebular/theme';
 import { ElectronService } from 'ngx-electron';
+import { IpcRendererService } from '../../../services/ipc-renderer/ipc-renderer.service';
 
 @Component({
   selector: 'app-certificate',
@@ -17,14 +19,19 @@ export class CertificateComponent implements OnInit {
   stepThreeForm: FormGroup;
   stepper: NbStepperComponent;
 
-  constructor(private fb: FormBuilder, private toastrServ: ToastrService, private electronService: ElectronService) {
+  private myPugConf: PugToPdfConfig = new PugToPdfConfig();
+
+  constructor(private fb: FormBuilder, private toastrServ: ToastrService, private electronService: ElectronService,
+    private ipc: IpcRendererService) {
   }
 
   ngOnInit() {
     this.stepOneForm = this.fb.group({
+      artBescheinigung: ['', Validators.required],
       nameVeranstaltung: ['', Validators.required],
       datumVeranstaltung: ['', Validators.required],
-      artBescheinigung: ['', Validators.required],
+      kurzerNameVeranstaltung: ['', Validators.required],
+      ortVeranstaltung: ['', Validators.required],
     });
 
     this.stepTwoForm = this.fb.group({
@@ -34,15 +41,27 @@ export class CertificateComponent implements OnInit {
     });
 
     this.stepThreeForm = this.fb.group({
-      filePath: ['', Validators.required],
-      urlSite: ['', Validators.required],
+      pdfFile: ['', Validators.required],
+      pugFile: ['', Validators.required],
+      htmlFile: ['', Validators.required],
     });
+
+    this.stepOneForm.get('nameVeranstaltung').setValue('Mathematischen Winterakademie');
+    this.stepOneForm.get('kurzerNameVeranstaltung').setValue('Winterakademie');
+    this.stepOneForm.get('datumVeranstaltung').setValue('07. bis 09. Dezember 2018');
+    this.stepOneForm.get('ortVeranstaltung').setValue('Wegberg');
+
+    this.stepThreeForm.get('pdfFile').setValue('D:/Studienprojekt/generated/student.pdf');
+    this.stepThreeForm.get('pugFile').setValue('D:/Studienprojekt/generated/certificateStudent.pug');
+    this.stepThreeForm.get('htmlFile').setValue('D:/Studienprojekt/generated/student.html');
   }
 
   onFirstClicked(stepper) {
     if ( 'VALID' === this.stepOneForm.get('nameVeranstaltung').status
+      &&  'VALID' === this.stepOneForm.get('kurzerNameVeranstaltung').status
       && 'VALID' === this.stepOneForm.get('datumVeranstaltung').status
-      && 'VALID' === this.stepOneForm.get('artBescheinigung').status) {
+      && 'VALID' === this.stepOneForm.get('artBescheinigung').status
+      &&  'VALID' === this.stepOneForm.get('ortVeranstaltung').status) {
         this.stepOneForm.markAsDirty();
         this.toastrServ.clear();
         stepper.next();
@@ -64,85 +83,45 @@ export class CertificateComponent implements OnInit {
   }
 
   onThirdSubmit() {
-    if ( 'VALID' === this.stepThreeForm.get('filePath').status
-      && 'VALID' === this.stepThreeForm.get('urlSite').status) {
+    if ( 'VALID' === this.stepThreeForm.get('pdfFile').status
+      && 'VALID' === this.stepThreeForm.get('pugFile').status
+      && 'VALID' === this.stepThreeForm.get('htmlFile').status) {
         this.stepThreeForm.markAsDirty();
         this.toastrServ.clear();
-
-        this.generatePDFfromURL(this.stepThreeForm.get('urlSite').value,
-          this.stepThreeForm.get('filePath').value);
+        this.toastrServ.info('Bitte warten.');
+        this.pugToPDF('a', 'b');
     } else {
+      this.toastrServ.clear();
       this.toastrServ.error('Bitte alle Felder ausfüllen.');
     }
   }
 
-  /**
-   * Lädt Website im neuen Fenster
-   * @param urlToLoad Website die geladen werden soll
-   * @param showWindow Soll das Fenster angezeigt werden
-   * @returns BrowserWindow: Fenster
-   */
-  createUrlBrowserWindow(urlToLoad, showWindow) {
-    const broswerWindow = new this.electronService.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow });
-    broswerWindow.loadURL(urlToLoad);
-    return broswerWindow;
-  }
+  pugToPDF(fileIn, filePathOut) {
+    this.myPugConf.filepathPug = this.stepThreeForm.get('pugFile').value;
+    this.myPugConf.filepathGeneratedHtml = this.stepThreeForm.get('htmlFile').value;
+    this.myPugConf.filepathGeneratedPdf = this.stepThreeForm.get('pdfFile').value;
+    this.myPugConf.pugConf = {
+      vorname: 'Marc',
+      nachname: 'Müller',
+      jahrgangsstufe: '10',
+      schulname: 'A-Schule',
+      schulort: 'B-Stadt',
+      veranstaltungsnamelangversion: this.stepOneForm.get('nameVeranstaltung').value,
+      veranstaltungsnamekurzversion: this.stepOneForm.get('kurzerNameVeranstaltung').value,
+      zeitraum: this.stepOneForm.get('datumVeranstaltung').value,
+      austragungsort: this.stepOneForm.get('ortVeranstaltung').value,
+    };
+    this.myPugConf.pdfConf = PdfConfig.defaultPdfSettings();
 
-  /**
-   * Lädt HtmlFile im neuen Fenster
-   * @param fileToLoad Datei die geladen werden soll
-   * @param showWindow Soll das Fenster angezeigt werden
-   * @returns BrowserWindow: Fenster
-   */
-  createFileBrowserWindow(fileToLoad, showWindow) {
-    const broswerWindow = new this.electronService.remote.BrowserWindow({ width: 800, height: 1500, show : showWindow  });
-    broswerWindow.loadFile(fileToLoad);
-    return broswerWindow;
-  }
-
-  /**
-   * Generiert eine PDF Datei aus der angegebenen Website
-   * @param urlSource URL der zu druckenden Seite
-   * @param filePath Pfad zum speichern e.g. "C:/name.pdf"
-   */
-  generatePDFfromURL(urlSource, filePath) {
-    function pdfSettings() {
-      const avaiblePaperSizes = ['A5', 'A4', 'A3', 'Legal', 'Letter', 'Tabloid'];
-      const option = {
-          marginsType: 0,
-          pageSize: avaiblePaperSizes[1],
-          printBackground: false,
-          printSelectionOnly: false,
-          landscape: false,
-      };
-      return option;
-    }
-    return this.generatePDF(this.createUrlBrowserWindow(urlSource, false), filePath, pdfSettings());
-  }
-
-  /**
-   * Druckt ein BrowserWindow aus.
-   * @param windowToPdf BrowserWindow welches ausgedruckt werden soll
-   * @param filePath Speicherort (erstmal so...)
-   */
-  generatePDF(pdfWindow, filePath, pdfSettings) {
-    const fs = require('fs');
-
-    pdfWindow.once('ready-to-show', () => {
-      pdfWindow.show();
-      // PDF erzeugen
-      pdfWindow.webContents.printToPDF(pdfSettings, function(err, data) {
-        if (err) {
-            console.error('Failed to generate file.');
-            return;
-        }
-        try {
-            fs.writeFileSync(filePath, data);
-        } catch (err) {
-            console.error('Failed to write file.');
-            return;
-        }
-      });
+    this.ipc.get<boolean>('convertPugToPdf', this.myPugConf).then(result => {
+      if (result) {
+        this.toastrServ.clear();
+        this.toastrServ.success('Fertig');
+      } else {
+        this.toastrServ.clear();
+        this.toastrServ.error('Fehlgeschlagen');
+      }
     });
+    console.error('invoked');
   }
 }
