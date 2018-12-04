@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Event, EventSchema } from '@entity/event/event.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
@@ -33,7 +33,9 @@ export class EventEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Ort',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/venue/editor/',
   };
 
 
@@ -43,11 +45,12 @@ export class EventEditorComponent implements OnInit {
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
     private toastr: ToastrService,
-    private currentEventService: CurrentEventService
+    private currentEventService: CurrentEventService,
+    private router: Router
   ) { }
 
   regenarate(): void {
-    this.form_eventInstance = new Event();
+    this.form_eventInstance = Object.assign(new Event(), { hosting: { id: null }, comments: [] }); // fallbacks
     this.isLoaded = false;
   }
 
@@ -70,7 +73,7 @@ export class EventEditorComponent implements OnInit {
 
   reassignEvent(event: Event): void {
     this.form_eventInstance = Object.assign(this.form_eventInstance, event);
-    this.selection_selectedIds = [this.form_eventInstance.hostingId];
+    this.selection_selectedIds = [this.form_eventInstance.hosting.id];
   }
 
   checkFinished(event: any, member: string) {
@@ -83,10 +86,10 @@ export class EventEditorComponent implements OnInit {
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_eventInstance.hostingId > 0);
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_eventInstance.hosting.id > 0);
   }
   selectionSelected(event: number[]): void {
-    this.form_eventInstance.hostingId = (event && event.length) ? event[0] : null;
+    this.form_eventInstance.hosting.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
   save(): void {
@@ -95,12 +98,11 @@ export class EventEditorComponent implements OnInit {
     }
 
 
-
     this.ipc.get('post/event', this.form_eventInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
-        this.reassignEvent(result);
         this.currentEventService.refreshEvents();
+        this.router.navigateByUrl('/logged/event/editor/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

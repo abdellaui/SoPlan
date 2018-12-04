@@ -9,6 +9,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '@components/components.module';
 import { NbDateFnsDateModule, NbDateFnsDateService } from '@nebular/date-fns';
 import {
@@ -38,7 +39,7 @@ import { AppComponent } from './app.component';
     Ng2SmartTableModule,
     // route
     AppRoutingModule,
-
+    RouterModule,
     NbDateFnsDateModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbDatepickerModule.forRoot(),

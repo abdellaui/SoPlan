@@ -20,23 +20,24 @@ export function init() {
     });
   });
 
-
-  on('get/classroom/by/venueId', (event: any, arg: number) => {
-    Classroom.getRepository()
-      .createQueryBuilder('classroom')
-      .where('classroom.venueId = :id', { id: arg })
-      .getMany().then((result: Classroom[]) => {
-        send(event, 'get/classroom/by/venueId', result);
-      }).catch(e => {
-        send(event, 'get/classroom/by/venueId', 0);
-      });
-  });
-
   on('post/classroom', (event: any, arg: any) => {
     Classroom.create(arg).save().then((result: Classroom) => {
       send(event, 'post/classroom', result);
     }).catch(e => {
       send(event, 'post/classroom', 0);
+    });
+  });
+
+
+  /**
+   * END DEFAULT SLOTS
+   */
+
+  on('get/classroom/by/venueId', (event: any, arg: number) => {
+    Classroom.getByVenue(arg).then((result: Classroom[]) => {
+      send(event, 'get/classroom/by/venueId', result);
+    }).catch(e => {
+      send(event, 'get/classroom/by/venueId', 0);
     });
   });
 }

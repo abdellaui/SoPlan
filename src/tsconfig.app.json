@@ -4,7 +4,30 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "",
-    "types": []
+    "types": [],
+    "paths": {
+      "typeorm": [
+        "../node_modules/typeorm/typeorm-class-transformer-shim.js",
+      ],
+      "@entity/*": [
+        "../backend/entity/*"
+      ],
+      "@models/*": [
+        "../backend/models/*"
+      ],
+      "@components/*": [
+        "./app/components/*"
+      ],
+      "@guards/*": [
+        "./app/guards/*"
+      ],
+      "@pages/*": [
+        "./app/pages/*"
+      ],
+      "@services/*": [
+        "./app/services/*"
+      ],
+    }
   },
   "exclude": [
     "**/*.spec.ts"

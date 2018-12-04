@@ -15,8 +15,8 @@
 
       <!-- Venue -->
 
-      <app-entity-select (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_setttins"
-        [hasError]="!this.form_bedroomInstance.venueId"></app-entity-select>
+      <app-entity-select [readonly]="this.form_bedroomInstance.id" (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds"
+        [settings]="selection_setttins" [hasError]="!this.form_bedroomInstance.venue.id"></app-entity-select>
 
     </div>
 

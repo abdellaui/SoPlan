@@ -3,9 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticationGuard } from '../../guards/authentication/authentication.guard';
 import { CertificateComponent } from './certificate/certificate.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EinstellungenComponent } from './einstellungen/einstellungen.component';
 import { EventEditorComponent } from './event/event-editor/event-editor.component';
 import { EventListeComponent } from './event/event-liste/event-liste.component';
+import { GroupEditorComponent } from './event/group/group-editor/group-editor.component';
+import { GroupListeComponent } from './event/group/group-liste/group-liste.component';
+import { ParticipantEditorComponent } from './event/participant/participant-editor/participant-editor.component';
+import { ParticipantListeComponent } from './event/participant/participant-liste/participant-liste.component';
 import { LoggedComponent } from './logged.component';
 import { PersonEditorComponent } from './person/person-editor/person-editor.component';
 import { PersonListeComponent } from './person/person-liste/person-liste.component';
@@ -25,6 +30,10 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
     canActivateChild: [AuthenticationGuard],
     children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
       {
         path: 'einstellungen',
         component: EinstellungenComponent
@@ -78,9 +87,29 @@ const routes: Routes = [
         component: EventListeComponent
       },
       {
+        path: 'event/group/editor/:eventId/:id',
+        component: GroupEditorComponent
+      },
+      {
+        path: 'event/group/list',
+        component: GroupListeComponent
+      },
+      {
+        path: 'event/participant/editor/:eventId/:id',
+        component: ParticipantEditorComponent
+      },
+      {
+        path: 'event/participant/list',
+        component: ParticipantListeComponent
+      },
+      {
         path: 'certificate',
         component: CertificateComponent
-      }
+      },
+      {
+        path: '**',
+        redirectTo: 'dashboard'
+      },
     ]
   }
 ];

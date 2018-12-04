@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { EinstellungMailComponent } from '@components/einstellung-mail/einstellung-mail.component';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import {
@@ -16,6 +17,7 @@ import {
   NbLayoutModule,
   NbListModule,
   NbMenuModule,
+  NbPopoverModule,
   NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
@@ -65,6 +67,7 @@ const nebularModules = [
   NbRadioModule,
   NbActionsModule,
   NbUserModule,
+  NbPopoverModule,
   NbInputModule,
   NbListModule,
   NbDatepickerModule,
@@ -85,6 +88,7 @@ const nebularModules = [
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     ...nebularModules,
     Ng2SmartTableModule,
     NbDateFnsDateModule,

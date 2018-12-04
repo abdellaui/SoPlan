@@ -1,15 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
 import { Room } from '../_room/room.entity';
@@ -32,7 +22,7 @@ export class Bedroom extends BaseEntity {
   @Column(type => Room)
   room: Room;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
 
@@ -48,12 +38,18 @@ export class Bedroom extends BaseEntity {
   @ManyToOne(type => Venue, venue => venue.bedrooms, { eager: true })
   venue: Venue;
 
-  @RelationId((bed_room: Bedroom) => bed_room.venue)
-  venueId: number;
-
   @OneToMany(type => Participant, participant => participant.bedroom)
   roommates: Participant[];
 
+  /**
+   * METHODS
+   */
+  static getByVenue(searchId: number) {
+    // (this as any) fallback
+    return (this as any).createQueryBuilder('bedroom')
+      .where('bedroom.venueId = :id', { id: searchId })
+      .getMany();
+  }
 }
 
 const BedroomSchema: FormElement[] = [
@@ -63,7 +59,7 @@ const BedroomSchema: FormElement[] = [
     element: new RadioButton([
       new Option('Schüler', BedroomTypes.SCHUELER),
       new Option('Dozent', BedroomTypes.DOZENT),
-      new Option('<i>gesperrt</i>', BedroomTypes.GESPERRT),
+      new Option('gesperrt', BedroomTypes.GESPERRT),
     ])
   }
 ];

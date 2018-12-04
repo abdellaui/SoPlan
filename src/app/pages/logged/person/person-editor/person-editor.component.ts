@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
@@ -49,7 +49,9 @@ export class PersonEditorComponent implements OnInit {
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
     header: 'Schule',
-    maxSelection: 1
+    maxSelection: 1,
+    showCreateButton: true,
+    editorUrl: '/logged/school/editor/',
   };
 
 
@@ -59,11 +61,13 @@ export class PersonEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   regenarate(): void {
-    this.form_personInstance = new Person();
+    this.form_personInstance = Object.assign(new Person(), { school: { id: null }, comments: [] }); // fallbacks
+
     this.form_comInstance = new Communication();
     this.form_locInstance = new Location();
     this.isLoaded = false;
@@ -93,11 +97,10 @@ export class PersonEditorComponent implements OnInit {
    */
   reassignPerson(person: Person): void {
     person.birthDate = new Date(person.birthDate);
-    console.log(person);
     this.form_personInstance = Object.assign(this.form_personInstance, person);
     this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, person.location);
-    this.selection_selectedIds = [this.form_personInstance.schoolId];
+    this.selection_selectedIds = [this.form_personInstance.school.id];
   }
 
   public checkFinished(event: any, member: string) {
@@ -109,7 +112,7 @@ export class PersonEditorComponent implements OnInit {
   }
 
   selectionSelected(event: number[]): void {
-    this.form_personInstance.schoolId = (event && event.length) ? event[0] : null;
+    this.form_personInstance.school.id = (event && event.length) ? event[0] : null;
   }
 
   save(): void {
@@ -124,7 +127,7 @@ export class PersonEditorComponent implements OnInit {
     this.ipc.get('post/person', this.form_personInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Person wurde erfolgreich gespeichert!');
-        this.reassignPerson(result);
+        this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

@@ -45,7 +45,7 @@ app.on('second-instance', (event, commandLine, workingDirectory) => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
-      }
+    }
     mainWindow.focus();
   }
 });

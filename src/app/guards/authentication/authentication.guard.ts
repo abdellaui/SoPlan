@@ -68,7 +68,6 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   }
 
   canLoad(route: Route): boolean {
-    console.log(route);
     if (this.hasRight()) {
       return true;
     } else {

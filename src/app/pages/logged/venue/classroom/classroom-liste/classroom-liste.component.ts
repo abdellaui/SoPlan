@@ -12,9 +12,9 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class ClassroomListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Bedroomliste',
+      header: 'Classroom liste',
       showCreateButton: true,
-      createButtonText: 'Neue Bedroom'
+      createButtonText: 'Neue Classroom'
     },
     slotUrls: {
       getUrl: 'get/classroom/all',

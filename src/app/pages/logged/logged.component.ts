@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Event } from '@entity/event/event.entity';
-import { NB_WINDOW, NbMenuService, NbSidebarService } from '@nebular/theme';
+import { NbSidebarService } from '@nebular/theme';
 import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 
 @Component({
   selector: 'app-logged',
@@ -13,10 +14,9 @@ export class LoggedComponent implements OnInit {
   currentItem: Event;
   defaultEvent = <Event>{ name: 'keine Veranstaltung', hosting: { name: 'bitte wähle eine Veranstaltung' } };
   constructor(
-    private nbMenuService: NbMenuService,
-    @Inject(NB_WINDOW) private window,
     private sidebarService: NbSidebarService,
-    private currentEventsService: CurrentEventService) {
+    private currentEventsService: CurrentEventService,
+    private historyMemory: HistoryMemoryService) {
 
     this.updateItems();
     this.currentEventsService.newEvents.subscribe(() => {
@@ -53,5 +53,19 @@ export class LoggedComponent implements OnInit {
   public toggleRight(): boolean {
     this.sidebarService.toggle(false, 'right');
     return false;
+  }
+
+  public canNotGoForward(): boolean {
+    return !this.historyMemory.getForwardState();
+  }
+  public goHistoryForward(): void {
+    this.historyMemory.goForward();
+  }
+
+  public canNotGoBackward(): boolean {
+    return !this.historyMemory.getBackwardState();
+  }
+  public goHistoryBackward(): void {
+    this.historyMemory.goBackward();
   }
 }

@@ -59,6 +59,9 @@ export class FormBuilderComponent implements OnInit, OnChanges {
     const currentErros = {};
 
     for (const error of errors) {
+      /**
+       * TODO: German lookup table for error
+       */
       this.errorHistory[error.property] = Object.values(error.constraints).join(', ');
       currentErros[error.property] = true;
     }

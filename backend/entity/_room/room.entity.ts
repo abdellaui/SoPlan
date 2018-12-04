@@ -10,7 +10,7 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Room {
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @IsAscii()
   @Column()
   floor: string;
@@ -19,7 +19,7 @@ export class Room {
   @Column({ nullable: true })
   corridor: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   number: number;
 
@@ -27,7 +27,7 @@ export class Room {
   @Column({ nullable: true })
   name: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   capacity: number;
 

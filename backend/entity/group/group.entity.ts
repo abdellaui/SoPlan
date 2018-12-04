@@ -1,15 +1,5 @@
 import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationId,
-} from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Classroom } from '../classroom/classroom.entity';
@@ -23,13 +13,11 @@ export class Group extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   name: string;
 
-  @IsNotEmpty()
-  @IsPositive()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   capacity: number;
 
@@ -43,16 +31,12 @@ export class Group extends BaseEntity {
 
   @ManyToOne(type => Classroom, classroom => classroom.groups, { eager: true })
   classroom: Classroom;
-  @RelationId((group: Group) => group.classroom)
-  classroomId: number;
 
   @OneToMany(type => Participant, participant => participant.group)
   members: Participant[];
 
   @ManyToOne(type => Event, event => event.groups, { eager: true })
   event: Event;
-  @RelationId((group: Group) => group.event)
-  eventId: number;
 }
 
 const GroupSchema: FormElement[] = [

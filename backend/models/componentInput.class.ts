@@ -14,6 +14,9 @@ export interface EntitySelectSettings {
   maxSelection?: number;
   seperatorName?: string;
   seperatorTitle?: string;
+  createButtonText?: string;
+  showCreateButton?: boolean;
+  editorUrl?: string;
 }
 
 export interface FormBuilderSettings {

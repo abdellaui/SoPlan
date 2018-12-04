@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
@@ -42,11 +42,12 @@ export class SchoolEditorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private router: Router) {
   }
 
   regenarate(): void {
-    this.form_schoolInstance = new School();
+    this.form_schoolInstance = Object.assign(new School(), { comments: [] }); // fallbacks
     this.form_locInstance = new Location();
     this.isLoaded = false;
   }
@@ -92,7 +93,7 @@ export class SchoolEditorComponent implements OnInit {
     this.ipc.get('post/school', this.form_schoolInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('SChule wurde erfolgreich gespeichert!');
-        this.reassignSchool(result);
+        this.router.navigateByUrl('/logged/school/editor/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

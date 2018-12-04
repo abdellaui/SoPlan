@@ -1,4 +1,7 @@
 import { on, send } from '../../slots';
+import { Bedroom } from '../bedroom/bedroom.entity';
+import { Classroom } from '../classroom/classroom.entity';
+import { Group } from '../group/group.entity';
 import { Event } from './event.entity';
 
 export function init() {
@@ -26,6 +29,35 @@ export function init() {
       send(event, 'post/event', result);
     }).catch(e => {
       send(event, 'post/event', 0);
+    });
+
+  });
+
+  /**
+   * END DEFAULT SLOTS
+   */
+
+  on('get/event/classrooms', (event: any, arg: { id: number }) => {
+    Event.getAllClassrooms(arg.id).then((result: Classroom[]) => {
+      send(event, 'get/event/classrooms', result);
+    }).catch(e => {
+      send(event, 'get/event/classrooms', 0);
+    });
+  });
+
+  on('get/event/bedrooms', (event: any, arg: { id: number }) => {
+    Event.getAllBedrooms(arg.id).then((result: Bedroom[]) => {
+      send(event, 'get/event/bedrooms', result);
+    }).catch(e => {
+      send(event, 'get/event/bedrooms', 0);
+    });
+  });
+
+  on('get/event/groups', (event: any, arg: { id: number }) => {
+    Event.getAllGroups(arg.id).then((result: Group[]) => {
+      send(event, 'get/event/groups', result);
+    }).catch(e => {
+      send(event, 'get/event/groups', 0);
     });
   });
 }

@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, IsNumberString, MaxLength } from 'class-validator';
+import { IsAlpha, IsNotEmpty, IsNumberString, MaxLength, IsAlphanumeric, IsString } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -10,32 +10,26 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Location {
 
-  @IsNotEmpty()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   street: string;
 
   // Hausnummer
-  @IsNotEmpty()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   subThoroughfare: string;
 
-  @IsNotEmpty()
-  @IsNumberString()
-  @MaxLength(5)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNumberString({ message: 'Nur DE PLZ zulässig' })
+  @MaxLength(5, { message: 'PLZ besteht aus 5 Ziffern' })
   @Column()
   postalcode: string;
 
-  @IsNotEmpty()
-  @IsAlpha()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column()
   city: string;
 
-  @IsNotEmpty()
-  @IsAlpha()
-  @MaxLength(255)
+  @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ default: 'Deutschland' })
   // tslint:disable-next-line:no-inferrable-types
   country: string = 'Deutschland';

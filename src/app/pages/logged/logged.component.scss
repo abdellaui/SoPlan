@@ -1,12 +1,6 @@
 :host {
-    .menuToggle {
-        font-size: 3rem;
-        width: 3rem;
-        display: block;
-        text-align: left;
-        text-decoration: none;
-        color: #a4abb3;
-        margin-left: -1rem;
+    .menuActions {
+        margin-left: -25px;
     }
     nb-layout-column {
         min-height: 50vw;

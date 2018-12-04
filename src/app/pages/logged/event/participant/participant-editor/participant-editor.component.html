@@ -1,0 +1,37 @@
+<div *ngIf="isLoaded">
+  <div class="row">
+    <!-- Group -->
+    <div class="{{this.form_participantInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+
+      <app-form-builder [write]="form_participantInstance" [schema]="form_groupSchema" [settings]="form_groupSettings"
+        (finished)="checkFinished($event, 'participant')"></app-form-builder>
+
+
+
+      <!-- Event -->
+
+      <app-entity-select (selected)="eventSelected($event)" [selectedIds]="event_selectedIds" [settings]="selection_event_settings"
+        [hasError]="!this.form_participantInstance.event.id"></app-entity-select>
+
+      <!-- Person -->
+
+      <app-entity-select *ngIf="this.form_participantInstance.event.id" (selected)="personSelected($event)"
+        [selectedIds]="person_selectedIds" [settings]="selection_person_settings" [hasError]="!this.form_participantInstance.person.id"></app-entity-select>
+
+    </div>
+
+    <div class="col-lg-6">
+      <app-entity-comment entityPostUrl="post/participant" [entity]="form_participantInstance"></app-entity-comment>
+    </div>
+
+
+  </div>
+  <nb-card>
+    <nb-card-body>
+
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="save()">speichern</button>
+
+
+    </nb-card-body>
+  </nb-card>
+</div>

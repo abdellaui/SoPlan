@@ -9,21 +9,31 @@
 
         <nb-actions size="medium">
 
-          <nb-action [disabled]="!selectedData.length" nbTooltip="Makierte Löschen" nbTooltipPlacement="left" icon="nb-trash"
+          <nb-action [disabled]="!selectedData.length" nbPopover="Makierte Löschen" nbPopoverMode="hover" icon="nb-trash"
             (click)="selectedData.length  && deleteAllSelected()">
           </nb-action>
 
           <nb-action *ngFor="let action of config.customActions" [disabled]="!selectedData.length" [icon]="action.icon"
-            [nbTooltip]="action.tooltip" nbTooltipPlacement="left" (click)="selectedData.length && onCustomActionClicked(action.name)"></nb-action>
+            [nbPopover]="action.tooltip" nbPopoverMode="hover" (click)="selectedData.length && onCustomActionClicked(action.name)"></nb-action>
 
           <!-- if settings allow to create new instance-->
-          <nb-action *ngIf="config.settings.showCreateButton" [nbTooltip]="config.settings.createButtonText"
-            nbTooltipPlacement="left" routerLink="{{config.slotUrls.editorUrl}}0" icon="nb-plus-circled"></nb-action>
+          <nb-action *ngIf="config.settings.showCreateButton" [nbPopover]="config.settings.createButtonText"
+            nbPopoverMode="hover" routerLink="{{config.slotUrls.editorUrl}}0" icon="nb-plus-circled"></nb-action>
         </nb-actions>
       </div>
     </div>
   </nb-card-header>
-  <nb-card-body>
+  <nb-card-body *ngIf="!loadedFirstTime">
+    <div style="position: relative;height: 200px;" class="spinner">
+      <div class="blob blob-0"></div>
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="blob blob-4"></div>
+      <div class="blob blob-5"></div>
+    </div>
+  </nb-card-body>
+  <nb-card-body *ngIf="loadedFirstTime">
     <ng2-smart-table (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
       (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>

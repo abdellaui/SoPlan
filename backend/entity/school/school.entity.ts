@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, MaxLength } from 'class-validator';
+import { IsAlpha, IsNotEmpty, MaxLength, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -12,9 +12,8 @@ export class School extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty()
-  @MaxLength(255)
-  @IsAlpha()
+  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsString({ message: 'Der Name ist nicht gültig' })
   @Column()
   name: string;
 
