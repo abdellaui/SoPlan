@@ -52,3 +52,4 @@ Thumbs.db
 
 /doc
 .vscode/settings.json
+yarn.lock

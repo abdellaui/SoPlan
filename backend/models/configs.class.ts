@@ -105,3 +105,47 @@ const MailConfigSchema: FormElement[] = [
   }
 ];
 export { MailConfigSchema };
+
+export class PugConfig {
+  public filepath: string;
+  public outputpath: string;
+  public config: {};
+
+  constructor(filepath, outputpath, config) {
+    this.filepath = filepath;
+    this.outputpath = outputpath;
+    this.config = config;
+  }
+}
+
+export class PdfConfig {
+  public filepath: string;
+  public outputpath: string;
+  public config: {};
+
+  constructor(filepath, outputpath, config) {
+    this.filepath = filepath;
+    this.outputpath = outputpath;
+    this.config = config;
+  }
+
+  public static defaultPdfSettings() {
+    const avaiblePaperSizes = ['A5', 'A4', 'A3', 'Legal', 'Letter', 'Tabloid'];
+    const option = {
+        marginsType: 0,
+        pageSize: avaiblePaperSizes[1],
+        printBackground: false,
+        printSelectionOnly: false,
+        landscape: false,
+    };
+    return option;
+  }
+}
+
+export class PugToPdfConfig {
+  public filepathPug: string;
+  public filepathGeneratedHtml: string;
+  public filepathGeneratedPdf: string;
+  public pugConf: {};
+  public pdfConf: {};
+}

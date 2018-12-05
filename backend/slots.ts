@@ -26,7 +26,6 @@ export function isExpressServer(): Boolean {
  */
 
 export function on(channel: string, callback: Function): any {
-
   if (isExpressServer()) {
     return expressServer.post('/' + channel, (req: any, res: any) => {
       callback(res, req.body);

@@ -15,19 +15,35 @@
             </nb-select>
           <p></p>
           <p class="certificationName">
-              Wie heißt die Veranstaltung?
+              Wie heißt die Veranstaltung? (lange Version)
           </p>
           <div class="input-group">
             <input type="text" placeholder="Name" class="form-control" formControlName="nameVeranstaltung"
                    [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
+          <p class="certificationShortName">
+            Wie wird die Veranstaltung abgekürzt? (kurze Version des Namens)
+          </p>
+          <div class="input-group">
+            <input type="text" placeholder="Name" class="form-control" formControlName="kurzerNameVeranstaltung"
+                  [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+          </div>
+          <p></p>
           <p class="certificationDate">
-              In welchem Zeitraum wurde sie ausgetragen?
+              In welchem Zeitraum wurde sie ausgetragen? (Textversion)
           </p>
           <div class="input-group">
             <input type="text" placeholder="Zeitraum" class="form-control" formControlName="datumVeranstaltung"
                    [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+          </div>
+          <p></p>
+          <p class="certificationPlace">
+            Wo wurde sie ausgetragen? (Stadt/Ort)
+          </p>
+          <div class="input-group">
+            <input type="text" placeholder="Zeitraum" class="form-control" formControlName="ortVeranstaltung"
+                  [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
           <button (click)="onFirstClicked(stepper)" nbButton>Weiter</button>
@@ -63,15 +79,26 @@
       <nb-step [stepControl]="stepThreeControl" label="Speichern">
         <form [formGroup]="stepThreeForm" class="step-container">
           <p class="saveAs">
-            Speicherort...
+            Speicherort für das generierte PDF.
           </p>
           <div class="input-group">
-            <input type="text" placeholder="Dateipfad (like C:/Hello/filename.pdf)" class="form-control" formControlName="filePath"
+            <input type="text" placeholder="Dateipfad (like C:/Hello/filename.pdf)" class="form-control" formControlName="pdfFile"
                    [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
           </div>
           <p></p>
+          <p class="loadFrom">
+            Speicherort des pug files.
+          </p>
           <div class="input-group">
-            <input type="text" placeholder="Url (Testweise: https://url.de)" class="form-control" formControlName="urlSite"
+            <input type="text" placeholder=".../name.pug" class="form-control" formControlName="pugFile"
+                   [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
+          </div>
+          <p></p>
+          <p class="htmlTo">
+            Speicherort für die html-Datei.
+          </p>
+          <div class="input-group">
+            <input type="text" placeholder=".../name.html" class="form-control" formControlName="htmlFile"
                    [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
           </div>
           <p></p>
