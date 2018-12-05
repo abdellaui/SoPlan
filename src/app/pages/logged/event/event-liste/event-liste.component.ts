@@ -23,8 +23,8 @@ export class EventListeComponent implements OnInit {
       editorUrl: '/logged/event/editor/'
     },
     instanceMap: {
-      '': new Event(),
-      'hosting@': new Venue(),
+      '': Event.prototype,
+      'hosting@': Venue.prototype
     },
     memberList: [
       {

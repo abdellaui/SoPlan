@@ -1,7 +1,7 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
+import { FormElement, Input, Option, RadioButton } from '../../models/formBuilder.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
@@ -22,7 +22,12 @@ export class Participant extends BaseEntity {
 
   @IsNotEmpty({ message: 'Pflichtfeld' })
   @Column({ type: 'enum', enum: ParticipantRole })
-  role: ParticipantRole;
+  role: ParticipantRole = ParticipantRole.SCHUELER;
+
+  @IsOptional()
+  @IsInt({ message: 'Zahl' })
+  @Column({ nullable: true })
+  grade: number;
 
   /**
    * RELATIONS
@@ -58,6 +63,11 @@ const ParticipantSchema: FormElement[] = [
       new Option('Dozent', ParticipantRole.DOZENT),
       new Option('Schülerdozent', ParticipantRole.SCHUELERDOZENT),
     ])
+  },
+  {
+    name: 'Klassenstufe',
+    member: 'grade',
+    element: new Input('number')
   }
 ];
 

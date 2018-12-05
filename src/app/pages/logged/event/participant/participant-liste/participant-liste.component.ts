@@ -26,11 +26,11 @@ export class ParticipantListeComponent implements OnInit {
       editorUrl: '/logged/event/participant/editor/0/'
     },
     instanceMap: {
-      '': new Participant(),
-      'person': new Person(),
-      'group': new Group(),
-      'bedroom': new Bedroom(),
-      'event': new Event(),
+      '': Participant.prototype,
+      'person': Person.prototype,
+      'group': Group.prototype,
+      'bedroom': Bedroom.prototype,
+      'event': Event.prototype
     },
     memberList: [
       {

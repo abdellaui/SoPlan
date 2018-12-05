@@ -53,6 +53,7 @@
     "class-transformer": "^0.2.0",
     "class-validator": "^0.9.1",
     "date-fns": "^1.29.0",
+    "deepmerge": "^3.0.0",
     "devtron": "^1.4.0",
     "electron-settings": "^3.2.0",
     "express": "^4.16.4",

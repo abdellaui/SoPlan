@@ -23,9 +23,9 @@ export class ClassroomListeComponent implements OnInit {
       editorUrl: '/logged/venue/classroom/editor/0/'
     },
     instanceMap: {
-      '': new Classroom(),
-      'room': new Room(),
-      'venue': new Venue()
+      '': Classroom.prototype,
+      'room': Room.prototype,
+      'venue': Venue.prototype
     },
     memberList: [
       {

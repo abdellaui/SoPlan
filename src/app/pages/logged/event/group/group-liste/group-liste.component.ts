@@ -24,10 +24,10 @@ export class GroupListeComponent implements OnInit {
       editorUrl: '/logged/event/group/editor/0/'
     },
     instanceMap: {
-      '': new Group(),
-      'event': new Event(),
-      'classroom': new Classroom(),
-      'room': new Room()
+      '': Group.prototype,
+      'event': Event.prototype,
+      'classroom': Classroom.prototype,
+      'room': Room.prototype,
     },
     memberList: [
       {

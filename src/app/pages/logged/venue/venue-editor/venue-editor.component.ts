@@ -63,8 +63,8 @@ export class VenueEditorComponent implements OnInit {
       getParam: 0
     },
     instanceMap: {
-      '': new Bedroom(),
-      'room': new Room()
+      '': Bedroom.prototype,
+      'room': Room.prototype
     },
     memberList: [
       {
@@ -93,8 +93,8 @@ export class VenueEditorComponent implements OnInit {
       getParam: 0
     },
     instanceMap: {
-      '': new Classroom(),
-      'room': new Room()
+      '': Classroom.prototype,
+      'room': Room.prototype
     },
     memberList: [
       {

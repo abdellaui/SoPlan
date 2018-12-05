@@ -23,9 +23,9 @@ export class BedroomListeComponent implements OnInit {
       editorUrl: '/logged/venue/bedroom/editor/0/'
     },
     instanceMap: {
-      '': new Bedroom(),
-      'room': new Room(),
-      'venue': new Venue()
+      '': Bedroom.prototype,
+      'room': Room.prototype,
+      'venue': Venue.prototype,
     },
     memberList: [
       {

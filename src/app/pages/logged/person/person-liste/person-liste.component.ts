@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Communication, CommunicationSchema } from '@entity/_communication/communicaton.entity';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
+import { Participant, ParticipantSchema } from '@entity/participant/participant.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-person-liste',
@@ -24,9 +28,9 @@ export class PersonListeComponent implements OnInit {
       editorUrl: '/logged/person/editor/'
     },
     instanceMap: {
-      '': new Person(),
-      'location': new Location(),
-      'communication': new Communication()
+      '': Person.prototype,
+      'location': Location.prototype,
+      'communication': Communication.prototype,
     },
     memberList: [
       {
@@ -54,12 +58,108 @@ export class PersonListeComponent implements OnInit {
         schema: CommunicationSchema,
         members: ['mail']
       },
+    ],
+    customActions: [
+      {
+        name: 'add_participant',
+        icon: 'nb-plus',
+        tooltip: 'Teilnehmer erstellen'
+      }
     ]
   };
 
-  constructor() { }
+
+  public form_participantSchema = ParticipantSchema;
+  public selectedPerson: Participant[] = [];
+  public rememberReadyStatus = {};
+  public readyToSave = false;
+
+  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) { }
 
   ngOnInit() {
+  }
+
+
+  /**
+   * Erstellt ein Lookup Table für jedes Formular um im Nachhinein überprüfen zu können, ob alle Formulare Validierung passieren konnten
+   * @param event boolean: sagt aus ob ein formular validierung passieren konnnte
+   * @param member identiefiziert formular
+   */
+  checkFinished(event: any, member: string) {
+    // event gibt an obs error hat
+    this.rememberReadyStatus[member] = event;
+
+    this.updateReadyToSave();
+  }
+
+  /**
+   * Updated bool, welches angibt das jedes Formular valide ist => button anzeigen und trigger akzeptieren
+   */
+  updateReadyToSave(): void {
+    // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0);
+  }
+
+  /**
+   * für jeden Eintrag in selectedPerson (type: Participant) wird Slot zum Einfügen aufgerufen
+   */
+  addParticipants(): void {
+    if (!this.readyToSave) {
+      return;
+    }
+
+    this.selectedPerson.forEach((parti: Participant) => {
+      this.ipc.send('post/participant', parti);
+    });
+    this.toastr.success('Okey go back bitch!');
+    this.backToTableView();
+  }
+
+  /**
+   * löscht lookup table für validation und zwischenspeicher von selection => keine selection => table anzeigen
+   */
+  backToTableView(): void {
+    this.selectedPerson = [];
+    this.rememberReadyStatus = {};
+  }
+
+  /**
+   * falls zwischenspeicher einträge hat => wächsle zur andere view
+   */
+  showParticipantAddingView(): boolean {
+    return (this.selectedPerson.length > 0);
+  }
+
+  /**
+   * Personen werden zur Teilnehmer
+   * @param data  array von Person
+   */
+  personToParticipant(data: Person[]): void {
+    this.selectedPerson = data.map((person: Person) => {
+      const parti = new Participant();
+
+      /*
+       robin du kannst dich hier austobben!
+       parti.grade = 1
+       */
+      parti.person = person;
+      parti.event = this.currentEventService.getEvent();
+      return parti;
+    });
+  }
+
+  /**
+   * listet ob custom actions von smart table getriggert wurden
+   * @param event  {action:string , data: any[]} => action gibt custom action name an
+   * siehe this.st_config.customAction, data enthält selection
+   */
+  onCustomAction(event: any): void {
+    if (this.currentEventService.getEvent() === null) {
+      return window.alert('Halt stopp! Erst einmal Veranst. wählen!');
+    }
+    if (event.action === 'add_participant') {
+      this.personToParticipant(event.data);
+    }
   }
 
 }

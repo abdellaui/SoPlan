@@ -12,7 +12,10 @@ export class RadiobuttonComponent implements OnInit {
   @Input() value: any;
   @Input() error: boolean;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  public uniqueName: string;
+  constructor() {
+    this.uniqueName = Math.random().toString() + '_' + new Date().getTime().toString() + '_' + Math.random().toString();
+  }
 
   ngOnInit() {
   }

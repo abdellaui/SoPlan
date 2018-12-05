@@ -4,6 +4,7 @@ import { SmartTableConfig } from '@models/componentInput.class';
 import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
+import * as Deepmerge from 'deepmerge';
 
 import { DateRendererComponent } from './date-renderer/date-renderer.component';
 
@@ -183,24 +184,30 @@ export class TableComponent implements OnInit {
   }
 
   /**
-   * die smart table datenstruktur wird dem ursprünglichem entät struktur zugewiesen
+   * die smart table datenstruktur wird dem ursprünglichem entität struktur zugewiesen
    * @param column enthält die smart table datenstruktur
    */
   dataToEntity(column: any): any {
+
     let returnEntity = this.idToEntityMap[column.id];
+
+    const recreateObject = {};
     Object.keys(column).forEach(key => {
-      returnEntity = Object.assign(returnEntity, this.goInsideData(column, key, key.split('@')));
+      Object.assign(recreateObject, this.goInsideData(column, key, key.split('@')));
     });
 
+    returnEntity = Deepmerge(returnEntity, recreateObject);
 
-    // assign to instances
     Object.keys(this.config.instanceMap).forEach(keys => {
+      const generateInstance = Object.setPrototypeOf({}, this.config.instanceMap[keys]);
       if (keys === '') {
-        returnEntity = Object.assign(this.config.instanceMap[keys], returnEntity);
+        returnEntity = Object.assign(generateInstance, returnEntity);
       } else {
-        returnEntity[keys] = Object.assign(this.config.instanceMap[keys], returnEntity[keys]);
+        returnEntity[keys] = Object.assign(generateInstance, returnEntity[keys]);
       }
+
     });
+
     return returnEntity;
   }
 
@@ -301,7 +308,7 @@ export class TableComponent implements OnInit {
   }
 
   saveEntity(entity: any): void {
-    this.ipc.get(this.config.slotUrls.postUrl, entity).then(r => {
+    this.ipc.get(this.config.slotUrls.postUrl, entity).then(() => {
       this.dataChanged.emit();
     });
   }
@@ -326,7 +333,7 @@ export class TableComponent implements OnInit {
    * wird ausgelöst falls ein custom action auf einer zeiler ausgeführt wird (edit&delete sind ausgeschlossen)
    * @param event {action:string, data:any} enthält action name und die daten der zeile
    */
-  onCustomActionListClicked(event) {
+  onCustomActionListClicked(event: any) {
     if (event.action === 'gotoEditor') {
 
       this.router.navigateByUrl(this.config.slotUrls.editorUrl + event.data.id);
@@ -341,7 +348,12 @@ export class TableComponent implements OnInit {
    * @param name entält name des custom actions
    */
   onCustomActionClicked(name: string) {
-    this.action.emit({ action: name, data: this.selectedData });
+    this.action.emit({
+      action: name, data: this.selectedData.map(
+        (el: any) => {
+          return this.dataToEntity(el);
+        })
+    });
   }
 
 

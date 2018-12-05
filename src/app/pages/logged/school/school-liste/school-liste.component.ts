@@ -23,8 +23,8 @@ export class SchoolListeComponent implements OnInit {
       editorUrl: '/logged/school/editor/'
     },
     instanceMap: {
-      '': new School(),
-      'location': new Location()
+      '': School.prototype,
+      'location': Location.prototype,
     },
     memberList: [
       {

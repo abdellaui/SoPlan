@@ -23,9 +23,9 @@ export class VenueListeComponent implements OnInit {
       editorUrl: '/logged/venue/editor/'
     },
     instanceMap: {
-      '': new Venue(),
-      'location': new Location(),
-      'communication': new Communication()
+      '': Venue.prototype,
+      'location': Location.prototype,
+      'communication': Communication.prototype
     },
     memberList: [
       {
