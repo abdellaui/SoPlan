@@ -5,7 +5,7 @@
 
   <nb-sidebar right tag="right" state="collapsed">
     <nb-list>
-      <nb-list-item *ngFor="let item of items" [class.selected]="currentItem === item">
+      <nb-list-item *ngFor="let item of items" [class.selected]="currentItem.id === item.id">
         <nb-user (click)="setCurrentEvent(item)" [name]="item.name" [title]="item.hosting.name">
         </nb-user>
       </nb-list-item>

@@ -29,14 +29,17 @@ export class CurrentEventService {
       }
     });
 
-    this.refreshEvents();
+    this.ipc.get('get/event/current').then((result: number) => {
+      this.currentId = result;
+      this.refreshEvents();
+    });
   }
 
   setEvent(event: Event): void {
     this.currentId = (event) ? event.id : 0;
     this.currentEvent = event;
     this.currentEventChanged.next(this.currentEvent);
-    // maybe store
+    this.ipc.send('set/event/current', { id: this.currentId });
   }
 
   getEvent(): Event {

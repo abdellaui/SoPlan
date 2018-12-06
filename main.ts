@@ -23,8 +23,8 @@ const mockPort: Number = 3030;
 const testDatabaseConfigs: DatabaseConfig = {
   host: 'localhost',
   port: 3306,
-  username: 'root',
-  password: '666666',
+  username: 'tester',
+  password: 'password',
   database: 'tests'
 };
 

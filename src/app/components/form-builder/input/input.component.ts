@@ -17,7 +17,21 @@ export class InputComponent implements OnInit {
   }
 
   emitChange(): void {
+    this.outputToType();
     this.valueChanged.emit(this.value);
+  }
+
+  outputToType(): void {
+
+    if (!this.value || this.value === '') {
+      this.value = null;
+    }
+
+    if (this.element.getType() === 'number' && this.value) {
+
+      this.value = Number(this.value);
+
+    }
   }
 
 }

@@ -19,9 +19,11 @@ export class LoggedComponent implements OnInit {
     private historyMemory: HistoryMemoryService) {
 
     this.updateItems();
+
     this.currentEventsService.newEvents.subscribe(() => {
       this.updateItems();
     });
+
   }
 
   updateItems(): void {

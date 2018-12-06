@@ -21,7 +21,13 @@ export class DatepickerComponent implements OnInit {
 
 
   emitChange(): void {
+    this.outputToType();
     this.valueChanged.emit(this.value);
   }
 
+  outputToType(): void {
+    if (!this.value || this.value === '') {
+      this.value = null;
+    }
+  }
 }

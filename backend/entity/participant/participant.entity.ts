@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, Max, Min } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input, Option, RadioButton } from '../../models/formBuilder.class';
@@ -25,7 +25,9 @@ export class Participant extends BaseEntity {
   role: ParticipantRole = ParticipantRole.SCHUELER;
 
   @IsOptional()
-  @IsInt({ message: 'Zahl' })
+  @IsInt({ message: 'Klassenstufe muss zwischen 1 bis 13 sein!' })
+  @Min(1)
+  @Max(13)
   @Column({ nullable: true })
   grade: number;
 

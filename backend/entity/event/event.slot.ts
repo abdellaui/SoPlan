@@ -1,4 +1,6 @@
-import { on, send } from '../../slots';
+import * as Settings from 'electron-settings';
+
+import { end, on, send } from '../../slots';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Group } from '../group/group.entity';
@@ -36,6 +38,15 @@ export function init() {
   /**
    * END DEFAULT SLOTS
    */
+
+  on('get/event/current', (event: any, arg: any) => {
+    send(event, 'get/event/current', Settings.get('currentEventId') ? Settings.get('currentEventId') : 0);
+  });
+
+  on('set/event/current', (event: any, arg: { id: number }) => {
+    Settings.set('currentEventId', arg.id);
+    end(event);
+  });
 
   on('get/event/classrooms', (event: any, arg: { id: number }) => {
     Event.getAllClassrooms(arg.id).then((result: Classroom[]) => {
