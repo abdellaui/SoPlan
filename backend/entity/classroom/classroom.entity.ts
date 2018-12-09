@@ -1,4 +1,4 @@
-import { IsOptional, MaxLength } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -36,14 +36,12 @@ export class Classroom extends BaseEntity {
   groups: Group[];
 
   /**
-   * METHODS
+   * STATIC METHODS
    */
 
   static getByVenue(searchId: number) {
     // (this as any) fallback
-    return (this as any).createQueryBuilder('classroom')
-      .where('classroom.venueId = :id', { id: searchId })
-      .getMany();
+    return (this as any).find({ where: { venue: { id: searchId } } });
   }
 }
 

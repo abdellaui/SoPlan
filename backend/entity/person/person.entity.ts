@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, IsOptional, MaxLength, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
@@ -64,6 +64,16 @@ export class Person extends BaseEntity {
 
   @OneToMany(type => Participant, participant => participant.person)
   participantes: Participant[];
+
+  /**
+  * STATIC METHODS
+  */
+  static getBySchool(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { school: { id: searchId } } });
+  }
+
+
 }
 
 

@@ -41,7 +41,7 @@ function init(): void {
 /**
  * If someone tries to run a new instance, but we already have one, bring it to the front
  */
-app.on('second-instance', (event, commandLine, workingDirectory) => {
+app.on('second-instance', () => {
   if (mainWindow) {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();

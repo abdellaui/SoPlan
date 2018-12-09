@@ -19,7 +19,7 @@ export function init() {
     end(event);
   });
 
-  on('get/administrator', (event: any, arg: any) => {
+  on('get/administrator', (event: any) => {
     send(event, 'get/administrator', <AdminLogin>Settings.get('admin'));
   });
 

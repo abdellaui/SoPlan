@@ -21,6 +21,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
+  NbSpinnerModule,
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -76,6 +77,7 @@ const nebularModules = [
   NbBadgeModule,
   NbMenuModule,
   NbContextMenuModule,
+  NbSpinnerModule,
 ];
 
 @NgModule({

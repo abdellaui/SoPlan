@@ -1,6 +1,6 @@
-<nb-card>
+<nb-card [nbSpinner]="deletedCount" nbSpinnerSize="xxlarge">
   <nb-card-header style="position:relative">
-    <nb-badge text="{{data.length}}" status="info" position="top right"></nb-badge>
+    <nb-badge text="{{data.count()}}" status="info" position="top right"></nb-badge>
     <div class="header-container">
       <div class="header-row left">
         {{config.settings.header}}

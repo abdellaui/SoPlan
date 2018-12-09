@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -37,6 +37,20 @@ export class Group extends BaseEntity {
 
   @ManyToOne(type => Event, event => event.groups, { eager: true })
   event: Event;
+
+  /**
+  * METHODS
+  */
+
+  static getByEvent(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { event: { id: searchId } } });
+  }
+
+  static getByClassroom(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { classroom: { id: searchId } } });
+  }
 }
 
 const GroupSchema: FormElement[] = [

@@ -12,6 +12,7 @@ export class IpcRendererService {
 
   constructor(private electronService: ElectronService, private httpClient: HttpClient) {
     if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.setMaxListeners(99999);
       console.log('application runs on electron!');
     } else {
       this.mockService = new Subject();
@@ -28,11 +29,9 @@ export class IpcRendererService {
 
   get<T>(channel: string, args?: Object): Promise<T> {
     return new Promise<T>((resolve: Function) => {
-
       this.once(channel, (event: any, arg: any) => {
         resolve(arg);
       });
-
       this.send(channel, args);
     });
   }
