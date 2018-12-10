@@ -21,8 +21,8 @@ export class Communication {
   phone: string;
 
   @IsOptional()
-  @IsNumberString({
-    message: 'Bitte eine gültige Telefonnummer eingeben (ohne +49)'
+  @Matches(/^[0-9]*\/*(\+49)*[ ]*(\([0-9]+\))*([ ]*(-|–)*[ ]*[0-9]+)*$/g, {
+    message: 'Es sind nur deutsche Telefonnummern gültig!'
   })
   @Column({ nullable: true })
   mobile: string;

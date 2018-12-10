@@ -10,10 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { MailConfig } from '@models/configs.class';
 
 describe('EinstellungMailComponent', () => {
   let component: EinstellungMailComponent;
   let fixture: ComponentFixture<EinstellungMailComponent>;
+  let ipc: IpcRendererService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,10 +43,15 @@ describe('EinstellungMailComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EinstellungMailComponent);
     component = fixture.componentInstance;
+    ipc = TestBed.get(IpcRendererService);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should get the config', () => {
+    expect(ipc.get('get/mail/config')).toBeDefined();
   });
 });
