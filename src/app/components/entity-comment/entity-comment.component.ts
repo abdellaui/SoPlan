@@ -128,7 +128,7 @@ export class EntityCommentComponent implements OnInit {
   }
 
   /**
-   * bei Speichern eines änderunges
+   * bei speichern einer Änderung
    * @event enhält im newData Attribut die Änderung
    */
   onSaveConfirm(event: any) {

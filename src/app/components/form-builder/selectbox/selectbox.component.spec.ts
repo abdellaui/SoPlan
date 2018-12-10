@@ -4,16 +4,18 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { SelectboxComponent } from './selectbox.component';
+import { SelectBox } from '@models/formBuilder.class';
 
 describe('SelectboxComponent', () => {
   let component: SelectboxComponent;
   let fixture: ComponentFixture<SelectboxComponent>;
+  let selectBox: SelectBox;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectboxComponent ]
+      declarations: [SelectboxComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,6 +25,10 @@ describe('SelectboxComponent', () => {
   });
 
   it('should create', () => {
+    selectBox = new SelectBox([{ label: 'Test Label', value: 'Test Value' }]);
+    component.element = selectBox;
+    component.value = 'Test Value';
+    component.error = false;
     expect(component).toBeTruthy();
   });
 });
