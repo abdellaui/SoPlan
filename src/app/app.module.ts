@@ -48,7 +48,7 @@ import { AppComponent } from './app.component';
 
     // toastr
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),

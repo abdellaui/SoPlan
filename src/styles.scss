@@ -1,8 +1,16 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
-@import "../node_modules/@nebular/theme/styles/prebuilt/default.css";
 @import "../node_modules/nebular-icons/css/nebular-icons.css";
 @import "../node_modules/font-awesome/css/font-awesome.min.css";
 @import '../node_modules/ngx-toastr/toastr.css';
+@import '../node_modules/@nebular/theme/styles/globals';
+@import '../node_modules/@nebular/theme/styles/theming';
+@import '../node_modules/@nebular/theme/styles/themes/default';
+$nb-themes: nb-register-theme(( popover-border:black, menu-submenu-active-border-color:rgb(110, 109, 109), menu-submenu-active-bg: #bcc3cc, menu-group-font-size: 1rem, menu-group-padding:2rem), default, default);
+@include nb-install() {
+    @include nb-theme-global();
+}
+
+;
 * {
     -webkit-user-select: none;
 }

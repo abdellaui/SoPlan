@@ -42,13 +42,11 @@ export class Bedroom extends BaseEntity {
   roommates: Participant[];
 
   /**
-   * METHODS
+   * STATIC METHODS
    */
   static getByVenue(searchId: number) {
     // (this as any) fallback
-    return (this as any).createQueryBuilder('bedroom')
-      .where('bedroom.venueId = :id', { id: searchId })
-      .getMany();
+    return (this as any).find({ where: { venue: { id: searchId } } });
   }
 }
 

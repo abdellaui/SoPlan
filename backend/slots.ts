@@ -59,7 +59,7 @@ export function end(event: any) {
 }
 /**
  * Handles unexpected errors
- * @param error (Error) includes describtion
+ * @param error (Error) includes description
  * @param quiet (Boolean) show error box?
  * @param run (Boolean) quit application?
  */
@@ -76,4 +76,13 @@ export function slotException(error: Error, quiet?: boolean, run?: boolean) {
   if (!run) {
     app.quit();
   }
+}
+
+
+/**
+ * Should create log files.
+ * @param error (any) includes error
+ */
+export function logException(error: any) {
+  console.log(error);
 }
