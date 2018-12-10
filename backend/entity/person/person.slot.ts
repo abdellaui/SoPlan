@@ -48,4 +48,8 @@ export function init() {
       send(event, 'delete/person', { deleted: false, id: -1 });
     });
   });
+
+  /**
+   * END DEFAULT SLOTS
+   */
 }

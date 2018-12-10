@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Room, RoomSchema } from '@entity/_room/room.entity';
+import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Event, EventSchema } from '@entity/event/event.entity';
-import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { Group, GroupSchema } from '@entity/group/group.entity';
+import { EntitySelectSettings, FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -40,6 +43,104 @@ export class EventEditorComponent implements OnInit {
 
 
 
+  public st_group_config: SmartTableConfig = {
+    settings: {
+      header: 'Gruppen',
+      showCreateButton: true,
+      createButtonText: 'Neue Gruppe'
+    },
+    slotUrls: {
+      getUrl: 'get/event/groups',
+      postUrl: 'post/group',
+      deleteUrl: 'delete/group',
+      editorUrl: '/logged/event/group/editor/0/',
+      getParam: { id: 0 }
+    },
+    instanceMap: {
+      '': Group.prototype,
+      'event': Event.prototype,
+      'classroom': Classroom.prototype,
+      'room': Room.prototype,
+    },
+    memberList: [
+      {
+        prefix: '',
+        schema: GroupSchema,
+        members: ['name', 'capacity']
+      },
+      {
+        prefix: 'event@',
+        schema: EventSchema,
+        members: ['name'],
+        extendedSettings: {
+          name: {
+            editable: false
+          }
+        }
+      },
+      {
+        prefix: 'classroom@',
+        schema: ClassroomSchema,
+        members: ['identifier'],
+        extendedSettings: {
+          identifier: {
+            editable: false
+          }
+        }
+      }, {
+        prefix: 'classroom@room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name'],
+        extendedSettings: {
+          floor: {
+            editable: false
+          },
+          corridor: {
+            editable: false
+          },
+          number: {
+            editable: false
+          },
+          name: {
+            editable: false
+          }
+        }
+      }
+    ]
+  };
+
+  /*
+  public st_participant_config: SmartTableConfig = {
+    settings: {
+      header: 'Teilnehmer',
+      showCreateButton: true,
+      createButtonText: 'Neue Teilnehmer'
+    },
+    slotUrls: {
+      getUrl: 'get/classroom/by/venueId',
+      postUrl: 'post/classroom',
+      deleteUrl: 'delete/classroom',
+      editorUrl: '/logged/venue/classroom/editor/0/',
+      getParam: 0
+    },
+    instanceMap: {
+      '': Classroom.prototype,
+      'room': Room.prototype
+    },
+    memberList: [
+      {
+        prefix: '',
+        schema: ClassroomSchema,
+        members: ['identifier']
+      },
+      {
+        prefix: 'room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name', 'capacity']
+      }
+    ]
+  };
+*/
 
   constructor(
     private route: ActivatedRoute,
@@ -49,12 +150,8 @@ export class EventEditorComponent implements OnInit {
     private router: Router
   ) { }
 
-  regenarate(): void {
-    this.form_eventInstance = Object.assign(new Event(), { hosting: { id: null }, comments: [] }); // fallbacks
-    this.isLoaded = false;
-  }
-
   ngOnInit() {
+
     this.route.params.subscribe(params => {
       this.regenarate();
       if (params && params['id'] && params['id'] > 0) {
@@ -71,9 +168,22 @@ export class EventEditorComponent implements OnInit {
     });
   }
 
+  regenarate(): void {
+    this.form_eventInstance = Object.assign(new Event(), { hosting: { id: null }, comments: [] }); // fallbacks
+    this.isLoaded = false;
+  }
+
   reassignEvent(event: Event): void {
     this.form_eventInstance = Object.assign(this.form_eventInstance, event);
     this.selection_selectedIds = [this.form_eventInstance.hosting.id];
+
+    const appendingId = (this.form_eventInstance.id) ? this.form_eventInstance.id : 0;
+
+    this.st_group_config.slotUrls.getParam = { id: appendingId };
+    this.st_group_config.slotUrls.editorUrl = `/logged/event/group/editor/${appendingId}/`;
+
+    // this.st_participant_config.slotUrls.getParam = { id: appendingId };
+    // this.st_participant_config.slotUrls.editorUrl = `/logged/event/participant/editor/${appendingId}/`;
   }
 
   checkFinished(event: any, member: string) {

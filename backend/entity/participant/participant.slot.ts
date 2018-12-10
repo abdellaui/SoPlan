@@ -12,7 +12,6 @@ export function init() {
     });
   });
 
-
   on('get/participant/by/id', (event: any, arg: number) => {
     Participant.findOneOrFail(arg).then((result: Participant) => {
       send(event, 'get/participant/by/id', result);
@@ -22,19 +21,6 @@ export function init() {
     });
   });
 
-  on('get/participant/by/eventId', (event: any, arg: number) => {
-    Participant.getRepository()
-      .createQueryBuilder('participant')
-      .where('participant.eventId = :id', { id: arg })
-      .getMany().then((result: Participant[]) => {
-        send(event, 'get/participant/by/eventId', result);
-      }).catch(e => {
-        logException(e);
-        send(event, 'get/participant/by/eventId', 0);
-      });
-  });
-
-
   on('post/participant', (event: any, arg: any) => {
     Participant.create(arg).save().then((result: Participant) => {
       send(event, 'post/participant', result);
@@ -43,7 +29,6 @@ export function init() {
       send(event, 'post/participant', 0);
     });
   });
-
 
   on('delete/participant', (event: any, arg: any) => {
     // TODO: maybe check if other participants wants to be with this one
@@ -56,4 +41,8 @@ export function init() {
       send(event, 'delete/participant', { deleted: false, id: -1 });
     });
   });
+
+  /**
+   * END DEFAULT SLOTS
+   */
 }

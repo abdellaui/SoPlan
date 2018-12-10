@@ -5,13 +5,13 @@ import { end, on, send } from './../slots';
 
 export function init() {
 
-  on('check/administrator', (event: any, arg: AdminLogin) => {
+  on('get/administrator/auth', (event: any, arg: AdminLogin) => {
     const admin = <AdminLogin>Settings.get('admin');
     let accepted = false;
     if (arg.username === admin.username && arg.password === admin.password) {
       accepted = true;
     }
-    send(event, 'check/administrator', (accepted) ? admin : false);
+    send(event, 'get/administrator/auth', (accepted) ? admin : false);
   });
 
   on('post/administrator', (event: any, arg: AdminLogin) => {

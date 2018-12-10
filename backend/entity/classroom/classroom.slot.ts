@@ -13,7 +13,6 @@ export function init() {
     });
   });
 
-
   on('get/classroom/by/id', (event: any, arg: number) => {
     Classroom.findOneOrFail(arg).then((result: Classroom) => {
       send(event, 'get/classroom/by/id', result);
@@ -52,12 +51,5 @@ export function init() {
    * END DEFAULT SLOTS
    */
 
-  on('get/classroom/by/venueId', (event: any, arg: number) => {
-    Classroom.getByVenue(arg).then((result: Classroom[]) => {
-      send(event, 'get/classroom/by/venueId', result);
-    }).catch(e => {
-      logException(e);
-      send(event, 'get/classroom/by/venueId', 0);
-    });
-  });
+
 }

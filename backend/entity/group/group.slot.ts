@@ -13,7 +13,6 @@ export function init() {
     });
   });
 
-
   on('get/group/by/id', (event: any, arg: number) => {
     Group.findOneOrFail(arg).then((result: Group) => {
       send(event, 'get/group/by/id', result);
@@ -22,7 +21,6 @@ export function init() {
       send(event, 'get/group/by/id', 0);
     });
   });
-
 
   on('post/group', (event: any, arg: any) => {
     Group.create(arg).save().then((result: Group) => {
@@ -48,4 +46,9 @@ export function init() {
       send(event, 'delete/group', { deleted: false, id: -1 });
     });
   });
+
+  /**
+   * END DEFAULT SLOTS
+   */
+
 }

@@ -55,5 +55,25 @@ export function init() {
     });
   });
 
+  /**
+   * END DEFAULT SLOTS
+   */
 
+  on('get/venue/classrooms', (event: any, arg: { id: number }) => {
+    Venue.getAllClassrooms(arg.id).then((result: Classroom[]) => {
+      send(event, 'get/venue/classrooms', result);
+    }).catch(e => {
+      logException(e);
+      send(event, 'get/venue/classrooms', 0);
+    });
+  });
+
+  on('get/venue/bedrooms', (event: any, arg: { id: number }) => {
+    Venue.getAllBedrooms(arg.id).then((result: Bedroom[]) => {
+      send(event, 'get/venue/bedrooms', result);
+    }).catch(e => {
+      logException(e);
+      send(event, 'get/venue/bedrooms', 0);
+    });
+  });
 }

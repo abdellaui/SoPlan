@@ -13,7 +13,6 @@ export function init() {
     });
   });
 
-
   on('get/bedroom/by/id', (event: any, arg: number) => {
     Bedroom.findOneOrFail(arg).then((result: Bedroom) => {
       send(event, 'get/bedroom/by/id', result);
@@ -22,7 +21,6 @@ export function init() {
       send(event, 'get/bedroom/by/id', 0);
     });
   });
-
 
   on('post/bedroom', (event: any, arg: any) => {
     Bedroom.create(arg).save().then((result: Bedroom) => {
@@ -53,12 +51,4 @@ export function init() {
    * END DEFAULT SLOTS
    */
 
-  on('get/bedroom/by/venueId', (event: any, arg: number) => {
-    Bedroom.getByVenue(arg).then((result: Bedroom[]) => {
-      send(event, 'get/bedroom/by/venueId', result);
-    }).catch(e => {
-      logException(e);
-      send(event, 'get/bedroom/by/venueId', 0);
-    });
-  });
 }

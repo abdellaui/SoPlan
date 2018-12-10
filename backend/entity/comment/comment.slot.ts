@@ -12,7 +12,6 @@ export function init() {
     });
   });
 
-
   on('get/comment/by/id', (event: any, arg: number) => {
     Comment.findOneOrFail(arg).then((result: Comment) => {
       send(event, 'get/comment/by/id', result);
@@ -21,7 +20,6 @@ export function init() {
       send(event, 'get/comment/by/id', 0);
     });
   });
-
 
   on('post/comment', (event: any, arg: any) => {
     Comment.create(arg).save().then((result: Comment) => {
@@ -43,5 +41,7 @@ export function init() {
     });
   });
 
-
+  /**
+   * END DEFAULT SLOTS
+   */
 }
