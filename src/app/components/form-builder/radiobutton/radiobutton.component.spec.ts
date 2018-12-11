@@ -1,19 +1,26 @@
 /* tslint:disable:no-unused-variable */
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RadioButton } from '@models/formBuilder.class';
+import { NB_DOCUMENT, NbPopoverModule, NbRadioModule } from '@nebular/theme';
 
 import { RadiobuttonComponent } from './radiobutton.component';
-import { RadioButton } from '@models/formBuilder.class';
 
 describe('RadiobuttonComponent', () => {
   let component: RadiobuttonComponent;
   let fixture: ComponentFixture<RadiobuttonComponent>;
-  let radioButton: RadioButton;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RadiobuttonComponent]
+      declarations: [RadiobuttonComponent],
+      imports: [
+        FormsModule,
+        NbPopoverModule,
+        NbRadioModule,
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [{ provide: NB_DOCUMENT, useValue: document }],
     })
       .compileComponents();
   }));
@@ -21,14 +28,16 @@ describe('RadiobuttonComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RadiobuttonComponent);
     component = fixture.componentInstance;
+
+
+    component.element = new RadioButton([new Option('test')]);
+    component.value = 'Test Value';
+    component.error = false;
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    radioButton = new RadioButton([{ label: 'TestBed Label', value: 'TestBed Value' }]);
-    component.element = radioButton;
-    component.value = 'Test Value';
-    component.error = false;
     expect(component).toBeTruthy();
   });
 });
