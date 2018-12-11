@@ -29,7 +29,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Electron', 'Chrome'],
+    browsers: ['Chrome'],
     electronOpts: {
       width: 800,
       height: 600

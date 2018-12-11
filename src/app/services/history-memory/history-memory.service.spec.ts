@@ -2,10 +2,14 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { HistoryMemoryService } from './history-memory.service';
+import { RouterModule } from '@angular/router';
 
 describe('Service: HistoryMemory', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterModule.forRoot([])
+      ],
       providers: [HistoryMemoryService]
     });
   });
