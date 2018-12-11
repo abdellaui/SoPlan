@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { DashboardComponent } from './dashboard.component';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { ElectronService, NgxElectronModule } from 'ngx-electron';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -11,9 +14,17 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [DashboardComponent],
+      imports: [
+        NgxElectronModule,
+        HttpClientModule
+      ],
+      providers: [
+        CurrentEventService,
+        ElectronService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
