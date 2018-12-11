@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./entity-comment.component.scss']
 })
 
-
+// TODO: die Komponente soll erst auf comments zugreifen, wenn es defined ist !
 
 export class EntityCommentComponent implements OnInit {
   @Input() entity: any;
