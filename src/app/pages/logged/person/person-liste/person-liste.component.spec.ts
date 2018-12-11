@@ -7,7 +7,7 @@ import { PersonListeComponent } from './person-liste.component';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { ToastrService } from 'ngx-toastr';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler/src/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('PersonListeComponent', () => {
   let component: PersonListeComponent;
