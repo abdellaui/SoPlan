@@ -78,7 +78,6 @@ export class EntityCommentComponent implements OnInit {
     return (this.entityPostUrl && this.entity && this.entity.id);
   }
   ngOnInit() {
-
     this.data = new LocalDataSource(this.entity.comments);
 
     this.ipc.on('delete/comment', (event: any, arg: { deleted: boolean, id: number }) => {
