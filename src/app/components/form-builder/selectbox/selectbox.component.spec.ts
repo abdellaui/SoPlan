@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Option, SelectBox } from '@models/formBuilder.class';
-import { NB_DOCUMENT, NbListModule, NbPopoverModule, NbSelectModule, NbThemeModule } from '@nebular/theme';
+import { NB_DOCUMENT, NbPopoverModule, NbSelectModule, NbThemeModule } from '@nebular/theme';
 import { NbOverlayContainerAdapter } from '@nebular/theme/components/cdk';
 
 import { SelectboxComponent } from './selectbox.component';
@@ -25,7 +25,6 @@ describe('SelectboxComponent', () => {
         FormsModule,
         NbPopoverModule,
         NbSelectModule,
-        NbListModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
@@ -34,9 +33,9 @@ describe('SelectboxComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectboxComponent);
+
     overlayContainerService = TestBed.get(NbOverlayContainerAdapter);
     document = TestBed.get(NB_DOCUMENT);
-
     overlayContainer = document.createElement('div');
     overlayContainerService.setContainer(overlayContainer);
 
