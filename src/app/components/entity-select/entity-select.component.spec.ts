@@ -1,11 +1,15 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EntitySelectOption, EntitySelectSettings } from '@models/componentInput.class';
 
 import { EntitySelectComponent } from './entity-select.component';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { FormsModule } from '@angular/forms';
+import { NgxElectronModule } from 'ngx-electron';
+import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('EntitySelectComponent', () => {
   let component: EntitySelectComponent;
@@ -15,7 +19,14 @@ describe('EntitySelectComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EntitySelectComponent],
-      providers: [IpcRendererService]
+      imports: [
+        FormsModule,
+        NgxElectronModule,
+        HttpClientModule,
+        ToastrModule.forRoot()
+      ],
+      providers: [IpcRendererService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
@@ -23,20 +34,22 @@ describe('EntitySelectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EntitySelectComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-    // TODO: richtige Settings angeben zum testen
+
     settings = {
       getUrl: '',
       listNameMembers: ['']
     };
-  });
-
-  it('should create', () => {
-    // TODO: sinnvolle Inputwerte zuweisen
     component.selectedIds = [1];
     component.settings = settings;
     component.hasError = false;
     component.readonly = false;
+
+    fixture.detectChanges();
+
+  });
+
+  it('should create', () => {
+    // TODO: sinnvolle Inputwerte zuweisen
     expect(component).toBeTruthy();
   });
 });
