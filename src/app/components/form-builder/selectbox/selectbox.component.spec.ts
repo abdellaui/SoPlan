@@ -1,34 +1,59 @@
 /* tslint:disable:no-unused-variable */
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Option, SelectBox } from '@models/formBuilder.class';
+import { NB_DOCUMENT, NbListModule, NbPopoverModule, NbSelectModule, NbThemeModule } from '@nebular/theme';
+import { NbOverlayContainerAdapter } from '@nebular/theme/components/cdk';
 
 import { SelectboxComponent } from './selectbox.component';
-import { SelectBox } from '@models/formBuilder.class';
 
 describe('SelectboxComponent', () => {
   let component: SelectboxComponent;
   let fixture: ComponentFixture<SelectboxComponent>;
-  let selectBox: SelectBox;
+  let overlayContainerService: NbOverlayContainerAdapter;
+  let overlayContainer: HTMLElement;
+  let document: Document;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SelectboxComponent]
+      declarations: [SelectboxComponent],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        NbThemeModule.forRoot(),
+        FormsModule,
+        NbPopoverModule,
+        NbSelectModule,
+        NbListModule,
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectboxComponent);
+    overlayContainerService = TestBed.get(NbOverlayContainerAdapter);
+    document = TestBed.get(NB_DOCUMENT);
+
+    overlayContainer = document.createElement('div');
+    overlayContainerService.setContainer(overlayContainer);
+
     component = fixture.componentInstance;
+
+    component.element = new SelectBox([new Option('test')]);
+    component.value = 'Test Value';
+    component.error = false;
+
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    overlayContainerService.clearContainer();
+  });
+
   it('should create', () => {
-    selectBox = new SelectBox([{ label: 'Test Label', value: 'Test Value' }]);
-    component.element = selectBox;
-    component.value = 'Test Value';
-    component.error = false;
     expect(component).toBeTruthy();
   });
 });
