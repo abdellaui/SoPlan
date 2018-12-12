@@ -34,13 +34,17 @@ export class DashboardComponent implements OnInit {
   public genderChartData = [];
   /************************/
 
-  /***** Gender Chart *****/
+  /***** Role Chart *****/
   public roleChartLabels = [];
   public roleChartType: string;
   public roleChartData = [];
   /************************/
+
+  /***Current Event Mangament***/
   private currentEvent: Event = null;
   private showHelp = true;
+  /***************************/
+
 
   /*STATISTICS FOR DASHBOARD*/
   private stat_num_participants: number = null;
@@ -54,15 +58,18 @@ export class DashboardComponent implements OnInit {
   private stat_num_role_d: number = null;
   private stat_num_role_sd: number = null;
   /**************************/
+  /***Verknüpfte Enittäten vom aktuellen Event***/
   private participants: Participant[] = [];
   private groups: Group[] = [];
   private classrooms: Classroom[] = [];
   private bedrooms: Bedroom[] = [];
-  private agekeys: string[] = [];
+  /****************************************/
+
+  /***********Data for Charts***********/
   private agearr: number[] = [];
-  private classkeys: string[] = [];
   public age_stats = new Object;
   public class_stats = new Object;
+  /*****************************************/
 
   private initialize_Age(): void {
     this.age_stats = new Object;
@@ -87,11 +94,10 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.agekeys = Object.keys(this.age_stats);
-    this.classkeys = Object.keys(this.class_stats);
   }
   //
 
+  /***Chart Related Functions */
   public genderChartClicked(e: any): void {
     console.log(e);
   }
@@ -107,7 +113,7 @@ export class DashboardComponent implements OnInit {
   public roleChartHovered(e: any): void {
     console.log(e);
   }
-
+  /*********************************** */
 
   /*STATISTIC METHODS*/
 
@@ -142,7 +148,7 @@ export class DashboardComponent implements OnInit {
           }
     });
   }
-
+  /****************************************************************** */
 
 
 
@@ -158,6 +164,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    /***   Initialize Basic Chart Parameters, that never Change  ***/
     this.ageChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true,
@@ -167,7 +175,7 @@ export class DashboardComponent implements OnInit {
     this.roleChartType = 'pie';
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
     this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
-
+    /************************************************************* */
 
 
   }
@@ -175,7 +183,7 @@ export class DashboardComponent implements OnInit {
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
       this.currentEvent = ev;
-
+      /******* Nested Get IPC Renderer Methods, so that ShowHelp won't be false before every Chart is initialized ******* */
       this.ipc.get('get/event/participants', { id: this.currentEvent.id }).
         then((result: Participant[]) => {
           this.participants = result;
@@ -196,10 +204,6 @@ export class DashboardComponent implements OnInit {
           },
           ];
 
-
-
-
-
           this.ipc.get('get/event/groups', { id: this.currentEvent.id }).
             then((resultA: Group[]) => {
               this.groups = resultA;
@@ -219,7 +223,7 @@ export class DashboardComponent implements OnInit {
 
 
         });
-
+      /**************************** */
     } else {
       this.showHelp = true;
 
