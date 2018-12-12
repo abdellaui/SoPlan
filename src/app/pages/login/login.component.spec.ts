@@ -8,6 +8,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxElectronModule } from 'ngx-electron';
+import { FormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,15 +21,15 @@ describe('LoginComponent', () => {
         RouterModule.forRoot([]),
         ToastrModule.forRoot(),
         HttpClientModule,
-        NgxElectronModule
+        NgxElectronModule,
+        FormsModule
       ],
       providers: [
         ToastrService,
         IpcRendererService
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ],
     })
       .compileComponents();
