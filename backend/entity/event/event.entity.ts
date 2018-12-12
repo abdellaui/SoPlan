@@ -68,6 +68,10 @@ export class Event extends BaseEntity {
   static getAllGroups(eventId: number) {
     return (Group as any).find({ where: { event: { id: eventId } } });
   }
+
+  static getAllParticipants(eventId: number) {
+    return (Participant as any).find({ where: { event: { id: eventId } } });
+  }
 }
 
 const EventSchema: FormElement[] = [

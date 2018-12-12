@@ -1,8 +1,53 @@
-<div *ngIf="showHelp">
-  hier wird ein intro / help / hinweis seite kommen, da keine veranstaltung gewählt
-</div>
-<div *ngIf="!showHelp">
+<script src="node_modules/chart.js/src/chart.js"></script>
 
-  hier wird {{currentEvent.name}} stehen
+<div id='charts' *ngIf="!showHelp">
+
+  <nb-card id="age">
+    <nb-card-body>
+
+      <div style="display: block">
+        <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
+          [chartType]="ageChartType"></canvas>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+
+  <nb-card id="gender">
+    <nb-card-body>
+
+      <div style="display: block">
+        <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
+          (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
+        </canvas>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card id="roleSDSD">
+    <nb-card-body>
+
+      <div style="display: block">
+        <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType" (chartHover)="roleChartHovered($event)"
+          (chartClick)="roleChartClicked($event)">
+        </canvas>
+      </div>
+
+    </nb-card-body>
+
+  </nb-card>
+
+</div>
+
+<div *ngIf="showHelp">
+
+  <nb-card>
+    <nb-card-body>
+
+      Wähle ein Event in der oberen rechten Ecke aus um eine detaillierte Event Beschreibung zu erhalten.
+
+    </nb-card-body>
+
+  </nb-card>
 
 </div>

@@ -37,6 +37,7 @@ export class Group extends BaseEntity {
 
   @ManyToOne(type => Event, event => event.groups, { eager: true })
   event: Event;
+
 }
 
 const GroupSchema: FormElement[] = [

@@ -23,6 +23,7 @@ import {
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { ToastrModule } from 'ngx-toastr';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,8 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     FormsModule,
     Ng2SmartTableModule,
+    ChartsModule,
+
     // route
     AppRoutingModule,
     RouterModule,

@@ -1,0 +1,19 @@
+#charts {
+  display: grid;
+  grid-template-areas: "gender roleSDSD"
+    "age age";
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+#age {
+  grid-area: age;
+}
+
+#gender {
+  grid-area: gender;
+}
+
+#roleSDSD {
+  grid-area: roleSDSD;
+}
