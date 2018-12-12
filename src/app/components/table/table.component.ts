@@ -8,6 +8,7 @@ import * as Deepmerge from 'deepmerge';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
 
+import { DateEditorComponent } from './date-editor/date-editor.component';
 import { DateRendererComponent } from './date-renderer/date-renderer.component';
 
 @Component({
@@ -47,6 +48,7 @@ export class TableComponent implements OnInit {
   public selectedData: any[] = []; // zwischenspeicher für auswahl
   public rememberIdOfDeleteError: number[] = [];
   public deletedCount = 0;
+  public uniqueName;
   @Output() action: EventEmitter<any> = new EventEmitter();
   @Output() dataChanged: EventEmitter<any> = new EventEmitter();
   @Input() config: SmartTableConfig;
@@ -55,6 +57,7 @@ export class TableComponent implements OnInit {
 
   constructor(private ipc: IpcRendererService, private router: Router, private toastr: ToastrService) {
     this.data = new LocalDataSource();
+    this.uniqueName = 'st_' + new Date().getTime().toString();
   }
 
   ngOnInit() {
@@ -173,6 +176,9 @@ export class TableComponent implements OnInit {
             case ElementTypes.DatePicker:
               currConfig['type'] = 'custom';
               currConfig['renderComponent'] = DateRendererComponent;
+              currEditorConfig['type'] = 'custom';
+              currEditorConfig['component'] = DateEditorComponent;
+
               break;
 
             default:
@@ -188,7 +194,6 @@ export class TableComponent implements OnInit {
     }
     this.settings['columns'] = this.columnConfig;
   }
-
   /**
    * die entität wird der smart table angemessenen datenstruktur transformiert
    * @param data enthält eine instance eines entitäten
@@ -285,11 +290,12 @@ export class TableComponent implements OnInit {
   onSaveConfirm(event: any) {
     const newEntity = this.dataToEntity(event.newData);
     validate(newEntity).then((errors: ValidationError[]) => {
+      console.log(errors);
       if (errors.length === 0) {
         this.saveEntity(newEntity);
         event.confirm.resolve();
       } else {
-        this.handleErrors(errors);
+        this.handleErrors(errors, event.newData.id);
         event.confirm.reject();
       }
     });
@@ -302,19 +308,27 @@ export class TableComponent implements OnInit {
    * vorab werden alle Makierungen entfernt!
    * @param errors  ValidationError[]
    */
-  handleErrors(errors: ValidationError[]): void {
+  handleErrors(errors: ValidationError[], id: number): void {
+    this.data.getAll().then((data: any[]) => {
+      let index = data.findIndex(x => x.id === id);
+      if (index > -1) {
+        index = index + 1;
+        // entferne alte
+        const elements = document
+          .querySelectorAll(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) .validationErrorBorder`);
 
-    // entferne alte
-    const elements = document.querySelectorAll('.validationErrorBorder');
-
-    for (let i = 0; i < elements.length; ++i) {
-      elements[i].classList.remove('validationErrorBorder');
-    }
+        for (let i = 0; i < elements.length; ++i) {
+          elements[i].classList.remove('validationErrorBorder');
+        }
 
 
-    for (const error of errors) {
-      document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
-    }
+        for (const error of errors) {
+          document
+            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) [ng-reflect-name="${error.property}"]`)
+            .classList.add('validationErrorBorder');
+        }
+      }
+    });
   }
 
   /**

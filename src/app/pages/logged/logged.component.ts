@@ -41,7 +41,7 @@ export class LoggedComponent implements OnInit {
     }
     if (!initial) {
       this.currentEventsService.setEvent(this.currentItem);
-      this.toggleRight();
+      // this.toggleRight();
     }
   }
   ngOnInit() {

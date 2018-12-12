@@ -96,7 +96,6 @@ export class PersonEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignPerson(person: Person): void {
-    person.birthDate = new Date(person.birthDate);
     this.form_personInstance = Object.assign(this.form_personInstance, person);
     this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
     this.form_locInstance = Object.assign(this.form_locInstance, person.location);

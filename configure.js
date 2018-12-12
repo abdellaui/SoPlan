@@ -4,6 +4,7 @@ const path = require('path');
 
 const f_angular = 'node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/webpack-configs/browser.js';
 const f_typeorm = 'node_modules/typeorm/typeorm-class-transformer-shim.js';
+const f_datepicker = 'node_modules/@nebular/theme/components/datepicker/datepicker.component.js';
 const f_datbase = 'backend/autoload.ts';
 const args = process.argv.slice(1);
 const isElectronConfigure = args.some(val => val === '--electron');
@@ -75,6 +76,20 @@ exports.BaseEntity = function(){};
   });
 
   // end add BaseEntity to typeorm-model-shim
+
+
+  /**
+   * Datepicker fix
+   */
+  fs.readFile(f_datepicker, 'utf8', function (err, data) {
+    if (err) return console.log(err);
+
+    var result = data.replace(/NbBasePicker\.prototype\.ngOnChanges = function \(\) \{(.*?)\};/s, '');
+    fs.writeFile(f_datepicker, result, 'utf8', function (err) {
+      if (err) return console.log(err);
+    });
+  });
+  // Datepicker fix end
 
   fs.readFile(f_angular, 'utf8', function (err, data) {
     if (err) return console.log(err);

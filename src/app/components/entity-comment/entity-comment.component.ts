@@ -21,6 +21,8 @@ export class EntityCommentComponent implements OnInit {
   showThis = false;
   commentIsAccaptable = false;
 
+  public uniqueName;
+
   public form_commentInstance: Comment = new Comment();
   public form_commentSchema = CommentSchema;
   public form_commentSettings: FormBuilderSettings = <FormBuilderSettings>{
@@ -33,7 +35,9 @@ export class EntityCommentComponent implements OnInit {
 
 
 
-  constructor(private ipc: IpcRendererService, public toastr: ToastrService) { }
+  constructor(private ipc: IpcRendererService, public toastr: ToastrService) {
+    this.uniqueName = 'cm_' + new Date().getTime().toString();
+  }
 
   settings = {
     selectMode: 'multi',
@@ -151,7 +155,7 @@ export class EntityCommentComponent implements OnInit {
         this.saveEntity(newEntity);
         event.confirm.resolve();
       } else {
-        this.handleErrors(errors);
+        this.handleErrors(errors, event.newData.id);
         event.confirm.reject();
       }
     });
@@ -164,19 +168,27 @@ export class EntityCommentComponent implements OnInit {
    * vorab werden alle Makierungen entfernt!
    * @param errors  ValidationError[]
    */
-  handleErrors(errors: ValidationError[]): void {
+  handleErrors(errors: ValidationError[], id: number): void {
+    this.data.getAll().then((data: any[]) => {
+      let index = data.findIndex(x => x.id === id);
+      if (index > -1) {
+        index = index + 1;
+        // entferne alte
+        const elements = document
+          .querySelectorAll(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) .validationErrorBorder`);
 
-    // entferne alte
-    const elements = document.querySelectorAll('.validationErrorBorder');
-
-    for (let i = 0; i < elements.length; ++i) {
-      elements[i].classList.remove('validationErrorBorder');
-    }
+        for (let i = 0; i < elements.length; ++i) {
+          elements[i].classList.remove('validationErrorBorder');
+        }
 
 
-    for (const error of errors) {
-      document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
-    }
+        for (const error of errors) {
+          document
+            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) [ng-reflect-name="${error.property}"]`)
+            .classList.add('validationErrorBorder');
+        }
+      }
+    });
   }
 
   /**
