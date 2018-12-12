@@ -1,6 +1,6 @@
-<nb-card>
+<nb-card [nbSpinner]="deletedCount" nbSpinnerSize="xxlarge">
   <nb-card-header style="position:relative">
-    <nb-badge text="{{data.length}}" status="info" position="top right"></nb-badge>
+    <nb-badge text="{{data.count()}}" status="info" position="top right"></nb-badge>
     <div class="header-container">
       <div class="header-row left">
         {{config.settings.header}}
@@ -34,8 +34,8 @@
     </div>
   </nb-card-body>
   <nb-card-body *ngIf="loadedFirstTime">
-    <ng2-smart-table (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
-      (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table [id]="uniqueName" (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data"
+      (userRowSelect)="onSelectRow($event)" (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

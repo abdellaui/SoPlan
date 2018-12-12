@@ -3,7 +3,7 @@
     [placeholder]="element.getPlaceholder()">
 </div>
 <div *ngIf="!element.isReadOnly()">
-  <input nbInput [status]="(error)?'danger':''" class="form-control" (ngModelChange)="emitChange()" [(ngModel)]="value"
-    [placeholder]="element.getPlaceholder()" [nbDatepicker]="localDatepicker">
+  <input nbInput [status]="(error)?'danger':''" class="form-control" (ngModelChange)="emitChange()" (keyup)="emitChange()"
+    [(ngModel)]="shownValue" [placeholder]="element.getPlaceholder()" [nbDatepicker]="localDatepicker">
 </div>
-<nb-datepicker #localDatepicker></nb-datepicker>
+<nb-datepicker #localDatepicker [visibleDate]="shownValue" [format]="element.getDateFormat()" (dateChange)="onDateSelect($event)"></nb-datepicker>

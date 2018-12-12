@@ -1,4 +1,4 @@
-import { IsNotEmpty, MaxLength } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
@@ -19,11 +19,11 @@ export class Event extends BaseEntity {
   @IsNotEmpty({ message: 'Pflichtfeld' })
   name: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsDate({ message: 'Pflichtfeld' })
   @Column()
   startsDate: Date = new Date();
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsDate({ message: 'Pflichtfeld' })
   @Column()
   endsDate: Date = new Date();
   /**
@@ -44,7 +44,7 @@ export class Event extends BaseEntity {
   groups: Group[];
 
   /**
-   * METHODS
+   * STATIC METHODS
    */
   static async getAllClassrooms(eventId: number) {
     try {
@@ -65,8 +65,25 @@ export class Event extends BaseEntity {
       return Promise.reject();
     }
   }
+  static getByVenue(searchId: number) {
+    return (this as any).find({ where: { hosting: { id: searchId } } });
+  }
   static getAllGroups(eventId: number) {
-    return (Group as any).find({ where: { event: { id: eventId } } });
+    return Group.getByEvent(eventId);
+  }
+  static getAllParticipants(eventId: number) {
+    return Participant.getByEvent(eventId);
+  }
+
+  /**
+   * METHODS
+   */
+
+  getAllGroups() {
+    return Event.getAllGroups(this.id);
+  }
+  getAllParticipants() {
+    return Event.getAllParticipants(this.id);
   }
 
   static getAllParticipants(eventId: number) {

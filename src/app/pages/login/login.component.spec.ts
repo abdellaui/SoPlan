@@ -1,6 +1,13 @@
 /* tslint:disable:no-unused-variable */
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/compiler/src/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { NgxElectronModule } from 'ngx-electron';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { LoginComponent } from './login.component';
 
@@ -11,9 +18,20 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
+      imports: [
+        RouterModule.forRoot([]),
+        ToastrModule.forRoot(),
+        HttpClientModule,
+        NgxElectronModule,
+        FormsModule
+      ],
+      providers: [
+        ToastrService,
+        IpcRendererService,
+        { provide: APP_BASE_HREF, useValue: '/' }
+      ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
       ],
     })
       .compileComponents();

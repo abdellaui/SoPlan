@@ -1,7 +1,9 @@
 /* tslint:disable:no-unused-variable */
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Input } from '@models/formBuilder.class';
+import { NbInputModule, NbPopoverModule } from '@nebular/theme';
 
 import { InputComponent } from './input.component';
 
@@ -11,14 +13,25 @@ describe('InputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputComponent ]
+      declarations: [InputComponent],
+      imports: [
+        FormsModule,
+        NbPopoverModule,
+        NbInputModule
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(InputComponent);
     component = fixture.componentInstance;
+
+    component.element = new Input();
+    component.value = 'test';
+    component.error = false;
+
     fixture.detectChanges();
   });
 

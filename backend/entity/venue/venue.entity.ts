@@ -1,4 +1,4 @@
-import { MaxLength, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -47,6 +47,32 @@ export class Venue extends BaseEntity {
   @OneToMany(type => Event, event => event.hosting)
   hosts: Event[];
 
+  /**
+   * STATIC METHODS
+   */
+
+  static getAllEvents(venueId: number) {
+    return Event.getByVenue(venueId);
+  }
+  static getAllClassrooms(venueId: number) {
+    return Classroom.getByVenue(venueId);
+  }
+  static getAllBedrooms(venueId: number) {
+    return Bedroom.getByVenue(venueId);
+  }
+
+  /**
+   * METHODS
+   */
+  getAllEvents() {
+    return Venue.getAllEvents(this.id);
+  }
+  getAllClassrooms() {
+    return Venue.getAllClassrooms(this.id);
+  }
+  getAllBedrooms() {
+    return Venue.getAllBedrooms(this.id);
+  }
 }
 
 const VenueSchema: FormElement[] = [

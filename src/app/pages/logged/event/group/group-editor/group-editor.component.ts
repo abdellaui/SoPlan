@@ -59,6 +59,8 @@ export class GroupEditorComponent implements OnInit {
 
   regenarate(): void {
     this.form_groupInstance = Object.assign(new Group(), { event: { id: null }, classroom: { id: null }, comments: [] }); // fallback
+    this.classroom_selectedIds = [];
+    this.event_selectedIds = [];
     this.isLoaded = false;
   }
 
@@ -66,7 +68,6 @@ export class GroupEditorComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.regenarate();
       this.event_selectedIds = (params['eventId']) ? [Number(params['eventId'])] : [];
-
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/group/by/id', { id: params['id'] }).then((result: any) => {
 
@@ -90,6 +91,7 @@ export class GroupEditorComponent implements OnInit {
     this.form_groupInstance = Object.assign(this.form_groupInstance, bedroom);
     this.event_selectedIds = [this.form_groupInstance.event.id];
     this.classroom_selectedIds = [this.form_groupInstance.classroom.id];
+    this.selection_classroom_settings.getParams = { id: this.form_groupInstance.event.id };
   }
 
   updateReadyToSave(): void {
@@ -130,7 +132,7 @@ export class GroupEditorComponent implements OnInit {
     this.ipc.get('post/group', this.form_groupInstance).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
-        this.router.navigateByUrl('/logged/group/editor/0/' + result.id);
+        this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

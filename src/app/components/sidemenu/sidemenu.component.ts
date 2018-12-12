@@ -13,6 +13,7 @@ export class SidemenuComponent implements OnInit {
       title: 'Dashboard',
       icon: 'nb-grid-a-outline',
       link: '/logged/dashboard',
+      home: true,
     },
     {
       title: 'Ort',
@@ -28,32 +29,28 @@ export class SidemenuComponent implements OnInit {
         },
         {
           title: 'Schlafzimmer',
-
-          icon: 'nb-chevron-right-outline',
-          children: [
-            {
-              title: 'Editor',
-              link: '/logged/venue/bedroom/editor/0/0',
-            },
-            {
-              title: 'Liste',
-              link: '/logged/venue/bedroom/list',
-            }
-          ],
+          group: true,
+        },
+        {
+          title: 'Editor',
+          link: '/logged/venue/bedroom/editor/0/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/venue/bedroom/list',
         },
         {
           title: 'Klassenzimmer',
-          children: [
-            {
-              title: 'Editor',
-              link: '/logged/venue/classroom/editor/0/0',
-            },
-            {
-              title: 'Liste',
-              link: '/logged/venue/classroom/list',
-            }
-          ],
+          group: true
         },
+        {
+          title: 'Editor',
+          link: '/logged/venue/classroom/editor/0/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/venue/classroom/list',
+        }
       ]
 
     },
@@ -100,50 +97,44 @@ export class SidemenuComponent implements OnInit {
         },
         {
           title: 'Gruppen',
-          children: [
-            {
-              title: 'Editor',
-              link: '/logged/event/group/editor/0/0',
-            },
-            {
-              title: 'Liste',
-              link: '/logged/event/group/list',
-            }
-          ],
+          group: true
+        },
+        {
+          title: 'Editor',
+          link: '/logged/event/group/editor/0/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/event/group/list',
         },
         {
           title: 'Teilnehmer',
-          children: [
-            {
-              title: 'Editor',
-              link: '/logged/event/participant/editor/0/0',
-            },
-            {
-              title: 'Liste',
-              link: '/logged/event/participant/list',
-            }
-          ],
+          group: true
         },
+        {
+          title: 'Editor',
+          link: '/logged/event/participant/editor/0/0',
+        },
+        {
+          title: 'Liste',
+          link: '/logged/event/participant/list',
+        }
       ]
     },
     {
       title: 'Certificate',
       icon: 'nb-lightbulb',
       link: '/logged/certificate',
+    },
+    {
+      title: 'Einstellungen',
+      icon: 'nb-gear',
+      link: '/logged/einstellungen',
     }
   ];
 
 
   constructor() {
-
-
-    this.items.push({
-      title: 'Einstellungen',
-      icon: 'nb-gear',
-      link: '/logged/einstellungen',
-      home: true
-
-    });
   }
   ngOnInit() {
   }

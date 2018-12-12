@@ -5,7 +5,10 @@ import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 import * as Deepmerge from 'deepmerge';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ToastrService } from 'ngx-toastr';
 
+import { DateEditorComponent } from './date-editor/date-editor.component';
 import { DateRendererComponent } from './date-renderer/date-renderer.component';
 
 @Component({
@@ -39,18 +42,22 @@ export class TableComponent implements OnInit {
     }
   };
 
-  public data: any[] = []; // angezeigte daten
+  public data: LocalDataSource; // angezeigte daten
   private idToEntityMap = {}; // um nicht angezeigte Daten nicht zu verwerfen
   public columnConfig = {}; // transformations gedächnis
   public selectedData: any[] = []; // zwischenspeicher für auswahl
-
+  public rememberIdOfDeleteError: number[] = [];
+  public deletedCount = 0;
+  public uniqueName;
   @Output() action: EventEmitter<any> = new EventEmitter();
   @Output() dataChanged: EventEmitter<any> = new EventEmitter();
   @Input() config: SmartTableConfig;
 
 
 
-  constructor(private ipc: IpcRendererService, private router: Router) {
+  constructor(private ipc: IpcRendererService, private router: Router, private toastr: ToastrService) {
+    this.data = new LocalDataSource();
+    this.uniqueName = 'st_' + new Date().getTime().toString();
   }
 
   ngOnInit() {
@@ -95,14 +102,33 @@ export class TableComponent implements OnInit {
     // get data
     this.ipc.get(this.config.slotUrls.getUrl, this.config.slotUrls.getParam).then((result: any) => {
       if (result !== 0) {
-        this.data = result.map(obj => {
+        this.data.load(result.map(obj => {
           return this.entityToData(obj);
+        })).then(() => {
+          this.loadedFirstTime = true;
         });
-
-        this.loadedFirstTime = true;
       }
     });
 
+    this.ipc.on(this.config.slotUrls.deleteUrl, (event: any, arg: { deleted: boolean, id: number }) => {
+      this.deletedCount--;
+      if (arg.deleted === false) {
+        this.rememberIdOfDeleteError.push(arg.id);
+      } else {
+        this.data.getAll().then((dataArray: any[]) => {
+          const data = dataArray.find(x => x.id === arg.id);
+          if (data !== undefined) {
+            this.data.remove(data).then(() => {
+              this.dataChanged.emit();
+            }).catch(e => console.log(e));
+          }
+        });
+      }
+      if (!this.deletedCount) {
+        this.showDeleteErrorToastr();
+      }
+
+    });
 
   }
 
@@ -150,6 +176,9 @@ export class TableComponent implements OnInit {
             case ElementTypes.DatePicker:
               currConfig['type'] = 'custom';
               currConfig['renderComponent'] = DateRendererComponent;
+              currEditorConfig['type'] = 'custom';
+              currEditorConfig['component'] = DateEditorComponent;
+
               break;
 
             default:
@@ -165,7 +194,6 @@ export class TableComponent implements OnInit {
     }
     this.settings['columns'] = this.columnConfig;
   }
-
   /**
    * die entität wird der smart table angemessenen datenstruktur transformiert
    * @param data enthält eine instance eines entitäten
@@ -246,15 +274,10 @@ export class TableComponent implements OnInit {
    * @param event enthält die zu löschende data
    */
   onDeleteConfirm(event: any) {
-    if (window.confirm('Sie versuchen ein Eintrag zu löschen!')) {
-      this.ipc.get(this.config.slotUrls.deleteUrl, this.dataToEntity(event.data)).then((result: number) => {
-        if (result === 1) {
-          this.dataChanged.emit();
-          event.confirm.resolve();
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (window.confirm('Sie versuchen ein Eintrag zu löschen!') && !this.deletedCount) {
+      this.deletedCount = 1;
+      this.clearDeleteErrors();
+      this.ipc.send(this.config.slotUrls.deleteUrl, this.dataToEntity(event.data));
     } else {
       event.confirm.reject();
     }
@@ -267,11 +290,12 @@ export class TableComponent implements OnInit {
   onSaveConfirm(event: any) {
     const newEntity = this.dataToEntity(event.newData);
     validate(newEntity).then((errors: ValidationError[]) => {
+      console.log(errors);
       if (errors.length === 0) {
         this.saveEntity(newEntity);
         event.confirm.resolve();
       } else {
-        this.handleErrors(errors);
+        this.handleErrors(errors, event.newData.id);
         event.confirm.reject();
       }
     });
@@ -284,19 +308,27 @@ export class TableComponent implements OnInit {
    * vorab werden alle Makierungen entfernt!
    * @param errors  ValidationError[]
    */
-  handleErrors(errors: ValidationError[]): void {
+  handleErrors(errors: ValidationError[], id: number): void {
+    this.data.getAll().then((data: any[]) => {
+      let index = data.findIndex(x => x.id === id);
+      if (index > -1) {
+        index = index + 1;
+        // entferne alte
+        const elements = document
+          .querySelectorAll(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) .validationErrorBorder`);
 
-    // entferne alte
-    const elements = document.querySelectorAll('.validationErrorBorder');
-
-    for (let i = 0; i < elements.length; ++i) {
-      elements[i].classList.remove('validationErrorBorder');
-    }
+        for (let i = 0; i < elements.length; ++i) {
+          elements[i].classList.remove('validationErrorBorder');
+        }
 
 
-    for (const error of errors) {
-      document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
-    }
+        for (const error of errors) {
+          document
+            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) [ng-reflect-name="${error.property}"]`)
+            .classList.add('validationErrorBorder');
+        }
+      }
+    });
   }
 
   /**
@@ -316,19 +348,44 @@ export class TableComponent implements OnInit {
 
   deleteAllSelected(): void {
 
-    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`)) {
+    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`) && !this.deletedCount) {
+      this.deletedCount = this.selectedData.length;
+      this.clearDeleteErrors();
       for (const data of this.selectedData) {
-        this.ipc.get(this.config.slotUrls.deleteUrl, this.dataToEntity(data)).then((result: number) => {
-          if (result === 0) {
-            window.alert(data); // TODO: handle could not delete
-          } else {
-            this.dataChanged.emit();
-          }
-        });
+        this.ipc.send(this.config.slotUrls.deleteUrl, this.dataToEntity(data));
       }
     }
   }
 
+  clearDeleteErrors(): void {
+    this.rememberIdOfDeleteError = [];
+    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    for (let i = 0; i < rowsOfTable.length; ++i) {
+      rowsOfTable[i].classList.remove('validationErrorBorder');
+    }
+  }
+
+  handleDeleteError(indexOfData: number): void {
+
+    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+  }
+
+  showDeleteErrorToastr(): void {
+
+    if (this.rememberIdOfDeleteError.length) {
+      this.data.getAll().then((dataArray: any[]) => {
+        this.rememberIdOfDeleteError.forEach((id: number) => {
+          const indexFromId = dataArray.findIndex(x => x.id === id);
+          if (indexFromId > -1) {
+            this.handleDeleteError(indexFromId);
+          }
+        });
+      });
+      this.toastr.error(`Rot umrahmte Einträge (#${this.rememberIdOfDeleteError.length}) konnten nicht gelöscht werden!
+      Entfernen Sie vorab die Abhängigkeiten!`);
+    }
+  }
   /**
    * wird ausgelöst falls ein custom action auf einer zeiler ausgeführt wird (edit&delete sind ausgeschlossen)
    * @param event {action:string, data:any} enthält action name und die daten der zeile

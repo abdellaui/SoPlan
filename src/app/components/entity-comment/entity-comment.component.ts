@@ -13,13 +13,15 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./entity-comment.component.scss']
 })
 
-
+// TODO: die Komponente soll erst auf comments zugreifen, wenn es defined ist !
 
 export class EntityCommentComponent implements OnInit {
   @Input() entity: any;
   @Input() entityPostUrl: string;
   showThis = false;
   commentIsAccaptable = false;
+
+  public uniqueName;
 
   public form_commentInstance: Comment = new Comment();
   public form_commentSchema = CommentSchema;
@@ -33,7 +35,9 @@ export class EntityCommentComponent implements OnInit {
 
 
 
-  constructor(private ipc: IpcRendererService, public toastr: ToastrService) { }
+  constructor(private ipc: IpcRendererService, public toastr: ToastrService) {
+    this.uniqueName = 'cm_' + new Date().getTime().toString();
+  }
 
   settings = {
     selectMode: 'multi',
@@ -72,13 +76,30 @@ export class EntityCommentComponent implements OnInit {
 
   public data: LocalDataSource; // angezeigte daten
   public selectedData: any[] = []; // zwischenspeicher für auswahl
-
+  public rememberIdOfDeleteError: number[] = [];
+  public deletedCount = 0;
   getShow(): boolean {
     return (this.entityPostUrl && this.entity && this.entity.id);
   }
   ngOnInit() {
-
     this.data = new LocalDataSource(this.entity.comments);
+
+    this.ipc.on('delete/comment', (event: any, arg: { deleted: boolean, id: number }) => {
+      this.deletedCount--;
+      if (arg.deleted === false) {
+        this.rememberIdOfDeleteError.push(arg.id);
+      } else {
+        const index = this.entity.comments.findIndex(x => x.id === arg.id);
+        if (index > -1) {
+          this.entity.comments.splice(index, 1);
+          this.data.refresh();
+        }
+      }
+      if (!this.deletedCount) {
+        this.showDeleteErrorToastr();
+      }
+
+    });
   }
 
   public checkFinished(event: boolean): void {
@@ -114,21 +135,17 @@ export class EntityCommentComponent implements OnInit {
 
 
   onDeleteConfirm(event: any) {
-    if (window.confirm('Sie versuchen ein Eintrag zu löschen!')) {
-      this.ipc.get('delete/comment', this.dataToEntity(event.data)).then((result: number) => {
-        if (result === 1) {
-          event.confirm.resolve();
-        } else {
-          event.confirm.reject();
-        }
-      });
+    if (window.confirm('Sie versuchen ein Eintrag zu löschen!') && !this.deletedCount) {
+      this.deletedCount = 1;
+      this.clearDeleteErrors();
+      this.ipc.send('delete/comment', this.dataToEntity(event.data));
     } else {
       event.confirm.reject();
     }
   }
 
   /**
-   * bei Speichern eines änderunges
+   * bei speichern einer Änderung
    * @event enhält im newData Attribut die Änderung
    */
   onSaveConfirm(event: any) {
@@ -138,7 +155,7 @@ export class EntityCommentComponent implements OnInit {
         this.saveEntity(newEntity);
         event.confirm.resolve();
       } else {
-        this.handleErrors(errors);
+        this.handleErrors(errors, event.newData.id);
         event.confirm.reject();
       }
     });
@@ -151,19 +168,27 @@ export class EntityCommentComponent implements OnInit {
    * vorab werden alle Makierungen entfernt!
    * @param errors  ValidationError[]
    */
-  handleErrors(errors: ValidationError[]): void {
+  handleErrors(errors: ValidationError[], id: number): void {
+    this.data.getAll().then((data: any[]) => {
+      let index = data.findIndex(x => x.id === id);
+      if (index > -1) {
+        index = index + 1;
+        // entferne alte
+        const elements = document
+          .querySelectorAll(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) .validationErrorBorder`);
 
-    // entferne alte
-    const elements = document.querySelectorAll('.validationErrorBorder');
-
-    for (let i = 0; i < elements.length; ++i) {
-      elements[i].classList.remove('validationErrorBorder');
-    }
+        for (let i = 0; i < elements.length; ++i) {
+          elements[i].classList.remove('validationErrorBorder');
+        }
 
 
-    for (const error of errors) {
-      document.querySelector(`[ng-reflect-name="${error.property}"]`).classList.add('validationErrorBorder');
-    }
+        for (const error of errors) {
+          document
+            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) [ng-reflect-name="${error.property}"]`)
+            .classList.add('validationErrorBorder');
+        }
+      }
+    });
   }
 
   /**
@@ -175,21 +200,48 @@ export class EntityCommentComponent implements OnInit {
   }
 
   saveEntity(entity: any): void {
-    this.ipc.get('post/comment', entity).then(r => {
-    });
+    this.ipc.send('post/comment', entity);
   }
 
 
   deleteAllSelected(): void {
 
-    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`)) {
+    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`) && !this.deletedCount) {
+      this.deletedCount = this.selectedData.length;
+      this.clearDeleteErrors();
       for (const data of this.selectedData) {
-        this.ipc.get('delete/comment', this.dataToEntity(data)).then((result: number) => {
-          if (result === 0) {
-            window.alert(data); // TODO: handle could not delete
+        this.ipc.send('delete/comment', this.dataToEntity(data));
+      }
+    }
+  }
+
+  clearDeleteErrors(): void {
+    this.rememberIdOfDeleteError = [];
+    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    for (let i = 0; i < rowsOfTable.length; ++i) {
+      rowsOfTable[i].classList.remove('validationErrorBorder');
+    }
+  }
+
+  handleDeleteError(indexOfData: number): void {
+
+    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+  }
+
+  showDeleteErrorToastr(): void {
+
+    if (this.rememberIdOfDeleteError.length) {
+      this.data.getAll().then((dataArray: any[]) => {
+        this.rememberIdOfDeleteError.forEach((id: number) => {
+          const indexFromId = dataArray.findIndex(x => x.id === id);
+          if (indexFromId > -1) {
+            this.handleDeleteError(indexFromId);
           }
         });
-      }
+      });
+      this.toastr.error(`Rot umrahmte Einträge (#${this.rememberIdOfDeleteError.length}) konnten nicht gelöscht werden!
+      Entfernen Sie vorab die Abhängigkeiten!`);
     }
   }
 }

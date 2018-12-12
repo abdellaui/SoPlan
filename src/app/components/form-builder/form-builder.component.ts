@@ -57,11 +57,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
   handleErrors(errors: ValidationError[], member?: string): void {
 
     const currentErros = {};
-
     for (const error of errors) {
-      /**
-       * TODO: German lookup table for error
-       */
       this.errorHistory[error.property] = Object.values(error.constraints).join(', ');
       currentErros[error.property] = true;
     }
@@ -95,10 +91,10 @@ export class FormBuilderComponent implements OnInit, OnChanges {
    * @param member begrenzt die Validierung auf ein bestimmtes Attribut
    */
   check(member?: string): void {
-    this.errorHistory = {};
     validate(this.write).then((error: ValidationError[]) => {
+      console.log(this.write, error);
+      this.errorHistory = {};
       if (error.length > 0) {
-
         this.handleErrors(error, member);
         this.reportReadyStatus();
 

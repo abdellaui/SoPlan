@@ -54,6 +54,31 @@ export class Participant extends BaseEntity {
   @ManyToMany(type => Participant, participant => participant.wantsToBeWith)
   @JoinTable()
   wantsToBeWith: Participant[];
+
+  /**
+   * STATIC METHODS
+   */
+  static getByBedroom(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { bedroom: { id: searchId } } });
+  }
+
+  static getByGroup(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { group: { id: searchId } } });
+  }
+
+  static getByEvent(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { event: { id: searchId } } });
+  }
+
+  static getByPerson(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { person: { id: searchId } } });
+  }
+
+
 }
 
 const ParticipantSchema: FormElement[] = [

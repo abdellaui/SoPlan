@@ -11,15 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from '@components/components.module';
-import { NbDateFnsDateModule, NbDateFnsDateService } from '@nebular/date-fns';
-import {
-  NbDatepickerModule,
-  NbDateService,
-  NbMenuModule,
-  NbSidebarModule,
-  NbSidebarService,
-  NbThemeModule,
-} from '@nebular/theme';
+import { NbDatepickerModule, NbMenuModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 import { ToastrModule } from 'ngx-toastr';
@@ -43,7 +35,6 @@ import { AppComponent } from './app.component';
     // route
     AppRoutingModule,
     RouterModule,
-    NbDateFnsDateModule,
     NbThemeModule.forRoot({ name: 'default' }),
     NbDatepickerModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -51,7 +42,7 @@ import { AppComponent } from './app.component';
 
     // toastr
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
@@ -66,8 +57,7 @@ import { AppComponent } from './app.component';
     ElectronService,
     NbSidebarService,
     { provide: APP_BASE_HREF, useValue: '/' },
-    { provide: LOCALE_ID, useValue: 'de' },
-    { provide: NbDateService, useClass: NbDateFnsDateService }
+    { provide: LOCALE_ID, useValue: 'de' }
   ],
   bootstrap: [AppComponent]
 })

@@ -56,11 +56,11 @@ export class VenueEditorComponent implements OnInit {
       createButtonText: 'Neue Ort'
     },
     slotUrls: {
-      getUrl: 'get/bedroom/by/venueId',
+      getUrl: 'get/venue/bedrooms',
       postUrl: 'post/bedroom',
       deleteUrl: 'delete/bedroom',
       editorUrl: '/logged/venue/bedroom/editor/0/',
-      getParam: 0
+      getParam: { id: 0 }
     },
     instanceMap: {
       '': Bedroom.prototype,
@@ -86,11 +86,11 @@ export class VenueEditorComponent implements OnInit {
       createButtonText: 'Neue Ort'
     },
     slotUrls: {
-      getUrl: 'get/classroom/by/venueId',
+      getUrl: 'get/venue/classrooms',
       postUrl: 'post/classroom',
       deleteUrl: 'delete/classroom',
       editorUrl: '/logged/venue/classroom/editor/0/',
-      getParam: 0
+      getParam: { id: 0 }
     },
     instanceMap: {
       '': Classroom.prototype,
@@ -148,10 +148,10 @@ export class VenueEditorComponent implements OnInit {
 
     const appendingId = (this.form_venueInstance.id) ? this.form_venueInstance.id : 0;
 
-    this.st_bed_config.slotUrls.getParam = appendingId;
+    this.st_bed_config.slotUrls.getParam = { id: appendingId };
     this.st_bed_config.slotUrls.editorUrl = `/logged/venue/bedroom/editor/${appendingId}/`;
 
-    this.st_class_config.slotUrls.getParam = appendingId;
+    this.st_class_config.slotUrls.getParam = { id: appendingId };
     this.st_class_config.slotUrls.editorUrl = `/logged/venue/classroom/editor/${appendingId}/`;
   }
 

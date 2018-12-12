@@ -1,4 +1,4 @@
-import { IsAlpha, IsNotEmpty, IsOptional, MaxLength, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
@@ -34,7 +34,7 @@ export class Person extends BaseEntity {
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsDateString({ message: 'Pflichtfeld' })
   @Column()
   birthDate: Date;
 
@@ -64,6 +64,16 @@ export class Person extends BaseEntity {
 
   @OneToMany(type => Participant, participant => participant.person)
   participantes: Participant[];
+
+  /**
+  * STATIC METHODS
+  */
+  static getBySchool(searchId: number) {
+    // (this as any) fallback
+    return (this as any).find({ where: { school: { id: searchId } } });
+  }
+
+
 }
 
 

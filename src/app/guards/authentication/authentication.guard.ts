@@ -31,7 +31,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     const currAdmin = admin;
     currAdmin.password = window.btoa(admin.password);
 
-    this.ipc.get('check/administrator', currAdmin).then((result: any) => {
+    this.ipc.get('get/administrator/auth', currAdmin).then((result: any) => {
       if (result) {
         result.remember = _remember;
         localStorage.setItem('administrator', JSON.stringify(result));

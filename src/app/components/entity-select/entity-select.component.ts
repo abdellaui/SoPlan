@@ -23,7 +23,6 @@ export class EntitySelectComponent implements OnInit {
   constructor(private ipc: IpcRendererService) { }
 
   ngOnInit() {
-
     // defaults for optional arguments
     this.selectedIds = (this.selectedIds) ? this.selectedIds : [];
     this.settings.listTitleMembers = (this.settings.listTitleMembers) ? this.settings.listTitleMembers : [];

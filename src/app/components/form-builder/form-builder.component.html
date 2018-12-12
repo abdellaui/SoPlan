@@ -4,7 +4,8 @@
     <div *ngFor="let schemata of schema">
       <div class="form-group row">
         <label class="col-{{settings.paddings.left}} col-form-label">{{schemata.name}}
-          <span *ngIf="getError(schemata.member)" class="badge badge-danger" [nbTooltip]="showError(schemata.member)">?</span>
+          <span *ngIf="getError(schemata.member)" class="badge badge-danger" [nbPopover]="showError(schemata.member)"
+            nbPopoverMode="hover">?</span>
         </label>
         <div class="col-{{settings.paddings.right}}" [ngSwitch]="schemata.element.getElementType()">
 

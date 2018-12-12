@@ -1,7 +1,9 @@
 /* tslint:disable:no-unused-variable */
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TextArea } from '@models/formBuilder.class';
+import { NbInputModule, NbPopoverModule } from '@nebular/theme';
 
 import { TextareaComponent } from './textarea.component';
 
@@ -9,16 +11,28 @@ describe('TextareaComponent', () => {
   let component: TextareaComponent;
   let fixture: ComponentFixture<TextareaComponent>;
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TextareaComponent ]
+      declarations: [TextareaComponent],
+      imports: [
+        FormsModule,
+        NbPopoverModule,
+        NbInputModule
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TextareaComponent);
     component = fixture.componentInstance;
+
+    component.element = new TextArea(false);
+    component.value = 'TestBed Test Value';
+    component.error = false;
+
     fixture.detectChanges();
   });
 

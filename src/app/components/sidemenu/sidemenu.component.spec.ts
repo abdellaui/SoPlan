@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { NbMenuModule, NbThemeModule } from '@nebular/theme';
 
 import { SidemenuComponent } from './sidemenu.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SidemenuComponent', () => {
   let component: SidemenuComponent;
@@ -17,9 +18,10 @@ describe('SidemenuComponent', () => {
       declarations: [SidemenuComponent],
       imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         RouterModule.forRoot([]),
         NbThemeModule.forRoot({ name: 'default' }),
-        NbMenuModule.forRoot(),
+        NbMenuModule.forRoot()
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

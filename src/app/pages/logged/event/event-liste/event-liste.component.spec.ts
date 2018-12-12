@@ -4,6 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { EventListeComponent } from './event-liste.component';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ElectronService, NgxElectronModule } from 'ngx-electron';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EventListeComponent', () => {
   let component: EventListeComponent;
@@ -11,9 +15,17 @@ describe('EventListeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventListeComponent ]
+      declarations: [EventListeComponent],
+      imports: [
+        HttpClientModule,
+      ],
+      providers: [
+        CurrentEventService,
+        ElectronService
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

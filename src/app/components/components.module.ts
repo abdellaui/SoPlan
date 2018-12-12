@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EinstellungMailComponent } from '@components/einstellung-mail/einstellung-mail.component';
@@ -21,6 +21,7 @@ import {
   NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
+  NbSpinnerModule,
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
@@ -38,6 +39,7 @@ import { RadiobuttonComponent } from './form-builder/radiobutton/radiobutton.com
 import { SelectboxComponent } from './form-builder/selectbox/selectbox.component';
 import { TextareaComponent } from './form-builder/textarea/textarea.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { DateEditorComponent } from './table/date-editor/date-editor.component';
 import { DateRendererComponent } from './table/date-renderer/date-renderer.component';
 
 const declarations = [
@@ -54,7 +56,8 @@ const declarations = [
   TextareaComponent,
   EntitySelectComponent,
   EntityCommentComponent,
-  DateRendererComponent
+  DateRendererComponent,
+  DateEditorComponent
 ];
 
 const nebularModules = [
@@ -71,16 +74,19 @@ const nebularModules = [
   NbInputModule,
   NbListModule,
   NbDatepickerModule,
+  NbDateFnsDateModule,
   NbButtonModule,
   NbTooltipModule,
   NbBadgeModule,
   NbMenuModule,
   NbContextMenuModule,
+  NbSpinnerModule,
 ];
 
 @NgModule({
   entryComponents: [
-    DateRendererComponent
+    DateRendererComponent,
+    DateEditorComponent
   ],
   declarations: [
     ...declarations,
@@ -91,11 +97,13 @@ const nebularModules = [
     RouterModule,
     ...nebularModules,
     Ng2SmartTableModule,
-    NbDateFnsDateModule,
   ],
   exports: [
     ...nebularModules,
     ...declarations
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'de' }
   ]
 })
 export class ComponentsModule { }
