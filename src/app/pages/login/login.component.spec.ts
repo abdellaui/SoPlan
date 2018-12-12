@@ -7,13 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { NgxElectronModule } from 'ngx-electron';
-<<<<<<< HEAD
-import { FormsModule } from '@angular/forms';
-=======
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { LoginComponent } from './login.component';
->>>>>>> 816cf1b688675afa48a771dda5d5b853dc484c80
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -35,11 +31,7 @@ describe('LoginComponent', () => {
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
       schemas: [
-<<<<<<< HEAD
-        CUSTOM_ELEMENTS_SCHEMA
-=======
         CUSTOM_ELEMENTS_SCHEMA,
->>>>>>> 816cf1b688675afa48a771dda5d5b853dc484c80
       ],
     })
       .compileComponents();
