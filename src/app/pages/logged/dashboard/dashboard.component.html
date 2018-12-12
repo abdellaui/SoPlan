@@ -1,8 +1,173 @@
-<div *ngIf="showHelp">
-  hier wird ein intro / help / hinweis seite kommen, da keine veranstaltung gewählt
-</div>
 <div *ngIf="!showHelp">
 
-  hier wird {{currentEvent.name}} stehen
+  <div class="row">
+    <!-- one stat example -->
+    <div class="col-md-3">
+
+      <!-- billig stat-->
+      <nb-card>
+
+        <div class="row lowStatWidget">
+          <div class="col-sm-4 icon customColor_1">
+            <!-- icon here-->
+            <i class="fa fa-address-card"></i> </div>
+          <div class="col-sm-8 info">
+            <!-- title and value here -->
+            <h1> Teilnehmer </h1>
+            <h2> {{stat_num_participants}}</h2>
+          </div>
+        </div>
+      </nb-card>
+      <!-- billig stat end-->
+
+    </div>
+    <!-- one stat ex end-->
+
+    <!-- one stat example -->
+    <div class="col-md-3">
+
+      <!-- billig stat-->
+      <nb-card>
+        <div class="row lowStatWidget">
+          <div class="col-sm-4 icon customColor_2">
+            <!-- icon here-->
+            <i class="fa fa-beds"></i>
+          </div>
+          <div class="col-sm-8 info">
+            <!-- title and value here -->
+            <h1> Schlafzimmer </h1>
+            <h2> {{stat_num_bedrooms}}</h2>
+          </div>
+        </div>
+      </nb-card>
+      <!-- billig stat end-->
+
+    </div>
+    <!-- one stat ex end-->
+
+
+    <!-- one stat example -->
+    <div class="col-md-3">
+
+      <!-- billig stat-->
+      <nb-card>
+        <div class="row lowStatWidget">
+          <div class="col-sm-4 icon customColor_3">
+            <!-- icon here-->
+            <i class="fa fa-object-group"></i>
+          </div>
+          <div class="col-sm-8 info">
+            <!-- title and value here -->
+            <h1> Klassenzimmer </h1>
+            <h2> {{stat_num_classrooms}}</h2>
+          </div>
+        </div>
+      </nb-card>
+      <!-- billig stat end-->
+
+    </div>
+    <!-- one stat ex end-->
+
+    <!-- one stat example -->
+    <div class="col-md-3">
+
+      <!-- billig stat-->
+      <nb-card>
+        <div class="row lowStatWidget">
+          <div class="col-sm-4 icon customColor_4">
+            <!-- icon here-->
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="col-sm-8 info">
+            <!-- title and value here -->
+            <h1> Gruppenanzahl </h1>
+            <h2> {{stat_num_groups}}</h2>
+          </div>
+        </div>
+      </nb-card>
+      <!-- billig stat end-->
+
+    </div>
+    <!-- one stat ex end-->
+  </div>
+  <div class="row">
+
+    <div class="col-sm-6">
+      <!-- GESCHLECHT -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="pieChartType"
+              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
+            </canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- GESCHLECHT ENDE -->
+    </div>
+    <div class="col-sm-6">
+      <!-- -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="pieChartType" (chartHover)="roleChartHovered($event)"
+              (chartClick)="roleChartClicked($event)">
+            </canvas>
+          </div>
+
+        </nb-card-body>
+
+      </nb-card>
+      <!-- ende -->
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-6">
+      <!--- ALTER -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
+              [chartType]="barChartType"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- ALTER END -->
+    </div>
+
+    <div class="col-sm-6">
+      <!--- GRADE -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="gradeChartData" [labels]="gradeChartLabels" [options]="gradeChartOptions"
+              [legend]="gradeChartLegend" [chartType]="barChartType"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- GRADE END -->
+    </div>
+
+
+  </div>
+
+</div>
+
+<div *ngIf="showHelp">
+
+  <nb-card>
+    <nb-card-body>
+
+      Wähle ein Event in der oberen rechten Ecke aus um eine detaillierte Event Beschreibung zu erhalten.
+
+    </nb-card-body>
+
+  </nb-card>
 
 </div>

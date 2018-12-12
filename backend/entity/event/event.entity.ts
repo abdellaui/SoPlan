@@ -85,6 +85,7 @@ export class Event extends BaseEntity {
   getAllParticipants() {
     return Event.getAllParticipants(this.id);
   }
+
 }
 
 const EventSchema: FormElement[] = [

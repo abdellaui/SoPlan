@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -51,6 +51,7 @@ export class Group extends BaseEntity {
     // (this as any) fallback
     return (this as any).find({ where: { classroom: { id: searchId } } });
   }
+
 }
 
 const GroupSchema: FormElement[] = [

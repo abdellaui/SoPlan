@@ -1,0 +1,42 @@
+:host {
+    nb-card {
+        overflow: hidden;
+        .lowStatWidget {
+            min-height: 75px;
+            padding: 0px 15px;
+            .icon {
+                width: 100%;
+                text-align: center;
+                i {
+                    margin-top: 20px;
+                    font-size: 35px;
+                    color: rgba(0, 0, 0, 0.5)
+                }
+                &.customColor_1 {
+                    background: lightblue;
+                }
+                &.customColor_2 {
+                    background: lightcoral;
+                }
+                &.customColor_3 {
+                    background: rgb(238, 247, 166);
+                }
+                &.customColor_4 {
+                    background: rgb(179, 245, 179);
+                }
+            }
+            .info {
+                width: 100%;
+                text-align: center;
+                h1 {
+                    font-size: 15px;
+                    color: gray
+                }
+                h2 {
+                    font-size: 25px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}

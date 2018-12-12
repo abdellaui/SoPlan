@@ -28,6 +28,7 @@ import { ClassroomEditorComponent } from './venue/classroom/classroom-editor/cla
 import { ClassroomListeComponent } from './venue/classroom/classroom-liste/classroom-liste.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
     Ng2SmartTableModule,
     NbStepperModule,
     ReactiveFormsModule,
+    ChartsModule
   ]
 })
 export class LoggedModule { }

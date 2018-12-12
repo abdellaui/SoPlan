@@ -4,8 +4,8 @@ import { end, logException, on, send } from '../../slots';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Group } from '../group/group.entity';
-import { Participant } from '../participant/participant.entity';
 import { Event } from './event.entity';
+import { Participant } from '../participant/participant.entity';
 
 export function init() {
 
@@ -95,6 +95,14 @@ export function init() {
     }).catch(e => {
       logException(e);
       send(event, 'get/event/groups', 0);
+    });
+  });
+
+  on('get/event/participants', (event: any, arg: { id: number }) => {
+    Event.getAllParticipants(arg.id).then((result: Participant[]) => {
+      send(event, 'get/event/participants', result);
+    }).catch(e => {
+      send(event, 'get/event/participants', 0);
     });
   });
 }
