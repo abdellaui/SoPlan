@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Event } from '@entity/event/event.entity';
-import { CurrentEventService } from '@services/current-event/current-event.service';
-import { Participant, ParticipantRole } from '@entity/participant/participant.entity';
-import { Group } from '@entity/group/group.entity';
-import { Classroom } from '@entity/classroom/classroom.entity';
-import { PersonGender } from '@entity/person/person.entity';
-import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { Component, OnInit } from '@angular/core';
 import { Bedroom } from '@entity/bedroom/bedroom.entity';
-import { Chart } from 'chart.js';
+import { Classroom } from '@entity/classroom/classroom.entity';
+import { Event } from '@entity/event/event.entity';
+import { Group } from '@entity/group/group.entity';
+import { Participant, ParticipantRole } from '@entity/participant/participant.entity';
+import { PersonGender } from '@entity/person/person.entity';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 
 
 @Component({
