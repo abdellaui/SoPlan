@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
@@ -19,11 +19,11 @@ export class Event extends BaseEntity {
   @IsNotEmpty({ message: 'Pflichtfeld' })
   name: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsDate({ message: 'Pflichtfeld' })
   @Column()
   startsDate: Date = new Date();
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsDate({ message: 'Pflichtfeld' })
   @Column()
   endsDate: Date = new Date();
   /**

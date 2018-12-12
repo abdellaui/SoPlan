@@ -12,22 +12,32 @@ export class DatepickerComponent implements OnInit {
   @Input() error: boolean;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
 
-  /**
-   * optimize dateformat etc. but its still not important
-   *  */
-
-  ngOnInit() {
+  public shownValue;
+  constructor() {
   }
 
+  ngOnInit() {
+    this.shownValue = new Date(this.value);
+  }
+
+  onDateSelect(event: any) {
+    this.shownValue = event;
+  }
 
   emitChange(): void {
     this.outputToType();
+    this.value = (typeof this.shownValue.toISOString === 'function')
+      ? this.shownValue.toISOString()
+      : this.shownValue;
     this.valueChanged.emit(this.value);
   }
 
   outputToType(): void {
-    if (!this.value || this.value === '') {
-      this.value = null;
+    if (!this.shownValue || this.shownValue === '') {
+      this.shownValue = null;
+    }
+    if (!(this.shownValue instanceof Date) && this.shownValue) {
+      this.shownValue = new Date(this.shownValue);
     }
   }
 }

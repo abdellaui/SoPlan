@@ -1,0 +1,10 @@
+<div *ngIf="!cell.isEditable()">
+  <input [disabled]="true" [ngClass]="inputClass" [name]="cell.getId()" readonly class="form-control" ngModel="{{value | date:'dd.MM.yyyy' }}"
+    [placeholder]="cell.getTitle()">
+</div>
+<div *ngIf="cell.isEditable()">
+  <input [ngClass]="inputClass" [name]="cell.getId()" nbInput [status]="(error)?'danger':''" class="form-control"
+    (ngModelChange)="emitChange()" (keyup)="emitChange()" [(ngModel)]="value" [placeholder]="cell.getTitle()" (click)="onClick.emit($event)"
+    (keydown.enter)="onEdited.emit($event)" (keydown.esc)="onStopEditing.emit()" [nbDatepicker]="localDatepicker">
+</div>
+<nb-datepicker #localDatepicker [visibleDate]="value" [format]="'dd.MM.yyyy'" (dateChange)="onDateSelect($event)"></nb-datepicker>

@@ -34,8 +34,8 @@
     </div>
   </nb-card-body>
   <nb-card-body *ngIf="loadedFirstTime">
-    <ng2-smart-table (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data" (userRowSelect)="onSelectRow($event)"
-      (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table [id]="uniqueName" (custom)="onCustomActionListClicked($event)" [settings]="settings" [source]="data"
+      (userRowSelect)="onSelectRow($event)" (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
