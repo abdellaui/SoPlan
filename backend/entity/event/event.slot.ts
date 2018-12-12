@@ -4,7 +4,6 @@ import { end, logException, on, send } from '../../slots';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Group } from '../group/group.entity';
-import { Participant } from '../participant/participant.entity';
 import { Event } from './event.entity';
 import { Participant } from '../participant/participant.entity';
 

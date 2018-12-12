@@ -38,8 +38,6 @@ export class Group extends BaseEntity {
   @ManyToOne(type => Event, event => event.groups, { eager: true })
   event: Event;
 
-<<<<<<< HEAD
-=======
   /**
   * METHODS
   */
@@ -53,7 +51,7 @@ export class Group extends BaseEntity {
     // (this as any) fallback
     return (this as any).find({ where: { classroom: { id: searchId } } });
   }
->>>>>>> b22d4970d202965388dc8b251ac501bbbc683a87
+
 }
 
 const GroupSchema: FormElement[] = [

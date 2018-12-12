@@ -1,41 +1,53 @@
-<script src="node_modules/chart.js/src/chart.js"></script>
-
 <div id='charts' *ngIf="!showHelp">
 
-  <nb-card id="age">
-    <nb-card-body>
+  <div class="row">
+    <div class="col-sm-6">
+      <!--- ALTER -->
+      <nb-card id="age">
+        <nb-card-body>
 
-      <div style="display: block">
-        <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
-          [chartType]="ageChartType"></canvas>
-      </div>
-    </nb-card-body>
-  </nb-card>
+          <div style="display: block">
+            <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
+              [chartType]="ageChartType"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- ALTER END -->
+    </div>
+    <div class="col-sm-6">
+      <!-- GESCHLECHT -->
+      <nb-card id="gender">
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
+              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
+            </canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- GESCHLECHT ENDE -->
+    </div>
+    <div class="col-sm-12">
+      <!-- -->
+      <nb-card id="roleSDSD">
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
+              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)">
+            </canvas>
+          </div>
+
+        </nb-card-body>
+
+      </nb-card>
+      <!-- ende -->
+    </div>
+  </div>
 
 
-  <nb-card id="gender">
-    <nb-card-body>
 
-      <div style="display: block">
-        <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
-          (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
-        </canvas>
-      </div>
-    </nb-card-body>
-  </nb-card>
-
-  <nb-card id="roleSDSD">
-    <nb-card-body>
-
-      <div style="display: block">
-        <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType" (chartHover)="roleChartHovered($event)"
-          (chartClick)="roleChartClicked($event)">
-        </canvas>
-      </div>
-
-    </nb-card-body>
-
-  </nb-card>
 
 </div>
 

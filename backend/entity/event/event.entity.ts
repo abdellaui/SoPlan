@@ -86,9 +86,6 @@ export class Event extends BaseEntity {
     return Event.getAllParticipants(this.id);
   }
 
-  static getAllParticipants(eventId: number) {
-    return (Participant as any).find({ where: { event: { id: eventId } } });
-  }
 }
 
 const EventSchema: FormElement[] = [
