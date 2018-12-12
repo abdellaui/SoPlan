@@ -22,57 +22,73 @@ export class DashboardComponent implements OnInit {
     responsive: true,
   };
   public ageChartLabels = [];
-  public ageChartType: string;
   public ageChartLegend = true;
   public ageChartData = [];
   /********************/
 
+  /******* Grade Chart *******/
+  public gradeChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+  };
+  public gradeChartLabels = [];
+  public gradeChartLegend = true;
+  public gradeChartData = [];
+  /***************************/
+
   /***** Gender Chart *****/
   public genderChartLabels = [];
-  public genderChartType: string;
   public genderChartData = [];
   /************************/
 
   /***** Role Chart *****/
   public roleChartLabels = [];
-  public roleChartType: string;
   public roleChartData = [];
   /************************/
 
+  /******CHART TYPES ********/
+  public pieChartType: string;
+  public lineChartType: string;
+  public barChartType: string;
+  public doughnutChartType: string;
+
+  /************************* */
+
   /***Current Event Mangament***/
-  private currentEvent: Event = null;
-  private showHelp = true;
+  public currentEvent: Event = null;
+  public showHelp = true;
   /***************************/
 
 
   /*STATISTICS FOR DASHBOARD*/
-  private stat_num_participants: number = null;
-  private stat_num_groups: number = null;
-  private stat_num_bedrooms: number = null;
-  private stat_num_classrooms: number = null;
-  private stat_num_gender_f: number = null;
-  private stat_num_gender_m: number = null;
-  private stat_num_gender_d: number = null;
-  private stat_num_role_s: number = null;
-  private stat_num_role_d: number = null;
-  private stat_num_role_sd: number = null;
+  public stat_num_participants: number = null;
+  public stat_num_groups: number = null;
+  public stat_num_bedrooms: number = null;
+  public stat_num_classrooms: number = null;
+  public stat_num_gender_f: number = null;
+  public stat_num_gender_m: number = null;
+  public stat_num_gender_d: number = null;
+  public stat_num_role_s: number = null;
+  public stat_num_role_d: number = null;
+  public stat_num_role_sd: number = null;
   /**************************/
   /***Verknüpfte Enittäten vom aktuellen Event***/
-  private participants: Participant[] = [];
-  private groups: Group[] = [];
-  private classrooms: Classroom[] = [];
-  private bedrooms: Bedroom[] = [];
+  public participants: Participant[] = [];
+  public groups: Group[] = [];
+  public classrooms: Classroom[] = [];
+  public bedrooms: Bedroom[] = [];
   /****************************************/
 
   /***********Data for Charts***********/
-  private agearr: number[] = [];
+  public agearr: number[] = [];
+  public gradearr: number[] = [];
   public age_stats = new Object;
-  public class_stats = new Object;
+  public grade_stats = new Object;
   /*****************************************/
 
   private initialize_Age(): void {
     this.age_stats = new Object;
-    this.class_stats = new Object;
+    this.grade_stats = new Object;
     this.participants.forEach(participant => {
       const date = new Date();
       const participantDate = participant.person.birthDate.toString();
@@ -86,10 +102,10 @@ export class DashboardComponent implements OnInit {
           = this.age_stats[age] + 1;
       }
       const grade = participant.grade;
-      if (!this.class_stats[grade]) {
-        this.class_stats[grade] = 1;
+      if (!this.grade_stats[grade]) {
+        this.grade_stats[grade] = 1;
       } else {
-        this.class_stats[grade] = this.class_stats[grade] + 1;
+        this.grade_stats[grade] = this.grade_stats[grade] + 1;
       }
     });
 
@@ -169,9 +185,10 @@ export class DashboardComponent implements OnInit {
       scaleShowVerticalLines: false,
       responsive: true,
     };
-    this.ageChartType = 'bar';
-    this.genderChartType = 'doughnut';
-    this.roleChartType = 'pie';
+    this.lineChartType = 'line';
+    this.doughnutChartType = 'doughnut';
+    this.barChartType = 'bar';
+    this.pieChartType = 'pie';
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
     this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
     /************************************************************* */
@@ -186,10 +203,11 @@ export class DashboardComponent implements OnInit {
       this.ipc.get('get/event/participants', { id: this.currentEvent.id }).
         then((result: Participant[]) => {
           this.participants = result;
-          this.stat_num_participants = this.participants.length;
+          this.stat_num_participants = result.length;
           this.initalize_gender_numbers();
           this.initialize_Age();
           this.agearr = [];
+          this.gradearr = [];
           this.genderChartData = [this.stat_num_gender_f, this.stat_num_gender_m, this.stat_num_gender_d];
           this.roleChartData = [this.stat_num_role_s, this.stat_num_role_d, this.stat_num_role_sd];
           for (const year of Object.keys(this.age_stats)) {
@@ -200,6 +218,18 @@ export class DashboardComponent implements OnInit {
           this.ageChartLegend = true;
           this.ageChartData = [{
             data: this.agearr, label: 'Age'
+          },
+
+          ];
+
+          for (const grade of Object.keys(this.grade_stats)) {
+            this.gradearr.push(this.grade_stats[grade]);
+          }
+
+          this.gradeChartLabels = Object.keys(this.age_stats);
+          this.gradeChartLegend = true;
+          this.gradeChartData = [{
+            data: this.gradearr, label: 'Grade'
           },
           ];
 
