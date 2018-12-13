@@ -16,6 +16,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 })
 export class DashboardComponent implements OnInit {
 
+  public rangeObject;
   /***** Age Chart******/
   public ageChartOptions = {
     scaleShowVerticalLines: false,
@@ -171,6 +172,7 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService) {
+
     this.currentEventService.currentEventChanged.subscribe((newEvent: Event) => {
       this.setEvent(newEvent);
     });
@@ -195,10 +197,17 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
+  rejectRangeChange(event: any): void {
+    console.log(event, this.rangeObject);
+  }
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
       this.currentEvent = ev;
+
+      this.rangeObject = {
+        start: new Date(this.currentEvent.startsDate),
+        end: new Date(this.currentEvent.endsDate)
+      };
       /******* Nested Get IPC Renderer Methods, so that ShowHelp won't be false before every Chart is initialized ******* */
       this.ipc.get('get/event/participants', { id: this.currentEvent.id }).
         then((result: Participant[]) => {

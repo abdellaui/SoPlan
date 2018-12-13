@@ -1,5 +1,10 @@
 :host {
     nb-card {
+        &#allgemeineInfo {
+            nb-card-body {
+                min-height: 190px;
+            }
+        }
         overflow: hidden;
         .lowStatWidget {
             min-height: 75px;

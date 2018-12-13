@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '@components/components.module';
 import { TableComponent } from '@components/table/table.component';
-import { NbStepperModule } from '@nebular/theme';
+import { NbCalendarRangeModule, NbStepperModule } from '@nebular/theme';
 import { VeranstaltungenComponent } from '@pages/logged/veranstaltungen/veranstaltungen.component';
+import { ChartsModule } from 'ng2-charts';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { CertificateComponent } from './certificate/certificate.component';
@@ -28,7 +29,6 @@ import { ClassroomEditorComponent } from './venue/classroom/classroom-editor/cla
 import { ClassroomListeComponent } from './venue/classroom/classroom-liste/classroom-liste.component';
 import { VenueEditorComponent } from './venue/venue-editor/venue-editor.component';
 import { VenueListeComponent } from './venue/venue-liste/venue-liste.component';
-import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -63,7 +63,8 @@ import { ChartsModule } from 'ng2-charts';
     Ng2SmartTableModule,
     NbStepperModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    NbCalendarRangeModule
   ]
 })
 export class LoggedModule { }

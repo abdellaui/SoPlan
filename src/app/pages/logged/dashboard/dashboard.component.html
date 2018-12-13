@@ -1,6 +1,38 @@
 <div *ngIf="!showHelp">
 
   <div class="row">
+    <div class="col-sm-6">
+      <!-- allgemeine info-->
+      <nb-card id="allgemeineInfo">
+        <nb-card-header>{{currentEvent.name}}</nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-4"><b>Ortsname</b></div>
+            <div class="col-8">{{currentEvent.hosting.name}}</div>
+            <div class="col-4"><b>Kontaktperson</b></div>
+            <div class="col-8">{{currentEvent.hosting.contactPerson}}</div>
+            <div class="col-4"><b>Ortanschrift</b></div>
+            <div class="col-8">{{currentEvent.hosting.location.street}}
+              {{currentEvent.hosting.location.subThoroughfare}}</div>
+            <div class="col-4"></div>
+            <div class="col-8">{{currentEvent.hosting.location.postalcode}} {{currentEvent.hosting.location.city}}</div>
+            <div class="col-4"></div>
+            <div class="col-8">{{currentEvent.hosting.location.country}}</div>
+          </div>
+        </nb-card-body>
+
+      </nb-card>
+      <!-- end allgemeine info-->
+    </div>
+    <div class="col-sm-6">
+      <!-- kalender info-->
+      <nb-calendar-range [showHeader]="false" size="small" [visibleDate]="rangeObject.start" [range]="rangeObject"
+        (rangeChange)="rejectRangeChange($event)">
+      </nb-calendar-range>
+      <!-- end kalender info-->
+    </div>
+  </div>
+  <div class="row">
     <!-- one stat example -->
     <div class="col-md-3">
 
@@ -31,7 +63,7 @@
         <div class="row lowStatWidget">
           <div class="col-sm-4 icon customColor_2">
             <!-- icon here-->
-            <i class="fa fa-beds"></i>
+            <i class="fa fa-bed"></i>
           </div>
           <div class="col-sm-8 info">
             <!-- title and value here -->
