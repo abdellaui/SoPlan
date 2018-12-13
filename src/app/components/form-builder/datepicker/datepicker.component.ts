@@ -12,12 +12,16 @@ export class DatepickerComponent implements OnInit {
   @Input() error: boolean;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
 
-  public shownValue;
+  public shownValue: any = null;
   constructor() {
   }
 
   ngOnInit() {
-    this.shownValue = new Date(this.value);
+    if (!this.value || this.value === '') {
+      this.value = null;
+    } else {
+      this.shownValue = new Date(this.value);
+    }
   }
 
   onDateSelect(event: any) {
@@ -26,7 +30,7 @@ export class DatepickerComponent implements OnInit {
 
   emitChange(): void {
     this.outputToType();
-    this.value = (typeof this.shownValue.toISOString === 'function')
+    this.value = (this.shownValue && typeof this.shownValue.toISOString === 'function')
       ? this.shownValue.toISOString()
       : this.shownValue;
     this.valueChanged.emit(this.value);

@@ -22,7 +22,8 @@ export class DateEditorComponent extends DefaultEditor implements OnInit {
 
   emitChange(): void {
     this.outputToType();
-    this.cell.newValue = (typeof this.value.toISOString === 'function')
+
+    this.cell.newValue = (this.value && typeof this.value.toISOString === 'function')
       ? this.value.toISOString()
       : this.value;
 
