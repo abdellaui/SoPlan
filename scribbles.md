@@ -1,0 +1,97 @@
+[ ] ban the errors/failures
+[ ] Testing
+[ ] Überarbeitung der Texte
+[ ] Features
+[ ] compiling to standalone-exe
+----------------------------------
+
+[ ] ban the errors/failures
+    [x] slots first part is a http method (get/post/put?/delete)
+    [x] Current event konsistenz
+    [x] entity-selector
+        [x] forgets selected ids
+    [ ] Validierungsdekoratoren
+        [x] handle phone numbers
+        [x] date validation
+        [ ] find better validators for some props
+    [x] Group Editor
+        [x] create new one
+        [x] edit new one by id
+    [ ] Participant Editor
+        [x] create new one
+        [ ] edit new one by id
+        [ ] entity-selctor for wantsToBeWith
+    [ ]
+    [x] Datepicker
+        [x] german-style output
+        [x] converts selection to ISO-Datstrign
+    [x] Smart-table
+        [x] multi inline edit per time error
+        [x] inline saving
+        [x] multi select -> output in entity schema
+        [x] type: date 
+            [x] date-renderer
+            [x] date-editor based on datepicker
+    [x] Login password gets longer (encoding displayed)
+
+----------------------------------
+[ ] Testing
+    [ ] Unit Test
+        [x] every comp. should create independently
+        [x] fit comp. props
+        [x] get green
+        [ ] test till get bored
+            [ ] test important methods
+            [ ] test every single method?
+        [ ] backend?
+            [ ] entity getter setter?
+            [ ] slots?
+    [ ] e2e test? => vs. unit-testing?
+        [ ] maybe login?
+        [ ] db connection requirement?
+        [ ] input helpers?
+
+----------------------------------
+[ ] Überarbeitung der Texte
+    [x] Validierungsfehler übersetzen!
+    [ ] NbCard headers
+    [ ] Toastr-Meldungen
+    [ ] FormSchema titles
+
+----------------------------------
+[x] Features
+    [x] easy logout
+    [ ] send mail to person (multi-select)?
+    [ ] send mail to particpants (multi-select)?
+    [ ] custom-action on participants smart-t. to print certf. (multi-select)?
+    [x] adding multiple participants from person-list (multi-select)
+        [x] new view on selection+custom action click
+        [x] each person gets a role and a grade
+        [?] maybe create groups automaticly ? monte-carlo?    
+    [ ] Dashboard
+        [x] Allgemeines
+            [x] Name
+            [x] Veranstalltungsort
+            [x] Kalender (Zeitraum)
+        [ ] Statistik
+          [ ] Daten erzeugen
+              [x] #Gruppen
+              [ ] Teilnehmer
+                  [x] Alter
+                  [x] Geschlecht
+                  [x] Klassenstufe
+                  [ ] Herkunfsorte
+                  [ ] Schulen
+                  [x] Rolle 
+              [x] Ort
+                  [x] #Zimmer
+          [x] Charts framework finden
+
+----------------------------------
+[ ] Compiling to standalone-exe
+    [x] have a logo
+    [x] mac
+    [x] linux
+    [x] windows
+    [ ] doesnt throw erros / warnings
+        [ ] fix public / private props by html-interpolation

@@ -1,19 +1,18 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Event -->
-    <div class="{{this.form_eventInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+    <div class="{{this.form_event.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
-      <app-form-builder [write]="form_eventInstance" [schema]="form_eventSchema" [settings]="form_eventSettings"
-        (finished)="checkFinished($event, 'event')"></app-form-builder>
-      <app-entity-select [readonly]="this.form_eventInstance.id" [hasError]="!this.form_eventInstance.hosting.id"
-        (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
+      <app-form-builder [write]="form_event" [schema]="form_eventSchema" [settings]="form_eventSettings" (finished)="checkFinished($event, 'event')"></app-form-builder>
+      <app-entity-select [readonly]="this.form_event.id" [hasError]="!this.form_event.hosting.id" (selected)="selectionSelected($event)"
+        [selectedIds]="selection_selectedIds" [settings]="selection_setttins"></app-entity-select>
     </div>
     <div class="col-lg-6">
-      <app-entity-comment entityPostUrl="post/event" [entity]="form_eventInstance"></app-entity-comment>
+      <app-entity-comment entityPostUrl="post/event" [entity]="form_event"></app-entity-comment>
     </div>
 
     <!-- group & participants lists-->
-    <div *ngIf="this.form_eventInstance.id" class="col-lg-12">
+    <div *ngIf="this.form_event.id" class="col-lg-12">
       <app-table [config]="st_group_config"></app-table>
       <!--
         <app-table [config]="st_participant_config"></app-table>

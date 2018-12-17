@@ -130,6 +130,11 @@ export class SidemenuComponent implements OnInit {
       title: 'Einstellungen',
       icon: 'nb-gear',
       link: '/logged/einstellungen',
+    },
+    {
+      title: 'Abmelden',
+      icon: 'nb-close-circled',
+      link: '/login/',
     }
   ];
 

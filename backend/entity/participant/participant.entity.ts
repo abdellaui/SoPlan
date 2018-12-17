@@ -1,5 +1,15 @@
 import { IsInt, IsNotEmpty, IsOptional, Max, Min } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
+  Unique,
+} from 'typeorm';
 
 import { FormElement, Input, Option, RadioButton } from '../../models/formBuilder.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
@@ -15,6 +25,7 @@ export enum ParticipantRole {
 }
 
 @Entity()
+@Unique(['person', 'event']) // eine Person kann nur einmal Teilnehmen!
 export class Participant extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -54,6 +65,10 @@ export class Participant extends BaseEntity {
   @ManyToMany(type => Participant, participant => participant.wantsToBeWith)
   @JoinTable()
   wantsToBeWith: Participant[];
+
+  // eager on wantsToBeWith wont work, because of circularity, so relationid makes wantsToBeWith accessible
+  @RelationId((participant: Participant) => participant.wantsToBeWith)
+  ids_wantsToBeWith: number[];
 
   /**
    * STATIC METHODS

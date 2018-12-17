@@ -2,6 +2,7 @@ import { IsDateString, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
+import { IsLaterThanDate } from '../../models/isLaterThanDate.validator';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
@@ -21,11 +22,12 @@ export class Event extends BaseEntity {
 
   @IsDateString({ message: 'Pflichtfeld' })
   @Column()
-  startsDate: Date = new Date();
+  startsDate: Date;
 
+  @IsLaterThanDate('startsDate', { message: 'musst später sein!' })
   @IsDateString({ message: 'Pflichtfeld' })
   @Column()
-  endsDate: Date = new Date();
+  endsDate: Date;
   /**
    * RELATIONS
    */

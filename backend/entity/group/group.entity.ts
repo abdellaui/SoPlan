@@ -1,5 +1,15 @@
-import { IsNotEmpty, IsPositive, MaxLength } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Classroom } from '../classroom/classroom.entity';
@@ -8,6 +18,7 @@ import { Event } from '../event/event.entity';
 import { Participant } from '../participant/participant.entity';
 
 @Entity()
+@Unique(['classroom', 'event']) // ein Klassenzimmer pro Gruppe
 export class Group extends BaseEntity {
 
   @PrimaryGeneratedColumn()

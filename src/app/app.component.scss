@@ -1,0 +1,11 @@
+// override english defaults on calender
+/deep/nb-calendar-header {
+    /deep/.header {
+        /deep/.sub-title {
+            display: none
+        }
+        .title::after {
+            content: 'heute';
+        }
+    }
+}

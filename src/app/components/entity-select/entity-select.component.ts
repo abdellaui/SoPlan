@@ -5,7 +5,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 @Component({
   selector: 'app-entity-select',
   templateUrl: './entity-select.component.html',
-  styleUrls: ['./entity-select.component.scss']
+  styleUrls: ['./entity-select.component.scss'],
 })
 export class EntitySelectComponent implements OnInit {
   @Input() selectedIds: number[];

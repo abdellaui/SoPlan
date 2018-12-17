@@ -1,27 +1,40 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Group -->
-    <div class="{{this.form_participantInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+    <div class="{{this.form_participant.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
-      <app-form-builder [write]="form_participantInstance" [schema]="form_groupSchema" [settings]="form_groupSettings"
+      <app-form-builder [write]="form_participant" [schema]="form_groupSchema" [settings]="form_groupSettings"
         (finished)="checkFinished($event, 'participant')"></app-form-builder>
 
+      <!-- Person -->
 
+      <app-entity-select (selected)="personSelected($event)" [selectedIds]="person_selectedIds" [settings]="selection_person_settings"
+        [hasError]="!this.form_participant.person.id"></app-entity-select>
 
       <!-- Event -->
 
       <app-entity-select (selected)="eventSelected($event)" [selectedIds]="event_selectedIds" [settings]="selection_event_settings"
-        [hasError]="!this.form_participantInstance.event.id"></app-entity-select>
+        [hasError]="!this.form_participant.event.id"></app-entity-select>
 
-      <!-- Person -->
+      <!-- Gruppe -->
 
-      <app-entity-select *ngIf="this.form_participantInstance.event.id" (selected)="personSelected($event)"
-        [selectedIds]="person_selectedIds" [settings]="selection_person_settings" [hasError]="!this.form_participantInstance.person.id"></app-entity-select>
+      <app-entity-select *ngIf="this.form_participant.event.id" (selected)="groupSelected($event)" [selectedIds]="group_selectedIds"
+        [settings]="selection_group_settings" [hasError]="!this.form_participant.group.id"></app-entity-select>
 
     </div>
 
-    <div class="col-lg-6">
-      <app-entity-comment entityPostUrl="post/participant" [entity]="form_participantInstance"></app-entity-comment>
+    <div class="{{this.form_participant.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+
+      <!-- Schlafraum -->
+
+      <app-entity-select *ngIf="this.form_participant.event.id" (selected)="bedroomSelected($event)" [selectedIds]="bedroom_selectedIds"
+        [settings]="selection_bedroom_settings" [hasError]="!this.form_participant.bedroom.id"></app-entity-select>
+
+      <!-- wants to be with -->
+      <app-entity-select *ngIf="this.form_participant.event.id" (selected)="participantSelected($event)" [selectedIds]="participant_selectedIds"
+        [settings]="selection_participant_settings"></app-entity-select>
+
+      <app-entity-comment entityPostUrl="post/participant" [entity]="form_participant"></app-entity-comment>
     </div>
 
 

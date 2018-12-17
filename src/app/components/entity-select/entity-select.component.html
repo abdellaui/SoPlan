@@ -1,6 +1,6 @@
-<nb-flip-card [flipped]="readonly || selectedElements.length" [showToggleButton]="!readonly">
+<nb-reveal-card [revealed]="readonly || selectedElements.length" [showToggleButton]="!readonly">
   <nb-card-front>
-    <nb-card size="medium" [accent]="(hasError)?'danger':''">
+    <nb-card size="small" [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
         <div class="header-container">
           <div class="header-row left">
@@ -29,7 +29,7 @@
   </nb-card-front>
   <!-- BACK -->
   <nb-card-back>
-    <nb-card [accent]="(hasError)?'danger':''">
+    <nb-card size="small" [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
         {{settings.header}} (Auswahl)
         <nb-badge text="{{selectedElements.length}} / {{settings.maxSelection}}" status="info" position="top right">
@@ -45,4 +45,4 @@
       </nb-list>
     </nb-card>
   </nb-card-back>
-</nb-flip-card>
+</nb-reveal-card>

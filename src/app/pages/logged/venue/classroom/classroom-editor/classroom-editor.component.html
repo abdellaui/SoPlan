@@ -1,27 +1,26 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Bedroom -->
-    <div class="{{this.form_classroomInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+    <div class="{{this.form_classroom.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
-      <app-form-builder [write]="form_classroomInstance" [schema]="form_classroomSchema" [settings]="form_classroomSettings"
+      <app-form-builder [write]="form_classroom" [schema]="form_classroomSchema" [settings]="form_classroomSettings"
         (finished)="checkFinished($event, 'classroom')"></app-form-builder>
       <!-- Room -->
 
 
-      <app-form-builder [write]="form_roomInstance" [schema]="form_roomSchema" [settings]="form_roomSettings"
-        (finished)="checkFinished($event, 'room')"></app-form-builder>
+      <app-form-builder [write]="form_room" [schema]="form_roomSchema" [settings]="form_roomSettings" (finished)="checkFinished($event, 'room')"></app-form-builder>
 
 
 
       <!-- Venue -->
 
-      <app-entity-select [readonly]="this.form_classroomInstance.id" (selected)="selectionSelected($event)"
-        [selectedIds]="selection_selectedIds" [settings]="selection_setttins" [hasError]="!this.form_classroomInstance.venue.id"></app-entity-select>
+      <app-entity-select [readonly]="this.form_classroom.id" (selected)="selectionSelected($event)" [selectedIds]="selection_selectedIds"
+        [settings]="selection_setttins" [hasError]="!this.form_classroom.venue.id"></app-entity-select>
 
     </div>
 
     <div class="col-lg-6">
-      <app-entity-comment entityPostUrl="post/classroom" [entity]="form_classroomInstance"></app-entity-comment>
+      <app-entity-comment entityPostUrl="post/classroom" [entity]="form_classroom"></app-entity-comment>
     </div>
 
 

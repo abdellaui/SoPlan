@@ -23,7 +23,7 @@ export class EntityCommentComponent implements OnInit {
 
   public uniqueName;
 
-  public form_commentInstance: Comment = new Comment();
+  public form_comment: Comment = new Comment();
   public form_commentSchema = CommentSchema;
   public form_commentSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Bemerkung hinzufügen',
@@ -112,7 +112,7 @@ export class EntityCommentComponent implements OnInit {
 
   public onSave(event: any): void {
 
-    this.ipc.get('post/comment', this.form_commentInstance).then((result: any) => {
+    this.ipc.get('post/comment', this.form_comment).then((result: any) => {
       if (result !== 0) {
         this.toastr.info(`Kommentar erstellt`);
         const newComment: Comment = <Comment>result;
@@ -120,7 +120,7 @@ export class EntityCommentComponent implements OnInit {
         this.data.refresh();
         this.ipc.get(this.entityPostUrl, this.entity).then((saved: any) => {
           if (saved !== 0) {
-            this.form_commentInstance = new Comment();
+            this.form_comment = new Comment();
             this.form_commentSettings.initialWarningsIgnore = true;
           } else {
             this.toastr.error(`Fehler beim Zuweisen!`);

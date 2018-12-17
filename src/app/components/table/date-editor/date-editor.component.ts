@@ -8,7 +8,7 @@ import { DefaultEditor } from 'ng2-smart-table';
 })
 export class DateEditorComponent extends DefaultEditor implements OnInit {
 
-  private value: any = null;
+  public value: any = null;
   constructor() {
     super();
   }

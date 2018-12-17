@@ -8,9 +8,9 @@
         <nb-card-body>
           <div class="row">
             <div class="col-4"><b>Ortsname</b></div>
-            <div class="col-8">{{currentEvent.hosting.name}}</div>
+            <div class="col-8">{{currentEvent.hosting.name}}<br><br></div>
             <div class="col-4"><b>Kontaktperson</b></div>
-            <div class="col-8">{{currentEvent.hosting.contactPerson}}</div>
+            <div class="col-8">{{currentEvent.hosting.contactPerson}}<br><br></div>
             <div class="col-4"><b>Ortanschrift</b></div>
             <div class="col-8">{{currentEvent.hosting.location.street}}
               {{currentEvent.hosting.location.subThoroughfare}}</div>
@@ -26,8 +26,8 @@
     </div>
     <div class="col-sm-6">
       <!-- kalender info-->
-      <nb-calendar-range [showHeader]="false" size="small" [visibleDate]="rangeObject.start" [range]="rangeObject"
-        (rangeChange)="rejectRangeChange($event)">
+      <nb-calendar-range id="kalender" *ngIf="refreshCalenderRange" [showHeader]="false" size="small" [visibleDate]="rangeObject.start"
+        [range]="rangeObject" (rangeChange)="rejectRangeChange()">
       </nb-calendar-range>
       <!-- end kalender info-->
     </div>

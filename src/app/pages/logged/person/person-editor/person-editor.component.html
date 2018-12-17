@@ -3,10 +3,9 @@
     <!-- Person -->
     <div class="col-lg-6">
 
-      <app-form-builder [write]="form_personInstance" [schema]="form_personSchema" [settings]="form_personSettings"
-        (finished)="checkFinished($event, 'person')"></app-form-builder>
+      <app-form-builder [write]="form_person" [schema]="form_personSchema" [settings]="form_personSettings" (finished)="checkFinished($event, 'person')"></app-form-builder>
 
-      <app-entity-comment entityPostUrl="post/person" [entity]="form_personInstance"></app-entity-comment>
+      <app-entity-comment entityPostUrl="post/person" [entity]="form_person"></app-entity-comment>
     </div>
 
     <div class="col-lg-6">
@@ -14,11 +13,11 @@
       <!-- Communication -->
 
 
-      <app-form-builder [write]="form_comInstance" [schema]="form_comSchema" [settings]="form_comSettings" (finished)="checkFinished($event, 'communication')"></app-form-builder>
+      <app-form-builder [write]="form_com" [schema]="form_comSchema" [settings]="form_comSettings" (finished)="checkFinished($event, 'communication')"></app-form-builder>
 
       <!-- Location -->
 
-      <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
+      <app-form-builder [write]="form_loc" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
 
 
       <!-- School -->

@@ -62,7 +62,7 @@ export class PersonListeComponent implements OnInit {
     customActions: [
       {
         name: 'add_participant',
-        icon: 'nb-plus',
+        icon: 'nb-person',
         tooltip: 'Teilnehmer erstellen'
       }
     ]
@@ -74,7 +74,14 @@ export class PersonListeComponent implements OnInit {
   public rememberReadyStatus = {};
   public readyToSave = false;
 
-  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) { }
+  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) {
+
+    ipc.on('post/participant', (event: any, result: any) => {
+      if (result === 0) {
+        this.toastr.warning('Eine Person konnte nicht hinzugefügt werden!');
+      }
+    });
+  }
 
   ngOnInit() {
   }

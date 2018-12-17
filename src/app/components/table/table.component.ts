@@ -227,11 +227,11 @@ export class TableComponent implements OnInit {
     returnEntity = Deepmerge(returnEntity, recreateObject);
 
     Object.keys(this.config.instanceMap).forEach(keys => {
-      const generateInstance = Object.setPrototypeOf({}, this.config.instanceMap[keys]);
+      const generate = Object.setPrototypeOf({}, this.config.instanceMap[keys]);
       if (keys === '') {
-        returnEntity = Object.assign(generateInstance, returnEntity);
+        returnEntity = Object.assign(generate, returnEntity);
       } else {
-        returnEntity[keys] = Object.assign(generateInstance, returnEntity[keys]);
+        returnEntity[keys] = Object.assign(generate, returnEntity[keys]);
       }
 
     });

@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, Matches } from 'class-validator';
+import { IsEmail, IsOptional, IsPhoneNumber } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -11,21 +11,12 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 export class Communication {
 
   @IsOptional()
-  // @IsNumberString({
-  //   message: 'Bitte eine gültige Telefonnummer eingeben (ohne +49)'
-  // })
-  @Matches(/^[0-9]*\/*(\+49)*[ ]*(\([0-9]+\))*([ ]*(-|–)*[ ]*[0-9]+)*$/g, {
-    message: 'Es sind nur deutsche Telefonnummern gültig!',
-    always: true
-  })
+  @IsPhoneNumber('DE', { message: 'Es sind nur deutsche Telefonnummern gültig!' })
   @Column({ nullable: true })
   phone: string;
 
   @IsOptional()
-  @Matches(/^[0-9]*\/*(\+49)*[ ]*(\([0-9]+\))*([ ]*(-|–)*[ ]*[0-9]+)*$/g, {
-    message: 'Es sind nur deutsche Telefonnummern gültig!',
-    always: true
-  })
+  @IsPhoneNumber('DE', { message: 'Es sind nur deutsche Telefonnummern gültig!' })
   @Column({ nullable: true })
   mobile: string;
 

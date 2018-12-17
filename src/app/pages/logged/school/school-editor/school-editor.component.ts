@@ -21,7 +21,7 @@ export class SchoolEditorComponent implements OnInit {
   };
 
 
-  public form_schoolInstance: School;
+  public form_school: School;
   public form_schoolSchema = SchoolSchema;
   public form_schoolSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Information',
@@ -29,7 +29,7 @@ export class SchoolEditorComponent implements OnInit {
   };
 
 
-  public form_locInstance: Location;
+  public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Anschrift',
@@ -47,8 +47,8 @@ export class SchoolEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_schoolInstance = Object.assign(new School(), { comments: [] }); // fallbacks
-    this.form_locInstance = new Location();
+    this.form_school = Object.assign(new School(), { comments: [] }); // fallbacks
+    this.form_loc = new Location();
     this.isLoaded = false;
   }
 
@@ -70,8 +70,8 @@ export class SchoolEditorComponent implements OnInit {
   }
 
   reassignSchool(school: School): void {
-    this.form_schoolInstance = Object.assign(this.form_schoolInstance, school);
-    this.form_locInstance = Object.assign(this.form_locInstance, school.location);
+    this.form_school = Object.assign(this.form_school, school);
+    this.form_loc = Object.assign(this.form_loc, school.location);
   }
 
   public checkFinished(event: any, member: string) {
@@ -87,10 +87,10 @@ export class SchoolEditorComponent implements OnInit {
       return;
     }
 
-    this.form_schoolInstance.location = this.form_locInstance;
+    this.form_school.location = this.form_loc;
 
 
-    this.ipc.get('post/school', this.form_schoolInstance).then((result: any) => {
+    this.ipc.get('post/school', this.form_school).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('SChule wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/school/editor/' + result.id);

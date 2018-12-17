@@ -61,7 +61,7 @@ if (isElectronConfigure || isWebConfigure) {
 /* export */`;
 
   const toPlace = `exports.Entity = Entity;
-
+exports.Unique = Entity;
 exports.BaseEntity = function(){};
 
 /* export */`;

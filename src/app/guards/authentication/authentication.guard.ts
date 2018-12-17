@@ -28,7 +28,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   }
 
   login(admin: AdminLogin, _remember: boolean): void {
-    const currAdmin = admin;
+    const currAdmin = Object.assign(new AdminLogin(), admin); // copy
     currAdmin.password = window.btoa(admin.password);
 
     this.ipc.get('get/administrator/auth', currAdmin).then((result: any) => {

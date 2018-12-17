@@ -26,7 +26,7 @@ export class VenueEditorComponent implements OnInit {
   };
 
 
-  public form_venueInstance: Venue;
+  public form_venue: Venue;
   public form_venueSchema = VenueSchema;
   public form_venueSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Information',
@@ -34,14 +34,14 @@ export class VenueEditorComponent implements OnInit {
   };
 
 
-  public form_locInstance: Location;
+  public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Anschrift',
     buttons: false
   };
 
-  public form_comInstance: Communication;
+  public form_com: Communication;
   public form_comSchema = CommunicationSchema;
   public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Kommunikation',
@@ -118,9 +118,9 @@ export class VenueEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_venueInstance = Object.assign(new Venue(), { comments: [] }); // fallback
-    this.form_comInstance = new Communication();
-    this.form_locInstance = new Location();
+    this.form_venue = Object.assign(new Venue(), { comments: [] }); // fallback
+    this.form_com = new Communication();
+    this.form_loc = new Location();
     this.isLoaded = false;
   }
 
@@ -142,11 +142,11 @@ export class VenueEditorComponent implements OnInit {
   }
 
   reassignVenue(venue: Venue): void {
-    this.form_venueInstance = Object.assign(this.form_venueInstance, venue);
-    this.form_comInstance = Object.assign(this.form_comInstance, venue.communication);
-    this.form_locInstance = Object.assign(this.form_locInstance, venue.location);
+    this.form_venue = Object.assign(this.form_venue, venue);
+    this.form_com = Object.assign(this.form_com, venue.communication);
+    this.form_loc = Object.assign(this.form_loc, venue.location);
 
-    const appendingId = (this.form_venueInstance.id) ? this.form_venueInstance.id : 0;
+    const appendingId = (this.form_venue.id) ? this.form_venue.id : 0;
 
     this.st_bed_config.slotUrls.getParam = { id: appendingId };
     this.st_bed_config.slotUrls.editorUrl = `/logged/venue/bedroom/editor/${appendingId}/`;
@@ -168,11 +168,11 @@ export class VenueEditorComponent implements OnInit {
       return;
     }
 
-    this.form_venueInstance.communication = this.form_comInstance;
-    this.form_venueInstance.location = this.form_locInstance;
+    this.form_venue.communication = this.form_com;
+    this.form_venue.location = this.form_loc;
 
 
-    this.ipc.get('post/venue', this.form_venueInstance).then((result: any) => {
+    this.ipc.get('post/venue', this.form_venue).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Venue wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/venue/editor/' + result.id);

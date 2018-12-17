@@ -23,7 +23,7 @@ export class EventEditorComponent implements OnInit {
   public isLoaded = false;
 
 
-  public form_eventInstance: Event;
+  public form_event: Event;
   public form_eventSchema = EventSchema;
   public form_eventSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Veranstaltung',
@@ -169,15 +169,15 @@ export class EventEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_eventInstance = Object.assign(new Event(), { hosting: { id: null }, comments: [] }); // fallbacks
+    this.form_event = Object.assign(new Event(), { hosting: { id: null }, comments: [] }); // fallbacks
     this.isLoaded = false;
   }
 
   reassignEvent(event: Event): void {
-    this.form_eventInstance = Object.assign(this.form_eventInstance, event);
-    this.selection_selectedIds = [this.form_eventInstance.hosting.id];
+    this.form_event = Object.assign(this.form_event, event);
+    this.selection_selectedIds = [this.form_event.hosting.id];
 
-    const appendingId = (this.form_eventInstance.id) ? this.form_eventInstance.id : 0;
+    const appendingId = (this.form_event.id) ? this.form_event.id : 0;
 
     this.st_group_config.slotUrls.getParam = { id: appendingId };
     this.st_group_config.slotUrls.editorUrl = `/logged/event/group/editor/${appendingId}/`;
@@ -196,10 +196,10 @@ export class EventEditorComponent implements OnInit {
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_eventInstance.hosting.id > 0);
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_event.hosting.id > 0);
   }
   selectionSelected(event: number[]): void {
-    this.form_eventInstance.hosting.id = (event && event.length) ? event[0] : null;
+    this.form_event.hosting.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
   save(): void {
@@ -208,7 +208,7 @@ export class EventEditorComponent implements OnInit {
     }
 
 
-    this.ipc.get('post/event', this.form_eventInstance).then((result: any) => {
+    this.ipc.get('post/event', this.form_event).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
         this.currentEventService.refreshEvents();

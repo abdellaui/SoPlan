@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
   public age_stats = new Object;
   public grade_stats = new Object;
   /*****************************************/
-
+  public refreshCalenderRange = true;
   private initialize_Age(): void {
     this.age_stats = new Object;
     this.grade_stats = new Object;
@@ -197,8 +197,15 @@ export class DashboardComponent implements OnInit {
 
 
   }
-  rejectRangeChange(event: any): void {
-    console.log(event, this.rangeObject);
+
+  /**
+   * NbCalendarRangeComponent not support to reject change...
+   * so we need to hack.. ngIf removes dom element on false, so
+   * we remove element and add it after 1ms
+   */
+  rejectRangeChange(): void {
+    this.refreshCalenderRange = false;
+    setTimeout(() => this.refreshCalenderRange = true, 1);
   }
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {

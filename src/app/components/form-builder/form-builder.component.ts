@@ -92,7 +92,6 @@ export class FormBuilderComponent implements OnInit, OnChanges {
    */
   check(member?: string): void {
     validate(this.write).then((error: ValidationError[]) => {
-      console.log(this.write, error);
       this.errorHistory = {};
       if (error.length > 0) {
         this.handleErrors(error, member);

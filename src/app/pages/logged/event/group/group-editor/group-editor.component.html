@@ -1,26 +1,25 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- Group -->
-    <div class="{{this.form_groupInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+    <div class="{{this.form_group.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
-      <app-form-builder [write]="form_groupInstance" [schema]="form_groupSchema" [settings]="form_groupSettings"
-        (finished)="checkFinished($event, 'group')"></app-form-builder>
+      <app-form-builder [write]="form_group" [schema]="form_groupSchema" [settings]="form_groupSettings" (finished)="checkFinished($event, 'group')"></app-form-builder>
 
 
       <!-- Event -->
 
       <app-entity-select (selected)="eventSelected($event)" [selectedIds]="event_selectedIds" [settings]="selection_event_settings"
-        [hasError]="!this.form_groupInstance.event.id"></app-entity-select>
+        [hasError]="!this.form_group.event.id"></app-entity-select>
 
       <!-- Classroom -->
 
-      <app-entity-select *ngIf="this.form_groupInstance.event.id" (selected)="classroomSelected($event)" [selectedIds]="classroom_selectedIds"
-        [settings]="selection_classroom_settings" [hasError]="!this.form_groupInstance.classroom.id"></app-entity-select>
+      <app-entity-select *ngIf="this.form_group.event.id" (selected)="classroomSelected($event)" [selectedIds]="classroom_selectedIds"
+        [settings]="selection_classroom_settings" [hasError]="!this.form_group.classroom.id"></app-entity-select>
 
     </div>
 
     <div class="col-lg-6">
-      <app-entity-comment entityPostUrl="post/group" [entity]="form_groupInstance"></app-entity-comment>
+      <app-entity-comment entityPostUrl="post/group" [entity]="form_group"></app-entity-comment>
     </div>
 
 

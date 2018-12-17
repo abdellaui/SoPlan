@@ -20,7 +20,7 @@ export class PersonEditorComponent implements OnInit {
     location: false
   };
 
-  public form_personInstance: Person;
+  public form_person: Person;
   public form_personSchema = PersonSchema;
   public form_personSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Zur Person',
@@ -29,14 +29,14 @@ export class PersonEditorComponent implements OnInit {
   };
 
 
-  public form_comInstance: Communication;
+  public form_com: Communication;
   public form_comSchema = CommunicationSchema;
   public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Kommunikation',
     buttons: false
   };
 
-  public form_locInstance: Location;
+  public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Anschrift',
@@ -66,10 +66,10 @@ export class PersonEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_personInstance = Object.assign(new Person(), { school: { id: null }, comments: [] }); // fallbacks
+    this.form_person = Object.assign(new Person(), { school: { id: null }, comments: [] }); // fallbacks
 
-    this.form_comInstance = new Communication();
-    this.form_locInstance = new Location();
+    this.form_com = new Communication();
+    this.form_loc = new Location();
     this.isLoaded = false;
   }
 
@@ -96,10 +96,10 @@ export class PersonEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignPerson(person: Person): void {
-    this.form_personInstance = Object.assign(this.form_personInstance, person);
-    this.form_comInstance = Object.assign(this.form_comInstance, person.communication);
-    this.form_locInstance = Object.assign(this.form_locInstance, person.location);
-    this.selection_selectedIds = [this.form_personInstance.school.id];
+    this.form_person = Object.assign(this.form_person, person);
+    this.form_com = Object.assign(this.form_com, person.communication);
+    this.form_loc = Object.assign(this.form_loc, person.location);
+    this.selection_selectedIds = [this.form_person.school.id];
   }
 
   public checkFinished(event: any, member: string) {
@@ -111,7 +111,7 @@ export class PersonEditorComponent implements OnInit {
   }
 
   selectionSelected(event: number[]): void {
-    this.form_personInstance.school.id = (event && event.length) ? event[0] : null;
+    this.form_person.school.id = (event && event.length) ? event[0] : null;
   }
 
   save(): void {
@@ -119,11 +119,11 @@ export class PersonEditorComponent implements OnInit {
       return;
     }
 
-    this.form_personInstance.communication = this.form_comInstance;
-    this.form_personInstance.location = this.form_locInstance;
+    this.form_person.communication = this.form_com;
+    this.form_person.location = this.form_loc;
 
 
-    this.ipc.get('post/person', this.form_personInstance).then((result: any) => {
+    this.ipc.get('post/person', this.form_person).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Person wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/person/editor/' + result.id);

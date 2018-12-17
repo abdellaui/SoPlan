@@ -18,7 +18,7 @@ export class GroupEditorComponent implements OnInit {
     group: false
   };
 
-  public form_groupInstance: Group;
+  public form_group: Group;
   public form_groupSchema = GroupSchema;
   public form_groupSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Gruppe',
@@ -58,7 +58,7 @@ export class GroupEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_groupInstance = Object.assign(new Group(), { event: { id: null }, classroom: { id: null }, comments: [] }); // fallback
+    this.form_group = Object.assign(new Group(), { event: { id: null }, classroom: { id: null }, comments: [] }); // fallback
     this.classroom_selectedIds = [];
     this.event_selectedIds = [];
     this.isLoaded = false;
@@ -88,17 +88,21 @@ export class GroupEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignGroup(bedroom: Bedroom): void {
-    this.form_groupInstance = Object.assign(this.form_groupInstance, bedroom);
-    this.event_selectedIds = [this.form_groupInstance.event.id];
-    this.classroom_selectedIds = [this.form_groupInstance.classroom.id];
-    this.selection_classroom_settings.getParams = { id: this.form_groupInstance.event.id };
+    this.form_group = Object.assign(this.form_group, bedroom);
+    this.reorganizeInstance();
+  }
+
+  reorganizeInstance(): void {
+    this.event_selectedIds = [this.form_group.event.id];
+    this.classroom_selectedIds = [this.form_group.classroom.id];
+    this.selection_classroom_settings.getParams = { id: this.form_group.event.id };
   }
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
     this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0
-      && this.form_groupInstance.event.id > 0
-      && this.form_groupInstance.classroom.id > 0);
+      && this.form_group.event.id > 0
+      && this.form_group.classroom.id > 0);
   }
 
   checkFinished(event: any, member: string) {
@@ -111,15 +115,15 @@ export class GroupEditorComponent implements OnInit {
     const newEventId = (event && event.length) ? event[0] : null;
 
     // falls sich event ändert soll klassenzimmer resettet werden
-    if (this.form_groupInstance.event.id && this.form_groupInstance.event.id !== newEventId) {
-      this.form_groupInstance.classroom.id = null;
+    if (this.form_group.event.id && this.form_group.event.id !== newEventId) {
+      this.classroomSelected([]);
     }
-    this.form_groupInstance.event.id = newEventId;
-    this.selection_classroom_settings.getParams = { id: this.form_groupInstance.event.id };
+    this.form_group.event.id = newEventId;
+    this.reorganizeInstance();
     this.updateReadyToSave();
   }
   classroomSelected(event: number[]): void {
-    this.form_groupInstance.classroom.id = (event && event.length) ? event[0] : null;
+    this.form_group.classroom.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
 
@@ -129,7 +133,7 @@ export class GroupEditorComponent implements OnInit {
     }
 
 
-    this.ipc.get('post/group', this.form_groupInstance).then((result: any) => {
+    this.ipc.get('post/group', this.form_group).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);

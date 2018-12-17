@@ -14,7 +14,6 @@ export class DatabaseGuard implements CanActivate {
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-
     return this.ipc.get('get/database/connection').then((next: boolean) => {
       if (next) {
         localStorage.setItem('databaseConnection', 'true');

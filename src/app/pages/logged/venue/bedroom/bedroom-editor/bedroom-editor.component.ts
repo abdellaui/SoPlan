@@ -19,7 +19,7 @@ export class BedroomEditorComponent implements OnInit {
     room: false
   };
 
-  public form_bedroomInstance: Bedroom;
+  public form_bedroom: Bedroom;
   public form_bedroomSchema = BedroomSchema;
   public form_bedroomSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Schalfraumtyp',
@@ -28,7 +28,7 @@ export class BedroomEditorComponent implements OnInit {
   };
 
 
-  public form_roomInstance: Room;
+  public form_room: Room;
   public form_roomSchema = RoomSchema;
   public form_roomSettings: FormBuilderSettings = <FormBuilderSettings>{
     header: 'Raum',
@@ -57,8 +57,8 @@ export class BedroomEditorComponent implements OnInit {
   }
 
   regenarate(): void {
-    this.form_bedroomInstance = Object.assign(new Bedroom(), { venue: { id: null }, comments: [] }); // fallback
-    this.form_roomInstance = new Room();
+    this.form_bedroom = Object.assign(new Bedroom(), { venue: { id: null }, comments: [] }); // fallback
+    this.form_room = new Room();
     this.isLoaded = false;
   }
 
@@ -87,14 +87,14 @@ export class BedroomEditorComponent implements OnInit {
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
   reassignBedroom(bedroom: Bedroom): void {
-    this.form_bedroomInstance = Object.assign(this.form_bedroomInstance, bedroom);
-    this.form_roomInstance = Object.assign(this.form_roomInstance, bedroom.room);
-    this.selection_selectedIds = [this.form_bedroomInstance.venue.id];
+    this.form_bedroom = Object.assign(this.form_bedroom, bedroom);
+    this.form_room = Object.assign(this.form_room, bedroom.room);
+    this.selection_selectedIds = [this.form_bedroom.venue.id];
   }
 
   updateReadyToSave(): void {
     // alle Werte readyStatusse auf ihre Negation filtern und falls Ergebnis Array länge 0 hat => true
-    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_bedroomInstance.venue.id > 0);
+    this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0 && this.form_bedroom.venue.id > 0);
   }
 
   checkFinished(event: any, member: string) {
@@ -105,7 +105,7 @@ export class BedroomEditorComponent implements OnInit {
 
 
   selectionSelected(event: number[]): void {
-    this.form_bedroomInstance.venue.id = (event && event.length) ? event[0] : null;
+    this.form_bedroom.venue.id = (event && event.length) ? event[0] : null;
     this.updateReadyToSave();
   }
 
@@ -114,13 +114,13 @@ export class BedroomEditorComponent implements OnInit {
       return;
     }
 
-    this.form_bedroomInstance.room = this.form_roomInstance;
+    this.form_bedroom.room = this.form_room;
 
 
-    this.ipc.get('post/bedroom', this.form_bedroomInstance).then((result: any) => {
+    this.ipc.get('post/bedroom', this.form_bedroom).then((result: any) => {
       if (result !== 0) {
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
-        this.router.navigateByUrl('/logged/venue/editor/0/' + result.id);
+        this.router.navigateByUrl('/logged/venue/bedroom/editor/0/' + result.id);
       } else {
         this.toastr.error(`Fehler!`);
       }

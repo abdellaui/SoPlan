@@ -1,19 +1,18 @@
 <div *ngIf="isLoaded">
   <div class="row">
     <!-- School -->
-    <div class="{{this.form_schoolInstance.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
+    <div class="{{this.form_school.id?'col-lg-6':'col-lg-8 offset-lg-2'}}">
 
-      <app-form-builder [write]="form_schoolInstance" [schema]="form_schoolSchema" [settings]="form_schoolSettings"
-        (finished)="checkFinished($event, 'school')"></app-form-builder>
+      <app-form-builder [write]="form_school" [schema]="form_schoolSchema" [settings]="form_schoolSettings" (finished)="checkFinished($event, 'school')"></app-form-builder>
       <!-- Location -->
 
-      <app-form-builder [write]="form_locInstance" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
+      <app-form-builder [write]="form_loc" [schema]="form_locSchema" [settings]="form_locSettings" (finished)="checkFinished($event, 'location')"></app-form-builder>
 
 
     </div>
 
     <div class="col-lg-6">
-      <app-entity-comment entityPostUrl="post/school" [entity]="form_schoolInstance"></app-entity-comment>
+      <app-entity-comment entityPostUrl="post/school" [entity]="form_school"></app-entity-comment>
     </div>
 
 
