@@ -17,11 +17,12 @@
     [x] Group Editor
         [x] create new one
         [x] edit new one by id
-    [ ] Participant Editor
+        [x] unique combination of (event x classroom)
+    [x] Participant Editor
         [x] create new one
-        [ ] edit new one by id
-        [ ] entity-selctor for wantsToBeWith
-    [ ]
+        [x] edit new one by id
+        [x] unique combination of (event x person)
+        [x] entity-selctor for wantsToBeWith
     [x] Datepicker
         [x] german-style output
         [x] converts selection to ISO-Datstrign
