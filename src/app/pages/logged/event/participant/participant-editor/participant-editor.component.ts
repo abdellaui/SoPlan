@@ -147,7 +147,7 @@ export class ParticipantEditorComponent implements OnInit {
     this.person_selectedIds = [this.form_participant.person.id];
     this.group_selectedIds = [this.form_participant.group.id];
     this.bedroom_selectedIds = [this.form_participant.bedroom.id];
-    this.participant_selectedIds = [...this.form_participant.ids_wantsToBeWith];
+    this.participant_selectedIds = this.form_participant.ids_wantsToBeWith || [];
 
     this.selection_group_settings.getParams = { id: this.form_participant.event.id };
     this.selection_bedroom_settings.getParams = { id: this.form_participant.event.id };
