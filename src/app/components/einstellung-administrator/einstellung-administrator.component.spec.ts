@@ -49,7 +49,7 @@ describe('EinstellungAdministratorComponent', () => {
 
   // TODO: should save config
   it('should save config (admin)', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBe(true);
   });
 
 });

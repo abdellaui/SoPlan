@@ -50,6 +50,6 @@ describe('EntityCommentComponent', () => {
 
   // TODO: should save entity
   it('should save entity', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBe(true);
   });
 });

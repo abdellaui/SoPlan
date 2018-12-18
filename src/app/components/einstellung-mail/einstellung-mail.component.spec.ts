@@ -57,6 +57,6 @@ describe('EinstellungMailComponent', () => {
 
   // TODO: should save config (mail)
   it('should save config', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBe(true);
   });
 });

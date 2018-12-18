@@ -39,7 +39,7 @@ describe('EntitySelectComponent', () => {
       getUrl: '',
       listNameMembers: ['']
     };
-    component.selectedIds = [1];
+    component.selectedIds = [];
     component.settings = settings;
     component.hasError = false;
     component.readonly = false;
@@ -55,6 +55,6 @@ describe('EntitySelectComponent', () => {
 
   // TODO: should select element
   it('should select element', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBe(true);
   });
 });

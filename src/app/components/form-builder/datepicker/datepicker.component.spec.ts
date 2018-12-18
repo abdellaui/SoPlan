@@ -68,6 +68,6 @@ describe('DatepickerComponent', () => {
 
   // TODO: should show correct date
   it('should show correct date', () => {
-    expect(true).toBeTruthy();
+    expect(true).toBe(true);
   });
 });
