@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Person } from '../person/person.entity';
 import { School } from './school.entity';
 
@@ -8,8 +9,7 @@ export function init() {
     School.find().then((result: School[]) => {
       send(event, 'get/school/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/school/all', 0);
+      send(event, 'get/school/all', ErrorRequest.create(e));
     });
   });
 
@@ -18,8 +18,7 @@ export function init() {
     School.findOneOrFail(arg).then((result: School) => {
       send(event, 'get/school/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/school/by/id', 0);
+      send(event, 'get/school/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -28,8 +27,7 @@ export function init() {
     School.create(arg).save().then((result: School) => {
       send(event, 'post/school', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/school', 0);
+      send(event, 'post/school', ErrorRequest.create(e, arg));
     });
   });
 
@@ -44,8 +42,7 @@ export function init() {
         send(event, 'delete/school', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/school', { deleted: false, id: -1 });
+      send(event, 'delete/school', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

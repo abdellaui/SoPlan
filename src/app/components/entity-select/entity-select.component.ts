@@ -49,7 +49,7 @@ export class EntitySelectComponent implements OnInit {
   private getElements(): void {
     if (this.settings.getUrl) {
       this.ipc.get(this.settings.getUrl, this.settings.getParams).then((result: any) => {
-        if (result !== 0) {
+        if (!('hasError' in result)) {
           this.backUpElements = <any[]>result;
           this.transferToListItem(this.backUpElements);
           this.selectSelectedIds();

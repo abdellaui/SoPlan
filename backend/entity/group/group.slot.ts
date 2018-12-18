@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Participant } from '../participant/participant.entity';
 import { Group } from './group.entity';
 
@@ -8,8 +9,7 @@ export function init() {
     Group.find().then((result: Group[]) => {
       send(event, 'get/group/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/group/all', 0);
+      send(event, 'get/group/all', ErrorRequest.create(e));
     });
   });
 
@@ -17,8 +17,7 @@ export function init() {
     Group.findOneOrFail(arg).then((result: Group) => {
       send(event, 'get/group/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/group/by/id', 0);
+      send(event, 'get/group/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -26,8 +25,7 @@ export function init() {
     Group.create(arg).save().then((result: Group) => {
       send(event, 'post/group', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/group', 0);
+      send(event, 'post/group', ErrorRequest.create(e, arg));
     });
   });
 
@@ -42,8 +40,7 @@ export function init() {
         send(event, 'delete/group', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/group', { deleted: false, id: -1 });
+      send(event, 'delete/group', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

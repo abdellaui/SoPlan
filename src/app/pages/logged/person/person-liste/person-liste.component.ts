@@ -77,8 +77,9 @@ export class PersonListeComponent implements OnInit {
   constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) {
 
     ipc.on('post/participant', (event: any, result: any) => {
-      if (result === 0) {
+      if ('hasError' in result) {
         this.toastr.warning('Eine Person konnte nicht hinzugefügt werden!');
+        console.log(result.error, result.input);
       }
     });
   }

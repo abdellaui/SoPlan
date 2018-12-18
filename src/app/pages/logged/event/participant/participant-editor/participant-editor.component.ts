@@ -117,7 +117,7 @@ export class ParticipantEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/participant/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignParticipant(result);
           }
           this.isLoaded = true;
@@ -210,11 +210,11 @@ export class ParticipantEditorComponent implements OnInit {
 
 
     this.ipc.get('post/participant', this.form_participant).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Parti gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/participant/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

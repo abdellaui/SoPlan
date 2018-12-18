@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Participant } from '../participant/participant.entity';
 import { Bedroom } from './bedroom.entity';
 
@@ -8,8 +9,7 @@ export function init() {
     Bedroom.find().then((result: Bedroom[]) => {
       send(event, 'get/bedroom/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/bedroom/all', 0);
+      send(event, 'get/bedroom/all', ErrorRequest.create(e));
     });
   });
 
@@ -17,8 +17,7 @@ export function init() {
     Bedroom.findOneOrFail(arg).then((result: Bedroom) => {
       send(event, 'get/bedroom/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/bedroom/by/id', 0);
+      send(event, 'get/bedroom/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -26,8 +25,7 @@ export function init() {
     Bedroom.create(arg).save().then((result: Bedroom) => {
       send(event, 'post/bedroom', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/bedroom', 0);
+      send(event, 'post/bedroom', ErrorRequest.create(e, arg));
     });
   });
 
@@ -42,8 +40,7 @@ export function init() {
         send(event, 'delete/bedroom', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/bedroom', { deleted: false, id: -1 });
+      send(event, 'delete/bedroom', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

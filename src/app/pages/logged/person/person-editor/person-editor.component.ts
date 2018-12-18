@@ -79,7 +79,7 @@ export class PersonEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/person/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignPerson(result);
           }
           this.isLoaded = true;
@@ -124,11 +124,11 @@ export class PersonEditorComponent implements OnInit {
 
 
     this.ipc.get('post/person', this.form_person).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Person wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

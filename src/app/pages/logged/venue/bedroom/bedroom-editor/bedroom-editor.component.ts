@@ -70,7 +70,7 @@ export class BedroomEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/bedroom/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignBedroom(result);
           }
           this.isLoaded = true;
@@ -118,11 +118,11 @@ export class BedroomEditorComponent implements OnInit {
 
 
     this.ipc.get('post/bedroom', this.form_bedroom).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/venue/bedroom/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

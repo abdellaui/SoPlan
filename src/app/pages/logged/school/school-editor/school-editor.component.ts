@@ -58,7 +58,7 @@ export class SchoolEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/school/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignSchool(result);
           }
           this.isLoaded = true;
@@ -91,11 +91,11 @@ export class SchoolEditorComponent implements OnInit {
 
 
     this.ipc.get('post/school', this.form_school).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('SChule wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/school/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

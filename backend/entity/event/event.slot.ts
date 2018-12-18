@@ -1,11 +1,12 @@
 import * as Settings from 'electron-settings';
 
-import { end, logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { end, on, send } from '../../slots';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Group } from '../group/group.entity';
-import { Event } from './event.entity';
 import { Participant } from '../participant/participant.entity';
+import { Event } from './event.entity';
 
 export function init() {
 
@@ -13,8 +14,7 @@ export function init() {
     Event.find().then((result: Event[]) => {
       send(event, 'get/event/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/event/all', 0);
+      send(event, 'get/event/all', ErrorRequest.create(e));
     });
   });
 
@@ -23,8 +23,7 @@ export function init() {
     Event.findOneOrFail(arg).then((result: Event) => {
       send(event, 'get/event/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/event/by/id', 0);
+      send(event, 'get/event/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -33,8 +32,7 @@ export function init() {
     Event.create(arg).save().then((result: Event) => {
       send(event, 'post/event', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/event', 0);
+      send(event, 'post/event', ErrorRequest.create(e, arg));
     });
 
   });
@@ -53,8 +51,7 @@ export function init() {
         send(event, 'delete/event', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/event', { deleted: false, id: -1 });
+      send(event, 'delete/event', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 
@@ -75,8 +72,7 @@ export function init() {
     Event.getAllClassrooms(arg.id).then((result: Classroom[]) => {
       send(event, 'get/event/classrooms', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/event/classrooms', 0);
+      send(event, 'get/event/classrooms', ErrorRequest.create(e, arg));
     });
   });
 
@@ -84,8 +80,7 @@ export function init() {
     Event.getAllBedrooms(arg.id).then((result: Bedroom[]) => {
       send(event, 'get/event/bedrooms', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/event/bedrooms', 0);
+      send(event, 'get/event/bedrooms', ErrorRequest.create(e, arg));
     });
   });
 
@@ -93,8 +88,7 @@ export function init() {
     Event.getAllGroups(arg.id).then((result: Group[]) => {
       send(event, 'get/event/groups', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/event/groups', 0);
+      send(event, 'get/event/groups', ErrorRequest.create(e, arg));
     });
   });
 
@@ -102,7 +96,7 @@ export function init() {
     Event.getAllParticipants(arg.id).then((result: Participant[]) => {
       send(event, 'get/event/participants', result);
     }).catch(e => {
-      send(event, 'get/event/participants', 0);
+      send(event, 'get/event/participants', ErrorRequest.create(e, arg));
     });
   });
 }

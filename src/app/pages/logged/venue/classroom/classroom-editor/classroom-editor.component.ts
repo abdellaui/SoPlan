@@ -70,7 +70,7 @@ export class ClassroomEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/classroom/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignClassroom(result);
           }
           this.isLoaded = true;
@@ -118,7 +118,7 @@ export class ClassroomEditorComponent implements OnInit {
 
 
     this.ipc.get('post/classroom', this.form_classroom).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/venue/classroom/editor/0/' + result.id);
       } else {

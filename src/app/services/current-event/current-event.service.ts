@@ -17,14 +17,14 @@ export class CurrentEventService {
 
   constructor(private ipc: IpcRendererService) {
     this.ipc.on('get/event/all', (event: any, arg: any) => {
-      if (arg !== 0) {
+      if (!('hasError' in arg)) { // result.error has the error
         this.currentAviableEvents = <Event[]>arg;
         this.newEvents.next(true);
       }
     });
 
     this.ipc.on('get/event/by/id', (event: any, arg: any) => {
-      if (arg !== 0) {
+      if (!('hasError' in arg)) { // result.error has the error
         this.setEvent(<Event>arg);
       }
     });

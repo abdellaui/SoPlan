@@ -7,7 +7,6 @@ import { Participant, ParticipantRole } from '@entity/participant/participant.en
 import { PersonGender } from '@entity/person/person.entity';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
-import { resolve } from 'url';
 
 
 @Component({
@@ -17,7 +16,7 @@ import { resolve } from 'url';
 })
 export class DashboardComponent implements OnInit {
 
-  public rangeObject;
+  public rangeObject: any;
   /***** Age Chart******/
   public ageChartType: string = null;
   public ageChartOptions = {
@@ -425,7 +424,6 @@ export class DashboardComponent implements OnInit {
                       this.classrooms = resultC;
                       this.stat_num_classrooms = this.classrooms.length;
                       this.showHelp = false;
-                      // this.load(5000);
                       this.loading = false;
                     });
                 });
@@ -438,15 +436,6 @@ export class DashboardComponent implements OnInit {
       this.showHelp = true;
 
     }
-  }
-
-  private delay(ms: number) {
-    return new Promise(res => setTimeout(res, ms));
-  }
-
-  private async load() {
-    await this.delay(500);
-    this.loading = false;
   }
 
 

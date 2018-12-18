@@ -71,7 +71,7 @@ export class GroupEditorComponent implements OnInit {
       this.event_selectedIds = (params['eventId']) ? [Number(params['eventId'])] : [];
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/group/by/id', { id: params['id'] }).then((result: any) => {
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignGroup(result);
           }
           this.isLoaded = true;
@@ -137,11 +137,11 @@ export class GroupEditorComponent implements OnInit {
 
 
     this.ipc.get('post/group', this.form_group).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 
