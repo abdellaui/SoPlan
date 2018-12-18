@@ -21,7 +21,7 @@ export async function init() {
   location.city = 'Bochum';
   location.country = 'Deutschland';
   location.postalcode = '44809';
-  location.street = 'Meinegüte';
+  location.street = 'Teststr.';
   location.subThoroughfare = '111 a';
 
   const communication = new Communication();
@@ -39,8 +39,8 @@ export async function init() {
   const venueInstance = await venue.save();
 
   const room = new Room();
-  room.corridor = 'yesbaby';
-  room.floor = 'unterbrücke';
+  room.corridor = 'Coridor';
+  room.floor = 'floor';
   room.name = 'kp';
   room.number = 23;
   room.capacity = 50;
@@ -65,7 +65,7 @@ export async function init() {
   const schoolInstance = await school.save();
 
   const person = new Person();
-  person.firstname = 'Robin';
+  person.firstname = 'Naruto';
   person.surname = 'Salamanda';
   person.gender = PersonGender.DIVERSE;
   person.birthDate = new Date('1995-07-16');
@@ -76,17 +76,30 @@ export async function init() {
   person.foodIntolerance = 'none';
   const personInstance = await person.save();
 
+  const person2 = new Person();
+  person2.firstname = 'Songokhu';
+  person2.surname = 'Salamanda';
+  person2.gender = PersonGender.FEMALE;
+  person2.birthDate = new Date('2001-07-16');
+  person2.comments = [commentInstance];
+  person2.location = location; // chill
+  person2.school = schoolInstance;
+  person2.communication = communication; // chill
+  person2.foodIntolerance = 'none';
+  const personInstance2 = await person2.save();
 
   // STATICS ENDS
 
   const event = new Event();
   event.name = 'Salamanders!';
   event.hosting = venueInstance;
+  event.startsDate = new Date();
+  event.endsDate = new Date();
   event.comments = [commentInstance];
   const eventInstance = await event.save();
 
   const group = new Group();
-  group.name = 'krabelgruppe';
+  group.name = 'krabsbelgruppe';
   group.capacity = 5;
   group.classroom = classroomInstance;
   group.event = eventInstance;
@@ -103,7 +116,7 @@ export async function init() {
   const participantInstance = await participant.save();
 
   const participant2 = new Participant();
-  participant2.person = personInstance; // chill
+  participant2.person = personInstance2; // chill
   participant2.bedroom = bedroomInstance;
   participant2.comments = [commentInstance];
   participant2.group = groupInstance;
