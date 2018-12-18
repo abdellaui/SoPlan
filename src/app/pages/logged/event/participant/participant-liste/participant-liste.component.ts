@@ -46,7 +46,7 @@ export class ParticipantListeComponent implements OnInit {
       {
         prefix: '',
         schema: ParticipantSchema,
-        members: ['role']
+        members: ['role', 'grade']
       },
       {
         prefix: 'person@',

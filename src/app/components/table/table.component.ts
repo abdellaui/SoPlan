@@ -248,7 +248,7 @@ export class TableComponent implements OnInit {
   goInsideData(data: any, key: string, path: string[]): any {
     const returnEntity = {};
     if (path.length === 1) {
-      returnEntity[path[0]] = data[key];
+      returnEntity[path[0]] = Number(data[key]) || data[key] || null; // fixes validators
     } else {
       returnEntity[path[0]] = this.goInsideData(data, key, path.slice(1));
     }
