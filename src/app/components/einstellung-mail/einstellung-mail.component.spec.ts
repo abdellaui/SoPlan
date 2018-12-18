@@ -54,4 +54,9 @@ describe('EinstellungMailComponent', () => {
   it('should get the config', () => {
     expect(ipc.get('get/mail/config')).toBeDefined();
   });
+
+  // TODO: should save config (mail)
+  it('should save config', () => {
+    expect(true).toBeTruthy();
+  });
 });

@@ -65,4 +65,9 @@ describe('DatepickerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should show correct date
+  it('should show correct date', () => {
+    expect(true).toBeTruthy();
+  });
 });
