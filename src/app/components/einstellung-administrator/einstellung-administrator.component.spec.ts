@@ -46,4 +46,10 @@ describe('EinstellungAdministratorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should save config
+  it('should save config (admin)', () => {
+    expect(true).toBeTruthy();
+  });
+
 });

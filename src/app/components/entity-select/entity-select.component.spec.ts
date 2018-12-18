@@ -52,4 +52,9 @@ describe('EntitySelectComponent', () => {
     // TODO: sinnvolle Inputwerte zuweisen
     expect(component).toBeTruthy();
   });
+
+  // TODO: should select element
+  it('should select element', () => {
+    expect(true).toBeTruthy();
+  });
 });
