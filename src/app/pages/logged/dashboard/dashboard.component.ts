@@ -78,6 +78,43 @@ export class DashboardComponent implements OnInit {
   public showHelp = true;
   /***************************/
 
+  /*************COLORS */
+  public genderColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#ec0caa', '#06b9ee', '#9f13df']
+    }
+  ];
+
+  public roleColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#fdff00', '#ff0000', '#ff861d']
+    }
+  ];
+
+  public ageColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#065535', '#ff0000']
+    }
+  ];
+
+  public gradechartColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#DAA520']
+    }
+  ];
+
+  public schoolColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#008080']
+    }
+  ];
+
+  public locationColors: Array<any> = [
+    {// all colors in order
+      backgroundColor: ['#A0DB8E']
+    }
+  ];
+  /************* */
 
   /*STATISTICS FOR DASHBOARD*/
   public stat_num_participants: number = null;
@@ -134,6 +171,21 @@ export class DashboardComponent implements OnInit {
       } else {
         this.grade_stats[grade] = this.grade_stats[grade] + 1;
       }
+      const school = participant.person.school.name;
+      if (!this.school_stats[school]) {
+        this.school_stats[school] = 1;
+      } else {
+        this.school_stats[school]
+          = this.school_stats[school] + 1;
+      }
+
+      const location = participant.person.location.city;
+      if (!this.location_stats[location]) {
+        this.location_stats[location] = 1;
+      } else {
+        this.location_stats[location]
+          = this.location_stats[location] + 1;
+      }
     });
 
   }
@@ -144,9 +196,10 @@ export class DashboardComponent implements OnInit {
     this.ageChartType = this.ageChartType === 'pie' ? 'doughnut' : 'pie';
     this.roleChartType = this.roleChartType === 'pie' ? 'doughnut' : 'pie';
 
-    this.ageChartType = this.ageChartType === 'line' ? 'bar' : 'line';
-    this.gradeChartType = this.gradeChartType === 'line' ? 'bar' : 'line';
+    this.ageChartType = this.ageChartType === 'bar' ? 'line' : 'bar';
+    this.gradeChartType = this.gradeChartType === 'bar' ? 'line' : 'bar';
   }
+
   public genderChartClicked(e: any): void {
     console.log(e);
   }
@@ -225,6 +278,8 @@ export class DashboardComponent implements OnInit {
     this.roleChartType = 'pie';
     this.ageChartType = 'bar';
     this.gradeChartType = 'bar';
+    this.locationChartType = 'bar';
+    this.schoolChartType = 'bar';
 
 
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
@@ -260,6 +315,9 @@ export class DashboardComponent implements OnInit {
           this.initialize_Age();
           this.agearr = [];
           this.gradearr = [];
+          this.locationarr = [];
+          this.schoolarr = [];
+
           this.genderChartData = [this.stat_num_gender_f, this.stat_num_gender_m, this.stat_num_gender_d];
           this.roleChartData = [this.stat_num_role_s, this.stat_num_role_d, this.stat_num_role_sd];
           for (const year of Object.keys(this.age_stats)) {
@@ -273,12 +331,38 @@ export class DashboardComponent implements OnInit {
           },
 
           ];
+          for (const school of Object.keys(this.school_stats)) {
+            this.schoolarr.push(this.school_stats[school]);
+          }
+
+          this.schoolChartLabels = Object.keys(this.school_stats);
+          this.schoolChartLegend = true;
+          this.schoolChartData = [{
+            data: this.schoolarr, label: 'School'
+          },
+
+          ];
+          for (const location of Object.keys(this.location_stats)) {
+            this.locationarr.push(this.location_stats[location]);
+          }
+
+          this.locationChartLabels = Object.keys(this.location_stats);
+          this.locationChartLegend = true;
+          this.locationChartData = [{
+            data: this.locationarr, label: 'Location'
+          },
+
+          ];
 
           for (const grade of Object.keys(this.grade_stats)) {
             this.gradearr.push(this.grade_stats[grade]);
           }
 
-          this.gradeChartLabels = Object.keys(this.age_stats);
+          this.gradeChartLabels = Object.keys(this.grade_stats);
+          const check = this.gradeChartLabels.indexOf('null');
+          if (!(check === -1)) {
+            this.gradeChartLabels[check] = 'Keine Klasse';
+          }
           this.gradeChartLegend = true;
           this.gradeChartData = [{
             data: this.gradearr, label: 'Grade'

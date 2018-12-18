@@ -131,7 +131,7 @@
 
           <div style="display: block">
             <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
-              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
+              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)" [colors]='genderColors'>
             </canvas>
           </div>
         </nb-card-body>
@@ -139,13 +139,13 @@
       <!-- GESCHLECHT ENDE -->
     </div>
     <div class="col-sm-6">
-      <!-- -->
+      <!--ROLLE -->
       <nb-card>
         <nb-card-body>
 
           <div style="display: block">
             <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
-              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)">
+              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)" [colors]="roleColors">
             </canvas>
           </div>
 
@@ -165,7 +165,7 @@
 
           <div style="display: block">
             <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
-              [chartType]="ageChartType"></canvas>
+              [chartType]="ageChartType" [colors]="ageColors"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
@@ -179,11 +179,43 @@
 
           <div style="display: block">
             <canvas baseChart [datasets]="gradeChartData" [labels]="gradeChartLabels" [options]="gradeChartOptions"
-              [legend]="gradeChartLegend" [chartType]="genderChartType"></canvas>
+              [legend]="gradeChartLegend" [chartType]="gradeChartType" [colors]="gradeColors"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
       <!-- GRADE END -->
+    </div>
+
+
+  </div>
+  <div class="row">
+
+    <div class="col-sm-6">
+      <!--- Schule -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="schoolChartData" [labels]="schoolChartLabels" [options]="schoolChartOptions"
+              [legend]="schoolChartLegend" [chartType]="schoolChartType" [colors]="schoolColors"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- Schule END -->
+    </div>
+
+    <div class="col-sm-6">
+      <!--- Ort -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="locationChartData" [labels]="locationChartLabels" [options]="locationChartOptions"
+              [legend]="locationChartLegend" [chartType]="locationChartType" [colors]="locationColors"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- Ort END -->
     </div>
 
 
