@@ -21,7 +21,9 @@
 git clone https://github.com/abdellaui/SoPlan.git
 cd SoPlan/
 npm i -g @angular/cli
-npm i --save
+npm install
+npm install @angular/core@7.1.0
+npm install @angular/animations@7.1.0
 npm start
 ```
 ## libaries
