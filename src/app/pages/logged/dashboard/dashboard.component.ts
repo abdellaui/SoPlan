@@ -7,6 +7,7 @@ import { Participant, ParticipantRole } from '@entity/participant/participant.en
 import { PersonGender } from '@entity/person/person.entity';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { resolve } from 'url';
 
 
 @Component({
@@ -22,6 +23,18 @@ export class DashboardComponent implements OnInit {
   public ageChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public ageChartLabels = [];
   public ageChartLegend = true;
@@ -33,6 +46,18 @@ export class DashboardComponent implements OnInit {
   public locationChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public locationChartLabels = [];
   public locationChartLegend = true;
@@ -44,6 +69,18 @@ export class DashboardComponent implements OnInit {
   public schoolChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public schoolChartLabels = [];
   public schoolChartLegend = true;
@@ -55,6 +92,18 @@ export class DashboardComponent implements OnInit {
   public gradeChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public gradeChartLabels = [];
   public gradeChartLegend = true;
@@ -76,6 +125,7 @@ export class DashboardComponent implements OnInit {
   /***Current Event Mangament***/
   public currentEvent: Event = null;
   public showHelp = true;
+  public loading = false;
   /***************************/
 
   /*************COLORS */
@@ -93,25 +143,25 @@ export class DashboardComponent implements OnInit {
 
   public ageColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#065535', '#ff0000']
+      backgroundColor: '#065535'
     }
   ];
 
-  public gradechartColors: Array<any> = [
+  public gradeColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#DAA520']
+      backgroundColor: '#DAA520'
     }
   ];
 
   public schoolColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#008080']
+      backgroundColor: '#008080'
     }
   ];
 
   public locationColors: Array<any> = [
     {// all colors in order
-      backgroundColor: ['#A0DB8E']
+      backgroundColor: '#A0DB8E'
     }
   ];
   /************* */
@@ -192,13 +242,6 @@ export class DashboardComponent implements OnInit {
   //
 
   /***Chart Related Functions */
-  public randomizeType(): void {
-    this.ageChartType = this.ageChartType === 'pie' ? 'doughnut' : 'pie';
-    this.roleChartType = this.roleChartType === 'pie' ? 'doughnut' : 'pie';
-
-    this.ageChartType = this.ageChartType === 'bar' ? 'line' : 'bar';
-    this.gradeChartType = this.gradeChartType === 'bar' ? 'line' : 'bar';
-  }
 
   public genderChartClicked(e: any): void {
     console.log(e);
@@ -216,6 +259,7 @@ export class DashboardComponent implements OnInit {
     console.log(e);
   }
   /*********************************** */
+
 
   /*STATISTIC METHODS*/
 
@@ -269,17 +313,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     /***   Initialize Basic Chart Parameters, that never Change  ***/
-    this.ageChartOptions = {
-      scaleShowVerticalLines: false,
-      responsive: true,
-    };
 
     this.genderChartType = 'pie';
     this.roleChartType = 'pie';
     this.ageChartType = 'bar';
     this.gradeChartType = 'bar';
-    this.locationChartType = 'bar';
-    this.schoolChartType = 'bar';
+    this.locationChartType = 'horizontalBar';
+    this.schoolChartType = 'horizontalBar';
 
 
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
@@ -288,6 +328,8 @@ export class DashboardComponent implements OnInit {
 
 
   }
+
+
 
   /**
    * NbCalendarRangeComponent not support to reject change...
@@ -300,6 +342,7 @@ export class DashboardComponent implements OnInit {
   }
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
+      this.loading = true;
       this.currentEvent = ev;
 
       this.rangeObject = {
@@ -327,7 +370,7 @@ export class DashboardComponent implements OnInit {
           this.ageChartLabels = Object.keys(this.age_stats);
           this.ageChartLegend = true;
           this.ageChartData = [{
-            data: this.agearr, label: 'Age'
+            data: this.agearr, label: 'Age',
           },
 
           ];
@@ -338,7 +381,7 @@ export class DashboardComponent implements OnInit {
           this.schoolChartLabels = Object.keys(this.school_stats);
           this.schoolChartLegend = true;
           this.schoolChartData = [{
-            data: this.schoolarr, label: 'School'
+            data: this.schoolarr, label: 'School',
           },
 
           ];
@@ -349,7 +392,7 @@ export class DashboardComponent implements OnInit {
           this.locationChartLabels = Object.keys(this.location_stats);
           this.locationChartLegend = true;
           this.locationChartData = [{
-            data: this.locationarr, label: 'Location'
+            data: this.locationarr, label: 'Location',
           },
 
           ];
@@ -365,7 +408,7 @@ export class DashboardComponent implements OnInit {
           }
           this.gradeChartLegend = true;
           this.gradeChartData = [{
-            data: this.gradearr, label: 'Grade'
+            data: this.gradearr, label: 'Grade',
           },
           ];
 
@@ -382,6 +425,8 @@ export class DashboardComponent implements OnInit {
                       this.classrooms = resultC;
                       this.stat_num_classrooms = this.classrooms.length;
                       this.showHelp = false;
+                      // this.load(5000);
+                      this.loading = false;
                     });
                 });
             });
@@ -394,4 +439,19 @@ export class DashboardComponent implements OnInit {
 
     }
   }
+
+  private delay(ms: number) {
+    return new Promise(res => setTimeout(res, ms));
+  }
+
+  private async load() {
+    await this.delay(500);
+    this.loading = false;
+  }
+
+
 }
+
+
+
+
