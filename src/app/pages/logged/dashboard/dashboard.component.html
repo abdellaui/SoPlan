@@ -130,7 +130,7 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="pieChartType"
+            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
               (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
             </canvas>
           </div>
@@ -144,8 +144,8 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="pieChartType" (chartHover)="roleChartHovered($event)"
-              (chartClick)="roleChartClicked($event)">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
+              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)">
             </canvas>
           </div>
 
@@ -165,7 +165,7 @@
 
           <div style="display: block">
             <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
-              [chartType]="barChartType"></canvas>
+              [chartType]="ageChartType"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
@@ -179,7 +179,7 @@
 
           <div style="display: block">
             <canvas baseChart [datasets]="gradeChartData" [labels]="gradeChartLabels" [options]="gradeChartOptions"
-              [legend]="gradeChartLegend" [chartType]="barChartType"></canvas>
+              [legend]="gradeChartLegend" [chartType]="genderChartType"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
@@ -188,18 +188,28 @@
 
 
   </div>
+  <div class="row">
 
-</div>
+    <div class="col-md-6">
+      <nb-card>
+        <button nbButton (click)='randomizeType()' text="toggle">
+          Toggle Chart Type
+        </button>
+      </nb-card>
 
-<div *ngIf="showHelp">
+    </div>
 
-  <nb-card>
-    <nb-card-body>
+  </div>
 
-      Wähle ein Event in der oberen rechten Ecke aus um eine detaillierte Event Beschreibung zu erhalten.
+  <div *ngIf="showHelp">
 
-    </nb-card-body>
+    <nb-card>
+      <nb-card-body>
 
-  </nb-card>
+        Wähle ein Event in der oberen rechten Ecke aus um eine detaillierte Event Beschreibung zu erhalten.
 
-</div>
+      </nb-card-body>
+
+    </nb-card>
+
+  </div>

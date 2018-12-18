@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   public rangeObject;
   /***** Age Chart******/
+  public ageChartType: string = null;
   public ageChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -27,7 +28,30 @@ export class DashboardComponent implements OnInit {
   public ageChartData = [];
   /********************/
 
+  /***** Location Chart******/
+  public locationChartType: string = null;
+  public locationChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+  };
+  public locationChartLabels = [];
+  public locationChartLegend = true;
+  public locationChartData = [];
+  /********************/
+
+  /***** School Chart******/
+  public schoolChartType: string = null;
+  public schoolChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+  };
+  public schoolChartLabels = [];
+  public schoolChartLegend = true;
+  public schoolChartData = [];
+  /********************/
+
   /******* Grade Chart *******/
+  public gradeChartType: string = null;
   public gradeChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -38,22 +62,16 @@ export class DashboardComponent implements OnInit {
   /***************************/
 
   /***** Gender Chart *****/
+  public genderChartType: string = null;
   public genderChartLabels = [];
   public genderChartData = [];
   /************************/
 
   /***** Role Chart *****/
+  public roleChartType: string = null;
   public roleChartLabels = [];
   public roleChartData = [];
   /************************/
-
-  /******CHART TYPES ********/
-  public pieChartType: string;
-  public lineChartType: string;
-  public barChartType: string;
-  public doughnutChartType: string;
-
-  /************************* */
 
   /***Current Event Mangament***/
   public currentEvent: Event = null;
@@ -83,13 +101,21 @@ export class DashboardComponent implements OnInit {
   /***********Data for Charts***********/
   public agearr: number[] = [];
   public gradearr: number[] = [];
+  public schoolarr: number[] = [];
+  public locationarr: number[] = [];
   public age_stats = new Object;
   public grade_stats = new Object;
+  public location_stats = new Object;
+  public school_stats = new Object;
+
   /*****************************************/
   public refreshCalenderRange = true;
   private initialize_Age(): void {
     this.age_stats = new Object;
     this.grade_stats = new Object;
+    this.school_stats = new Object;
+    this.location_stats = new Object;
+
     this.participants.forEach(participant => {
       const date = new Date();
       const participantDate = participant.person.birthDate.toString();
@@ -114,6 +140,13 @@ export class DashboardComponent implements OnInit {
   //
 
   /***Chart Related Functions */
+  public randomizeType(): void {
+    this.ageChartType = this.ageChartType === 'pie' ? 'doughnut' : 'pie';
+    this.roleChartType = this.roleChartType === 'pie' ? 'doughnut' : 'pie';
+
+    this.ageChartType = this.ageChartType === 'line' ? 'bar' : 'line';
+    this.gradeChartType = this.gradeChartType === 'line' ? 'bar' : 'line';
+  }
   public genderChartClicked(e: any): void {
     console.log(e);
   }
@@ -187,10 +220,13 @@ export class DashboardComponent implements OnInit {
       scaleShowVerticalLines: false,
       responsive: true,
     };
-    this.lineChartType = 'line';
-    this.doughnutChartType = 'doughnut';
-    this.barChartType = 'bar';
-    this.pieChartType = 'pie';
+
+    this.genderChartType = 'pie';
+    this.roleChartType = 'pie';
+    this.ageChartType = 'bar';
+    this.gradeChartType = 'bar';
+
+
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
     this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
     /************************************************************* */
