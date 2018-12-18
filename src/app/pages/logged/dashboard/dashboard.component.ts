@@ -16,21 +16,93 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 })
 export class DashboardComponent implements OnInit {
 
-  public rangeObject;
+  public rangeObject: any;
   /***** Age Chart******/
+  public ageChartType: string = null;
   public ageChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public ageChartLabels = [];
   public ageChartLegend = true;
   public ageChartData = [];
   /********************/
 
+  /***** Location Chart******/
+  public locationChartType: string = null;
+  public locationChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
+  };
+  public locationChartLabels = [];
+  public locationChartLegend = true;
+  public locationChartData = [];
+  /********************/
+
+  /***** School Chart******/
+  public schoolChartType: string = null;
+  public schoolChartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
+  };
+  public schoolChartLabels = [];
+  public schoolChartLegend = true;
+  public schoolChartData = [];
+  /********************/
+
   /******* Grade Chart *******/
+  public gradeChartType: string = null;
   public gradeChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+    }
   };
   public gradeChartLabels = [];
   public gradeChartLegend = true;
@@ -38,28 +110,60 @@ export class DashboardComponent implements OnInit {
   /***************************/
 
   /***** Gender Chart *****/
+  public genderChartType: string = null;
   public genderChartLabels = [];
   public genderChartData = [];
   /************************/
 
   /***** Role Chart *****/
+  public roleChartType: string = null;
   public roleChartLabels = [];
   public roleChartData = [];
   /************************/
 
-  /******CHART TYPES ********/
-  public pieChartType: string;
-  public lineChartType: string;
-  public barChartType: string;
-  public doughnutChartType: string;
-
-  /************************* */
-
   /***Current Event Mangament***/
   public currentEvent: Event = null;
   public showHelp = true;
+  public loading = false;
   /***************************/
 
+  /*************COLORS */
+  public genderColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#ec0caa', '#06b9ee', '#9f13df']
+    }
+  ];
+
+  public roleColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: ['#fdff00', '#ff0000', '#ff861d']
+    }
+  ];
+
+  public ageColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: '#065535'
+    }
+  ];
+
+  public gradeColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: '#DAA520'
+    }
+  ];
+
+  public schoolColors: Array<any> = [
+    { // all colors in order
+      backgroundColor: '#008080'
+    }
+  ];
+
+  public locationColors: Array<any> = [
+    {// all colors in order
+      backgroundColor: '#A0DB8E'
+    }
+  ];
+  /************* */
 
   /*STATISTICS FOR DASHBOARD*/
   public stat_num_participants: number = null;
@@ -83,13 +187,21 @@ export class DashboardComponent implements OnInit {
   /***********Data for Charts***********/
   public agearr: number[] = [];
   public gradearr: number[] = [];
+  public schoolarr: number[] = [];
+  public locationarr: number[] = [];
   public age_stats = new Object;
   public grade_stats = new Object;
+  public location_stats = new Object;
+  public school_stats = new Object;
+
   /*****************************************/
   public refreshCalenderRange = true;
   private initialize_Age(): void {
     this.age_stats = new Object;
     this.grade_stats = new Object;
+    this.school_stats = new Object;
+    this.location_stats = new Object;
+
     this.participants.forEach(participant => {
       const date = new Date();
       const participantDate = participant.person.birthDate.toString();
@@ -108,12 +220,28 @@ export class DashboardComponent implements OnInit {
       } else {
         this.grade_stats[grade] = this.grade_stats[grade] + 1;
       }
+      const school = participant.person.school.name;
+      if (!this.school_stats[school]) {
+        this.school_stats[school] = 1;
+      } else {
+        this.school_stats[school]
+          = this.school_stats[school] + 1;
+      }
+
+      const location = participant.person.location.city;
+      if (!this.location_stats[location]) {
+        this.location_stats[location] = 1;
+      } else {
+        this.location_stats[location]
+          = this.location_stats[location] + 1;
+      }
     });
 
   }
   //
 
   /***Chart Related Functions */
+
   public genderChartClicked(e: any): void {
     console.log(e);
   }
@@ -130,6 +258,7 @@ export class DashboardComponent implements OnInit {
     console.log(e);
   }
   /*********************************** */
+
 
   /*STATISTIC METHODS*/
 
@@ -183,20 +312,23 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     /***   Initialize Basic Chart Parameters, that never Change  ***/
-    this.ageChartOptions = {
-      scaleShowVerticalLines: false,
-      responsive: true,
-    };
-    this.lineChartType = 'line';
-    this.doughnutChartType = 'doughnut';
-    this.barChartType = 'bar';
-    this.pieChartType = 'pie';
+
+    this.genderChartType = 'pie';
+    this.roleChartType = 'pie';
+    this.ageChartType = 'bar';
+    this.gradeChartType = 'bar';
+    this.locationChartType = 'horizontalBar';
+    this.schoolChartType = 'horizontalBar';
+
+
     this.genderChartLabels = ['Female', 'Male', 'Diverse'];
     this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
     /************************************************************* */
 
 
   }
+
+
 
   /**
    * NbCalendarRangeComponent not support to reject change...
@@ -209,6 +341,7 @@ export class DashboardComponent implements OnInit {
   }
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
+      this.loading = true;
       this.currentEvent = ev;
 
       this.rangeObject = {
@@ -224,6 +357,9 @@ export class DashboardComponent implements OnInit {
           this.initialize_Age();
           this.agearr = [];
           this.gradearr = [];
+          this.locationarr = [];
+          this.schoolarr = [];
+
           this.genderChartData = [this.stat_num_gender_f, this.stat_num_gender_m, this.stat_num_gender_d];
           this.roleChartData = [this.stat_num_role_s, this.stat_num_role_d, this.stat_num_role_sd];
           for (const year of Object.keys(this.age_stats)) {
@@ -233,7 +369,29 @@ export class DashboardComponent implements OnInit {
           this.ageChartLabels = Object.keys(this.age_stats);
           this.ageChartLegend = true;
           this.ageChartData = [{
-            data: this.agearr, label: 'Age'
+            data: this.agearr, label: 'Age',
+          },
+
+          ];
+          for (const school of Object.keys(this.school_stats)) {
+            this.schoolarr.push(this.school_stats[school]);
+          }
+
+          this.schoolChartLabels = Object.keys(this.school_stats);
+          this.schoolChartLegend = true;
+          this.schoolChartData = [{
+            data: this.schoolarr, label: 'School',
+          },
+
+          ];
+          for (const location of Object.keys(this.location_stats)) {
+            this.locationarr.push(this.location_stats[location]);
+          }
+
+          this.locationChartLabels = Object.keys(this.location_stats);
+          this.locationChartLegend = true;
+          this.locationChartData = [{
+            data: this.locationarr, label: 'Location',
           },
 
           ];
@@ -242,10 +400,14 @@ export class DashboardComponent implements OnInit {
             this.gradearr.push(this.grade_stats[grade]);
           }
 
-          this.gradeChartLabels = Object.keys(this.age_stats);
+          this.gradeChartLabels = Object.keys(this.grade_stats);
+          const check = this.gradeChartLabels.indexOf('null');
+          if (!(check === -1)) {
+            this.gradeChartLabels[check] = 'Keine Klasse';
+          }
           this.gradeChartLegend = true;
           this.gradeChartData = [{
-            data: this.gradearr, label: 'Grade'
+            data: this.gradearr, label: 'Grade',
           },
           ];
 
@@ -262,6 +424,7 @@ export class DashboardComponent implements OnInit {
                       this.classrooms = resultC;
                       this.stat_num_classrooms = this.classrooms.length;
                       this.showHelp = false;
+                      this.loading = false;
                     });
                 });
             });
@@ -274,4 +437,10 @@ export class DashboardComponent implements OnInit {
 
     }
   }
+
+
 }
+
+
+
+

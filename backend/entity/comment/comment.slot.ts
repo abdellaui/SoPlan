@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Comment } from './comment.entity';
 
 export function init() {
@@ -7,8 +8,7 @@ export function init() {
     Comment.find().then((result: Comment[]) => {
       send(event, 'get/comment/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/comment/all', 0);
+      send(event, 'get/comment/all', ErrorRequest.create(e));
     });
   });
 
@@ -16,8 +16,7 @@ export function init() {
     Comment.findOneOrFail(arg).then((result: Comment) => {
       send(event, 'get/comment/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/comment/by/id', 0);
+      send(event, 'get/comment/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -25,8 +24,7 @@ export function init() {
     Comment.create(arg).save().then((result: Comment) => {
       send(event, 'post/comment', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/comment', 0);
+      send(event, 'post/comment', ErrorRequest.create(e, arg));
     });
   });
 
@@ -36,8 +34,7 @@ export function init() {
     instance.remove().then(() => {
       send(event, 'delete/comment', { deleted: true, id: _id });
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/comment', { deleted: false, id: -1 });
+      send(event, 'delete/comment', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

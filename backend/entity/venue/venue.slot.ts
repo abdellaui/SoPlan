@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Event } from '../event/event.entity';
@@ -10,8 +11,7 @@ export function init() {
     Venue.find().then((result: Venue[]) => {
       send(event, 'get/venue/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/venue/all', 0);
+      send(event, 'get/venue/all', ErrorRequest.create(e));
     });
   });
 
@@ -20,8 +20,7 @@ export function init() {
     Venue.findOneOrFail(arg).then((result: Venue) => {
       send(event, 'get/venue/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/venue/by/id', 0);
+      send(event, 'get/venue/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -30,8 +29,7 @@ export function init() {
     Venue.create(arg).save().then((result: Venue) => {
       send(event, 'post/venue', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/venue', 0);
+      send(event, 'post/venue', ErrorRequest.create(e, arg));
     });
   });
 
@@ -50,8 +48,7 @@ export function init() {
         send(event, 'delete/venue', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/venue', { deleted: false, id: -1 });
+      send(event, 'delete/venue', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 
@@ -63,8 +60,7 @@ export function init() {
     Venue.getAllClassrooms(arg.id).then((result: Classroom[]) => {
       send(event, 'get/venue/classrooms', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/venue/classrooms', 0);
+      send(event, 'get/venue/classrooms', ErrorRequest.create(e, arg));
     });
   });
 
@@ -72,8 +68,7 @@ export function init() {
     Venue.getAllBedrooms(arg.id).then((result: Bedroom[]) => {
       send(event, 'get/venue/bedrooms', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/venue/bedrooms', 0);
+      send(event, 'get/venue/bedrooms', ErrorRequest.create(e, arg));
     });
   });
 }

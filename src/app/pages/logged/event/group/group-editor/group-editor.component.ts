@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Bedroom } from '@entity/bedroom/bedroom.entity';
+import { Classroom } from '@entity/classroom/classroom.entity';
+import { Event } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
@@ -70,8 +71,7 @@ export class GroupEditorComponent implements OnInit {
       this.event_selectedIds = (params['eventId']) ? [Number(params['eventId'])] : [];
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/group/by/id', { id: params['id'] }).then((result: any) => {
-
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignGroup(result);
           }
           this.isLoaded = true;
@@ -87,12 +87,15 @@ export class GroupEditorComponent implements OnInit {
    * diese enthalten Methoden der Klasse etc. und alle Dekoratoren können ausgeführt werden
    * über Object.assign wird die rohe Struktur + daten in die neue Instanz geschoben.
    */
-  reassignGroup(bedroom: Bedroom): void {
-    this.form_group = Object.assign(this.form_group, bedroom);
+  reassignGroup(group: Group): void {
+    this.form_group = Object.assign(this.form_group, group);
     this.reorganizeInstance();
   }
 
   reorganizeInstance(): void {
+    this.form_group.event = this.form_group.event || <Event>{ id: null };
+    this.form_group.classroom = this.form_group.classroom || <Classroom>{ id: null };
+
     this.event_selectedIds = [this.form_group.event.id];
     this.classroom_selectedIds = [this.form_group.classroom.id];
     this.selection_classroom_settings.getParams = { id: this.form_group.event.id };
@@ -134,11 +137,11 @@ export class GroupEditorComponent implements OnInit {
 
 
     this.ipc.get('post/group', this.form_group).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

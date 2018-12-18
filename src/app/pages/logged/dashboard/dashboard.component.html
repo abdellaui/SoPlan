@@ -1,4 +1,4 @@
-<div *ngIf="!showHelp">
+<div *ngIf="!showHelp && !loading">
 
   <div class="row">
     <div class="col-sm-6">
@@ -7,11 +7,11 @@
         <nb-card-header>{{currentEvent.name}}</nb-card-header>
         <nb-card-body>
           <div class="row">
-            <div class="col-4"><b>Ortsname</b></div>
+            <div class="col-4"><b>Ort</b></div>
             <div class="col-8">{{currentEvent.hosting.name}}<br><br></div>
-            <div class="col-4"><b>Kontaktperson</b></div>
+            <div class="col-4"><b>Kontakt</b></div>
             <div class="col-8">{{currentEvent.hosting.contactPerson}}<br><br></div>
-            <div class="col-4"><b>Ortanschrift</b></div>
+            <div class="col-4"><b>Anschrift</b></div>
             <div class="col-8">{{currentEvent.hosting.location.street}}
               {{currentEvent.hosting.location.subThoroughfare}}</div>
             <div class="col-4"></div>
@@ -130,8 +130,8 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="pieChartType"
-              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)">
+            <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
+              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)" [colors]='genderColors'>
             </canvas>
           </div>
         </nb-card-body>
@@ -139,13 +139,13 @@
       <!-- GESCHLECHT ENDE -->
     </div>
     <div class="col-sm-6">
-      <!-- -->
+      <!--ROLLE -->
       <nb-card>
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="pieChartType" (chartHover)="roleChartHovered($event)"
-              (chartClick)="roleChartClicked($event)">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
+              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)" [colors]="roleColors">
             </canvas>
           </div>
 
@@ -164,8 +164,8 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [legend]="ageChartLegend"
-              [chartType]="barChartType"></canvas>
+            <canvas baseChart [datasets]="ageChartData" [labels]="ageChartLabels" [options]="ageChartOptions" [colors]="ageColors"
+              [legend]="ageChartLegend" [chartType]="ageChartType"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
@@ -179,7 +179,7 @@
 
           <div style="display: block">
             <canvas baseChart [datasets]="gradeChartData" [labels]="gradeChartLabels" [options]="gradeChartOptions"
-              [legend]="gradeChartLegend" [chartType]="barChartType"></canvas>
+              [legend]="gradeChartLegend" [colors]="gradeColors" [chartType]="gradeChartType"></canvas>
           </div>
         </nb-card-body>
       </nb-card>
@@ -188,18 +188,52 @@
 
 
   </div>
+  <div class="row">
 
+    <div class="col-sm-6">
+      <!--- Schule -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="schoolChartData" [labels]="schoolChartLabels" [colors]="schoolColors"
+              [options]="schoolChartOptions" [legend]="schoolChartLegend" [chartType]="schoolChartType"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- Schule END -->
+    </div>
+
+    <div class="col-sm-6">
+      <!--- Ort -->
+      <nb-card>
+        <nb-card-body>
+
+          <div style="display: block">
+            <canvas baseChart [datasets]="locationChartData" [labels]="locationChartLabels" [colors]="locationColors"
+              [options]="locationChartOptions" [legend]="locationChartLegend" [chartType]="locationChartType"></canvas>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- Ort END -->
+    </div>
+
+
+  </div>
 </div>
-
 <div *ngIf="showHelp">
 
+
   <nb-card>
-    <nb-card-body>
+    <nb-card-body>This is a empty Page</nb-card-body>
+  </nb-card>
 
-      Wähle ein Event in der oberen rechten Ecke aus um eine detaillierte Event Beschreibung zu erhalten.
+</div>
+<div *ngIf="loading">
 
-    </nb-card-body>
 
+  <nb-card [nbSpinner]=true nbSpinnerStatus="info" nbSpinnerSize="xxlarge">
+    <nb-card-body>Please be patient...</nb-card-body>
   </nb-card>
 
 </div>

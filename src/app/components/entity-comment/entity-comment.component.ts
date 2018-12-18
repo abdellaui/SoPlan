@@ -113,13 +113,13 @@ export class EntityCommentComponent implements OnInit {
   public onSave(event: any): void {
 
     this.ipc.get('post/comment', this.form_comment).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) {
         this.toastr.info(`Kommentar erstellt`);
         const newComment: Comment = <Comment>result;
         this.entity.comments.push(newComment);
         this.data.refresh();
         this.ipc.get(this.entityPostUrl, this.entity).then((saved: any) => {
-          if (saved !== 0) {
+          if (!('hasError' in saved)) {
             this.form_comment = new Comment();
             this.form_commentSettings.initialWarningsIgnore = true;
           } else {
@@ -127,7 +127,7 @@ export class EntityCommentComponent implements OnInit {
           }
         });
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
 
     });

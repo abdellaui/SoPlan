@@ -1,3 +1,4 @@
+import { ErrorRequest } from '../../models/errorRequest.class';
 import { logException, on, send } from '../../slots';
 import { Participant } from '../participant/participant.entity';
 import { Person } from './person.entity';
@@ -9,7 +10,7 @@ export function init() {
       send(event, 'get/person/all', result);
     }).catch(e => {
       logException(e);
-      send(event, 'get/person/all', 0);
+      send(event, 'get/person/all', ErrorRequest.create(e));
     });
   });
 
@@ -18,8 +19,7 @@ export function init() {
     Person.findOneOrFail(arg).then((result: Person) => {
       send(event, 'get/person/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/person/by/id', 0);
+      send(event, 'get/person/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -28,8 +28,7 @@ export function init() {
     Person.create(arg).save().then((result: Person) => {
       send(event, 'post/person', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/person', 0);
+      send(event, 'post/person', ErrorRequest.create(e, arg));
     });
   });
 
@@ -44,8 +43,7 @@ export function init() {
         send(event, 'delete/person', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/person', { deleted: false, id: -1 });
+      send(event, 'delete/person', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

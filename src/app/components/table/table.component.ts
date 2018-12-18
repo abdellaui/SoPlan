@@ -101,7 +101,7 @@ export class TableComponent implements OnInit {
 
     // get data
     this.ipc.get(this.config.slotUrls.getUrl, this.config.slotUrls.getParam).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.data.load(result.map(obj => {
           return this.entityToData(obj);
         })).then(() => {

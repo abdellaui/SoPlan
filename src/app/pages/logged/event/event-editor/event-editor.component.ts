@@ -157,7 +157,7 @@ export class EventEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/event/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (result !== 0) {
+          if (!('hasError' in result)) { // result.error has the error
             this.reassignEvent(result);
           }
           this.isLoaded = true;
@@ -209,12 +209,12 @@ export class EventEditorComponent implements OnInit {
 
 
     this.ipc.get('post/event', this.form_event).then((result: any) => {
-      if (result !== 0) {
+      if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
         this.currentEventService.refreshEvents();
         this.router.navigateByUrl('/logged/event/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Fehler! ${result.error}`);
       }
     });
 

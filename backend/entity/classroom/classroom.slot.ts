@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Group } from '../group/group.entity';
 import { Classroom } from './classroom.entity';
 
@@ -8,8 +9,7 @@ export function init() {
     Classroom.find().then((result: Classroom[]) => {
       send(event, 'get/classroom/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/classroom/all', 0);
+      send(event, 'get/classroom/all', ErrorRequest.create(e));
     });
   });
 
@@ -17,8 +17,7 @@ export function init() {
     Classroom.findOneOrFail(arg).then((result: Classroom) => {
       send(event, 'get/classroom/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/classroom/by/id', 0);
+      send(event, 'get/classroom/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -26,8 +25,7 @@ export function init() {
     Classroom.create(arg).save().then((result: Classroom) => {
       send(event, 'post/classroom', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/classroom', 0);
+      send(event, 'post/classroom', ErrorRequest.create(e, arg));
     });
   });
 
@@ -42,8 +40,7 @@ export function init() {
         send(event, 'delete/classroom', { deleted: false, id: _id });
       }
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/classroom', { deleted: false, id: -1 });
+      send(event, 'delete/classroom', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 

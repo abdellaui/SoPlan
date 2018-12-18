@@ -1,4 +1,5 @@
-import { logException, on, send } from '../../slots';
+import { ErrorRequest } from '../../models/errorRequest.class';
+import { on, send } from '../../slots';
 import { Participant } from './participant.entity';
 
 export function init() {
@@ -7,8 +8,7 @@ export function init() {
     Participant.find().then((result: Participant[]) => {
       send(event, 'get/participant/all', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/participant/all', 0);
+      send(event, 'get/participant/all', ErrorRequest.create(e));
     });
   });
 
@@ -16,8 +16,7 @@ export function init() {
     Participant.findOneOrFail(arg).then((result: Participant) => {
       send(event, 'get/participant/by/id', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'get/participant/by/id', 0);
+      send(event, 'get/participant/by/id', ErrorRequest.create(e, arg));
     });
   });
 
@@ -25,8 +24,7 @@ export function init() {
     Participant.create(arg).save().then((result: Participant) => {
       send(event, 'post/participant', result);
     }).catch(e => {
-      logException(e);
-      send(event, 'post/participant', 0);
+      send(event, 'post/participant', ErrorRequest.create(e, arg));
     });
   });
 
@@ -37,8 +35,7 @@ export function init() {
     instance.remove().then(() => {
       send(event, 'delete/participant', { deleted: true, id: _id });
     }).catch(e => {
-      logException(e);
-      send(event, 'delete/participant', { deleted: false, id: -1 });
+      send(event, 'delete/participant', Object.assign(ErrorRequest.create(e, arg), { deleted: false, id: -1 }));
     });
   });
 
