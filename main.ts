@@ -114,6 +114,11 @@ function createMockServer(): void {
   setExpressServer(expressApp);
   database = new Database(testDatabaseConfigs);
 
+  expressApp.use((err: any, req: any, res: any, next: any) => {
+    console.error(err.stack);
+    res.status(404).end();
+  });
+
   expressApp.listen(mockPort, () => {
     console.log(`mock server is running on http://localhost:${mockPort}/`);
   });

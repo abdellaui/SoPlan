@@ -62,31 +62,31 @@
 ----------------------------------
 - [x] Features
     - [x] easy logout
-    - [ ] send mail to person (multi-select)?
-    - [ ] send mail to particpants (multi-select)?
-    - [ ] custom-action on participants smart-t. to print certf. (multi-select)?
     - [x] adding multiple participants from person-list (multi-select)
         - [x] new view on selection+custom action click
         - [x] each person gets a role and a grade
         - [?] maybe create groups automaticly ? monte-carlo?    
-    - [ ] Dashboard
+    - [x] Dashboard
         - [x] Allgemeines
             - [x] Name
             - [x] Veranstalltungsort
             - [x] Kalender (Zeitraum)
-        - [ ] Statistik
-          - [ ] Daten erzeugen
+        - [x] Statistik
+          - [x] Daten erzeugen
               - [x] #Gruppen
-              - [ ] Teilnehmer
+              - [x] Teilnehmer
                   - [x] Alter
                   - [x] Geschlecht
                   - [x] Klassenstufe
-                  - [ ] Herkunfsorte
-                  - [ ] Schulen
+                  - [x] Herkunfsorte
+                  - [x] Schulen
                   - [x] Rolle 
               - [x] Ort
                   - [x] #Zimmer
           - [x] Charts framework finden
+    - [ ] send mail to person (multi-select)?
+    - [ ] send mail to particpants (multi-select)?
+    - [ ] custom-action on participants smart-t. to print certf. (multi-select)?
 
 ----------------------------------
 - [ ] Compiling to standalone-exe
