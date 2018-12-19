@@ -11,9 +11,9 @@ describe('DateRendererComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateRendererComponent ]
+      declarations: [DateRendererComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -24,5 +24,10 @@ describe('DateRendererComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  // TODO: should render the date
+  it('should render the date', () => {
+    expect(true).toBe(true);
   });
 });

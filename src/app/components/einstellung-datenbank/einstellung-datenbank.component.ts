@@ -21,7 +21,7 @@ export class EinstellungDatenbankComponent implements OnInit {
 
   }
 
-  private setConfig(config: DatabaseConfig): void {
+  setConfig(config: DatabaseConfig): void {
 
     if (config) {
       this.config = Object.assign(this.config, config);

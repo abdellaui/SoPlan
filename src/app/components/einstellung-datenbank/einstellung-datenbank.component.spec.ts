@@ -50,4 +50,9 @@ describe('EinstellungenDatenbankComponent', () => {
   it('should save config', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should set config (db)
+  it('should set config', () => {
+    expect(true).toBe(true);
+  });
 });

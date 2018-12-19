@@ -38,4 +38,24 @@ describe('InputComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should transfer empty value to null', () => {
+    component.value = '';
+    component.outputToType();
+    expect(component.value).toBeNull();
+  });
+
+  it('should transfer value to Number', () => {
+    component.element = new Input('number');
+    component.value = '123';
+    component.outputToType();
+    expect(component.value).toEqual(123);
+  });
+
+  it('should transfer value to String', () => {
+    component.element = new Input();
+    component.value = '123';
+    component.outputToType();
+    expect(component.value).toEqual('123');
+  });
 });

@@ -36,4 +36,11 @@ describe('CheckboxComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should emit change
+  it('should emit change', () => {
+    component.value = true;
+    component.emitChange();
+    expect(component.value).toBe(false);
+  });
 });

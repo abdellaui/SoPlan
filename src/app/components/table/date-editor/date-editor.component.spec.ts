@@ -70,4 +70,30 @@ describe('DateEditorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should transfer empty string to null', () => {
+    component.value = '';
+    component.outputToType();
+    expect(component.value).toBeNull();
+  });
+
+  it('should transfer ISODateString to Date', () => {
+    const actDate = new Date();
+    component.value = actDate.toISOString();
+    component.outputToType();
+    expect(component.value).toEqual(actDate);
+  });
+
+  it('shouldnt transfer wrong ISODateString to Date', () => {
+    const actDate = new Date();
+    component.value = new Date(actDate.getTime() + 100).toISOString();
+    component.outputToType();
+    expect(component.value).not.toEqual(actDate);
+  });
+
+  it('should set value on DateSelectEvent', () => {
+    const actDate = new Date();
+    component.onDateSelect(actDate);
+    expect(component.value).toEqual(actDate);
+  });
 });

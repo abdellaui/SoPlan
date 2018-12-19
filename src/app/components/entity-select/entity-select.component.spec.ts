@@ -57,4 +57,19 @@ describe('EntitySelectComponent', () => {
   it('should select element', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should extract information
+  it('should extract information', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should transfer to listitem
+  it('should transfer to listitem', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should get the elements from backend
+  it('should get the elemetns from backend', () => {
+    expect(true).toBe(true);
+  });
 });

@@ -28,9 +28,7 @@ export class EinstellungMailComponent implements OnInit {
   saveConfig(): void {
     this.ipc.send('post/mail/config', this.config);
     this.toastr.info('SMTP-Daten wurde erfolgreich konfiguriert!');
-
   }
-
 
   ngOnInit() {
     this.ipc.get('get/mail/config').then((result: MailConfig) => {

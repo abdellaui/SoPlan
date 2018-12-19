@@ -52,4 +52,13 @@ describe('EinstellungAdministratorComponent', () => {
     expect(true).toBe(true);
   });
 
+  // TODO: should check the password
+  it('should check the password', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should give response with toastr
+  it('should give response with toastr', () => {
+    expect(true).toBe(true);
+  });
 });

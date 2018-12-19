@@ -43,4 +43,19 @@ describe('ParticipantEditorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should save the content
+  it('should save the content', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should select group
+  it('should select group', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should select bedroom
+  it('should select bedroom', () => {
+    expect(true).toBe(true);
+  });
 });

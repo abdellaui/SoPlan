@@ -135,7 +135,6 @@ export class GroupEditorComponent implements OnInit {
       return;
     }
 
-
     this.ipc.get('post/group', this.form_group).then((result: any) => {
       if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');

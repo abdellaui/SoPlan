@@ -70,4 +70,35 @@ describe('DatepickerComponent', () => {
   it('should show correct date', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should emit change
+  it('should emit change', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should transfer empty string to null', () => {
+    component.shownValue = '';
+    component.outputToType();
+    expect(component.shownValue).toBeNull();
+  });
+
+  it('should transfer ISODateString to Date', () => {
+    const actDate = new Date();
+    component.shownValue = actDate.toISOString();
+    component.outputToType();
+    expect(component.shownValue).toEqual(actDate);
+  });
+
+  it('shouldnt transfer wrong ISODateString to Date', () => {
+    const actDate = new Date();
+    component.shownValue = new Date(actDate.getTime() + 100).toISOString();
+    component.outputToType();
+    expect(component.shownValue).not.toEqual(actDate);
+  });
+
+  it('should set value on DateSelectEvent', () => {
+    const actDate = new Date();
+    component.onDateSelect(actDate);
+    expect(component.shownValue).toEqual(actDate);
+  });
 });

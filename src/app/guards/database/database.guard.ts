@@ -12,7 +12,6 @@ export class DatabaseGuard implements CanActivate {
   constructor(private router: Router, private toastr: ToastrService, private ipc: IpcRendererService) {
   }
 
-
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return this.ipc.get('get/database/connection').then((next: boolean) => {
       if (next) {

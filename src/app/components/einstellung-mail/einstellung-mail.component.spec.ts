@@ -59,4 +59,14 @@ describe('EinstellungMailComponent', () => {
   it('should save config', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should set config (mail)
+  it('should set config', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should show toastr message (mail)
+  it('should show toastr message', () => {
+    expect(true).toBe(true);
+  });
 });

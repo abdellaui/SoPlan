@@ -387,7 +387,7 @@ export class TableComponent implements OnInit {
     }
   }
   /**
-   * wird ausgelöst falls ein custom action auf einer zeiler ausgeführt wird (edit&delete sind ausgeschlossen)
+   * wird ausgelöst falls ein custom action auf einer zeile ausgeführt wird (edit&delete sind ausgeschlossen)
    * @param event {action:string, data:any} enthält action name und die daten der zeile
    */
   onCustomActionListClicked(event: any) {
