@@ -46,9 +46,9 @@ export class CertificateComponent implements OnInit {
       htmlFile: ['', Validators.required],
     });
 
-    this.stepOneForm.get('nameVeranstaltung').setValue('Mathematischen Winterakademie');
-    this.stepOneForm.get('kurzerNameVeranstaltung').setValue('Winterakademie');
-    this.stepOneForm.get('datumVeranstaltung').setValue('07. bis 09. Dezember 2018');
+    this.stepOneForm.get('nameVeranstaltung').setValue('der Mathematischen Winterakademie');
+    this.stepOneForm.get('kurzerNameVeranstaltung').setValue('Die Winterakademie');
+    this.stepOneForm.get('datumVeranstaltung').setValue('vom 07. bis 09. Dezember 2018');
     this.stepOneForm.get('ortVeranstaltung').setValue('Wegberg');
 
     this.stepThreeForm.get('pdfFile').setValue('D:/Studienprojekt/generated/student.pdf');

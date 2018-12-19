@@ -1,6 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-
 import { FormElement, TextArea } from '../../models/formBuilder.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
@@ -10,6 +9,7 @@ import { Participant } from '../participant/participant.entity';
 import { Person } from '../person/person.entity';
 import { School } from '../school/school.entity';
 import { Venue } from '../venue/venue.entity';
+import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -17,7 +17,7 @@ export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('comment_mandatory') })
   @Column()
   content: string;
 
@@ -58,7 +58,7 @@ export class Comment extends BaseEntity {
 
 const CommentSchema: FormElement[] = [
   {
-    name: 'Inhalt',
+    name: I18n.resolve('comment_content'),
     member: 'content',
     element: new TextArea()
   },

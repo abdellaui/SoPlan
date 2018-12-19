@@ -1,6 +1,5 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
@@ -8,6 +7,7 @@ import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
+import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Venue extends BaseEntity {
@@ -15,12 +15,12 @@ export class Venue extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString({ message: 'Der Name ist nicht gültig' })
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsString({ message: I18n.resolve('venue_name_warning') })
+  @IsNotEmpty({ message: I18n.resolve('venue_mandatory') })
   @Column()
   name: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('venue_mandatory') })
   @Column()
   contactPerson: string;
 
@@ -77,12 +77,12 @@ export class Venue extends BaseEntity {
 
 const VenueSchema: FormElement[] = [
   {
-    name: 'Ort',
+    name: I18n.resolve('venue_location'),
     member: 'name',
     element: new Input('text')
   },
   {
-    name: 'Kontaktperson',
+    name: I18n.resolve('venue_contact_person'),
     member: 'contactPerson',
     element: new Input('text')
   },

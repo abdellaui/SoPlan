@@ -36,7 +36,7 @@
         </nb-badge>
       </nb-card-header>
 
-      <nb-card-body *ngIf="!selectedElements.length"><i>keine.</i></nb-card-body>
+      <nb-card-body *ngIf="!selectedElements.length"><i>Keine.</i></nb-card-body>
       <nb-list>
         <nb-list-item *ngFor="let element of selectedElements" (click)="select(element)" class="selected">
           <nb-user [name]="element.name" [title]="element.title">

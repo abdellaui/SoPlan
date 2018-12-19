@@ -3,6 +3,7 @@ import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '../../../../../../translation/language';
 
 @Component({
   selector: 'app-bedroom-liste',
@@ -12,9 +13,9 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class BedroomListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Bedroomliste',
+      header: 'Schlafzimmerliste',
       showCreateButton: true,
-      createButtonText: 'Neue Bedroom'
+      createButtonText: 'Neues Schlafzimmer'
     },
     slotUrls: {
       getUrl: 'get/bedroom/all',

@@ -3,6 +3,7 @@ import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '../../../../../../translation/language';
 
 @Component({
   selector: 'app-classroom-liste',
@@ -12,9 +13,9 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class ClassroomListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Classroom liste',
+      header: I18n.resolve('classroom_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Classroom'
+      createButtonText: I18n.resolve('classroom_new')
     },
     slotUrls: {
       getUrl: 'get/classroom/all',

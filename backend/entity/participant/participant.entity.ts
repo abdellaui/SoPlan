@@ -10,13 +10,13 @@ import {
   RelationId,
   Unique,
 } from 'typeorm';
-
 import { FormElement, Input, Option, RadioButton } from '../../models/formBuilder.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Group } from '../group/group.entity';
 import { Person } from '../person/person.entity';
+import { I18n } from '../../../src/translation/language';
 
 export enum ParticipantRole {
   SCHUELER = 's',
@@ -31,12 +31,12 @@ export class Participant extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('participant_mandatory') })
   @Column({ type: 'enum', enum: ParticipantRole })
   role: ParticipantRole = ParticipantRole.SCHUELER;
 
   @IsOptional()
-  @IsInt({ message: 'Klassenstufe muss zwischen 1 bis 13 sein!' })
+  @IsInt({ message: I18n.resolve('participant_grade_level_warning') })
   @Min(1)
   @Max(13)
   @Column({ nullable: true })
@@ -98,16 +98,16 @@ export class Participant extends BaseEntity {
 
 const ParticipantSchema: FormElement[] = [
   {
-    name: 'Rolle',
+    name: I18n.resolve('participant_role'),
     member: 'role',
     element: new RadioButton([
-      new Option('Schüler', ParticipantRole.SCHUELER),
-      new Option('Dozent', ParticipantRole.DOZENT),
-      new Option('Schülerdozent', ParticipantRole.SCHUELERDOZENT),
+      new Option(I18n.resolve('participant_student'), ParticipantRole.SCHUELER),
+      new Option(I18n.resolve('participant_teacher'), ParticipantRole.DOZENT),
+      new Option('participant_student_and_teacher', ParticipantRole.SCHUELERDOZENT),
     ])
   },
   {
-    name: 'Klassenstufe',
+    name: I18n.resolve('participant_grade_level'),
     member: 'grade',
     element: new Input('number')
   }

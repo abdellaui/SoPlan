@@ -1,6 +1,5 @@
 import { IsDateString, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
 import { IsLaterThanDate } from '../../models/isLaterThanDate.validator';
 import { Bedroom } from '../bedroom/bedroom.entity';
@@ -9,6 +8,7 @@ import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
+import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Event extends BaseEntity {
@@ -17,15 +17,15 @@ export class Event extends BaseEntity {
   id: number;
 
   @Column()
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('event_mandatory') })
   name: string;
 
-  @IsDateString({ message: 'Pflichtfeld' })
+  @IsDateString({ message: I18n.resolve('event_mandatory') })
   @Column()
   startsDate: Date;
 
-  @IsLaterThanDate('startsDate', { message: 'musst später sein!' })
-  @IsDateString({ message: 'Pflichtfeld' })
+  @IsLaterThanDate('startsDate', { message: I18n.resolve('event_must_be_later') })
+  @IsDateString({ message: I18n.resolve('event_mandatory') })
   @Column()
   endsDate: Date;
   /**
@@ -92,17 +92,17 @@ export class Event extends BaseEntity {
 
 const EventSchema: FormElement[] = [
   {
-    name: 'Eventname',
+    name: I18n.resolve('event_name'),
     member: 'name',
     element: new Input('text')
   },
   {
-    name: 'Startet',
+    name: I18n.resolve('event_start'),
     member: 'startsDate',
     element: new DatePicker()
   },
   {
-    name: 'Endet',
+    name: I18n.resolve('event_end'),
     member: 'endsDate',
     element: new DatePicker()
   },

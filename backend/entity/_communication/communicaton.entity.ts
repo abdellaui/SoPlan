@@ -1,5 +1,6 @@
 import { IsEmail, IsOptional, IsPhoneNumber } from 'class-validator';
 import { Column } from 'typeorm';
+import { I18n } from '../../../src/translation/language';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
 
@@ -11,37 +12,36 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 export class Communication {
 
   @IsOptional()
-  @IsPhoneNumber('DE', { message: 'Es sind nur deutsche Telefonnummern gültig!' })
+  @IsPhoneNumber('DE', { message: I18n.resolve('communication_phone_warning') })
   @Column({ nullable: true })
   phone: string;
 
   @IsOptional()
-  @IsPhoneNumber('DE', { message: 'Es sind nur deutsche Telefonnummern gültig!' })
+  @IsPhoneNumber('DE', { message: I18n.resolve('communication_phone_warning') })
   @Column({ nullable: true })
   mobile: string;
 
   @IsOptional()
   @IsEmail({}, {
-    message: 'Ungültige Mail-Adresse'
+    message: I18n.resolve('communication_mail_warning')
   })
   @Column({ nullable: true })
   mail: string;
-
 }
 
 const CommunicationSchema: FormElement[] = [
   {
-    name: 'Festnetz',
+    name: I18n.resolve('communication_landline'),
     member: 'phone',
     element: new Input('text')
   },
   {
-    name: 'Telefonnummer',
+    name: I18n.resolve('communication_mobile'),
     member: 'mobile',
     element: new Input('text')
   },
   {
-    name: 'E-Mail',
+    name: I18n.resolve('communication_mail'),
     member: 'mail',
     element: new Input('text')
   },

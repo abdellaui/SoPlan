@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { NbPopoverModule } from '@nebular/theme';
+import { I18n } from '../../../../src/translation/language';
 
 import { FormBuilderComponent } from './form-builder.component';
 
@@ -14,7 +15,7 @@ describe('FormBuilderComponent', () => {
   let form_schoolInstance: School;
   const form_schoolSchema = SchoolSchema;
   const form_schoolSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Information',
+    header: I18n.resolve('form_info'),
     buttons: false
   };
   beforeEach(async(() => {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Room, RoomSchema } from '@entity/_room/room.entity';
+import {Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';

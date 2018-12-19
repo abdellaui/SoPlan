@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
+import { I18n } from '../../../translation/language';
 
 @Component({
   selector: 'app-sidemenu',
@@ -10,129 +11,129 @@ import { NbMenuItem } from '@nebular/theme';
 export class SidemenuComponent implements OnInit {
   items: NbMenuItem[] = [
     {
-      title: 'Dashboard',
+      title: I18n.resolve('menu_dashboard'),
       icon: 'nb-grid-a-outline',
       link: '/logged/dashboard',
       home: true,
     },
     {
-      title: 'Ort',
+      title: I18n.resolve('menu_location'),
       icon: 'nb-location',
       children: [
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/venue/editor/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/venue/list',
         },
         {
-          title: 'Schlafzimmer',
+          title: I18n.resolve('menu_bedroom'),
           group: true,
         },
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/venue/bedroom/editor/0/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/venue/bedroom/list',
         },
         {
-          title: 'Klassenzimmer',
+          title: I18n.resolve('menu_classroom'),
           group: true
         },
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/venue/classroom/editor/0/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/venue/classroom/list',
         }
       ]
 
     },
     {
-      title: 'Person',
+      title: I18n.resolve('menu_person'),
       icon: 'nb-person',
       children: [
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/person/editor/0',
           pathMatch: 'partial'
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/person/list',
         }]
 
     },
     {
-      title: 'Schule',
+      title: I18n.resolve('menu_school'),
       icon: 'nb-home',
       children: [
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/school/editor/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/school/list',
         }]
 
     },
     {
-      title: 'Veranstaltung',
+      title: I18n.resolve('menu_event'),
       icon: 'nb-layout-default',
       children: [
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/event/editor/0'
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/event/list',
         },
         {
-          title: 'Gruppen',
+          title: I18n.resolve('menu_groups'),
           group: true
         },
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/event/group/editor/0/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/event/group/list',
         },
         {
-          title: 'Teilnehmer',
+          title: I18n.resolve('menu_participant'),
           group: true
         },
         {
-          title: 'Editor',
+          title: I18n.resolve('menu_editor'),
           link: '/logged/event/participant/editor/0/0',
         },
         {
-          title: 'Liste',
+          title: I18n.resolve('menu_list'),
           link: '/logged/event/participant/list',
         }
       ]
     },
-    {
-      title: 'Certificate',
+    /*{
+      title: I18n.resolve('menu_certificate'),
       icon: 'nb-lightbulb',
       link: '/logged/certificate',
-    },
+    },*/
     {
-      title: 'Einstellungen',
+      title: I18n.resolve('menu_settings'),
       icon: 'nb-gear',
       link: '/logged/einstellungen',
     },
     {
-      title: 'Abmelden',
+      title: I18n.resolve('menu_logout'),
       icon: 'nb-close-circled',
       link: '/login/',
     }

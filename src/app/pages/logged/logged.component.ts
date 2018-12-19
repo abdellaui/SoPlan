@@ -12,7 +12,7 @@ import { HistoryMemoryService } from '@services/history-memory/history-memory.se
 export class LoggedComponent implements OnInit {
   items: Event[];
   currentItem: Event;
-  defaultEvent = <Event>{ name: 'keine Veranstaltung', hosting: { name: 'bitte wähle eine Veranstaltung' } };
+  defaultEvent = <Event>{ name: 'Keine Veranstaltung gewählt', hosting: { name: 'Hier klicken um eine Veranstaltung zu wählen' } };
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,

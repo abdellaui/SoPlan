@@ -10,12 +10,12 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Participant } from '../participant/participant.entity';
+import { I18n } from '../../../src/translation/language';
 
 @Entity()
 @Unique(['classroom', 'event']) // ein Klassenzimmer pro Gruppe
@@ -24,11 +24,11 @@ export class Group extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('group_mandatory') })
   @Column()
   name: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('group_mandatory') })
   @Column()
   capacity: number;
 
@@ -67,12 +67,12 @@ export class Group extends BaseEntity {
 
 const GroupSchema: FormElement[] = [
   {
-    name: 'Gruppenname',
+    name: I18n.resolve('group_name'),
     member: 'name',
     element: new Input('text')
   },
   {
-    name: 'Kapazität',
+    name: I18n.resolve('group_capacity'),
     member: 'capacity',
     element: new Input('number')
   }
