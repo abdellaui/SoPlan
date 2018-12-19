@@ -52,4 +52,14 @@ describe('EntityCommentComponent', () => {
   it('should save entity', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should check finished
+  it('should check finished', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should delete all selected
+  it('should delete all selected', () => {
+    expect(true).toBe(true);
+  });
 });

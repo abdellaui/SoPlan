@@ -25,11 +25,15 @@ describe('AuthenticationGuard', () => {
         NgxElectronModule,
         HttpClientModule
       ],
-
     });
   });
 
   it('should ...', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
     expect(service).toBeTruthy();
   }));
+
+  // TODO: should has no rights
+  it('should has no rights', () => {
+    expect(true).toBe(true);
+  });
 });

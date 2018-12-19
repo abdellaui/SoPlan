@@ -84,4 +84,24 @@ describe('TableComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should show delete error
+  it('should show delete error', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should save the new content
+  it('should save the new content', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should delete selected entity
+  it('should delete selected entity', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: should warn the user with delete confirm
+  it('should warn the user with delete confirm', () => {
+    expect(true).toBe(true);
+  });
 });

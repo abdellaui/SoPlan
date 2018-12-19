@@ -78,6 +78,7 @@ export class EntityCommentComponent implements OnInit {
   public selectedData: any[] = []; // zwischenspeicher für auswahl
   public rememberIdOfDeleteError: number[] = [];
   public deletedCount = 0;
+
   getShow(): boolean {
     return (this.entityPostUrl && this.entity && this.entity.id);
   }

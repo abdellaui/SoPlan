@@ -46,4 +46,15 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should remember the login', () => {
+    component.toggleRemember();
+    expect(component.remember).toBe(true);
+  });
+
+  it('shouldnt remember the login', () => {
+    component.remember = true;
+    component.toggleRemember();
+    expect(component.remember).toBe(false);
+  });
 });

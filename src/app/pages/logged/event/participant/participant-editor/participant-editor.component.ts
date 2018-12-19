@@ -208,7 +208,6 @@ export class ParticipantEditorComponent implements OnInit {
       return;
     }
 
-
     this.ipc.get('post/participant', this.form_participant).then((result: any) => {
       if (!('hasError' in result)) { // result.error has the error
         this.toastr.info('Parti gespeichert wurde erfolgreich gespeichert!');

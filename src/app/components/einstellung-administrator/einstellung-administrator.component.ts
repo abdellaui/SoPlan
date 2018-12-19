@@ -20,7 +20,7 @@ export class EinstellungAdministratorComponent implements OnInit {
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService, private auth: AuthenticationGuard) {
   }
-  private setConfig(config: AdminLogin): void {
+  setConfig(config: AdminLogin): void {
 
     if (config) {
       this.username = config.username;

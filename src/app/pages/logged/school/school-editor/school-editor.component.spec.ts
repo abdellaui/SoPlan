@@ -41,4 +41,9 @@ describe('SchoolEditorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should save the content
+  it('should save the content', () => {
+    expect(true).toBe(true);
+  });
 });

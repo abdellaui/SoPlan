@@ -78,8 +78,6 @@ export class EntitySelectComponent implements OnInit {
     this.elements = instances.map(element => {
       const nameArray = this.extractInformation(element, this.settings.listNameMembers);
       const titleArray = this.extractInformation(element, this.settings.listTitleMembers);
-
-
       const showName = nameArray.join(this.settings.seperatorName);
       const showTitle = titleArray.join(this.settings.seperatorTitle);
       return <EntitySelectOption>{ id: element.id, name: showName, title: showTitle };
@@ -105,7 +103,6 @@ export class EntitySelectComponent implements OnInit {
 
 
   search() {
-
     /**
      * TODO: better search engine
      */

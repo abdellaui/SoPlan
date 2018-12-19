@@ -50,4 +50,9 @@ describe('FormBuilderComponent', () => {
   it('should create the correct components', () => {
     expect(true).toBe(true);
   });
+
+  // TODO: should clear the erros
+  it('should clear the errors', () => {
+    expect(true).toBe(true);
+  });
 });

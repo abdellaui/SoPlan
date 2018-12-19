@@ -39,4 +39,10 @@ describe('TextareaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should transfer empty value to null', () => {
+    component.value = '';
+    component.outputToType();
+    expect(component.value).toBeNull();
+  });
 });

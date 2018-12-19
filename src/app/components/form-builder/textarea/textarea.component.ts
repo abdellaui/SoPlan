@@ -18,7 +18,6 @@ export class TextareaComponent implements OnInit {
   ngOnInit() {
   }
 
-
   emitChange(): void {
     this.outputToType();
     this.valueChanged.emit(this.value);

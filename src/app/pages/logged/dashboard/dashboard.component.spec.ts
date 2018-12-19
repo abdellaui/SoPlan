@@ -42,4 +42,9 @@ describe('DashboardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should get statistics for charts
+  it('should get statistics for charts', () => {
+    expect(true).toBe(true);
+  })
 });

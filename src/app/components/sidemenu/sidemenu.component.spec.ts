@@ -40,4 +40,9 @@ describe('SidemenuComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: should have the right order
+  it('should have the right order', () => {
+    expect(true).toBe(true);
+  });
 });
