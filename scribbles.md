@@ -1,11 +1,11 @@
-- [ ] ban the errors/failures
-- [ ] Testing
-- [ ] Überarbeitung der Texte
-- [ ] Features
-- [ ] compiling to standalone-exe
+- [x] ban the errors/failures
+- [x] Testing
+- [x] Überarbeitung der Texte
+- [x] Features
+- [x] compiling to standalone-exe
 ----------------------------------
 
-- [ ] ban the errors/failures
+- [x] ban the errors/failures
     - [x] slots first part is a http method (get/post/put?/delete)
     - [x] Current event konsistenz
     - [x] entity-selector
@@ -36,13 +36,13 @@
     - [x] Login password gets longer (encoding displayed)
 
 ----------------------------------
-- [ ] Testing
-    - [ ] Unit Test
+- [x] Testing
+    - [x] Unit Test
         - [x] every comp. should create independently
         - [x] fit comp. props
         - [x] get green
         - [ ] test till get bored
-            - [ ] test important methods
+            - [x] test important methods
             - [ ] test every single method?
         - [ ] backend?
             - [ ] entity getter setter?
@@ -89,10 +89,10 @@
     - [ ] custom-action on participants smart-t. to print certf. (multi-select)?
 
 ----------------------------------
-- [ ] Compiling to standalone-exe
+- [x] Compiling to standalone-exe
     - [x] have a logo
     - [x] mac
     - [x] linux
     - [x] windows
-    - [ ] doesnt throw erros / warnings
-        - [ ] fix public / private props by html-interpolation
+    - [x] doesnt throw erros / warnings
+        - [x] fix public / private props by html-interpolation

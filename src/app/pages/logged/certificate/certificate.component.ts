@@ -1,9 +1,9 @@
-import { ViewChild, OnInit, ElementRef, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { PugToPdfConfig, PdfConfig } from '@models/configs.class';
+import { PdfConfig, PugToPdfConfig } from '@models/configs.class';
 import { NbStepperComponent } from '@nebular/theme';
-import { ElectronService } from 'ngx-electron';
+import { ToastrService } from 'ngx-toastr';
+
 import { IpcRendererService } from '../../../services/ipc-renderer/ipc-renderer.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class CertificateComponent implements OnInit {
 
   private myPugConf: PugToPdfConfig = new PugToPdfConfig();
 
-  constructor(private fb: FormBuilder, private toastrServ: ToastrService, private electronService: ElectronService,
+  constructor(private fb: FormBuilder, private toastrServ: ToastrService,
     private ipc: IpcRendererService) {
   }
 
@@ -56,47 +56,47 @@ export class CertificateComponent implements OnInit {
     this.stepThreeForm.get('htmlFile').setValue('D:/Studienprojekt/generated/student.html');
   }
 
-  onFirstClicked(stepper) {
-    if ( 'VALID' === this.stepOneForm.get('nameVeranstaltung').status
-      &&  'VALID' === this.stepOneForm.get('kurzerNameVeranstaltung').status
+  onFirstClicked(stepper: any) {
+    if ('VALID' === this.stepOneForm.get('nameVeranstaltung').status
+      && 'VALID' === this.stepOneForm.get('kurzerNameVeranstaltung').status
       && 'VALID' === this.stepOneForm.get('datumVeranstaltung').status
       && 'VALID' === this.stepOneForm.get('artBescheinigung').status
-      &&  'VALID' === this.stepOneForm.get('ortVeranstaltung').status) {
-        this.stepOneForm.markAsDirty();
-        this.toastrServ.clear();
-        stepper.next();
+      && 'VALID' === this.stepOneForm.get('ortVeranstaltung').status) {
+      this.stepOneForm.markAsDirty();
+      this.toastrServ.clear();
+      stepper.next();
     } else {
       this.toastrServ.error('Bitte alle Felder ausfüllen.');
     }
   }
 
-  onSecondClicked(stepper) {
-    if ( 'VALID' === this.stepTwoForm.get('namePerson').status
+  onSecondClicked(stepper: any) {
+    if ('VALID' === this.stepTwoForm.get('namePerson').status
       && 'VALID' === this.stepTwoForm.get('schulePerson').status
       && 'VALID' === this.stepTwoForm.get('classPerson').status) {
-        this.stepTwoForm.markAsDirty();
-        this.toastrServ.clear();
-        stepper.next();
+      this.stepTwoForm.markAsDirty();
+      this.toastrServ.clear();
+      stepper.next();
     } else {
       this.toastrServ.error('Bitte alle Felder ausfüllen.');
     }
   }
 
   onThirdSubmit() {
-    if ( 'VALID' === this.stepThreeForm.get('pdfFile').status
+    if ('VALID' === this.stepThreeForm.get('pdfFile').status
       && 'VALID' === this.stepThreeForm.get('pugFile').status
       && 'VALID' === this.stepThreeForm.get('htmlFile').status) {
-        this.stepThreeForm.markAsDirty();
-        this.toastrServ.clear();
-        this.toastrServ.info('Bitte warten.');
-        this.pugToPDF('a', 'b');
+      this.stepThreeForm.markAsDirty();
+      this.toastrServ.clear();
+      this.toastrServ.info('Bitte warten.');
+      this.pugToPDF('a', 'b');
     } else {
       this.toastrServ.clear();
       this.toastrServ.error('Bitte alle Felder ausfüllen.');
     }
   }
 
-  pugToPDF(fileIn, filePathOut) {
+  pugToPDF(fileIn, filePathOut: any) {
     this.myPugConf.filepathPug = this.stepThreeForm.get('pugFile').value;
     this.myPugConf.filepathGeneratedHtml = this.stepThreeForm.get('htmlFile').value;
     this.myPugConf.filepathGeneratedPdf = this.stepThreeForm.get('pdfFile').value;

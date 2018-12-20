@@ -4,22 +4,21 @@
     <nb-stepper #stepper>
 
       <!-- Allgemeines -->
-      <nb-step [stepControl]="stepOneControl" label="Art" (click)="onStepOneControlClicked()">
+      <nb-step label="Art">
         <form [formGroup]="stepOneForm" class="step-container">
           <p class="certificationArt">
             Welche Art von Bescheinigung soll erstellt werden?
           </p>
-          <nb-select placeholder="Bitte auswählen" [(selected)]="selectedItem" formControlName="artBescheinigung">
-              <nb-option value="1">Teilnahmebescheinigung</nb-option>
-              <nb-option value="2">Dozentenbescheinigung</nb-option>
-            </nb-select>
+          <nb-select placeholder="Bitte auswählen" formControlName="artBescheinigung">
+            <nb-option value="1">Teilnahmebescheinigung</nb-option>
+            <nb-option value="2">Dozentenbescheinigung</nb-option>
+          </nb-select>
           <p></p>
           <p class="certificationName">
-              Wie heißt die Veranstaltung? (lange Version)
+            Wie heißt die Veranstaltung? (lange Version)
           </p>
           <div class="input-group">
-            <input type="text" placeholder="Name" class="form-control" formControlName="nameVeranstaltung"
-                   [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+            <input type="text" placeholder="Name" class="form-control" formControlName="nameVeranstaltung" [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
           <p class="certificationShortName">
@@ -27,23 +26,22 @@
           </p>
           <div class="input-group">
             <input type="text" placeholder="Name" class="form-control" formControlName="kurzerNameVeranstaltung"
-                  [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+              [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
           <p class="certificationDate">
-              In welchem Zeitraum wurde sie ausgetragen? (Textversion)
+            In welchem Zeitraum wurde sie ausgetragen? (Textversion)
           </p>
           <div class="input-group">
             <input type="text" placeholder="Zeitraum" class="form-control" formControlName="datumVeranstaltung"
-                   [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+              [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
           <p class="certificationPlace">
             Wo wurde sie ausgetragen? (Stadt/Ort)
           </p>
           <div class="input-group">
-            <input type="text" placeholder="Zeitraum" class="form-control" formControlName="ortVeranstaltung"
-                  [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
+            <input type="text" placeholder="Zeitraum" class="form-control" formControlName="ortVeranstaltung" [ngClass]="{'form-control-danger': stepOneForm.invalid && (stepOneForm.dirty || stepOneForm.touched)}">
           </div>
           <p></p>
           <button (click)="onFirstClicked(stepper)" nbButton>Weiter</button>
@@ -51,24 +49,22 @@
       </nb-step>
 
       <!-- Personen auswählen -->
-      <nb-step [stepControl]="stepTwoCtrol" label="Person">
+      <nb-step label="Person">
         <form [formGroup]="stepTwoForm" class="step-container">
           <p class="choosePersons">
             Personen auswählen. (Vorläufig nur Daten in die Felder eintragen...)
           </p>
           <div class="input-group">
             <input type="text" placeholder="Name (Vorname & Nachname)" class="form-control" formControlName="namePerson"
-                   [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
+              [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
           </div>
           <p></p>
           <div class="input-group">
-            <input type="text" placeholder="Schule" class="form-control" formControlName="schulePerson"
-                   [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
+            <input type="text" placeholder="Schule" class="form-control" formControlName="schulePerson" [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
           </div>
           <p></p>
           <div class="input-group">
-            <input type="text" placeholder="Klassenstufe" class="form-control" formControlName="classPerson"
-                   [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
+            <input type="text" placeholder="Klassenstufe" class="form-control" formControlName="classPerson" [ngClass]="{'form-control-danger': stepTwoForm.invalid && (stepTwoForm.dirty || stepTwoForm.touched)}">
           </div>
           <p></p>
           <button (click)="onSecondClicked(stepper)" nbButton>Weiter</button>
@@ -76,30 +72,28 @@
       </nb-step>
 
       <!-- Speicherort wählen -->
-      <nb-step [stepControl]="stepThreeControl" label="Speichern">
+      <nb-step label="Speichern">
         <form [formGroup]="stepThreeForm" class="step-container">
           <p class="saveAs">
             Speicherort für das generierte PDF.
           </p>
           <div class="input-group">
-            <input type="text" placeholder="Dateipfad (like C:/Hello/filename.pdf)" class="form-control" formControlName="pdfFile"
-                   [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
+            <input type="text" placeholder="Dateipfad (like C:/Hello/filename.pdf)" class="form-control"
+              formControlName="pdfFile" [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
           </div>
           <p></p>
           <p class="loadFrom">
             Speicherort des pug files.
           </p>
           <div class="input-group">
-            <input type="text" placeholder=".../name.pug" class="form-control" formControlName="pugFile"
-                   [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
+            <input type="text" placeholder=".../name.pug" class="form-control" formControlName="pugFile" [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
           </div>
           <p></p>
           <p class="htmlTo">
             Speicherort für die html-Datei.
           </p>
           <div class="input-group">
-            <input type="text" placeholder=".../name.html" class="form-control" formControlName="htmlFile"
-                   [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
+            <input type="text" placeholder=".../name.html" class="form-control" formControlName="htmlFile" [ngClass]="{'form-control-danger': stepThreeForm.invalid && (stepThreeForm.dirty || stepThreeForm.touched)}">
           </div>
           <p></p>
           <button (click)="onThirdSubmit()" nbButton>Fertigstellen</button>
