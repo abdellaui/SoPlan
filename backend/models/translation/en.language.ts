@@ -1,19 +1,19 @@
-const de = {
+const en = {
   menu_TITLE: 'DAS SEITENMENÜ',
   menu_dashboard: 'Dashboard',
-  menu_location: 'Ort',
+  menu_location: 'Location',
   menu_editor: 'Editor',
-  menu_list: 'Liste',
-  menu_bedroom: 'Schlafzimmer',
-  menu_classroom: 'Klassenraum',
+  menu_list: 'List',
+  menu_bedroom: 'Bedroom',
+  menu_classroom: 'Classroom',
   menu_person: 'Person',
-  menu_school: 'Schule',
-  menu_event: 'Veranstaltung',
-  menu_groups: 'Gruppen',
-  menu_participant: 'Teilnehmer',
-  menu_certificate: 'Zertifikat',
-  menu_settings: 'Einstellungen',
-  menu_logout: 'Abmelden',
+  menu_school: 'School',
+  menu_event: 'Event',
+  menu_groups: 'Group',
+  menu_participant: 'Participant',
+  menu_certificate: 'Certificate',
+  menu_settings: 'Settings',
+  menu_logout: 'Logout',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
   communication_phone_warning: 'Es sind nur deutsche Telefonnummern gültig!',
@@ -151,4 +151,4 @@ const de = {
 
   TestWithParams: 'Fehler: %s, Keine Ahnung: %s'
 };
-export { de };
+export { en };
