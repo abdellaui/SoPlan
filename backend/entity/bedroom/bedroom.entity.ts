@@ -1,11 +1,12 @@
 import { IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
-import { I18n } from '../../../src/translation/language';
 
 export enum BedroomTypes {
   SCHUELER = 's',

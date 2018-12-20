@@ -225,7 +225,13 @@
 
 
   <nb-card>
-    <nb-card-body>Es muss eine Veranstaltung ausgewählt werden.</nb-card-body>
+    <nb-card-body>Es muss eine Veranstaltung ausgewählt werden.
+
+      {{ _i18n.resolve('table_edit_advanced') }}
+
+
+      {{ _i18n.resolve('TestWithParams', 'param1', 'param2') }}
+    </nb-card-body>
   </nb-card>
 
 </div>

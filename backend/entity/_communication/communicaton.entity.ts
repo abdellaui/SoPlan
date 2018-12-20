@@ -1,8 +1,8 @@
 import { IsEmail, IsOptional, IsPhoneNumber } from 'class-validator';
 import { Column } from 'typeorm';
-import { I18n } from '../../../src/translation/language';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 
 /**
  * This is an embedded entity

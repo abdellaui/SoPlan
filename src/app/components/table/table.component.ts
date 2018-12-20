@@ -2,14 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SmartTableConfig } from '@models/componentInput.class';
 import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 import * as Deepmerge from 'deepmerge';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
+
 import { DateEditorComponent } from './date-editor/date-editor.component';
 import { DateRendererComponent } from './date-renderer/date-renderer.component';
-import { I18n } from '../../../translation/language';
 
 @Component({
   selector: 'app-table',

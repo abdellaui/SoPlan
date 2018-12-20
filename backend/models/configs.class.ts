@@ -1,6 +1,7 @@
 import { IsNotEmpty } from 'class-validator';
+
 import { FormElement, Input } from './formBuilder.class';
-import { I18n } from '../../src/translation/language';
+import { I18n } from './translation/i18n.class';
 
 export class AdminLogin {
   username: string;
@@ -8,36 +9,36 @@ export class AdminLogin {
 }
 
 export class CustomEMail {
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   from: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   to: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   subject: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   text: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   html: string;
 }
 
 export class DatabaseConfig {
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   host: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   port: number | string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   username: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   password: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   database: string;
 }
 
@@ -71,16 +72,16 @@ const DatabaseConfigSchema: FormElement[] = [
 export { DatabaseConfigSchema };
 
 export class MailConfig {
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   host: string;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   port: number;
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   user: string; // username
 
-  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
+  @IsNotEmpty({ message: I18n.resolve('config_field_warning') })
   pass: string; // password
 }
 const MailConfigSchema: FormElement[] = [
@@ -133,11 +134,11 @@ export class PdfConfig {
   public static defaultPdfSettings() {
     const avaiblePaperSizes = ['A5', 'A4', 'A3', 'Legal', 'Letter', 'Tabloid'];
     const option = {
-        marginsType: 0,
-        pageSize: avaiblePaperSizes[1],
-        printBackground: false,
-        printSelectionOnly: false,
-        landscape: false,
+      marginsType: 0,
+      pageSize: avaiblePaperSizes[1],
+      printBackground: false,
+      printSelectionOnly: false,
+      landscape: false,
     };
     return option;
   }

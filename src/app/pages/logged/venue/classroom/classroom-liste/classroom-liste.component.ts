@@ -3,7 +3,7 @@ import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
-import { I18n } from '../../../../../../translation/language';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-classroom-liste',

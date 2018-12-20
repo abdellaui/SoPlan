@@ -1,14 +1,15 @@
 import { IsDateString, IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { DatePicker, FormElement, Input } from '../../models/formBuilder.class';
 import { IsLaterThanDate } from '../../models/isLaterThanDate.validator';
+import { I18n } from '../../models/translation/i18n.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
-import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Event extends BaseEntity {

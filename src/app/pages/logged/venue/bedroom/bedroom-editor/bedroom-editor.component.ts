@@ -5,7 +5,6 @@ import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '../../../../../../translation/language';
 
 @Component({
   selector: 'app-bedroom-editor',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { I18n } from '@models/translation/i18n.class';
 import { NbMenuItem } from '@nebular/theme';
-import { I18n } from '../../../translation/language';
 
 @Component({
   selector: 'app-sidemenu',

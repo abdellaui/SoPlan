@@ -4,9 +4,9 @@ import { Communication, CommunicationSchema } from '@entity/_communication/commu
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-person-editor',

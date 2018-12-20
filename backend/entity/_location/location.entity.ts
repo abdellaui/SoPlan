@@ -1,8 +1,8 @@
-import { IsAlpha, IsNotEmpty, IsNumberString, MaxLength, IsAlphanumeric, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumberString, MaxLength } from 'class-validator';
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
-import { I18n } from '../../../src/translation/language';
+import { I18n } from '../../models/translation/i18n.class';
 
 /**
  * This is an embedded entity
@@ -21,8 +21,8 @@ export class Location {
   subThoroughfare: string;
 
   @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
-  @IsNumberString({ message:  I18n.resolve('location_postalcode_warning') })
-  @MaxLength(5, { message:  I18n.resolve('location_postalcode_length') })
+  @IsNumberString({ message: I18n.resolve('location_postalcode_warning') })
+  @MaxLength(5, { message: I18n.resolve('location_postalcode_length') })
   @Column()
   postalcode: string;
 

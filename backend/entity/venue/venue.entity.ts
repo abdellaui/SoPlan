@@ -1,13 +1,14 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
-import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Venue extends BaseEntity {

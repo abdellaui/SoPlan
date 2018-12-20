@@ -3,7 +3,6 @@ import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
-import { I18n } from '../../../../../../translation/language';
 
 @Component({
   selector: 'app-bedroom-liste',

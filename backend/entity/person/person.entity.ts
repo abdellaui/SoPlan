@@ -1,12 +1,13 @@
 import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { School } from '../school/school.entity';
-import { I18n } from '../../../src/translation/language';
 
 export enum PersonGender {
   MALE = 'm',
@@ -25,7 +26,7 @@ export class Person extends BaseEntity {
   @Column()
   firstname: string;
 
-  @IsNotEmpty({ message:  I18n.resolve('person_mandatory') })
+  @IsNotEmpty({ message: I18n.resolve('person_mandatory') })
   @IsString({ message: I18n.resolve('person_surename_warning') })
   @Column()
   surname: string;

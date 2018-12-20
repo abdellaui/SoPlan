@@ -1,10 +1,12 @@
-import { IsAlpha, IsNotEmpty, MaxLength, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Location } from '../_location/location.entity';
 import { Comment } from '../comment/comment.entity';
 import { Person } from '../person/person.entity';
-import { I18n } from '../../../src/translation/language';
+
 @Entity()
 export class School extends BaseEntity {
 

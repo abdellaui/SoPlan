@@ -10,12 +10,13 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
+
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Classroom } from '../classroom/classroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Participant } from '../participant/participant.entity';
-import { I18n } from '../../../src/translation/language';
 
 @Entity()
 @Unique(['classroom', 'event']) // ein Klassenzimmer pro Gruppe

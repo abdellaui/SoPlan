@@ -4,8 +4,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 import { NbPopoverModule } from '@nebular/theme';
-import { I18n } from '../../../../src/translation/language';
 
 import { FormBuilderComponent } from './form-builder.component';
 

@@ -1,6 +1,8 @@
 import { IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
 import { FormElement, TextArea } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Classroom } from '../classroom/classroom.entity';
 import { Event } from '../event/event.entity';
@@ -9,7 +11,6 @@ import { Participant } from '../participant/participant.entity';
 import { Person } from '../person/person.entity';
 import { School } from '../school/school.entity';
 import { Venue } from '../venue/venue.entity';
-import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Comment extends BaseEntity {

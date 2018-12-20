@@ -10,13 +10,14 @@ import {
   RelationId,
   Unique,
 } from 'typeorm';
+
 import { FormElement, Input, Option, RadioButton } from '../../models/formBuilder.class';
+import { I18n } from '../../models/translation/i18n.class';
 import { Bedroom } from '../bedroom/bedroom.entity';
 import { Comment } from '../comment/comment.entity';
 import { Event } from '../event/event.entity';
 import { Group } from '../group/group.entity';
 import { Person } from '../person/person.entity';
-import { I18n } from '../../../src/translation/language';
 
 export enum ParticipantRole {
   SCHUELER = 's',

@@ -5,9 +5,9 @@ import { Event } from '@entity/event/event.entity';
 import { Group } from '@entity/group/group.entity';
 import { Participant, ParticipantRole } from '@entity/participant/participant.entity';
 import { PersonGender } from '@entity/person/person.entity';
+import { I18n } from '@models/translation/i18n.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
-
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +15,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public _i18n = I18n; // for accessing in html
 
   public rangeObject: any;
   /***** Age Chart******/
@@ -201,7 +202,6 @@ export class DashboardComponent implements OnInit {
     this.grade_stats = new Object;
     this.school_stats = new Object;
     this.location_stats = new Object;
-
     this.participants.forEach(participant => {
       const date = new Date();
       const participantDate = participant.person.birthDate.toString();

@@ -7,9 +7,9 @@ import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-venue-editor',

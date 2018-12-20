@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-school-editor',

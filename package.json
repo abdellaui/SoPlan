@@ -49,6 +49,7 @@
     "@nebular/date-fns": "^3.0.0",
     "@nebular/moment": "^3.0.0",
     "@nebular/theme": "^3.0.0",
+    "@types/sprintf-js": "^1.1.1",
     "angular-chart.js": "^1.1.1",
     "body-parser": "^1.18.3",
     "chart.js": "^2.7.3",
@@ -68,6 +69,7 @@
     "pug": "^2.0.3",
     "reflect-metadata": "^0.1.12",
     "rxjs-compat": "^6.3.3",
+    "sprintf-js": "^1.1.2",
     "typeorm": "^0.2.9",
     "utils": "^0.3.1"
   },

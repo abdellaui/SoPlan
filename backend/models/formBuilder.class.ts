@@ -1,4 +1,4 @@
-import { I18n } from '../../src/translation/language';
+import { I18n } from './translation/i18n.class';
 
 export class Option {
   label: string;
