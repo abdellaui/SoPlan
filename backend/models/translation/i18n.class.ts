@@ -8,10 +8,10 @@ export class I18n {
 
   static resolve(phrase: string, ...args: any[]): string {
 
-    return sprintf(I18n.currentLanguage[phrase], ...args) + '_i18n' || phrase + ' not found';
+    return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args);
   }
 
-  static setLanguage(lang) {
+  static setLanguage(lang: string): void {
     switch (lang) {
       case 'de':
         I18n.currentLanguage = de;
@@ -22,7 +22,7 @@ export class I18n {
       default:
         I18n.currentLanguage = de;
         break;
-      }
     }
+  }
 
 }
