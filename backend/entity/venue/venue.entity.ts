@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -25,9 +25,11 @@ export class Venue extends BaseEntity {
   @Column()
   contactPerson: string;
 
+  @ValidateNested()
   @Column(type => Location)
   location: Location;
 
+  @ValidateNested()
   @Column(type => Communication)
   communication: Communication;
 

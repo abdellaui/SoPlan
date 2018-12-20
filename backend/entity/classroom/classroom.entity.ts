@@ -1,4 +1,4 @@
-import { IsOptional } from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
@@ -14,6 +14,7 @@ export class Classroom extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ValidateNested()
   @Column(type => Room)
   room: Room;
 

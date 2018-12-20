@@ -183,13 +183,26 @@ export class EntityCommentComponent implements OnInit {
         }
 
 
-        for (const error of errors) {
+        this.renderErrors(errors, index, '');
+      }
+    });
+  }
+
+  renderErrors(errors: ValidationError[], tr_index: number, prefix: string): void {
+    for (const error of errors) {
+      if (error.children.length) {
+        this.renderErrors(error.children, tr_index, error.property + '@');
+      } else {
+        const indexOfColumn = Object.keys(this.entity.comments[0] || null).findIndex(x => x === prefix + error.property);
+        if (indexOfColumn > -1) {
           document
-            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${index}) [ng-reflect-name="${error.property}"]`)
+            .querySelector(`ng2-smart-table#${this.uniqueName} tr:nth-child(${tr_index})
+            td:nth-child(${indexOfColumn + 2}) table-cell-edit-mode > * > * > * > * > *`)
             .classList.add('validationErrorBorder');
         }
       }
-    });
+
+    }
   }
 
   /**
@@ -218,7 +231,7 @@ export class EntityCommentComponent implements OnInit {
 
   clearDeleteErrors(): void {
     this.rememberIdOfDeleteError = [];
-    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    const rowsOfTable = document.querySelectorAll(`ng2-smart-table#${this.uniqueName} tr`);
     for (let i = 0; i < rowsOfTable.length; ++i) {
       rowsOfTable[i].classList.remove('validationErrorBorder');
     }
@@ -226,7 +239,7 @@ export class EntityCommentComponent implements OnInit {
 
   handleDeleteError(indexOfData: number): void {
 
-    const rowsOfTable = document.querySelectorAll('[ng-reflect-klass="ng2-smart-row"]');
+    const rowsOfTable = document.querySelectorAll(`ng2-smart-table#${this.uniqueName} tr`);
     rowsOfTable[indexOfData].classList.add('validationErrorBorder');
   }
 

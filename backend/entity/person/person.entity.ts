@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
@@ -39,6 +39,7 @@ export class Person extends BaseEntity {
   @Column()
   birthDate: Date;
 
+  @ValidateNested()
   @Column(type => Communication)
   communication: Communication;
 
@@ -48,6 +49,7 @@ export class Person extends BaseEntity {
   @Column({ nullable: true })
   foodIntolerance: string;
 
+  @ValidateNested()
   @Column(type => Location)
   location: Location;
 

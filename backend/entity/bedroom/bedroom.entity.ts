@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, ValidateNested } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
@@ -20,9 +20,11 @@ export class Bedroom extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ValidateNested()
   @Column(type => Room)
   room: Room;
 
+  @ValidateNested()
   @IsNotEmpty({ message: I18n.resolve('bedroom_mandatory') })
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
