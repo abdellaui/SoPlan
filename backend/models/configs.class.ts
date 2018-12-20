@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
-
 import { FormElement, Input } from './formBuilder.class';
+import { I18n } from '../../src/translation/language';
 
 export class AdminLogin {
   username: string;
@@ -8,61 +8,62 @@ export class AdminLogin {
 }
 
 export class CustomEMail {
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   from: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   to: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   subject: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   text: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   html: string;
 }
 
 export class DatabaseConfig {
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   host: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   port: number | string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   username: string;
 
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   password: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   database: string;
 }
 
 const DatabaseConfigSchema: FormElement[] = [
   {
-    name: 'Host',
+    name: I18n.resolve('config_db_host'),
     member: 'host',
     element: new Input('text')
   },
   {
-    name: 'Port',
+    name: I18n.resolve('config_db_port'),
     member: 'port',
     element: new Input('text')
   },
   {
-    name: 'Benutzername',
+    name: I18n.resolve('config_db_username'),
     member: 'username',
     element: new Input('text')
   },
   {
-    name: 'Passwort',
+    name: I18n.resolve('config_db_password'),
     member: 'password',
     element: new Input('password')
   },
   {
-    name: 'Datenbank',
+    name: I18n.resolve('config_db_databasename'),
     member: 'database',
     element: new Input('text')
   }
@@ -70,36 +71,36 @@ const DatabaseConfigSchema: FormElement[] = [
 export { DatabaseConfigSchema };
 
 export class MailConfig {
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   host: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   port: number;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   user: string; // username
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: I18n.resolve('config_field_warning')})
   pass: string; // password
 }
 const MailConfigSchema: FormElement[] = [
   {
-    name: 'Host',
+    name: I18n.resolve('config_mail_host'),
     member: 'host',
     element: new Input('text')
   },
   {
-    name: 'Port',
+    name: I18n.resolve('config_mail_port'),
     member: 'port',
     element: new Input('text')
   },
   {
-    name: 'Benutzer',
+    name: I18n.resolve('config_mail_user'),
     member: 'user',
     element: new Input('text')
   },
   {
-    name: 'Passwort',
+    name: I18n.resolve('config_mail_password'),
     member: 'pass',
     element: new Input('password')
   }

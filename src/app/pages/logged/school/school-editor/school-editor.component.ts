@@ -5,6 +5,7 @@ import { School, SchoolSchema } from '@entity/school/school.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-school-editor',
@@ -24,7 +25,7 @@ export class SchoolEditorComponent implements OnInit {
   public form_school: School;
   public form_schoolSchema = SchoolSchema;
   public form_schoolSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Information',
+    header: I18n.resolve('school_info'),
     buttons: false
   };
 
@@ -32,7 +33,7 @@ export class SchoolEditorComponent implements OnInit {
   public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Anschrift',
+    header: I18n.resolve('school_address'),
     buttons: false
   };
 
@@ -92,10 +93,10 @@ export class SchoolEditorComponent implements OnInit {
 
     this.ipc.get('post/school', this.form_school).then((result: any) => {
       if (!('hasError' in result)) { // result.error has the error
-        this.toastr.info('SChule wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('school_success'));
         this.router.navigateByUrl('/logged/school/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(I18n.resolve('school_error'));
       }
     });
 

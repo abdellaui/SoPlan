@@ -321,7 +321,7 @@ export class DashboardComponent implements OnInit {
     this.schoolChartType = 'horizontalBar';
 
 
-    this.genderChartLabels = ['Female', 'Male', 'Diverse'];
+    this.genderChartLabels = ['Weiblich', 'Männlich', 'Divers'];
     this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
     /************************************************************* */
 
@@ -369,7 +369,7 @@ export class DashboardComponent implements OnInit {
           this.ageChartLabels = Object.keys(this.age_stats);
           this.ageChartLegend = true;
           this.ageChartData = [{
-            data: this.agearr, label: 'Age',
+            data: this.agearr, label: 'Alter',
           },
 
           ];
@@ -380,7 +380,7 @@ export class DashboardComponent implements OnInit {
           this.schoolChartLabels = Object.keys(this.school_stats);
           this.schoolChartLegend = true;
           this.schoolChartData = [{
-            data: this.schoolarr, label: 'School',
+            data: this.schoolarr, label: 'Schule',
           },
 
           ];
@@ -391,7 +391,7 @@ export class DashboardComponent implements OnInit {
           this.locationChartLabels = Object.keys(this.location_stats);
           this.locationChartLegend = true;
           this.locationChartData = [{
-            data: this.locationarr, label: 'Location',
+            data: this.locationarr, label: 'Ort',
           },
 
           ];
@@ -407,7 +407,7 @@ export class DashboardComponent implements OnInit {
           }
           this.gradeChartLegend = true;
           this.gradeChartData = [{
-            data: this.gradearr, label: 'Grade',
+            data: this.gradearr, label: 'Klassenstufe',
           },
           ];
 

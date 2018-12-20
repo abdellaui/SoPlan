@@ -69,7 +69,7 @@
     - [x] Dashboard
         - [x] Allgemeines
             - [x] Name
-            - [x] Veranstalltungsort
+            - [x] Veranstaltungsort
             - [x] Kalender (Zeitraum)
         - [x] Statistik
           - [x] Daten erzeugen

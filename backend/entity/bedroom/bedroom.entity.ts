@@ -1,11 +1,11 @@
 import { IsNotEmpty } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { FormElement, Option, RadioButton } from '../../models/formBuilder.class';
 import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { Venue } from '../venue/venue.entity';
+import { I18n } from '../../../src/translation/language';
 
 export enum BedroomTypes {
   SCHUELER = 's',
@@ -22,7 +22,7 @@ export class Bedroom extends BaseEntity {
   @Column(type => Room)
   room: Room;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('bedroom_mandatory') })
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;
 
@@ -52,12 +52,12 @@ export class Bedroom extends BaseEntity {
 
 const BedroomSchema: FormElement[] = [
   {
-    name: 'Typ',
+    name: I18n.resolve('bedroom_type'),
     member: 'type',
     element: new RadioButton([
-      new Option('Schüler', BedroomTypes.SCHUELER),
-      new Option('Dozent', BedroomTypes.DOZENT),
-      new Option('gesperrt', BedroomTypes.GESPERRT),
+      new Option(I18n.resolve('bedroom_student'), BedroomTypes.SCHUELER),
+      new Option(I18n.resolve('bedroom_teacher'), BedroomTypes.DOZENT),
+      new Option(I18n.resolve('bedroom_closed'), BedroomTypes.GESPERRT),
     ])
   }
 ];

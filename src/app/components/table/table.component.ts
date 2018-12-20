@@ -7,9 +7,9 @@ import { validate, ValidationError } from 'class-validator';
 import * as Deepmerge from 'deepmerge';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
-
 import { DateEditorComponent } from './date-editor/date-editor.component';
 import { DateRendererComponent } from './date-renderer/date-renderer.component';
+import { I18n } from '../../../translation/language';
 
 @Component({
   selector: 'app-table',
@@ -28,15 +28,15 @@ export class TableComponent implements OnInit {
     },
     edit: {
       confirmSave: true,
-      editButtonContent: '<i class="nb-edit" title="Bearbeiten"></i>',
+      editButtonContent: '<i class="nb-edit" title="' + I18n.resolve('table_edit') + '"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     delete: {
       confirmDelete: true,
-      deleteButtonContent: '<i class="nb-trash" title="Löschen"></i>',
+      deleteButtonContent: '<i class="nb-trash" title="' + I18n.resolve('table_delete') + '"></i>',
     },
-    noDataMessage: 'Keine Daten vorhanden!',
+    noDataMessage: I18n.resolve('table_no_data_warning'),
     pager: {
       display: false  // sonst wählt multi select by all nur die jenigen die auf der seite zusehen sind
     }
@@ -73,7 +73,7 @@ export class TableComponent implements OnInit {
       : [
         {
           name: 'gotoEditor',
-          title: '<i class="nb-compose" title="Erweiterte Bearbeitung"></i> ',
+          title: '<i class="nb-compose" title="' + I18n.resolve('table_edit_advanced') + '"></i> ',
         },
       ];
 
@@ -91,7 +91,7 @@ export class TableComponent implements OnInit {
 
     this.config.settings.createButtonText = (this.config.settings.createButtonText)
       ? this.config.settings.createButtonText
-      : 'hinzufügen';
+      : I18n.resolve('table_add');
     // end defaults
 
 
@@ -154,8 +154,8 @@ export class TableComponent implements OnInit {
             case ElementTypes.CheckBox:
               currEditorConfig['type'] = 'checkbox';
               currEditorConfig['config'] = {
-                true: 'Ja',
-                false: 'Nein',
+                true: I18n.resolve('table_yes'),
+                false: I18n.resolve('table_no'),
               };
               break;
             case ElementTypes.SelectBox:
@@ -274,7 +274,7 @@ export class TableComponent implements OnInit {
    * @param event enthält die zu löschende data
    */
   onDeleteConfirm(event: any) {
-    if (window.confirm('Sie versuchen ein Eintrag zu löschen!') && !this.deletedCount) {
+    if (window.confirm(I18n.resolve('table_delete_entry')) && !this.deletedCount) {
       this.deletedCount = 1;
       this.clearDeleteErrors();
       this.ipc.send(this.config.slotUrls.deleteUrl, this.dataToEntity(event.data));
@@ -348,7 +348,7 @@ export class TableComponent implements OnInit {
 
   deleteAllSelected(): void {
 
-    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`) && !this.deletedCount) {
+    if (window.confirm('Sie versuchen ${this.selectedData.length} Einträge zu löschen!') && !this.deletedCount) {
       this.deletedCount = this.selectedData.length;
       this.clearDeleteErrors();
       for (const data of this.selectedData) {

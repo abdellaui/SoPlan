@@ -12,7 +12,7 @@ export class SchoolListeComponent implements OnInit {
 
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Schulenliste',
+      header: 'Schulliste',
       showCreateButton: true,
       createButtonText: 'Neue Schule'
     },

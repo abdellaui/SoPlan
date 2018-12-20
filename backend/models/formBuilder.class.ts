@@ -1,3 +1,5 @@
+import { I18n } from '../../src/translation/language';
+
 export class Option {
   label: string;
   value: any;
@@ -48,9 +50,6 @@ export enum ElementTypes {
   DatePicker = 16,
   SelectBox = 32
 }
-
-
-
 
 export class Input extends Element {
   private type: string;
@@ -142,7 +141,7 @@ export class SelectBox extends Element {
   constructor(options: Option[], readonly?: boolean, placeholder?: string) {
     super(ElementTypes.SelectBox, readonly);
     this.options = options;
-    this.placeholder = (placeholder) ? placeholder : 'Bitte Wählen!';
+    this.placeholder = (placeholder) ? placeholder : I18n.resolve('form_choose'); // TODO: Localisation fehlt
   }
 
   getOptions(): Option[] {

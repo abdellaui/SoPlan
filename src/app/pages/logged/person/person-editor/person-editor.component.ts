@@ -6,6 +6,7 @@ import { Person, PersonSchema } from '@entity/person/person.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-person-editor',
@@ -23,7 +24,7 @@ export class PersonEditorComponent implements OnInit {
   public form_person: Person;
   public form_personSchema = PersonSchema;
   public form_personSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Zur Person',
+    header: I18n.resolve('person_about'),
     buttons: false,
     paddings: { left: 'md-12', right: 'md-12' }
   };
@@ -32,14 +33,14 @@ export class PersonEditorComponent implements OnInit {
   public form_com: Communication;
   public form_comSchema = CommunicationSchema;
   public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Kommunikation',
+    header: I18n.resolve('person_communication'),
     buttons: false
   };
 
   public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Anschrift',
+    header: I18n.resolve('person_adress'),
     buttons: false
   };
 
@@ -48,7 +49,7 @@ export class PersonEditorComponent implements OnInit {
     getUrl: 'get/school/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
-    header: 'Schule',
+    header: I18n.resolve('person_school'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/school/editor/',
@@ -125,10 +126,10 @@ export class PersonEditorComponent implements OnInit {
 
     this.ipc.get('post/person', this.form_person).then((result: any) => {
       if (!('hasError' in result)) { // result.error has the error
-        this.toastr.info('Person wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('person_success'));
         this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(I18n.resolve('person_error'));
       }
     });
 

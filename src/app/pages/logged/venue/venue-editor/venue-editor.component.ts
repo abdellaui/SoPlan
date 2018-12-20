@@ -9,6 +9,7 @@ import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '../../../../../translation/language';
 
 @Component({
   selector: 'app-venue-editor',
@@ -29,7 +30,7 @@ export class VenueEditorComponent implements OnInit {
   public form_venue: Venue;
   public form_venueSchema = VenueSchema;
   public form_venueSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Information',
+    header: I18n.resolve('venue_info'),
     buttons: false
   };
 
@@ -37,23 +38,23 @@ export class VenueEditorComponent implements OnInit {
   public form_loc: Location;
   public form_locSchema = LocationSchema;
   public form_locSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Anschrift',
+    header: I18n.resolve('venue_adress'),
     buttons: false
   };
 
   public form_com: Communication;
   public form_comSchema = CommunicationSchema;
   public form_comSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Kommunikation',
+    header: I18n.resolve('venue_communication'),
     buttons: false
   };
 
   public isLoaded = false;
   public st_bed_config: SmartTableConfig = {
     settings: {
-      header: 'Schlafzimmer',
+      header: I18n.resolve('venue_bedroom'),
       showCreateButton: true,
-      createButtonText: 'Neue Ort'
+      createButtonText: I18n.resolve('venue_new')
     },
     slotUrls: {
       getUrl: 'get/venue/bedrooms',
@@ -81,9 +82,9 @@ export class VenueEditorComponent implements OnInit {
   };
   public st_class_config: SmartTableConfig = {
     settings: {
-      header: 'Classenliste',
+      header: I18n.resolve('venue_classlist'),
       showCreateButton: true,
-      createButtonText: 'Neue Ort'
+      createButtonText: I18n.resolve('venue_new')
     },
     slotUrls: {
       getUrl: 'get/venue/classrooms',
@@ -174,10 +175,10 @@ export class VenueEditorComponent implements OnInit {
 
     this.ipc.get('post/venue', this.form_venue).then((result: any) => {
       if (!('hasError' in result)) { // result.error has the error
-        this.toastr.info('Venue wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('venue_success'));
         this.router.navigateByUrl('/logged/venue/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(I18n.resolve('venue_error'));
       }
     });
 

@@ -12,7 +12,7 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class VenueListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Orteliste',
+      header: 'Ortsliste',
       showCreateButton: true,
       createButtonText: 'Neue Ort'
     },

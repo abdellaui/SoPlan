@@ -31,7 +31,7 @@ export class GroupEditorComponent implements OnInit {
     getUrl: 'get/event/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { hosting: [{ location: ['postalcode', 'city'] }] }],
-    header: 'Veranstalltung',
+    header: 'Veranstaltung',
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/event/editor/',

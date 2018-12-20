@@ -3,6 +3,8 @@ import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
 
+import { I18n } from '../../../src/translation/language';
+
 /**
  * This is an embedded entity
  * for more information read http://typeorm.io/#/embedded-entities
@@ -10,7 +12,7 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Room {
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('room_mandatory') })
   @IsAscii()
   @Column()
   floor: string;
@@ -19,7 +21,7 @@ export class Room {
   @Column({ nullable: true })
   corridor: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('room_mandatory') })
   @Column()
   number: number;
 
@@ -27,7 +29,7 @@ export class Room {
   @Column({ nullable: true })
   name: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('room_mandatory') })
   @Column()
   capacity: number;
 
@@ -35,30 +37,30 @@ export class Room {
 
 const RoomSchema: FormElement[] = [
   {
-    name: 'Etage',
+    name: I18n.resolve('room_floor'),
     member: 'floor',
     element: new Input('text')
   },
 
   {
-    name: 'Korridor',
-    member: 'corrodor',
+    name: I18n.resolve('room_corridor'),
+    member: 'corridor',
     element: new Input('text')
   },
 
   {
-    name: 'Zimmernummer',
+    name: I18n.resolve('room_number'),
     member: 'number',
     element: new Input('number')
   },
 
   {
-    name: 'Zimmername',
+    name: I18n.resolve('room_name'),
     member: 'name',
     element: new Input('text')
   },
   {
-    name: 'Kapazität',
+    name: I18n.resolve('room_capacity'),
     member: 'capacity',
     element: new Input('number')
   },

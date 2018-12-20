@@ -1,11 +1,11 @@
 import { IsOptional } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { FormElement, Input } from '../../models/formBuilder.class';
-import { Room } from '../_room/room.entity';
 import { Comment } from '../comment/comment.entity';
 import { Group } from '../group/group.entity';
 import { Venue } from '../venue/venue.entity';
+import { Room } from '../_room/room.entity';
+import { I18n } from '../../../src/translation/language';
 
 @Entity()
 export class Classroom extends BaseEntity {
@@ -47,7 +47,7 @@ export class Classroom extends BaseEntity {
 
 const ClassroomSchema: FormElement[] = [
   {
-    name: 'Bezeichnung',
+    name: I18n.resolve('classroom_name'),
     member: 'identifier',
     element: new Input('text')
   }

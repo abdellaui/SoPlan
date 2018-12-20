@@ -1,19 +1,18 @@
 import { IsAlpha, IsNotEmpty, MaxLength, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { FormElement, Input } from '../../models/formBuilder.class';
 import { Location } from '../_location/location.entity';
 import { Comment } from '../comment/comment.entity';
 import { Person } from '../person/person.entity';
-
+import { I18n } from '../../../src/translation/language';
 @Entity()
 export class School extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
-  @IsString({ message: 'Der Name ist nicht gültig' })
+  @IsNotEmpty({ message: I18n.resolve('school_mandatory') })
+  @IsString({ message: I18n.resolve('school_name_warning') })
   @Column()
   name: string;
 
@@ -34,7 +33,7 @@ export class School extends BaseEntity {
 }
 
 const SchoolSchema: FormElement[] = [{
-  name: 'Schulname',
+  name: I18n.resolve('person_name'),
   member: 'name',
   element: new Input('text')
 }];

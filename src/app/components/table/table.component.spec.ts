@@ -20,7 +20,7 @@ describe('TableComponent', () => {
   let fixture: ComponentFixture<TableComponent>;
   const st_config: SmartTableConfig = {
     settings: {
-      header: 'Schulenliste',
+      header: 'Schulliste',
       showCreateButton: true,
       createButtonText: 'Neue Schule'
     },

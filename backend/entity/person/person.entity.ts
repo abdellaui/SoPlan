@@ -1,12 +1,12 @@
 import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-
 import { DatePicker, FormElement, Input, Option, RadioButton, TextArea } from '../../models/formBuilder.class';
 import { Communication } from '../_communication/communicaton.entity';
 import { Location } from '../_location/location.entity';
 import { Comment } from '../comment/comment.entity';
 import { Participant } from '../participant/participant.entity';
 import { School } from '../school/school.entity';
+import { I18n } from '../../../src/translation/language';
 
 export enum PersonGender {
   MALE = 'm',
@@ -20,21 +20,21 @@ export class Person extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
-  @IsString({ message: 'Der Vorname ist nicht gültig' })
+  @IsNotEmpty({ message: I18n.resolve('person_mandatory') })
+  @IsString({ message: I18n.resolve('person_firstname_warning') })
   @Column()
   firstname: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
-  @IsString({ message: 'Der Name ist nicht gültig' })
+  @IsNotEmpty({ message:  I18n.resolve('person_mandatory') })
+  @IsString({ message: I18n.resolve('person_surename_warning') })
   @Column()
   surname: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('person_mandatory') })
   @Column({ type: 'enum', enum: PersonGender })
   gender: PersonGender;
 
-  @IsDateString({ message: 'Pflichtfeld' })
+  @IsDateString({ message: I18n.resolve('person_mandatory') })
   @Column()
   birthDate: Date;
 
@@ -79,32 +79,32 @@ export class Person extends BaseEntity {
 
 const PersonSchema: FormElement[] = [
   {
-    name: 'Vorname',
+    name: I18n.resolve('person_firstname'),
     member: 'firstname',
     element: new Input('text')
   },
   {
-    name: 'Nachname',
+    name: I18n.resolve('person_surename'),
     member: 'surname',
     element: new Input('text')
   },
 
   {
-    name: 'Geschlecht',
+    name: I18n.resolve('person_gender'),
     member: 'gender',
     element: new RadioButton([
-      new Option('männlich', PersonGender.MALE),
-      new Option('weiblich', PersonGender.FEMALE),
-      new Option('diverse', PersonGender.DIVERSE),
+      new Option(I18n.resolve('person_male'), PersonGender.MALE),
+      new Option(I18n.resolve('person_female'), PersonGender.FEMALE),
+      new Option(I18n.resolve('person_diverse'), PersonGender.DIVERSE),
     ])
   },
   {
-    name: 'Geburtsdatum',
+    name: I18n.resolve('person_birthdate'),
     member: 'birthDate',
     element: new DatePicker()
   },
   {
-    name: 'Alergien',
+    name: I18n.resolve('person_allergies'),
     member: 'foodIntolerance',
     element: new TextArea(false, '(optional)')
   }

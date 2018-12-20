@@ -15,7 +15,7 @@ export class EinstellungDatenbankComponent implements OnInit {
   public loadingFinished = false;
   public config: DatabaseConfig = new DatabaseConfig();
   public form_schema = DatabaseConfigSchema;
-  public form_settings = { header: 'Datenbank konfiguration', buttons: true };
+  public form_settings = { header: 'Datenbankkonfiguration', buttons: true };
 
   constructor(private ipc: IpcRendererService, private toastr: ToastrService) {
 

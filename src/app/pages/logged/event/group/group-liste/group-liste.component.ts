@@ -13,7 +13,7 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class GroupListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Group',
+      header: 'Gruppe',
       showCreateButton: true,
       createButtonText: 'Neue Bedroom'
     },

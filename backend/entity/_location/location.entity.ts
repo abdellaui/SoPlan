@@ -2,6 +2,7 @@ import { IsAlpha, IsNotEmpty, IsNumberString, MaxLength, IsAlphanumeric, IsStrin
 import { Column } from 'typeorm';
 
 import { FormElement, Input } from '../../models/formBuilder.class';
+import { I18n } from '../../../src/translation/language';
 
 /**
  * This is an embedded entity
@@ -10,54 +11,54 @@ import { FormElement, Input } from '../../models/formBuilder.class';
 
 export class Location {
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
   @Column()
   street: string;
 
   // Hausnummer
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
   @Column()
   subThoroughfare: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
-  @IsNumberString({ message: 'Nur DE PLZ zulässig' })
-  @MaxLength(5, { message: 'PLZ besteht aus 5 Ziffern' })
+  @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
+  @IsNumberString({ message:  I18n.resolve('location_postalcode_warning') })
+  @MaxLength(5, { message:  I18n.resolve('location_postalcode_length') })
   @Column()
   postalcode: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
+  @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
   @Column()
   city: string;
 
-  @IsNotEmpty({ message: 'Pflichtfeld' })
-  @Column({ default: 'Deutschland' })
+  @IsNotEmpty({ message: I18n.resolve('location_mandatory') })
+  @Column({ default: I18n.resolve('location_default_country') })
   // tslint:disable-next-line:no-inferrable-types
-  country: string = 'Deutschland';
+  country: string = I18n.resolve('location_default_country');
 }
 
 const LocationSchema: FormElement[] = [
   {
-    name: 'Straße',
+    name: I18n.resolve('location_street'),
     member: 'street',
     element: new Input('text')
   },
   {
-    name: 'Hausnummer',
+    name: I18n.resolve('location_house_number'),
     member: 'subThoroughfare',
     element: new Input('text')
   },
   {
-    name: 'PLZ',
+    name: I18n.resolve('location_postalcode'),
     member: 'postalcode',
     element: new Input('text')
   },
   {
-    name: 'Stadt',
+    name: I18n.resolve('location_city'),
     member: 'city',
     element: new Input('text')
   },
   {
-    name: 'Land',
+    name: I18n.resolve('location_country'),
     member: 'country',
     element: new Input('text')
   },
