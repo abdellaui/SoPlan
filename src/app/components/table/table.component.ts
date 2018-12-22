@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { ElementTypes, Option, RadioButton } from '@models/formBuilder.class';
 import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
@@ -102,7 +103,7 @@ export class TableComponent implements OnInit {
 
     // get data
     this.ipc.get(this.config.slotUrls.getUrl, this.config.slotUrls.getParam).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.data.load(result.map(obj => {
           return this.entityToData(obj);
         })).then(() => {
@@ -291,7 +292,6 @@ export class TableComponent implements OnInit {
   onSaveConfirm(event: any) {
     const newEntity = this.dataToEntity(event.newData);
     validate(newEntity).then((errors: ValidationError[]) => {
-      console.log(errors);
       if (errors.length === 0) {
         this.saveEntity(newEntity);
         event.confirm.resolve();

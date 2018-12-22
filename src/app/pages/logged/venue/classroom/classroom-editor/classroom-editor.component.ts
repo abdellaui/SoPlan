@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -70,7 +71,7 @@ export class ClassroomEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/classroom/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignClassroom(result);
           }
           this.isLoaded = true;
@@ -118,7 +119,7 @@ export class ClassroomEditorComponent implements OnInit {
 
 
     this.ipc.get('post/classroom', this.form_classroom).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/venue/classroom/editor/0/' + result.id);
       } else {

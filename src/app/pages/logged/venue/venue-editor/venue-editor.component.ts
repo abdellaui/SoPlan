@@ -7,6 +7,7 @@ import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -131,7 +132,7 @@ export class VenueEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/venue/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignVenue(result);
           }
           this.isLoaded = true;
@@ -174,7 +175,7 @@ export class VenueEditorComponent implements OnInit {
 
 
     this.ipc.get('post/venue', this.form_venue).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info(I18n.resolve('venue_success'));
         this.router.navigateByUrl('/logged/venue/editor/' + result.id);
       } else {

@@ -1,25 +1,23 @@
 :host {
-  .menuActions {
-    margin-left: -25px;
-  }
-
-  nb-layout-column {
-    min-height: 50vw;
-    height: 100%;
-
-    :first-child {
-      background: #f4f4f7;
+    .menuActions {
+        margin-left: -25px;
     }
-  }
-
-  nb-list-item {
-    &.selected {
-      background: #ebeef2;
+    nb-layout-column {
+        min-height: 50vw;
+        height: 100%;
+        :first-child {
+            background: #f4f4f7;
+        }
     }
-  }
-
-  nb-sidebar /deep/ .scrollable {
-    padding: 0rem 1.25rem;
-  }
-
+    nb-list-item {
+        &.selected {
+            background: #ebeef2;
+        }
+    }
+    nb-sidebar /deep/ .scrollable {
+        padding: 0rem 1.25rem;
+    }
+    nb-layout-header {
+        z-index: 999999999 !important;
+    }
 }

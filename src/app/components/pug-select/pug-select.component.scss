@@ -1,0 +1,36 @@
+:host() {
+    #inlineEdit {
+        display: inline;
+        text-align: right
+    }
+    div#dropArea {
+        min-height: 230px;
+        position: relative;
+    }
+    .noPadding {
+        padding: 0px;
+    }
+    .dragOver {
+        opacity: 0.7;
+    }
+    #dragIcon {
+        color: #dadfe6;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -100px;
+        height: 200px;
+        margin-top: -80px;
+        font-size: 200px;
+        font-weight: 100;
+    }
+    nb-list-item {
+        &.hasError {
+            background: red;
+        }
+    }
+}
+
+/deep/ nb-card-body>ngx-json-viewer>.ngx-json-viewer:nth-child(1) {
+    overflow: auto;
+}

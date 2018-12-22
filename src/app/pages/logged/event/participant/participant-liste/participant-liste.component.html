@@ -1,1 +1,12 @@
-<app-table [config]="st_config"></app-table>
+<app-table *ngIf="!showUserProcess() && !showUserProcess()" [config]="st_config" (action)="onCustomAction($event)"></app-table>
+
+<ng-container *ngIf="showUserProcess()">
+  <nb-card>
+    <nb-card-body>
+      bla bla bla
+      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">Abbrechen</button>
+    </nb-card-body>
+  </nb-card>
+  <app-pug-select [data]="selectedPerson"></app-pug-select>
+
+</ng-container>

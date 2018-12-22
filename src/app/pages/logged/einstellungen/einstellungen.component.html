@@ -16,4 +16,11 @@
     <app-einstellung-mail></app-einstellung-mail>
 
   </div>
+
+  <div class="col-lg-6">
+
+    <app-entity-select (selected)="printerSelected($event)" [selectedIds]="selection_selectedIds" [settings]="selection_settings"></app-entity-select>
+
+
+  </div>
 </div>

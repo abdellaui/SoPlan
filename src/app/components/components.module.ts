@@ -18,6 +18,7 @@ import {
   NbListModule,
   NbMenuModule,
   NbPopoverModule,
+  NbProgressBarModule,
   NbRadioModule,
   NbSelectModule,
   NbSidebarModule,
@@ -25,7 +26,9 @@ import {
   NbTooltipModule,
   NbUserModule,
 } from '@nebular/theme';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 import { EinstellungAdministratorComponent } from './einstellung-administrator/einstellung-administrator.component';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank/einstellung-datenbank.component';
@@ -38,6 +41,7 @@ import { InputComponent } from './form-builder/input/input.component';
 import { RadiobuttonComponent } from './form-builder/radiobutton/radiobutton.component';
 import { SelectboxComponent } from './form-builder/selectbox/selectbox.component';
 import { TextareaComponent } from './form-builder/textarea/textarea.component';
+import { PugSelectComponent } from './pug-select/pug-select.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { DateEditorComponent } from './table/date-editor/date-editor.component';
 import { DateRendererComponent } from './table/date-renderer/date-renderer.component';
@@ -57,7 +61,8 @@ const declarations = [
   EntitySelectComponent,
   EntityCommentComponent,
   DateRendererComponent,
-  DateEditorComponent
+  DateEditorComponent,
+  PugSelectComponent
 ];
 
 const nebularModules = [
@@ -81,6 +86,7 @@ const nebularModules = [
   NbMenuModule,
   NbContextMenuModule,
   NbSpinnerModule,
+  NbProgressBarModule
 ];
 
 @NgModule({
@@ -97,6 +103,8 @@ const nebularModules = [
     RouterModule,
     ...nebularModules,
     Ng2SmartTableModule,
+    NgxJsonViewerModule,
+    PdfViewerModule
   ],
   exports: [
     ...nebularModules,

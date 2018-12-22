@@ -122,11 +122,6 @@ export class SidemenuComponent implements OnInit {
         }
       ]
     },
-    /*{
-      title: I18n.resolve('menu_certificate'),
-      icon: 'nb-lightbulb',
-      link: '/logged/certificate',
-    },*/
     {
       title: I18n.resolve('menu_settings'),
       icon: 'nb-gear',

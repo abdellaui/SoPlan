@@ -4,6 +4,7 @@ import { Bedroom } from '@entity/bedroom/bedroom.entity';
 import { Group } from '@entity/group/group.entity';
 import { Participant, ParticipantSchema } from '@entity/participant/participant.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -117,7 +118,7 @@ export class ParticipantEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/participant/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignParticipant(result);
           }
           this.isLoaded = true;
@@ -209,7 +210,7 @@ export class ParticipantEditorComponent implements OnInit {
     }
 
     this.ipc.get('post/participant', this.form_participant).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info('Parti gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/participant/editor/0/' + result.id);
       } else {

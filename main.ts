@@ -63,7 +63,10 @@ function createWindow(): void {
     minHeight: 360,
     backgroundColor: '#ebeff5',
     show: false,
-    webPreferences: { experimentalFeatures: true }
+    webPreferences: {
+      plugins: true,
+      experimentalFeatures: true
+    }
   });
 
   if (serve) {

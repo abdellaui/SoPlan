@@ -4,6 +4,7 @@ import { Communication, CommunicationSchema } from '@entity/_communication/commu
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -80,7 +81,7 @@ export class PersonEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/person/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignPerson(result);
           }
           this.isLoaded = true;
@@ -125,7 +126,7 @@ export class PersonEditorComponent implements OnInit {
 
 
     this.ipc.get('post/person', this.form_person).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info(I18n.resolve('person_success'));
         this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {

@@ -5,6 +5,16 @@ import { end, on, send } from './../slots';
 
 export function init() {
 
+  const defaultAdminLogin: AdminLogin = {
+    username: 'admin',
+    password: 'cGFzc3dvcmQ=' // => base64('password')
+  };
+
+  if (!Settings.has('admin')) {
+    Settings.set('admin', defaultAdminLogin);
+  }
+
+
   on('get/administrator/auth', (event: any, arg: AdminLogin) => {
     const admin = <AdminLogin>Settings.get('admin');
     let accepted = false;

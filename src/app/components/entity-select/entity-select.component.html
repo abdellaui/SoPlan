@@ -19,6 +19,7 @@
           placeholder="Suche">
 
       </nb-card-header>
+      <nb-card-body *ngIf="!elements.length"><i>Keine vorhanden.</i></nb-card-body>
       <nb-list>
         <nb-list-item *ngFor="let element of elements" (click)="select(element)" [class.selected]="containsId(element)">
           <nb-user [name]="element.name" [title]="element.title">

@@ -4,6 +4,7 @@ import { Classroom } from '@entity/classroom/classroom.entity';
 import { Event } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -71,7 +72,7 @@ export class GroupEditorComponent implements OnInit {
       this.event_selectedIds = (params['eventId']) ? [Number(params['eventId'])] : [];
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/group/by/id', { id: params['id'] }).then((result: any) => {
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignGroup(result);
           }
           this.isLoaded = true;
@@ -136,7 +137,7 @@ export class GroupEditorComponent implements OnInit {
     }
 
     this.ipc.get('post/group', this.form_group).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {

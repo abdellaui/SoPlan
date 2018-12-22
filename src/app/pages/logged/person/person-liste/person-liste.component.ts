@@ -4,15 +4,19 @@ import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Participant, ParticipantSchema } from '@entity/participant/participant.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+
+enum PersonView { TABLE, PARTICIPANT, PROCESS }
 
 @Component({
   selector: 'app-person-liste',
   templateUrl: './person-liste.component.html',
   styleUrls: ['./person-liste.component.scss']
 })
+
 export class PersonListeComponent implements OnInit {
 
   public st_config: SmartTableConfig = {
@@ -64,20 +68,27 @@ export class PersonListeComponent implements OnInit {
         name: 'add_participant',
         icon: 'nb-person',
         tooltip: 'Teilnehmer erstellen'
+      },
+      {
+        name: 'process_user',
+        icon: 'nb-email',
+        tooltip: 'Person process'
       }
     ]
   };
 
 
+
   public form_participantSchema = ParticipantSchema;
-  public selectedPerson: Participant[] = [];
+  public selectedPerson: any[] = [];
+  public currentView: PersonView;
   public rememberReadyStatus = {};
   public readyToSave = false;
 
   constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) {
 
     ipc.on('post/participant', (event: any, result: any) => {
-      if ('hasError' in result) {
+      if (ErrorRequest.hasError(result)) {
         this.toastr.warning('Eine Person konnte nicht hinzugefügt werden!');
         console.log(result.error, result.input);
       }
@@ -127,6 +138,7 @@ export class PersonListeComponent implements OnInit {
    * löscht lookup table für validation und zwischenspeicher von selection => keine selection => table anzeigen
    */
   backToTableView(): void {
+    this.currentView = PersonView.TABLE;
     this.selectedPerson = [];
     this.rememberReadyStatus = {};
   }
@@ -135,7 +147,15 @@ export class PersonListeComponent implements OnInit {
    * falls zwischenspeicher einträge hat => wächsle zur andere view
    */
   showParticipantAddingView(): boolean {
-    return (this.selectedPerson.length > 0);
+    return (this.selectedPerson.length > 0 && this.currentView === PersonView.PARTICIPANT);
+  }
+
+
+  /**
+   * falls zwischenspeicher einträge hat => wächsle zur andere view
+   */
+  showUserProcess(): boolean {
+    return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
   }
 
   /**
@@ -143,6 +163,7 @@ export class PersonListeComponent implements OnInit {
    * @param data  array von Person
    */
   personToParticipant(data: Person[]): void {
+    this.currentView = PersonView.PARTICIPANT;
     this.selectedPerson = data.map((person: Person) => {
       const parti = new Participant();
 
@@ -156,6 +177,12 @@ export class PersonListeComponent implements OnInit {
     });
   }
 
+
+  processUser(data: Person[]): void {
+    this.currentView = PersonView.PROCESS;
+    this.selectedPerson = data;
+  }
+
   /**
    * listet ob custom actions von smart table getriggert wurden
    * @param event  {action:string , data: any[]} => action gibt custom action name an
@@ -164,9 +191,11 @@ export class PersonListeComponent implements OnInit {
   onCustomAction(event: any): void {
     if (this.currentEventService.getEvent() === null) {
       return window.alert('Halt stopp! Erst einmal Veranst. wählen!');
-    }
-    if (event.action === 'add_participant') {
+    } else if (event.action === 'add_participant') {
       this.personToParticipant(event.data);
+    }
+    if (event.action === 'process_user') {
+      this.processUser(event.data);
     }
   }
 

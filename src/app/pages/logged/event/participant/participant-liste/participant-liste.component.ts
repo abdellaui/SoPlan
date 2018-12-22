@@ -7,6 +7,7 @@ import { Participant, ParticipantSchema } from '@entity/participant/participant.
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
 
+enum PersonView { TABLE, PROCESS }
 @Component({
   selector: 'app-participant-liste',
   templateUrl: './participant-liste.component.html',
@@ -99,11 +100,40 @@ export class ParticipantListeComponent implements OnInit {
           }
         }
       }
+    ],
+    customActions: [
+      {
+        name: 'process_user',
+        icon: 'nb-email',
+        tooltip: 'Person process'
+      }
     ]
   };
+  public selectedPerson: any[] = [];
+  public currentView: PersonView;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  showUserProcess(): boolean {
+    return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
+  }
+  processUser(data: Person[]): void {
+    this.currentView = PersonView.PROCESS;
+    this.selectedPerson = data;
+  }
+
+  backToTableView(): void {
+    this.currentView = PersonView.TABLE;
+    this.selectedPerson = [];
+  }
+
+  onCustomAction(event: any): void {
+
+    if (event.action === 'process_user') {
+      this.processUser(event.data);
+    }
+  }
 }

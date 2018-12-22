@@ -13,4 +13,8 @@ export class ErrorRequest {
   public static create(error: any, input?: any) {
     return new ErrorRequest(error, input);
   }
+
+  public static hasError(instance: any): boolean {
+    return (instance && instance.hasOwnProperty('hasError'));
+  }
 }

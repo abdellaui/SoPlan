@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DateRendererComponent } from '@components/table/date-renderer/date-renderer.component';
 import { Comment, CommentSchema } from '@entity/comment/comment.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -114,13 +115,13 @@ export class EntityCommentComponent implements OnInit {
   public onSave(event: any): void {
 
     this.ipc.get('post/comment', this.form_comment).then((result: any) => {
-      if (!('hasError' in result)) {
+      if (!ErrorRequest.hasError(result)) {
         this.toastr.info(`Kommentar erstellt`);
         const newComment: Comment = <Comment>result;
         this.entity.comments.push(newComment);
         this.data.refresh();
         this.ipc.get(this.entityPostUrl, this.entity).then((saved: any) => {
-          if (!('hasError' in saved)) {
+          if (!ErrorRequest.hasError(saved)) {
             this.form_comment = new Comment();
             this.form_commentSettings.initialWarningsIgnore = true;
           } else {

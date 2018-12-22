@@ -1,122 +1,141 @@
+import { app, shell } from 'electron';
+import { printPug, printPugToPdf } from 'electron-pug-printer';
+import * as Settings from 'electron-settings';
+import * as fs from 'fs-extra';
+import * as path from 'path';
+
+import { ErrorRequest } from '../models/errorRequest.class';
 import { end, on, send } from '../slots';
-import { app, BrowserWindow } from 'electron';
-import { PugConfig, PdfConfig, PugToPdfConfig } from '../models/configs.class';
 
 export function init() {
-  on('convertPugToHtml', (event: any, arg: PugConfig) => {
-    send(event, 'convertPugToHtml', convertPugToHtml(arg));
+  const appDataPugPath = path.join(app.getPath('userData'), '/pugfiles');
+  const _pO_PDF = {
+    marginsType: 0,
+    printBackground: false,
+    printSelectionOnly: false,
+    landscape: false
+  };
+
+  on('put/pugfiles', (event: any, arg: File) => {
+
+    const newPath = path.join(appDataPugPath, new Date().getTime().toString() + '-' + arg.name.replace(/-/g, ''));
+
+    fs.copy(arg.path, newPath)
+      .then(() => {
+        send(event, 'put/pugfiles', arg);
+      })
+      .catch((err: any) => {
+        send(event, 'put/pugfiles', ErrorRequest.create(err, arg));
+      });
+
   });
 
-  on('convertHtmlToPdf', (event: any, arg: PdfConfig) => {
-    send(event, 'convertHtmlToPdf', convertHtmlToPdf(arg));
-  });
+  on('get/pugfiles', (event: any, arg: any) => {
 
-  /**
-   * Umwandlung eines pug-files zum html-file und anschließend drucken zum pdf-file.
-   */
-  on('convertPugToPdf', (event: any, arg: PugToPdfConfig) => {
-    if (convertPugToHtml(new PugConfig(arg.filepathPug, arg.filepathGeneratedHtml, arg.pugConf))) {
-      send(event, 'convertPugToPdf', convertHtmlToPdf(new PdfConfig(arg.filepathGeneratedHtml, arg.filepathGeneratedPdf, arg.pdfConf)));
-    } else {
-      send(event, 'convertPugToPdf', false);
-    }
-  });
-}
-
-/**
- * Konvertiert eine PUG-Datei zu einer HTML-Datei
- * @param pugConf Konfiguration für die Konvertierung
- * @returns Boolean: Umwandlung hat funktioniert
- */
-function convertPugToHtml(pugConf: PugConfig): boolean {
-  try {
-    const pug = require('pug');
-    // Kompilieren
-    const compiledFunction = pug.compileFile(pugConf.filepath);
-    // Rendern
-    const fs = require('fs');
-    fs.writeFileSync(pugConf.outputpath, compiledFunction(pugConf.config));
-  } catch (err) {
-    console.error('FAILED convertPugToHtml: ' + err);
-    return false;
-  }
-  return true;
-}
-
-/**
- * Druckt eine HTML-Datei in eine PDF-Datei
- * @param conf Konfiguration für das Drucken
- * @returns Boolean: Umwandlung hat funktioniert
- */
-function convertHtmlToPdf(conf: PdfConfig): boolean {
-  // Todo
-  const showWindow = false;
-  const widthWindow = 800;
-  const heightWindow = 1500;
-
-  try {
-    const browserWindow = createFileBrowserWindow(conf.filepath, widthWindow, heightWindow, showWindow);
-    generatePDF(browserWindow, conf.outputpath, conf.config, showWindow);
-   } catch (err) {
-    console.error('FAILED convertHtmlToPdf: ' + err);
-    return false;
-  }
-
-
-  return true;
-}
-
-/**
- * Lädt Website im neuen Fenster
- * @param urlToLoad Website die geladen werden soll
- * @param showWindow Soll das Fenster angezeigt werden
- * @returns BrowserWindow: Fenster
- */
-function createUrlBrowserWindow(urlToLoad, width, height, showWindow) {
-  const broswerWindow = new BrowserWindow({ width: width, height: height, show: showWindow });
-  broswerWindow.loadURL(urlToLoad);
-  return broswerWindow;
-}
-
-/**
- * Lädt HtmlFile im neuen Fenster
- * @param fileToLoad Datei die geladen werden soll
- * @param showWindow Soll das Fenster angezeigt werden
- * @returns BrowserWindow: Fenster
- */
-function createFileBrowserWindow(fileToLoad, width, height, showWindow) {
-  const broswerWindow = new BrowserWindow({ width: width, height: height, show: showWindow  });
-  broswerWindow.loadFile(fileToLoad);
-  return broswerWindow;
-}
-
-/**
- * Druckt ein BrowserWindow aus.
- * @param windowToPdf BrowserWindow welches ausgedruckt werden soll
- * @param filePath Speicherort (erstmal so...)
- */
-function generatePDF(pdfWindow, filePath, pdfSettings, showWindow) {
-  const fs = require('fs');
-
-  pdfWindow.once('ready-to-show', () => {
-    // PDF erzeugen
-    pdfWindow.webContents.printToPDF(pdfSettings, function(err, data) {
+    fs.readdir(appDataPugPath, (err: any, flist: string[]) => {
       if (err) {
-          console.error('Failed to generate file.');
-          return;
-      }
-      try {
-          fs.writeFileSync(filePath, data);
-      } catch (err) {
-          console.error('Failed to write file.');
-          return;
-      }
-      if (showWindow) {
-        pdfWindow.show();
+        send(event, 'get/pugfiles', ErrorRequest.create(err, arg));
       } else {
-        pdfWindow.close();
-        pdfWindow.destroy();
+        const newArr = [];
+        for (let i = 0; i < flist.length; i++) {
+          const filenname = flist[i];
+          const splitAttr = filenname.split('-');
+          if (splitAttr.length === 2) {
+            const newFile = {
+              name: splitAttr[1],
+              created: new Date(Number(splitAttr[0])).toLocaleString('de-DE'),
+              id: filenname
+            };
+            newArr.push(newFile);
+          }
+        }
+        send(event, 'get/pugfiles', newArr);
       }
     });
+  });
+
+
+
+  on('put/pdf', (event: any, arg: { pugname: string, locals: Object, filename?: string }) => {
+    printPugToPdf({
+      pugOptions: {
+        filePath: path.join(appDataPugPath, arg.pugname),
+        locals: arg.locals
+      },
+      printOptions: _pO_PDF
+    }).then((data: any) => {
+      const now = new Date();
+
+      const splitPugName = arg.pugname.split('.');
+      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+
+      fs.ensureDir(pdfFileDir)
+        .then(() => {
+          const pdfFilePath = (arg.filename)
+            ? path.join(pdfFileDir, arg.filename)
+            : path.join(pdfFileDir, now.getTime().toString() + '.pdf');
+
+          fs.writeFile(pdfFilePath, data, (error: any) => {
+            if (error) {
+              send(event, 'put/pdf', ErrorRequest.create(error, arg));
+            } else {
+              send(event, 'put/pdf', { file: pdfFilePath, input: arg });
+            }
+          });
+        })
+        .catch((error: any) => {
+          send(event, 'put/pdf', ErrorRequest.create(error, arg));
+        });
+
+
+    }).catch((error: any) => {
+      send(event, 'put/pdf', ErrorRequest.create(error, arg));
+    });
+  });
+
+  on('put/pdf/print', (event: any, arg: { pugname: string, locals: Object, filename?: string }) => {
+    printPug({
+      pugOptions: {
+        filePath: path.join(appDataPugPath, arg.pugname),
+        locals: arg.locals
+      },
+      printOptions: {
+        silent: true,
+        printBackground: false,
+        deviceName: Settings.get('printer')
+      }
+    }).then(() => {
+      send(event, 'put/pdf/print', { input: arg });
+    }).catch((error: any) => {
+      send(event, 'put/pdf/print', ErrorRequest.create(error, arg));
+    });
+  });
+
+
+  on('get/pdf/buffer', (event: any, arg: { pugname: string, locals: Object }) => {
+    printPugToPdf({
+      pugOptions: {
+        filePath: path.join(appDataPugPath, arg.pugname),
+        locals: arg.locals
+      },
+      printOptions: _pO_PDF
+    }).then((data: any) => {
+      send(event, 'get/pdf/buffer', { input: arg, buffer: data });
+    }).catch((error: any) => {
+      send(event, 'get/pdf/buffer', ErrorRequest.create(error, arg));
+    });
+  });
+
+  on('get/pdf/fullscreen', (event: any, arg: { filename: string }) => {
+    shell.openItem(arg.filename);
+    end(event);
+  });
+
+  on('get/pdf/folder', (event: any, arg: { pugname: string }) => {
+    const now = new Date();
+    const splitPugName = arg.pugname.split('.');
+    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+    shell.openItem(pdfFileDir);
+    end(event);
   });
 }

@@ -3,6 +3,7 @@ import * as Nodemailer from 'nodemailer';
 import { Options } from 'nodemailer/lib/smtp-transport';
 
 import { MailConfig } from '../models/configs.class';
+import { ErrorRequest } from '../models/errorRequest.class';
 import { end, logException, on, send } from './../slots';
 
 let __Transporter: any = null;
@@ -38,6 +39,17 @@ function getTransporter(): any {
 
 export function init() {
 
+  const defaultMailConfig: MailConfig = {
+    host: '',
+    port: null,
+    user: '',
+    pass: ''
+  };
+
+  if (!Settings.has('mailconfig')) {
+    Settings.set('mailconfig', defaultMailConfig);
+  }
+
   setTransporter(Settings.get('mailconfig'));
 
   on('get/mail/config', (event: any) => {
@@ -55,14 +67,14 @@ export function init() {
     if (checkTransporter()) {
       getTransporter().sendMail(mailOptions)
         .then(() => {
-          send(event, 'post/mail/send', true);
+          send(event, 'post/mail/send', mailOptions);
         })
-        .catch((error) => {
+        .catch((error: any) => {
           logException(error);
-          send(event, 'post/mail/send', false);
+          send(event, 'post/mail/send', ErrorRequest.create(error, mailOptions));
         });
     } else {
-      send(event, 'post/mail/send', false);
+      send(event, 'post/mail/send', ErrorRequest.create('no transporter', mailOptions));
     }
   });
 

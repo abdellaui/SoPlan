@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-sm-6">
+    <!-- preview -->
+    <nb-card size="small" [nbSpinner]="showSpinner()">
+      <nb-card-header>
+        <div class="header-container">
+          <div class="header-row left">
+            Vorschau
+          </div>
+          <div class="header-row right">
+
+            <nb-actions size="small">
+
+              <nb-action icon="fa fa-arrows-alt" [disabled]="!isProcessingPdf()" (click)="showFullScreen()"></nb-action>
+            </nb-actions>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body *ngIf="!pdfSrc">
+        Bitte pug file wählen!
+      </nb-card-body>
+      <nb-card-body *ngIf="pdfSrc" class="noPadding">
+        <pdf-viewer [src]="pdfSrc" [show-all]="true" [original-size]="true" [render-text]="true" style="display: block;"
+          (on-progress)="onProgressPdf()" (error)="pdfRendered()" (page-rendered)="pdfRendered()"></pdf-viewer>
+      </nb-card-body>
+    </nb-card>
+    <!-- preview end -->
+  </div>
+  <div class="col-sm-6">
+    <!-- select -->
+    <app-entity-select #selection [settings]="selection_settings" [hasError]="!selection_selectedIds.length"
+      [selectedIds]="selection_selectedIds" (selected)="selectionSelected($event)"></app-entity-select>
+    <!-- select end -->
+  </div>
+  <div class="col-sm-6">
+    <!-- Daten -->
+    <nb-card size="small">
+      <nb-card-header>
+        <div class="header-container">
+          <div class="header-row left">
+            Daten (
+            <input *ngIf="inlineEdit" id="inlineEdit" (keydown.enter)="inlineEditSave()" (keydown.esc)="toggleInline()"
+              type="number" min="1" [max]="maxIndex" [(ngModel)]="inlineEditValue">
+            <span *ngIf="!inlineEdit"> {{currentIndex + 1}} </span>
+            /
+            {{maxIndex}})
+          </div>
+          <div class="header-row right">
+
+            <nb-actions size="small">
+              <nb-action icon="nb-edit" [disabled]="enabledNavigator()" (click)="toggleInline()"></nb-action>
+              <nb-action icon="nb-arrow-left" [disabled]="enabledNavigator()" (click)="goBackwardData()"></nb-action>
+              <nb-action icon="nb-arrow-right" [disabled]="enabledNavigator()" (click)="goForwardData()"></nb-action>
+            </nb-actions>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <ngx-json-viewer [json]="data[currentIndex]" [expanded]="false"></ngx-json-viewer>
+      </nb-card-body>
+    </nb-card>
+    <!-- daten end -->
+  </div>
+  <div class="col-sm-6">
+    <!-- upload -->
+    <nb-card size="small">
+      <nb-card-header>
+        Pug file upload
+      </nb-card-header>
+      <nb-card-body class="noPadding">
+        <div #dropArea id="dropArea">
+          <i *ngIf="!droppedItems.length" id="dragIcon" class="nb-collapse"></i>
+          <nb-list>
+            <nb-list-item *ngFor="let file of droppedItems" [class.hasError]="file.hasError">
+              <nb-user [name]="file.name">
+              </nb-user>
+            </nb-list-item>
+          </nb-list>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <!-- upload -->
+  </div>
+
+  <div class="col-sm-12" *ngIf="selection_selectedIds.length">
+    <nb-card>
+      <nb-card-body>
+        <nb-progress-bar [value]="
+    (processCount / maxIndex) * 100 " size=" xlg" status="success">{{processCount}}
+          /
+          {{maxIndex}}</nb-progress-bar>
+      </nb-card-body>
+    </nb-card>
+
+    <nb-card>
+      <nb-card-body>
+        <button nbButton (click)="actionPdf()">Pdf Erstellen</button>
+        <button nbButton (click)="actionPdfPrint()">Drucken</button>
+        <button nbButton (click)="actionMail()">Mail</button>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

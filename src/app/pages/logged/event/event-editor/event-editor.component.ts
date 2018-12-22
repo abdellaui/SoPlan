@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Room, RoomSchema } from '@entity/_room/room.entity';
+import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { EntitySelectSettings, FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
@@ -157,7 +158,7 @@ export class EventEditorComponent implements OnInit {
       if (params && params['id'] && params['id'] > 0) {
         this.ipc.get('get/event/by/id', { id: params['id'] }).then((result: any) => {
 
-          if (!('hasError' in result)) { // result.error has the error
+          if (!ErrorRequest.hasError(result)) { // result.error has the error
             this.reassignEvent(result);
           }
           this.isLoaded = true;
@@ -209,7 +210,7 @@ export class EventEditorComponent implements OnInit {
 
 
     this.ipc.get('post/event', this.form_event).then((result: any) => {
-      if (!('hasError' in result)) { // result.error has the error
+      if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
         this.currentEventService.refreshEvents();
         this.router.navigateByUrl('/logged/event/editor/' + result.id);

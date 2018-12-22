@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Event } from '@entity/event/event.entity';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { Subject } from 'rxjs';
 
@@ -17,14 +18,14 @@ export class CurrentEventService {
 
   constructor(private ipc: IpcRendererService) {
     this.ipc.on('get/event/all', (event: any, arg: any) => {
-      if (!('hasError' in arg)) { // result.error has the error
+      if (!ErrorRequest.hasError(arg)) { // result.error has the error
         this.currentAviableEvents = <Event[]>arg;
         this.newEvents.next(true);
       }
     });
 
     this.ipc.on('get/event/by/id', (event: any, arg: any) => {
-      if (!('hasError' in arg)) { // result.error has the error
+      if (!ErrorRequest.hasError(arg)) { // result.error has the error
         this.setEvent(<Event>arg);
       }
     });

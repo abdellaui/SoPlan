@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EntitySelectOption, EntitySelectSettings } from '@models/componentInput.class';
+import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class EntitySelectComponent implements OnInit {
   private initialized = false;
   public inputValue: string;
   public backUpElements: any[];
-  public elements: EntitySelectOption[];
+  public elements: EntitySelectOption[] = [];
   public selectedElements: EntitySelectOption[] = [];
 
   constructor(private ipc: IpcRendererService) { }
@@ -46,11 +47,11 @@ export class EntitySelectComponent implements OnInit {
   }
 
 
-  private getElements(): void {
+  public getElements(): void {
     if (this.settings.getUrl) {
       this.ipc.get(this.settings.getUrl, this.settings.getParams).then((result: any) => {
-        if (!('hasError' in result)) {
-          this.backUpElements = <any[]>result;
+        if (!ErrorRequest.hasError(result)) {
+          this.backUpElements = <any[]>result || [];
           this.transferToListItem(this.backUpElements);
           this.selectSelectedIds();
         }
