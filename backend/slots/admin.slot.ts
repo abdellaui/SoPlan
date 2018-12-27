@@ -14,7 +14,6 @@ export function init() {
     Settings.set('admin', defaultAdminLogin);
   }
 
-
   on('get/administrator/auth', (event: any, arg: AdminLogin) => {
     const admin = <AdminLogin>Settings.get('admin');
     let accepted = false;
