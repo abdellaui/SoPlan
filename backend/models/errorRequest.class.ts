@@ -1,11 +1,11 @@
-import { logException } from '../slots';
+//import { logException } from '../slots';
 
 export class ErrorRequest {
   public error: any;
   public input: any;
   public hasError = true;
   constructor(error: any, input?: any) {
-    logException(error);
+    //logException(error);
     this.error = error;
     this.input = input;
   }
