@@ -54,7 +54,7 @@ export function send(event: any, channel: string, args?: Object): any {
  */
 export function end(event: any) {
   if (isExpressServer()) {
-    return event.end();
+    return event.send({ target: '', value: '' });
   }
 }
 /**
