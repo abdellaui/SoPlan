@@ -16,10 +16,10 @@
       </nb-card-header>
       <nb-card-header>
         <input [(ngModel)]="inputValue" (ngModelChange)="search()" type="text" nbInput fullWidth shape="round"
-          placeholder="Suche">
+          placeholder="{{ _i18n.resolve('settings_search') }}">
 
       </nb-card-header>
-      <nb-card-body *ngIf="!elements.length"><i>Keine vorhanden.</i></nb-card-body>
+      <nb-card-body *ngIf="!elements.length"><i>{{ _i18n.resolve('settings_no_entries') }}</i></nb-card-body>
       <nb-list>
         <nb-list-item *ngFor="let element of elements" (click)="select(element)" [class.selected]="containsId(element)">
           <nb-user [name]="element.name" [title]="element.title">
@@ -37,7 +37,7 @@
         </nb-badge>
       </nb-card-header>
 
-      <nb-card-body *ngIf="!selectedElements.length"><i>Keine.</i></nb-card-body>
+      <nb-card-body *ngIf="!selectedElements.length"><i>{{ _i18n.resolve('settings_no_entries') }}</i></nb-card-body>
       <nb-list>
         <nb-list-item *ngFor="let element of selectedElements" (click)="select(element)" class="selected">
           <nb-user [name]="element.name" [title]="element.title">
