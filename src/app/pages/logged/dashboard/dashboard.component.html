@@ -238,7 +238,7 @@
 <div *ngIf="loading">
 
 
-  <nb-card [nbSpinner]=true nbSpinnerStatus="info" nbSpinnerSize="xxlarge">
+  <nb-card [nbSpinner]="true" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
     <nb-card-body>{{ _i18n.resolve('dashboard_wait') }}</nb-card-body>
   </nb-card>
 
