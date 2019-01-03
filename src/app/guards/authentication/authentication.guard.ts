@@ -11,6 +11,7 @@ import {
 import { AdminLogin } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,10 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
       if (result) {
         result.remember = _remember;
         localStorage.setItem('administrator', JSON.stringify(result));
-        this.toastr.success('Erfolgreich angemeldet!');
+        this.toastr.success(I18n.resolve('login_success'));
         this.router.navigate(['/logged']);
       } else {
-        this.toastr.error('Anmeldedaten falsch!');
+        this.toastr.error(I18n.resolve('login_error'));
       }
     });
   }

@@ -32,7 +32,7 @@
   <nb-card-back>
     <nb-card size="small" [accent]="(hasError)?'danger':''">
       <nb-card-header style="position: relative;">
-        {{settings.header}} (Auswahl)
+        {{settings.header}} {{_i18n.resolve('text_select')}}
         <nb-badge text="{{selectedElements.length}} / {{settings.maxSelection}}" status="info" position="top right">
         </nb-badge>
       </nb-card-header>

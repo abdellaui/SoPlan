@@ -372,7 +372,7 @@ export class DashboardComponent implements OnInit {
           this.ageChartLabels = Object.keys(this.age_stats);
           this.ageChartLegend = true;
           this.ageChartData = [{
-            data: this.agearr, label: 'Alter',
+            data: this.agearr, label: I18n.resolve('dashboard_age'),
           },
 
           ];
@@ -383,7 +383,7 @@ export class DashboardComponent implements OnInit {
           this.schoolChartLabels = Object.keys(this.school_stats);
           this.schoolChartLegend = true;
           this.schoolChartData = [{
-            data: this.schoolarr, label: 'Schule',
+            data: this.schoolarr, label: I18n.resolve('dashboard_school'),
           },
 
           ];
@@ -394,7 +394,7 @@ export class DashboardComponent implements OnInit {
           this.locationChartLabels = Object.keys(this.location_stats);
           this.locationChartLegend = true;
           this.locationChartData = [{
-            data: this.locationarr, label: 'Ort',
+            data: this.locationarr, label: I18n.resolve('dashboard_location'),
           },
 
           ];
@@ -406,11 +406,11 @@ export class DashboardComponent implements OnInit {
           this.gradeChartLabels = Object.keys(this.grade_stats);
           const check = this.gradeChartLabels.indexOf('null');
           if (!(check === -1)) {
-            this.gradeChartLabels[check] = 'Keine Klasse';
+            this.gradeChartLabels[check] = I18n.resolve('dashboard_no_grade');
           }
           this.gradeChartLegend = true;
           this.gradeChartData = [{
-            data: this.gradearr, label: 'Klassenstufe',
+            data: this.gradearr, label: I18n.resolve('dashboard_grade'),
           },
           ];
 

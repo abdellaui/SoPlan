@@ -8,6 +8,7 @@ import { ErrorRequest } from '@models/errorRequest.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 enum PersonView { TABLE, PARTICIPANT, PROCESS }
 
@@ -19,11 +20,12 @@ enum PersonView { TABLE, PARTICIPANT, PROCESS }
 
 export class PersonListeComponent implements OnInit {
 
+  public _i18n = I18n;
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Personenliste',
+      header: I18n.resolve('person_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Person'
+      createButtonText: I18n.resolve('person_new_person')
     },
     slotUrls: {
       getUrl: 'get/person/all',
@@ -67,12 +69,12 @@ export class PersonListeComponent implements OnInit {
       {
         name: 'add_participant',
         icon: 'nb-person',
-        tooltip: 'Teilnehmer erstellen'
+        tooltip: I18n.resolve('particpant_new_participants')
       },
       {
         name: 'process_user',
         icon: 'nb-email',
-        tooltip: 'Person process'
+        tooltip: I18n.resolve('person_process')
       }
     ]
   };
@@ -89,7 +91,7 @@ export class PersonListeComponent implements OnInit {
 
     ipc.on('post/participant', (event: any, result: any) => {
       if (ErrorRequest.hasError(result)) {
-        this.toastr.warning('Eine Person konnte nicht hinzugefügt werden!');
+        this.toastr.warning(I18n.resolve('toastr_person_could_not_be_added'));
         console.log(result.error, result.input);
       }
     });
@@ -130,7 +132,7 @@ export class PersonListeComponent implements OnInit {
     this.selectedPerson.forEach((parti: Participant) => {
       this.ipc.send('post/participant', parti);
     });
-    this.toastr.success('Okey go back bitch!');
+    this.toastr.success(I18n.resolve('toastr_go_back'));
     this.backToTableView();
   }
 
@@ -187,7 +189,7 @@ export class PersonListeComponent implements OnInit {
    */
   onCustomAction(event: any): void {
     if (this.currentEventService.getEvent() === null) {
-      return window.alert('Halt stopp! Erst einmal Veranst. wählen!');
+      return window.alert(I18n.resolve('alert_choose_event'));
     } else if (event.action === 'add_participant') {
       this.personToParticipant(event.data);
     }

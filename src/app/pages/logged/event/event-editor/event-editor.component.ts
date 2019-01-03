@@ -9,6 +9,7 @@ import { ErrorRequest } from '@models/errorRequest.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-event-editor',
@@ -16,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./event-editor.component.scss']
 })
 export class EventEditorComponent implements OnInit {
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     event: false
@@ -27,7 +29,7 @@ export class EventEditorComponent implements OnInit {
   public form_event: Event;
   public form_eventSchema = EventSchema;
   public form_eventSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Veranstaltung',
+    header: I18n.resolve('event'),
     buttons: false
   };
 
@@ -36,7 +38,7 @@ export class EventEditorComponent implements OnInit {
     getUrl: 'get/venue/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
-    header: 'Ort',
+    header: I18n.resolve('event_location'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/venue/editor/',
@@ -211,11 +213,11 @@ export class EventEditorComponent implements OnInit {
 
     this.ipc.get('post/event', this.form_event).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        this.toastr.info('Veranstaltung wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('toastr_event_susscess_save'));
         this.currentEventService.refreshEvents();
         this.router.navigateByUrl('/logged/event/editor/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(`Error! ${result.error}`);
       }
     });
 

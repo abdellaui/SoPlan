@@ -6,6 +6,7 @@ import { Group, GroupSchema } from '@entity/group/group.entity';
 import { Participant, ParticipantSchema } from '@entity/participant/participant.entity';
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 
 enum PersonView { TABLE, PROCESS }
 @Component({
@@ -16,9 +17,9 @@ enum PersonView { TABLE, PROCESS }
 export class ParticipantListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Participant',
+      header: I18n.resolve('participants'),
       showCreateButton: true,
-      createButtonText: 'Teilnehmer hinzufügen'
+      createButtonText: I18n.resolve('participant_new_participant')
     },
     slotUrls: {
       getUrl: 'get/participant/all',
@@ -105,7 +106,7 @@ export class ParticipantListeComponent implements OnInit {
       {
         name: 'process_user',
         icon: 'nb-email',
-        tooltip: 'Person process'
+        tooltip: I18n.resolve('person_process')
       }
     ]
   };

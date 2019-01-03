@@ -3,6 +3,7 @@ import { Communication, CommunicationSchema } from '@entity/_communication/commu
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-venue-liste',
@@ -12,9 +13,9 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class VenueListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Ortsliste',
+      header: I18n.resolve('venue_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Ort'
+      createButtonText: I18n.resolve('venue_new_venue')
     },
     slotUrls: {
       getUrl: 'get/venue/all',

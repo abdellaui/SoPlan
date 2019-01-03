@@ -44,6 +44,7 @@ export class TableComponent implements OnInit {
     }
   };
 
+  public _i18n = I18n;
   public data: LocalDataSource; // angezeigte daten
   private idToEntityMap = {}; // um nicht angezeigte Daten nicht zu verwerfen
   public columnConfig = {}; // transformations gedächnis
@@ -362,7 +363,7 @@ export class TableComponent implements OnInit {
 
   deleteAllSelected(): void {
 
-    if (window.confirm('Sie versuchen ${this.selectedData.length} Einträge zu löschen!') && !this.deletedCount) {
+    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
       this.deletedCount = this.selectedData.length;
       this.clearDeleteErrors();
       for (const data of this.selectedData) {
@@ -396,8 +397,7 @@ export class TableComponent implements OnInit {
           }
         });
       });
-      this.toastr.error(`Rot umrahmte Einträge (#${this.rememberIdOfDeleteError.length}) konnten nicht gelöscht werden!
-      Entfernen Sie vorab die Abhängigkeiten!`);
+      this.toastr.error(I18n.resolve('toastr_red_boxed_entries_cannot_be_deleted'));
     }
   }
   /**

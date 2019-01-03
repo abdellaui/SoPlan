@@ -3,30 +3,31 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <nb-card>
-          <nb-card-header>Login</nb-card-header>
+          <nb-card-header>{{_i18n.resolve('login_login')}}</nb-card-header>
           <nb-card-body (keydown.enter)="login()">
 
             <div class="form-group row">
-              <label for="db-input-username" class="col-md-4 col-form-label">Benutzername:</label>
+              <label for="db-input-username" class="col-md-4 col-form-label">{{_i18n.resolve('login_username')}}</label>
               <div class="col-md-8">
-                <input class="form-control" type="text" [(ngModel)]="admin.username" id="db-input-username" placeholder="Benutzername">
+                <input class="form-control" type="text" [(ngModel)]="admin.username" id="db-input-username"
+                  [placeholder]="_i18n.resolve('login_username_placeholder')">
               </div>
             </div>
             <div class="form-group row">
-              <label for="db-input-password" class="col-md-4 col-form-label">Passwort:</label>
+              <label for="db-input-password" class="col-md-4 col-form-label">{{_i18n.resolve('login_password')}}</label>
               <div class="col-md-8">
                 <input class="form-control" type="password" [(ngModel)]="admin.password" id="db-input-password"
-                  placeholder="Passwort">
+                  [placeholder]="_i18n.resolve('login_password_placeholder')">
               </div>
             </div>
             <div class="form-group row">
               <div class="col-md-12 text-center">
-                <nb-checkbox [value]="remember" (change)="toggleRemember()">Angemeldet bleiben</nb-checkbox>
+                <nb-checkbox [value]="remember" (change)="toggleRemember()">{{_i18n.resolve('login_stay_signed_in')}}</nb-checkbox>
 
               </div>
             </div>
 
-            <button hero status="success" nbButton (click)="login()" class="btn-block">anmelden</button>
+            <button hero status="success" nbButton (click)="login()" class="btn-block">{{_i18n.resolve('login_sign_in')}}</button>
 
           </nb-card-body>
         </nb-card>

@@ -75,7 +75,7 @@ const en = {
   participant_role: 'Rolle',
   participant_student: 'Schüler',
   participant_teacher: 'Dozent',
-  participant_student_and_teacher: 'Schülerdozent',
+  participant_studentteacher: 'Schülerdozent',
   participant_grade_level: 'Klassenstufe',
 
   person_TITLE: 'PERSON ENTITY + EDITOR',

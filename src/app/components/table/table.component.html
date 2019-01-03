@@ -9,8 +9,8 @@
 
         <nb-actions size="medium">
 
-          <nb-action [disabled]="!selectedData.length" nbPopover="Makierte Löschen" nbPopoverMode="hover" icon="nb-trash"
-            (click)="selectedData.length  && deleteAllSelected()">
+          <nb-action [disabled]="!selectedData.length" [nbPopover]="_i18n.resolve('entity_delete_selected')"
+            nbPopoverMode="hover" icon="nb-trash" (click)="selectedData.length  && deleteAllSelected()">
           </nb-action>
 
           <nb-action *ngFor="let action of config.customActions" [disabled]="!selectedData.length" [icon]="action.icon"

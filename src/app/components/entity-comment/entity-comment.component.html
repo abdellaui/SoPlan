@@ -13,8 +13,8 @@
         <div class="header-row right">
 
           <nb-actions size="medium">
-            <nb-action [disabled]="!selectedData.length" nbPopover="Makierte Löschen" nbPopoverMode="hover" icon="nb-trash"
-              (click)="selectedData.length  && deleteAllSelected()">
+            <nb-action [disabled]="!selectedData.length" [nbPopover]="_i18n.resolve('enitity_delete_selected')"
+              nbPopoverMode="hover" icon="nb-trash" (click)="selectedData.length  && deleteAllSelected()">
             </nb-action>
           </nb-actions>
         </div>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import { EntitySelectComponent } from '@components/entity-select/entity-select.component';
 import { EntitySelectSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -131,8 +132,11 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
 
         copyFileAttr.hasError = false;
 
+
       } else {
-        this.toastr.error('Es sind nur PUG-Files erlaubt!');
+
+        this.toastr.error(I18n.resolve('toastr_only_PUG'));
+
       }
 
       this.droppedItems.push(copyFileAttr);
@@ -206,7 +210,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
           if (!ErrorRequest.hasError(result)) {
             this.pdfSrc = result.buffer;
           } else {
-            this.toastr.error('Etwas lief schief' + JSON.stringify(result.error));
+            this.toastr.error(I18n.resolve('toastr_something_went_wrong') + JSON.stringify(result.error));
           }
         });
     } else {
