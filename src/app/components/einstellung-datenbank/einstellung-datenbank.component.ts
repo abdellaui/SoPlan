@@ -10,8 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EinstellungDatenbankComponent implements OnInit {
 
-
-
   public loadingFinished = false;
   public config: DatabaseConfig = new DatabaseConfig();
   public form_schema = DatabaseConfigSchema;
