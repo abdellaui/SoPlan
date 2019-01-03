@@ -36,7 +36,7 @@ export class School extends BaseEntity {
 }
 
 const SchoolSchema: FormElement[] = [{
-  name: I18n.resolve('person_name'),
+  name: I18n.resolve('school_name'),
   member: 'name',
   element: new Input('text')
 }];

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class DatabaseGuard implements CanActivate {
         return true;
       } else {
         localStorage.removeItem('databaseConnection');
-        this.toastr.error('Bitte zuerst Datenbankverbindung konfigurieren!');
+        this.toastr.error(I18n.resolve('toastr_configure_database_first'));
         this.router.navigate(['/databaseConnection'], { queryParams: { returnUrl: state.url } });
         return false;
       }

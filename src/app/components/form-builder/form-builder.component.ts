@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { FormElement } from '@models/formBuilder.class';
 import { validate, ValidationError } from 'class-validator';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-form-builder',
@@ -26,7 +27,7 @@ export class FormBuilderComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.settings.buttonText = (this.settings.buttonText) ? this.settings.buttonText : 'speichern';
+    this.settings.buttonText = (this.settings.buttonText) ? this.settings.buttonText : I18n.resolve('button_save');
     // default grids (look @ bootstrap)
     this.settings.paddings = (this.settings.paddings) ? this.settings.paddings : { left: 'md-4', right: 'md-8' };
 

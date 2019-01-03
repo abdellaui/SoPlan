@@ -7,6 +7,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 import { validate, ValidationError } from 'class-validator';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-entity-comment',
@@ -22,6 +23,7 @@ export class EntityCommentComponent implements OnInit {
   showThis = false;
   commentIsAccaptable = false;
 
+  public _i18n = I18n;
   public uniqueName;
 
   public form_comment: Comment = new Comment();
@@ -30,7 +32,7 @@ export class EntityCommentComponent implements OnInit {
     header: 'Bemerkung hinzufügen',
     buttons: true,
     paddings: { left: 'md-12', right: 'md-12' },
-    buttonText: 'hinzufügen',
+    buttonText: I18n.resolve('button_add'),
     initialWarningsIgnore: true
   };
 
@@ -114,7 +116,7 @@ export class EntityCommentComponent implements OnInit {
 
     this.ipc.get('post/comment', this.form_comment).then((result: any) => {
       if (!ErrorRequest.hasError(result)) {
-        this.toastr.info(`Kommentar erstellt`);
+        this.toastr.info(I18n.resolve('toastr_comment_created'));
         const newComment: Comment = <Comment>result;
         this.entity.comments.push(newComment);
         this.data.refresh();
@@ -123,7 +125,7 @@ export class EntityCommentComponent implements OnInit {
             this.form_comment = new Comment();
             this.form_commentSettings.initialWarningsIgnore = true;
           } else {
-            this.toastr.error(`Fehler beim Zuweisen!`);
+            this.toastr.error(I18n.resolve('toastr_assignment_fail'));
           }
         });
       } else {
@@ -135,7 +137,7 @@ export class EntityCommentComponent implements OnInit {
 
 
   onDeleteConfirm(event: any) {
-    if (window.confirm('Sie versuchen ein Eintrag zu löschen!') && !this.deletedCount) {
+    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
       this.deletedCount = 1;
       this.clearDeleteErrors();
       this.ipc.send('delete/comment', this.dataToEntity(event.data));
@@ -219,7 +221,7 @@ export class EntityCommentComponent implements OnInit {
 
   deleteAllSelected(): void {
 
-    if (window.confirm(`Sie versuchen ${this.selectedData.length} Einträge zu löschen!`) && !this.deletedCount) {
+    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
       this.deletedCount = this.selectedData.length;
       this.clearDeleteErrors();
       for (const data of this.selectedData) {
@@ -253,8 +255,7 @@ export class EntityCommentComponent implements OnInit {
           }
         });
       });
-      this.toastr.error(`Rot umrahmte Einträge (#${this.rememberIdOfDeleteError.length}) konnten nicht gelöscht werden!
-      Entfernen Sie vorab die Abhängigkeiten!`);
+      this.toastr.error(I18n.resolve('toastr_red_boxed_entries_cannot_be_deleted'));
     }
   }
 }

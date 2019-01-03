@@ -43,7 +43,7 @@ export class EntitySelectComponent implements OnInit {
 
     this.settings.createButtonText = (this.settings.createButtonText)
       ? this.settings.createButtonText
-      : this.settings.header + ' hinzufügen';
+      : this.settings.header + I18n.resolve('button_add');
 
     this.getElements();
   }

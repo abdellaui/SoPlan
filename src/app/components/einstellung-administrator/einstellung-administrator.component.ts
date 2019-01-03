@@ -3,6 +3,7 @@ import { AuthenticationGuard } from '@guards/authentication/authentication.guard
 import { AdminLogin } from '@models/configs.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-einstellung-administrator',
@@ -12,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class EinstellungAdministratorComponent implements OnInit {
 
 
+  public _i18n = I18n;
   private secret: string;
   username: string;
   password: string;
@@ -37,23 +39,23 @@ export class EinstellungAdministratorComponent implements OnInit {
   saveConfig(): void {
     // window.btoa(string) => base64.encode(string)
     if (this.secret !== window.btoa(this.password)) {
-      this.toastr.error('Aktuelles Passwort ist falsch!');
+      this.toastr.error(I18n.resolve('toastr_password_error'));
       return;
     }
     if (this.newpsw !== this.newpsw2) {
-      this.toastr.error('Passwörter stimmen nicht überein!');
+      this.toastr.error(I18n.resolve('toastr_password_do_not_match'));
       return;
     }
     if (this.newpsw.length < 5) {
-      this.toastr.error('Passwort muss mind. 5 Zeichen enthalten!');
+      this.toastr.error(I18n.resolve('toastr_password_short'));
       return;
     }
     if (this.username.length < 3) {
-      this.toastr.error('Benutzername muss mind. 3 Zeichen enthalten!');
+      this.toastr.error(I18n.resolve('toastr_username_short'));
       return;
     }
     this.ipc.send('post/administrator', <AdminLogin>{ username: this.username, password: window.btoa(this.newpsw) });
-    this.toastr.info('Ihre Benutzerdaten sind ab der nächsten Sitzung aktiv!', 'Erfolgreich gespeichert!');
+    this.toastr.info(I18n.resolve('toastr_usderdata_saved_for_next_session'), I18n.resolve('toastr_save_success'));
     this.auth.logout();
   }
 

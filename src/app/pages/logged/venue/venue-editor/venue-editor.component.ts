@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VenueEditorComponent implements OnInit {
 
-
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     venue: false,

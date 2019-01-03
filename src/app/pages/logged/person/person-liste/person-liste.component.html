@@ -4,18 +4,19 @@
 
   <nb-card>
     <nb-card-header>
-      Teilnehmer hinzufügen!
+      {{_i18n.resolve('person_list_component_add_participants')}}
     </nb-card-header>
     <nb-card-body>
       <p>
-        Es werden <b>{{selectedPerson.length}}</b> Teilnehmer zur Veranstaltung <b>{{currentEventService.getEvent().name}}</b>
-        hinzugefügt!
+        {{_i18n.resolve('person_list_component_adding')}} <b>{{selectedPerson.length}}</b>
+        {{_i18n.resolve('person_list_component_participants_to_event')}} <b>{{currentEventService.getEvent().name}}</b>
+        {{_i18n.resolve('person_list_component_adding_2')}}
       </p>
       <p>
-        Bitte überprüfen Sie vorab alle Einträge!
+        {{_i18n.resolve('person_list_component_check_everything')}}
       </p>
-      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="addParticipants()">hinzufügen</button>
-      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">Abbrechen</button>
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="addParticipants()">{{_i18n.resolve('person_list_component_add')}}</button>
+      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
     </nb-card-body>
   </nb-card>
 
@@ -28,8 +29,8 @@
 <ng-container *ngIf="showUserProcess()">
   <nb-card>
     <nb-card-body>
-      bla bla bla
-      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">Abbrechen</button>
+      {{_i18n.resolve('person_list_component_show_user_process_text')}}
+      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
     </nb-card-body>
   </nb-card>
   <app-pug-select [data]="selectedPerson"></app-pug-select>

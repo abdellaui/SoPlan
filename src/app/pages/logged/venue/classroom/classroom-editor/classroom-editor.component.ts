@@ -6,6 +6,7 @@ import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInpu
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-classroom-editor',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ClassroomEditorComponent implements OnInit {
 
+  public _i18n = I18n;
   public readyToSave = false;
   public isLoaded = false;
   public rememberReadyStatus = {
@@ -24,7 +26,7 @@ export class ClassroomEditorComponent implements OnInit {
   public form_classroom: Classroom;
   public form_classroomSchema = ClassroomSchema;
   public form_classroomSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Classroom',
+    header: I18n.resolve('classroom'),
     buttons: false,
     paddings: { left: 'md-12', right: 'md-12' }
   };
@@ -33,7 +35,7 @@ export class ClassroomEditorComponent implements OnInit {
   public form_room: Room;
   public form_roomSchema = RoomSchema;
   public form_roomSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Raum',
+    header: I18n.resolve('classroom_room'),
     buttons: false
   };
 
@@ -42,7 +44,7 @@ export class ClassroomEditorComponent implements OnInit {
     getUrl: 'get/venue/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
-    header: 'Ort',
+    header: I18n.resolve('classroom_location'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/venue/editor/',
@@ -120,10 +122,10 @@ export class ClassroomEditorComponent implements OnInit {
 
     this.ipc.get('post/classroom', this.form_classroom).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('toastr_bedroom_save_success'));
         this.router.navigateByUrl('/logged/venue/classroom/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler!`);
+        this.toastr.error(`Error!`);
       }
     });
 

@@ -104,7 +104,7 @@ const ParticipantSchema: FormElement[] = [
     element: new RadioButton([
       new Option(I18n.resolve('participant_student'), ParticipantRole.SCHUELER),
       new Option(I18n.resolve('participant_teacher'), ParticipantRole.DOZENT),
-      new Option('participant_student_and_teacher', ParticipantRole.SCHUELERDOZENT),
+      new Option(I18n.resolve('participant_studentteacher'), ParticipantRole.SCHUELERDOZENT),
     ])
   },
   {

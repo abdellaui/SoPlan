@@ -8,7 +8,7 @@ export class I18n {
 
   static resolve(phrase: string, ...args: any[]): string {
 
-    return sprintf(I18n.currentLanguage[phrase] + '_i18n' || phrase + ' not found', ...args);
+    return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args) + '_i18n';
   }
 
   static setLanguage(lang: string): void {
@@ -28,7 +28,7 @@ export class I18n {
   // Einbinden des i18n an verschiedenen Stellen:
 
   // *** inside HTML:
-  // In der zugehörigen .ts Datei in der Klasser ergänzen:
+  // In der zugehörigen .ts Datei in der Klasse ergänzen:
   // ... class ... {
   // public _i18n = I18n; // for accessing in html
   // ... }
