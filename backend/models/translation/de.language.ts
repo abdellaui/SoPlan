@@ -147,6 +147,31 @@ const de = {
   table_delete_entry: 'Möchten Sie den Eintrag wirklich löschen ? ',
   table_delete_multiple: 'Möchten Sie die ausgewählten Einträge löschen ? ',
 
+  settings_printer: 'Drucker',
+  settings_search: 'Suchen',
+  settings_no_entries: 'Keine Einträge vorhangen.',
+  dashboard_location: 'Ort',
+  dashboard_contact: 'Kontakt',
+  dashboard_address: 'Adresse',
+  dashboard_participants: 'Teilnehmer',
+  dashboard_bedrooms: 'Schlafzimmer',
+  dashboard_classroom: 'Klassenräume',
+  dashboard_numgroups: 'Gruppenanzahl',
+  dashboard_choose_venue: 'Es muss eine Veranstaltung gewählt werden',
+  dashboard_wait: 'Bitte warten',
+
+  dashboard_male: 'Männlich',
+  dashboard_female: 'Weiblich',
+  dashboard_divers: 'Divers',
+
+  dashboard_student: 'Schüler',
+  dashboard_teacher: 'Dozent',
+  dashboard_student_teacher: 'Schülerdozent',
+
+  dashboard_age: 'Alter',
+  dashboard_grade: 'Klassenstufe',
+  dashboard_school: 'Schule',
+
   Hello: 'Hello',
 
   TestWithParams: 'Fehler: %s, Keine Ahnung: %s'

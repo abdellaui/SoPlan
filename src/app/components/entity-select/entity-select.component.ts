@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EntitySelectOption, EntitySelectSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-entity-select',
@@ -20,6 +21,7 @@ export class EntitySelectComponent implements OnInit {
   public backUpElements: any[];
   public elements: EntitySelectOption[] = [];
   public selectedElements: EntitySelectOption[] = [];
+  public _i18n = I18n; // for accessing in html
 
   constructor(private ipc: IpcRendererService) { }
 

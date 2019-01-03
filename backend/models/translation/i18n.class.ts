@@ -8,7 +8,7 @@ export class I18n {
 
   static resolve(phrase: string, ...args: any[]): string {
 
-    return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args);
+    return sprintf(I18n.currentLanguage[phrase] + '_i18n' || phrase + ' not found', ...args);
   }
 
   static setLanguage(lang: string): void {
@@ -17,7 +17,7 @@ export class I18n {
         I18n.currentLanguage = de;
         break;
       case 'en':
-        I18n.currentLanguage = en;
+        // I18n.currentLanguage = en; @FIXME einkommentieren
         break;
       default:
         I18n.currentLanguage = de;
@@ -25,4 +25,16 @@ export class I18n {
     }
   }
 
+  // Einbinden des i18n an verschiedenen Stellen:
+
+  // *** inside HTML:
+  // In der zugehörigen .ts Datei in der Klasser ergänzen:
+  // ... class ... {
+  // public _i18n = I18n; // for accessing in html
+  // ... }
+  // Im HTML code
+  // {{ _i18n.resolve('table_edit_advanced') }}
+
+  // *** inside class:
+  // I18n.resolve('dashboard_female')
 }

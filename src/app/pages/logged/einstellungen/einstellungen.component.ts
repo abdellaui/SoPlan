@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EntitySelectSettings } from '@models/componentInput.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-einstellungen',
@@ -14,7 +15,7 @@ export class EinstellungenComponent implements OnInit {
     getUrl: 'get/printer/all',
     listNameMembers: ['description'],
     listTitleMembers: ['name'],
-    header: 'Drucker',
+    header: I18n.resolve('settings_printer'),
     maxSelection: 1,
     showCreateButton: false
   };
