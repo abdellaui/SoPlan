@@ -321,8 +321,11 @@ export class DashboardComponent implements OnInit {
     this.schoolChartType = 'horizontalBar';
 
 
-    this.genderChartLabels = ['Weiblich', 'Männlich', 'Divers'];
-    this.roleChartLabels = ['Schüler', 'Dozent', 'Schülerdozent'];
+    this.genderChartLabels = [I18n.resolve('dashboard_female'), I18n.resolve('dashboard_male'), I18n.resolve('dashboard_divers')];
+    this.roleChartLabels = [
+      I18n.resolve('dashboard_student'),
+      I18n.resolve('dashboard_teacher'),
+      I18n.resolve('dashboard_student_teacher')];
     /************************************************************* */
 
 

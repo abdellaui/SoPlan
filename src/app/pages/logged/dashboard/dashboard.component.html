@@ -7,11 +7,11 @@
         <nb-card-header>{{currentEvent.name}}</nb-card-header>
         <nb-card-body>
           <div class="row">
-            <div class="col-4"><b>Ort</b></div>
+            <div class="col-4"><b>{{ _i18n.resolve('dashboard_location') }}</b></div>
             <div class="col-8">{{currentEvent.hosting.name}}<br><br></div>
-            <div class="col-4"><b>Kontakt</b></div>
+            <div class="col-4"><b>{{ _i18n.resolve('dashboard_contact') }}</b></div>
             <div class="col-8">{{currentEvent.hosting.contactPerson}}<br><br></div>
-            <div class="col-4"><b>Anschrift</b></div>
+            <div class="col-4"><b>{{ _i18n.resolve('dashboard_address') }}</b></div>
             <div class="col-8">{{currentEvent.hosting.location.street}}
               {{currentEvent.hosting.location.subThoroughfare}}</div>
             <div class="col-4"></div>
@@ -45,7 +45,7 @@
             <i class="fa fa-address-card"></i> </div>
           <div class="col-sm-8 info">
             <!-- title and value here -->
-            <h1> Teilnehmer </h1>
+            <h1> {{ _i18n.resolve('dashboard_participants') }} </h1>
             <h2> {{stat_num_participants}}</h2>
           </div>
         </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="col-sm-8 info">
             <!-- title and value here -->
-            <h1> Schlafzimmer </h1>
+            <h1> {{ _i18n.resolve('dashboard_bedrooms') }} </h1>
             <h2> {{stat_num_bedrooms}}</h2>
           </div>
         </div>
@@ -90,7 +90,7 @@
           </div>
           <div class="col-sm-8 info">
             <!-- title and value here -->
-            <h1> Klassenzimmer </h1>
+            <h1> {{ _i18n.resolve('dashboard_classrooms') }} </h1>
             <h2> {{stat_num_classrooms}}</h2>
           </div>
         </div>
@@ -112,7 +112,7 @@
           </div>
           <div class="col-sm-8 info">
             <!-- title and value here -->
-            <h1> Gruppenanzahl </h1>
+            <h1> {{ _i18n.resolve('dashboard_numgroups') }} </h1>
             <h2> {{stat_num_groups}}</h2>
           </div>
         </div>
@@ -225,7 +225,7 @@
 
 
   <nb-card>
-    <nb-card-body>Es muss eine Veranstaltung ausgewählt werden.
+    <nb-card-body>{{ _i18n.resolve('dashboard_choose_venue') }}
 
       {{ _i18n.resolve('table_edit_advanced') }}
 
@@ -239,7 +239,7 @@
 
 
   <nb-card [nbSpinner]=true nbSpinnerStatus="info" nbSpinnerSize="xxlarge">
-    <nb-card-body>Please be patient...</nb-card-body>
+    <nb-card-body>{{ _i18n.resolve('dashboard_wait') }}</nb-card-body>
   </nb-card>
 
 </div>

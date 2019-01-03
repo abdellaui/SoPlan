@@ -35,7 +35,6 @@ export class EinstellungAdministratorComponent implements OnInit {
 
   }
   saveConfig(): void {
-
     // window.btoa(string) => base64.encode(string)
     if (this.secret !== window.btoa(this.password)) {
       this.toastr.error('Aktuelles Passwort ist falsch!');
