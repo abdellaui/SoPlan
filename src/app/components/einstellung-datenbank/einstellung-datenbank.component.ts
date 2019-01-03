@@ -11,8 +11,6 @@ import { I18n } from '@models/translation/i18n.class';
 })
 export class EinstellungDatenbankComponent implements OnInit {
 
-
-
   public loadingFinished = false;
   public config: DatabaseConfig = new DatabaseConfig();
   public form_schema = DatabaseConfigSchema;

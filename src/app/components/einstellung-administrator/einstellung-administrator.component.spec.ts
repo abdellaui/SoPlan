@@ -11,7 +11,11 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungAdministratorComponent } from './einstellung-administrator.component';
+<<<<<<< HEAD
 import { I18n } from '@models/translation/i18n.class';
+=======
+import { LoginComponent } from '@pages/login/login.component';
+>>>>>>> 7567bf7971786b65bfd38be482a16e562ebea0b9
 
 describe('EinstellungAdministratorComponent', () => {
   let component: EinstellungAdministratorComponent;
@@ -24,7 +28,12 @@ describe('EinstellungAdministratorComponent', () => {
         EinstellungAdministratorComponent,
       ],
       imports: [
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'login',
+            redirectTo: '/'
+          }
+        ]),
         NgxElectronModule,
         HttpClientModule,
         ToastrModule.forRoot(),
@@ -60,13 +69,13 @@ describe('EinstellungAdministratorComponent', () => {
 
   // btoa -> encode String to base64
   // atob -> decode base64 to string
-  fit('should save config', async () => {
+  it('should save config', async () => {
     const newUsername = 'admin';
-    const newPassword = 'testpw';
+    const newPassword = 'password';
     let newConfig: { username: string, password: string };
 
     await ipc.get('get/administrator').then(async (result: { username: string, password: string }) => {
-      component.setConfig({ username: result.username, password: result.password });
+      component.setConfig(result);
 
       component.username = newUsername;
       component.password = window.atob(result.password);
@@ -83,7 +92,7 @@ describe('EinstellungAdministratorComponent', () => {
     await expect(newConfig).toEqual({ password: window.btoa(newPassword), username: newUsername });
   });
 
-  fit('should check the password', async () => {
+  it('should check the password', async () => {
     component.username = 'admin';
     component.password = 'wrongPassword';
     component.newpsw = 'newPassword';
@@ -91,11 +100,10 @@ describe('EinstellungAdministratorComponent', () => {
 
     await component.saveConfig();
 
-    await expect(toastr.error).toHaveBeenCalled();
+    expect(toastr.error).toHaveBeenCalled();
   });
 
-  // TODO: should give response with toastr
-  fit('should give response with toastr', async () => {
+  it('new passwords dont match', async () => {
     await ipc.get('get/administrator').then(async (result: { username: string, password: string }) => {
       component.username = result.username;
       component.password = window.atob(result.password);
@@ -105,7 +113,36 @@ describe('EinstellungAdministratorComponent', () => {
       await component.saveConfig();
     });
 
+<<<<<<< HEAD
     await expect(toastr.error).toHaveBeenCalledWith(I18n.resolve('toastr_password_do_not_match'));
+=======
+    expect(toastr.error).toHaveBeenCalledWith('Passwörter stimmen nicht überein!');
+>>>>>>> 7567bf7971786b65bfd38be482a16e562ebea0b9
   });
 
+  it('should give error, password >= 5', async () => {
+    await ipc.get('get/administrator').then(async (result: { username: string, password: string }) => {
+      component.username = result.username;
+      component.password = window.atob(result.password);
+      component.newpsw = '1234';
+      component.newpsw2 = '1234';
+
+      await component.saveConfig();
+    });
+
+    expect(toastr.error).toHaveBeenCalledWith('Passwort muss mind. 5 Zeichen enthalten!');
+  });
+
+  it('should give error, username >= 3', async () => {
+    await ipc.get('get/administrator').then(async (result: { username: string, password: string }) => {
+      component.username = '12';
+      component.password = window.atob(result.password);
+      component.newpsw = '12345';
+      component.newpsw2 = '12345';
+
+      await component.saveConfig();
+    });
+
+    expect(toastr.error).toHaveBeenCalledWith('Benutzername muss mind. 3 Zeichen enthalten!');
+  });
 });
