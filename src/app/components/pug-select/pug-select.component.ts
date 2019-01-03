@@ -221,19 +221,14 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   }
 
   actionPdf(): void {
-    if (this.isProcessingPdf()) { return; }
-    this.actionIsRunning = true;
-    this.enableFullscreen = false;
 
-    setTimeout(() => {
+    this.runAction('put/pdf');
 
-      this.runAction('put/pdf');
-      if (this.getSelection()) {
-        setTimeout(() => {
-          this.ipc.send('get/pdf/folder', { pugname: this.getSelection() });
-        }, 1000);
-      }
-    }, 10);
+    if (this.getSelection()) {
+      setTimeout(() => {
+        this.ipc.send('get/pdf/folder', { pugname: this.getSelection() });
+      }, 1000);
+    }
   }
 
   openPugFolder() {
@@ -241,34 +236,28 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   }
 
   actionPdfPrint(): void {
-    if (this.isProcessingPdf()) { return; }
-    this.actionIsRunning = true;
-    this.enableFullscreen = false;
-    setTimeout(() => {
-      this.runAction('put/pdf/print');
-    }, 10);
-
+    this.runAction('put/pdf/print');
   }
 
   toggleMailSubject(): void {
     this.mailSubject = !this.mailSubject;
   }
   actionMail(): void {
-    if (this.isProcessingPdf()) { return; }
-    this.actionIsRunning = true;
-    this.enableFullscreen = false;
-    setTimeout(() => {
-      this.runAction('post/mail/pug', { subject: this.mailSubjectValue });
-    }, 10);
+    this.runAction('post/mail/pug', { subject: this.mailSubjectValue });
   }
 
   runAction(channel: string, optional?: Object): void {
+    if (this.isProcessingPdf()) { return; }
     const selection = this.getSelection();
     if (selection) {
+      this.actionIsRunning = true;
+      this.enableFullscreen = false;
       this.actionStatus = { count: 0, channel: channel };
-      for (const data of this.data) {
-        this.ipc.send(channel, { pugname: selection, locals: data, ...optional });
-      }
+      setTimeout(() => {
+        for (const data of this.data) {
+          this.ipc.send(channel, { pugname: selection, locals: data, ...optional });
+        }
+      }, 10);
     }
   }
 }

@@ -9,7 +9,11 @@ export class I18n {
   static resolve(phrase: string, ...args: any[]): string {
 
     if (!I18n.currentLanguage) {
-      I18n.setLanguage(localStorage.getItem('lang') || 'de');
+      try {
+        I18n.setLanguage(localStorage.getItem('lang') || 'de');
+      } catch (e) {
+        I18n.setLanguage('de');
+      }
     }
     return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args) + '_i18n';
 
