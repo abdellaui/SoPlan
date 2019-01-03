@@ -58,7 +58,7 @@
     "date-fns": "^2.0.0-alpha.16",
     "deepmerge": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron-pug-printer": "^1.0.4",
+    "electron-pug-printer": "^1.0.6",
     "electron-settings": "^3.2.0",
     "express": "^4.16.4",
     "moment": "^2.22.2",

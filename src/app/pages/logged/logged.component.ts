@@ -13,6 +13,7 @@ export class LoggedComponent implements OnInit {
   items: Event[];
   currentItem: Event;
   defaultEvent = <Event>{ name: 'Keine Veranstaltung gewählt', hosting: { name: 'Hier klicken um eine Veranstaltung zu wählen' } };
+  language: string;
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,
@@ -46,7 +47,7 @@ export class LoggedComponent implements OnInit {
     }
   }
   ngOnInit() {
-
+    this.language = localStorage.getItem('lang') || 'de';
   }
 
   public toggleLeft(): boolean {
@@ -70,5 +71,10 @@ export class LoggedComponent implements OnInit {
   }
   public goHistoryBackward(): void {
     this.historyMemory.goBackward();
+  }
+
+  public onChangeLanguage(lang: string): void {
+    localStorage.setItem('lang', lang);
+    window.location.reload();
   }
 }

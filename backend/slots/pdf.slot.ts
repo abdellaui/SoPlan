@@ -67,7 +67,7 @@ export function init() {
       const now = new Date();
 
       const splitPugName = arg.pugname.split('.');
-      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
 
       fs.ensureDir(pdfFileDir)
         .then(() => {
@@ -131,10 +131,15 @@ export function init() {
     end(event);
   });
 
+  on('get/pugfolder', (event: any, arg: { pugname: string }) => {
+    shell.openItem(appDataPugPath);
+    end(event);
+  });
+
   on('get/pdf/folder', (event: any, arg: { pugname: string }) => {
     const now = new Date();
     const splitPugName = arg.pugname.split('.');
-    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
     shell.openItem(pdfFileDir);
     end(event);
   });

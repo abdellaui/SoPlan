@@ -24,7 +24,6 @@ export class Bedroom extends BaseEntity {
   @Column(type => Room)
   room: Room;
 
-  @ValidateNested()
   @IsNotEmpty({ message: I18n.resolve('bedroom_mandatory') })
   @Column({ type: 'enum', enum: BedroomTypes })
   type: BedroomTypes;

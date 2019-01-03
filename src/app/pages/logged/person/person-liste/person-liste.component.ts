@@ -166,11 +166,6 @@ export class PersonListeComponent implements OnInit {
     this.currentView = PersonView.PARTICIPANT;
     this.selectedPerson = data.map((person: Person) => {
       const parti = new Participant();
-
-      /*
-       robin du kannst dich hier austobben!
-       parti.grade = 1
-       */
       parti.person = person;
       parti.event = this.currentEventService.getEvent();
       return parti;
@@ -180,7 +175,9 @@ export class PersonListeComponent implements OnInit {
 
   processUser(data: Person[]): void {
     this.currentView = PersonView.PROCESS;
-    this.selectedPerson = data;
+    this.selectedPerson = data.map((person: Person) => {
+      return Object.assign(person, { mail: person.communication.mail });
+    });
   }
 
   /**

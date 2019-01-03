@@ -28,8 +28,14 @@
         </nb-actions>
       </div>
       <div class="header-row right">
+
         <nb-user [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
         </nb-user>
+        <nb-select shape="semi-round" size="small" outline status="success" placeholder="Sprache" [(selected)]="language"
+          (selectedChange)="onChangeLanguage($event)">
+          <nb-option value="de">deutsch</nb-option>
+          <nb-option value="en">english</nb-option>
+        </nb-select>
       </div>
     </div>
   </nb-layout-header>

@@ -120,9 +120,11 @@ export class ParticipantListeComponent implements OnInit {
   showUserProcess(): boolean {
     return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
   }
-  processUser(data: Person[]): void {
+  processUser(data: Participant[]): void {
     this.currentView = PersonView.PROCESS;
-    this.selectedPerson = data;
+    this.selectedPerson = data.map((part: Participant) => {
+      return Object.assign(part, { mail: part.person.communication.mail });
+    });
   }
 
   backToTableView(): void {

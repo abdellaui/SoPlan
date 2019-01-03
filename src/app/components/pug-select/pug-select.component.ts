@@ -15,15 +15,19 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   @ViewChild('selection') selection: EntitySelectComponent;
   @Input() data: any[] = [];
 
+  public actionIsRunning = false;
+  public actionStatus = { count: 0, channel: '' };
   public inlineEdit = false;
   public inlineEditValue = 1;
   public enableFullscreen = true;
-  public processCount = 1;
-  public loadingBar = 0;
+  public mailSubject = false;
+  public mailSubjectValue = '';
   public currentIndex = 0;
   public maxIndex = 1;
-  public showLoading = false;
+
+
   public pdfSrc = null;
+  public showLoading = false;
   public droppedItems: any[] = [];
   public selection_selectedIds: string[] = [];
   public selection_settings: EntitySelectSettings = <EntitySelectSettings>{
@@ -37,14 +41,34 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   constructor(public ipc: IpcRendererService, public toastr: ToastrService) { }
 
   ngOnInit() {
+    this.ipc.on('put/pdf', (event: any, arg: any) => {
+      if (this.actionStatus.channel === 'put/pdf') {
+        this.actionStatus.count++;
+        if (this.actionStatus.count >= this.data.length) {
+          this.actionIsRunning = false;
+          this.enableFullscreen = true;
+        }
+      }
+    });
 
-    this.ipc.get('get/printer').then(e => console.log(e));
-    this.maxIndex = this.data.length;
+    this.ipc.on('put/pdf/print', (event: any, arg: any) => {
+      if (this.actionStatus.channel === 'put/pdf/print') {
+        this.actionStatus.count++;
+        if (this.actionStatus.count >= this.data.length) {
+          this.actionIsRunning = false;
+          this.enableFullscreen = true;
+        }
+      }
+    });
 
-    this.ipc.on('put/pdf', () => {
-      this.processCount = Math.max(this.processCount + 1, this.maxIndex);
-      if (this.processCount === this.maxIndex) {
-        this.enableFullscreen = true;
+    this.ipc.on('post/mail/pug', (event: any, arg: any) => {
+      if (this.actionStatus.channel === 'post/mail/pug') {
+        this.actionStatus.count++;
+        if (this.actionStatus.count >= this.data.length) {
+          this.actionIsRunning = false;
+          this.enableFullscreen = true;
+          this.mailSubject = false;
+        }
       }
     });
   }
@@ -52,6 +76,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
+    this.maxIndex = this.data.length;
     const holder = this.dropArea.nativeElement;
 
     holder.ondragover = () => {
@@ -99,15 +124,15 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
         hasError: true
       };
 
-      if (copyFileAttr.name && copyFileAttr.name.includes('.pug')) {
+      if (copyFileAttr.name && (copyFileAttr.name.toLowerCase().includes('.pug'))) {
         this.ipc.get('put/pugfiles', copyFileAttr).then(() => {
           this.renderSelectionComp();
         });
+
         copyFileAttr.hasError = false;
+
       } else {
-
         this.toastr.error('Es sind nur PUG-Files erlaubt!');
-
       }
 
       this.droppedItems.push(copyFileAttr);
@@ -123,7 +148,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     return this.showLoading;
   }
   isProcessingPdf(): boolean {
-    return (!this.showLoading && this.pdfSrc && this.enableFullscreen);
+    return (this.showSpinner() || !this.enableFullscreen);
   }
   goBackwardData(): void {
     if (this.enabledNavigator()) { return; }
@@ -159,7 +184,6 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     this.currentIndex = (this.inlineEditValue - 1 + this.maxIndex) % this.maxIndex;
     this.inlineEdit = false;
     this.selectionSelected(this.selection_selectedIds);
-
   }
 
   renderSelectionComp(): void {
@@ -197,31 +221,51 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   }
 
   actionPdf(): void {
-    // if (this.isProcessingPdf()) { return; }
-
+    if (this.isProcessingPdf()) { return; }
+    this.actionIsRunning = true;
     this.enableFullscreen = false;
-    this.runAction('put/pdf');
-    if (this.getSelection()) {
-      this.ipc.send('get/pdf/folder', { pugname: this.getSelection() });
-    }
+
+    setTimeout(() => {
+
+      this.runAction('put/pdf');
+      if (this.getSelection()) {
+        setTimeout(() => {
+          this.ipc.send('get/pdf/folder', { pugname: this.getSelection() });
+        }, 1000);
+      }
+    }, 10);
+  }
+
+  openPugFolder() {
+    this.ipc.send('get/pugfolder');
   }
 
   actionPdfPrint(): void {
-    // if (this.isProcessingPdf()) { return; }
-
+    if (this.isProcessingPdf()) { return; }
+    this.actionIsRunning = true;
     this.enableFullscreen = false;
-    this.runAction('put/pdf/print');
+    setTimeout(() => {
+      this.runAction('put/pdf/print');
+    }, 10);
 
   }
 
+  toggleMailSubject(): void {
+    this.mailSubject = !this.mailSubject;
+  }
   actionMail(): void {
-    console.log('mail');
+    if (this.isProcessingPdf()) { return; }
+    this.actionIsRunning = true;
+    this.enableFullscreen = false;
+    setTimeout(() => {
+      this.runAction('post/mail/pug', { subject: this.mailSubjectValue });
+    }, 10);
   }
 
   runAction(channel: string, optional?: Object): void {
     const selection = this.getSelection();
     if (selection) {
-      this.processCount = 0;
+      this.actionStatus = { count: 0, channel: channel };
       for (const data of this.data) {
         this.ipc.send(channel, { pugname: selection, locals: data, ...optional });
       }
