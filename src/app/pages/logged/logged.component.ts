@@ -3,6 +3,7 @@ import { Event } from '@entity/event/event.entity';
 import { NbSidebarService } from '@nebular/theme';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-logged',
@@ -12,7 +13,7 @@ import { HistoryMemoryService } from '@services/history-memory/history-memory.se
 export class LoggedComponent implements OnInit {
   items: Event[];
   currentItem: Event;
-  defaultEvent = <Event>{ name: 'Keine Veranstaltung gewählt', hosting: { name: 'Hier klicken um eine Veranstaltung zu wählen' } };
+  defaultEvent = <Event>{ name: I18n.resolve('logged_component_no_event'), hosting: { name: I18n.resolve('logged_component_click') } };
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,

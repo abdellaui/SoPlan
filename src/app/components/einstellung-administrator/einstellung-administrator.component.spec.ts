@@ -11,6 +11,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungAdministratorComponent } from './einstellung-administrator.component';
+import { I18n } from '@models/translation/i18n.class';
 
 describe('EinstellungAdministratorComponent', () => {
   let component: EinstellungAdministratorComponent;
@@ -104,7 +105,7 @@ describe('EinstellungAdministratorComponent', () => {
       await component.saveConfig();
     });
 
-    await expect(toastr.error).toHaveBeenCalledWith('Passwörter stimmen nicht überein!');
+    await expect(toastr.error).toHaveBeenCalledWith(I18n.resolve('toastr_password_do_not_match'));
   });
 
 });

@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./person-editor.component.scss']
 })
 export class PersonEditorComponent implements OnInit {
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     person: false,

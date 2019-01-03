@@ -7,6 +7,7 @@ import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInpu
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-participant-editor',
@@ -15,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ParticipantEditorComponent implements OnInit {
 
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     participant: false
@@ -23,7 +25,7 @@ export class ParticipantEditorComponent implements OnInit {
   public form_participant: Participant;
   public form_groupSchema = ParticipantSchema;
   public form_groupSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Teilnehmer',
+    header: I18n.resolve('participant'),
     buttons: false,
   };
 
@@ -33,7 +35,7 @@ export class ParticipantEditorComponent implements OnInit {
     getUrl: 'get/event/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { hosting: [{ location: ['postalcode', 'city'] }] }],
-    header: 'Veranstaltung',
+    header: I18n.resolve('event'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/event/editor/',
@@ -45,7 +47,7 @@ export class ParticipantEditorComponent implements OnInit {
     getUrl: 'get/person/all',
     listNameMembers: ['firstname', 'surname'],
     listTitleMembers: ['gender', { location: ['postalcode', 'city'] }],
-    header: 'Person',
+    header: I18n.resolve('person'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/person/editor/',
@@ -57,7 +59,7 @@ export class ParticipantEditorComponent implements OnInit {
     getUrl: 'get/event/groups',
     listNameMembers: ['name'],
     listTitleMembers: [{ classroom: [{ room: ['floor', 'corridor', 'number', 'name'] }] }],
-    header: 'Gruppen',
+    header: I18n.resolve('groups'),
     maxSelection: 1,
     showCreateButton: false,
     getParams: { id: 0 }
@@ -211,10 +213,10 @@ export class ParticipantEditorComponent implements OnInit {
 
     this.ipc.get('post/participant', this.form_participant).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        this.toastr.info('Parti gespeichert wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('toastr_participant_saved'));
         this.router.navigateByUrl('/logged/event/participant/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(`Error! ${result.error}`);
       }
     });
 

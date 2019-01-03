@@ -7,6 +7,7 @@ import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInpu
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-group-editor',
@@ -15,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GroupEditorComponent implements OnInit {
 
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     group: false
@@ -23,7 +25,7 @@ export class GroupEditorComponent implements OnInit {
   public form_group: Group;
   public form_groupSchema = GroupSchema;
   public form_groupSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Gruppe',
+    header: I18n.resolve('group'),
     buttons: false,
   };
 
@@ -32,7 +34,7 @@ export class GroupEditorComponent implements OnInit {
     getUrl: 'get/event/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { hosting: [{ location: ['postalcode', 'city'] }] }],
-    header: 'Veranstaltung',
+    header: I18n.resolve('event'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/event/editor/',
@@ -138,10 +140,10 @@ export class GroupEditorComponent implements OnInit {
 
     this.ipc.get('post/group', this.form_group).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        this.toastr.info('Group gespeichert wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('toastr_group_save_success'));
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(`Error! ${result.error}`);
       }
     });
 

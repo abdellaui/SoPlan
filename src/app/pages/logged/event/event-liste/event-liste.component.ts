@@ -3,6 +3,7 @@ import { Event, EventSchema } from '@entity/event/event.entity';
 import { Venue, VenueSchema } from '@entity/venue/venue.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-event-liste',
@@ -12,9 +13,9 @@ import { CurrentEventService } from '@services/current-event/current-event.servi
 export class EventListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Veranstaltungen',
+      header: I18n.resolve('event_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Veranstaltung'
+      createButtonText: I18n.resolve('event_new_event')
     },
     slotUrls: {
       getUrl: 'get/event/all',

@@ -6,6 +6,7 @@ import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInpu
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-bedroom-editor',
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BedroomEditorComponent implements OnInit {
 
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     bedroom: false,
@@ -23,7 +25,7 @@ export class BedroomEditorComponent implements OnInit {
   public form_bedroom: Bedroom;
   public form_bedroomSchema = BedroomSchema;
   public form_bedroomSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Schalfraumtyp',
+    header: I18n.resolve('bedroom_type'),
     buttons: false,
     paddings: { left: 'md-12', right: 'md-12' }
   };
@@ -32,7 +34,7 @@ export class BedroomEditorComponent implements OnInit {
   public form_room: Room;
   public form_roomSchema = RoomSchema;
   public form_roomSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Raum',
+    header: I18n.resolve('bedroom_room'),
     buttons: false
   };
 
@@ -41,7 +43,7 @@ export class BedroomEditorComponent implements OnInit {
     getUrl: 'get/venue/all',
     listNameMembers: ['name'],
     listTitleMembers: ['id', { location: ['postalcode', 'city'] }],
-    header: 'Ort',
+    header: I18n.resolve('bedroom_location'),
     maxSelection: 1,
     showCreateButton: true,
     editorUrl: '/logged/venue/editor/',
@@ -120,10 +122,10 @@ export class BedroomEditorComponent implements OnInit {
 
     this.ipc.get('post/bedroom', this.form_bedroom).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        this.toastr.info('Schlafraum gespeichert wurde erfolgreich gespeichert!');
+        this.toastr.info(I18n.resolve('toastr_bedroom_save_success'));
         this.router.navigateByUrl('/logged/venue/bedroom/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(`Error! ${result.error}`);
       }
     });
 

@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SchoolEditorComponent implements OnInit {
 
-
+  public _i18n = I18n;
   public readyToSave = false;
   public rememberReadyStatus = {
     location: false,

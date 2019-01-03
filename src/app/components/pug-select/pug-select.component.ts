@@ -4,6 +4,7 @@ import { EntitySelectSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-pug-select',
@@ -106,7 +107,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
         copyFileAttr.hasError = false;
       } else {
 
-        this.toastr.error('Es sind nur PUG-Files erlaubt!');
+        this.toastr.error(I18n.resolve('toastr_only_PUG'));
 
       }
 
@@ -182,7 +183,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
           if (!ErrorRequest.hasError(result)) {
             this.pdfSrc = result.buffer;
           } else {
-            this.toastr.error('Etwas lief schief' + JSON.stringify(result.error));
+            this.toastr.error(I18n.resolve('toastr_something_went_wrong') + JSON.stringify(result.error));
           }
         });
     } else {

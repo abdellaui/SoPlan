@@ -4,6 +4,7 @@ import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-group-liste',
@@ -13,9 +14,9 @@ import { SmartTableConfig } from '@models/componentInput.class';
 export class GroupListeComponent implements OnInit {
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Gruppe',
+      header: I18n.resolve('group'),
       showCreateButton: true,
-      createButtonText: 'Neue Bedroom'
+      createButtonText: I18n.resolve('group_new_group')
     },
     slotUrls: {
       getUrl: 'get/group/all',

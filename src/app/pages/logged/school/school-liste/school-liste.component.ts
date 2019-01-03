@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location, LocationSchema } from '@entity/_location/location.entity';
 import { School, SchoolSchema } from '@entity/school/school.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
+import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-school-liste',
@@ -12,9 +13,9 @@ export class SchoolListeComponent implements OnInit {
 
   public st_config: SmartTableConfig = {
     settings: {
-      header: 'Schulliste',
+      header: I18n.resolve('school_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Schule'
+      createButtonText: I18n.resolve('school_new_school')
     },
     slotUrls: {
       getUrl: 'get/school/all',

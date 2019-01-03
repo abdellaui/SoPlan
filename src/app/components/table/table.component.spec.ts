@@ -14,15 +14,16 @@ import { NgxElectronModule } from 'ngx-electron';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { TableComponent } from './table.component';
+import { I18n } from '@models/translation/i18n.class';
 
 describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
   const st_config: SmartTableConfig = {
     settings: {
-      header: 'Schulliste',
+      header: I18n.resolve('school_list'),
       showCreateButton: true,
-      createButtonText: 'Neue Schule'
+      createButtonText: I18n.resolve('school_new_school')
     },
     slotUrls: {
       getUrl: 'get/school/all',
