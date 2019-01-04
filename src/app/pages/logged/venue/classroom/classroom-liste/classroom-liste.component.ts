@@ -30,16 +30,6 @@ export class ClassroomListeComponent implements OnInit {
     },
     memberList: [
       {
-        prefix: '',
-        schema: ClassroomSchema,
-        members: ['identifier']
-      },
-      {
-        prefix: 'room@',
-        schema: RoomSchema,
-        members: ['floor', 'corridor', 'number', 'name', 'capacity']
-      },
-      {
         prefix: 'venue@',
         schema: VenueSchema,
         members: ['name'],
@@ -48,6 +38,16 @@ export class ClassroomListeComponent implements OnInit {
             editable: false
           }
         }
+      },
+      {
+        prefix: '',
+        schema: ClassroomSchema,
+        members: ['identifier']
+      },
+      {
+        prefix: 'room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name', 'capacity']
       }
     ]
   };

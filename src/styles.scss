@@ -10,7 +10,6 @@ $nb-themes: nb-register-theme(( popover-border:black, menu-submenu-active-border
     @include nb-theme-global();
 }
 
-;
 * {
     -webkit-user-select: none;
 }
@@ -109,5 +108,8 @@ body {
             align-items: center;
             width: 100%;
         }
+    }
+    button.btn-hero:not(.btn-block) {
+        margin: 0 15px;
     }
 }

@@ -1,21 +1,116 @@
 import { Component, OnInit } from '@angular/core';
-import { Bedroom } from '@entity/bedroom/bedroom.entity';
+import { RoomSchema } from '@entity/_room/room.entity';
+import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Classroom } from '@entity/classroom/classroom.entity';
 import { Event } from '@entity/event/event.entity';
-import { Group } from '@entity/group/group.entity';
-import { Participant, ParticipantRole } from '@entity/participant/participant.entity';
-import { PersonGender } from '@entity/person/person.entity';
+import { Group, GroupSchema } from '@entity/group/group.entity';
+import { Participant, ParticipantRole, ParticipantSchema } from '@entity/participant/participant.entity';
+import { Person, PersonGender, PersonSchema } from '@entity/person/person.entity';
+import { SmartTableConfig } from '@models/componentInput.class';
 import { I18n } from '@models/translation/i18n.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+
+
+enum PersonView { TABLE, PROCESS }
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
   public _i18n = I18n; // for accessing in html
+
+  public st_config: SmartTableConfig = {
+    settings: {
+      header: I18n.resolve('participants'),
+      showCreateButton: true,
+      createButtonText: I18n.resolve('participant_new_participant')
+    },
+    slotUrls: {
+      getUrl: 'get/event/participants',
+      postUrl: 'post/participant',
+      deleteUrl: 'delete/participant',
+      editorUrl: '/logged/event/participant/editor/0/',
+      getParam: { id: 10 }
+    },
+    instanceMap: {
+      '': Participant.prototype,
+      'person': Person.prototype,
+      'group': Group.prototype,
+      'bedroom': Bedroom.prototype
+    },
+    memberList: [
+      {
+        prefix: 'person@',
+        schema: PersonSchema,
+        members: ['firstname', 'surname'],
+        extendedSettings: {
+          firstname: {
+            editable: false
+          },
+          surname: {
+            editable: false
+          }
+        }
+      },
+      {
+        prefix: '',
+        schema: ParticipantSchema,
+        members: ['role', 'grade']
+      },
+      {
+        prefix: 'group@',
+        schema: GroupSchema,
+        members: ['name'],
+        extendedSettings: {
+          name: {
+            editable: false
+          }
+        }
+      },
+      {
+        prefix: 'bedroom@',
+        schema: BedroomSchema,
+        members: ['type'],
+        extendedSettings: {
+          type: {
+            editable: false
+          }
+        }
+      }, {
+        prefix: 'bedroom@room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name'],
+        extendedSettings: {
+          floor: {
+            editable: false
+          },
+          corridor: {
+            editable: false
+          },
+          number: {
+            editable: false
+          },
+          name: {
+            editable: false
+          }
+        }
+      }
+    ],
+    customActions: [
+      {
+        name: 'process_user',
+        icon: 'nb-email',
+        tooltip: I18n.resolve('person_process')
+      }
+    ]
+  };
+  public selectedPerson: any[] = [];
+  public currentView: PersonView;
 
   public rangeObject: any;
   /***** Age Chart******/
@@ -131,37 +226,37 @@ export class DashboardComponent implements OnInit {
   /*************COLORS */
   public genderColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#ec0caa', '#06b9ee', '#9f13df']
+      backgroundColor: ['#ec407a', '#81d4fa', '#e0e0e0']
     }
   ];
 
   public roleColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#fdff00', '#ff0000', '#ff861d']
+      backgroundColor: ['#fff176', '#ff8a65', '#ffb74d']
     }
   ];
 
   public ageColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#065535'
+      backgroundColor: '#90a4ae'
     }
   ];
 
   public gradeColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#DAA520'
+      backgroundColor: '#64b5f6'
     }
   ];
 
   public schoolColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#008080'
+      backgroundColor: '#80cbc4'
     }
   ];
 
   public locationColors: Array<any> = [
     {// all colors in order
-      backgroundColor: '#A0DB8E'
+      backgroundColor: '#c5e1a5'
     }
   ];
   /************* */
@@ -240,26 +335,6 @@ export class DashboardComponent implements OnInit {
   }
   //
 
-  /***Chart Related Functions */
-
-  public genderChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public genderChartHovered(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartHovered(e: any): void {
-    console.log(e);
-  }
-  /*********************************** */
-
-
   /*STATISTIC METHODS*/
 
   private initalize_gender_numbers(): void {
@@ -274,23 +349,23 @@ export class DashboardComponent implements OnInit {
     this.participants.forEach(participant => {
       if (participant.role === ParticipantRole.DOZENT) {
         this.stat_num_role_d++;
-      } else
-        if (participant.role === ParticipantRole.SCHUELER) {
-          this.stat_num_role_s++;
-        } else
-          if (participant.role === ParticipantRole.SCHUELERDOZENT) {
-            this.stat_num_role_sd++;
-          }
+      }
+      if (participant.role === ParticipantRole.SCHUELER) {
+        this.stat_num_role_s++;
+      }
+      if (participant.role === ParticipantRole.SCHUELERDOZENT) {
+        this.stat_num_role_sd++;
+      }
 
       if (participant.person.gender === PersonGender.FEMALE) {
         this.stat_num_gender_f++;
-      } else
-        if (participant.person.gender === PersonGender.MALE) {
-          this.stat_num_gender_m++;
-        } else
-          if (participant.person.gender === PersonGender.DIVERSE) {
-            this.stat_num_gender_d++;
-          }
+      }
+      if (participant.person.gender === PersonGender.MALE) {
+        this.stat_num_gender_m++;
+      }
+      if (participant.person.gender === PersonGender.DIVERSE) {
+        this.stat_num_gender_d++;
+      }
     });
   }
   /****************************************************************** */
@@ -300,7 +375,7 @@ export class DashboardComponent implements OnInit {
 
 
 
-  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService) {
+  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private history: HistoryMemoryService) {
 
     this.currentEventService.currentEventChanged.subscribe((newEvent: Event) => {
       this.setEvent(newEvent);
@@ -344,6 +419,10 @@ export class DashboardComponent implements OnInit {
   }
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
+
+      this.st_config.slotUrls.editorUrl = '/logged/event/participant/editor/' + ev.id + '/';
+      this.st_config.slotUrls.getParam = { id: ev.id };
+
       this.loading = true;
       this.currentEvent = ev;
 
@@ -440,7 +519,29 @@ export class DashboardComponent implements OnInit {
 
     }
   }
+  showUserProcess(): boolean {
+    return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
+  }
+  processUser(data: Participant[]): void {
+    this.history.enabledBack = false;
+    this.currentView = PersonView.PROCESS;
+    this.selectedPerson = data.map((part: Participant) => {
+      return Object.assign(part, { mail: part.person.communication.mail });
+    });
+  }
 
+  backToTableView(): void {
+    this.currentView = PersonView.TABLE;
+    this.selectedPerson = [];
+    this.history.enabledBack = true;
+  }
+
+  onCustomAction(event: any): void {
+
+    if (event.action === 'process_user') {
+      this.processUser(event.data);
+    }
+  }
 
 }
 

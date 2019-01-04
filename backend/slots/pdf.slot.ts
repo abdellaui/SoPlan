@@ -1,6 +1,5 @@
 import { app, shell } from 'electron';
 import { printPug, printPugToPdf } from 'electron-pug-printer';
-import * as Settings from 'electron-settings';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
@@ -9,6 +8,7 @@ import { end, on, send } from '../slots';
 
 export function init() {
   const appDataPugPath = path.join(app.getPath('userData'), '/pugfiles');
+  fs.ensureDir(appDataPugPath);
   const _pO_PDF = {
     marginsType: 0,
     printBackground: false,
@@ -17,8 +17,10 @@ export function init() {
   };
 
   on('put/pugfiles', (event: any, arg: File) => {
-
-    const newPath = path.join(appDataPugPath, new Date().getTime().toString() + '-' + arg.name.replace(/-/g, ''));
+    let newPath = path.join(appDataPugPath, arg.name);
+    if (arg.name.toLowerCase().includes('.pug')) {
+      newPath = path.join(appDataPugPath, new Date().getTime().toString() + '-' + arg.name.replace(/-/g, ''));
+    }
 
     fs.copy(arg.path, newPath)
       .then(() => {
@@ -40,7 +42,7 @@ export function init() {
         for (let i = 0; i < flist.length; i++) {
           const filenname = flist[i];
           const splitAttr = filenname.split('-');
-          if (splitAttr.length === 2) {
+          if (filenname.toLowerCase().includes('.pug') && splitAttr.length === 2) {
             const newFile = {
               name: splitAttr[1],
               created: new Date(Number(splitAttr[0])).toLocaleString('de-DE'),
@@ -67,7 +69,7 @@ export function init() {
       const now = new Date();
 
       const splitPugName = arg.pugname.split('.');
-      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
 
       fs.ensureDir(pdfFileDir)
         .then(() => {
@@ -102,7 +104,7 @@ export function init() {
       printOptions: {
         silent: true,
         printBackground: false,
-        deviceName: Settings.get('printer')
+        // deviceName: Settings.get('printer')
       }
     }).then(() => {
       send(event, 'put/pdf/print', { input: arg });
@@ -131,10 +133,15 @@ export function init() {
     end(event);
   });
 
+  on('get/pugfolder', (event: any, arg: { pugname: string }) => {
+    shell.openItem(appDataPugPath);
+    end(event);
+  });
+
   on('get/pdf/folder', (event: any, arg: { pugname: string }) => {
     const now = new Date();
     const splitPugName = arg.pugname.split('.');
-    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth(), now.getFullYear()].join('-'), splitPugName[0]);
+    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
     shell.openItem(pdfFileDir);
     end(event);
   });

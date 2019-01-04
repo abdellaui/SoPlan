@@ -1,17 +1,19 @@
 /* tslint:disable:no-unused-variable */
 import { APP_BASE_HREF } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { NbMenuModule, NbThemeModule } from '@nebular/theme';
 
 import { SidemenuComponent } from './sidemenu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { I18n } from '@models/translation/i18n.class';
 
 describe('SidemenuComponent', () => {
   let component: SidemenuComponent;
   let fixture: ComponentFixture<SidemenuComponent>;
+  let sideMenuDe: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,14 +37,23 @@ describe('SidemenuComponent', () => {
     fixture = TestBed.createComponent(SidemenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    sideMenuDe = fixture.debugElement;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should have the right order
+  it('should have option to logout', () => {
+    expect(sideMenuDe.queryAll(By.css('ul a')).pop().attributes.title).toEqual(I18n.resolve('menu_logout'));
+  });
+
   it('should have the right order', () => {
-    expect(true).toBe(true);
+    const listOfMenues = sideMenuDe.queryAll(By.css('nb-menu > ul > li > a'));
+
+    expect(listOfMenues[listOfMenues.length - 1].attributes.title).toEqual(I18n.resolve('menu_logout'));
+    expect(listOfMenues[listOfMenues.length - 2].attributes.title).toEqual(I18n.resolve('menu_settings'));
+    expect(listOfMenues[listOfMenues.length - 3].attributes.title).toEqual(I18n.resolve('menu_event'));
+    expect(listOfMenues[0].attributes.title).toEqual(I18n.resolve('menu_dashboard'));
   });
 });

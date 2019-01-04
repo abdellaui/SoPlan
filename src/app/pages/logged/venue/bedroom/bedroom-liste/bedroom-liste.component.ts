@@ -30,16 +30,6 @@ export class BedroomListeComponent implements OnInit {
     },
     memberList: [
       {
-        prefix: '',
-        schema: BedroomSchema,
-        members: ['type']
-      },
-      {
-        prefix: 'room@',
-        schema: RoomSchema,
-        members: ['floor', 'corridor', 'number', 'name', 'capacity']
-      },
-      {
         prefix: 'venue@',
         schema: VenueSchema,
         members: ['name'],
@@ -48,6 +38,16 @@ export class BedroomListeComponent implements OnInit {
             editable: false
           }
         }
+      },
+      {
+        prefix: '',
+        schema: BedroomSchema,
+        members: ['type']
+      },
+      {
+        prefix: 'room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name', 'capacity']
       }
     ]
   };

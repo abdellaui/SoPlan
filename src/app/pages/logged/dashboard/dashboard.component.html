@@ -34,7 +34,7 @@
   </div>
   <div class="row">
     <!-- one stat example -->
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-6">
 
       <!-- billig stat-->
       <nb-card>
@@ -56,7 +56,7 @@
     <!-- one stat ex end-->
 
     <!-- one stat example -->
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-6">
 
       <!-- billig stat-->
       <nb-card>
@@ -79,7 +79,7 @@
 
 
     <!-- one stat example -->
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-6">
 
       <!-- billig stat-->
       <nb-card>
@@ -101,7 +101,7 @@
     <!-- one stat ex end-->
 
     <!-- one stat example -->
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-6">
 
       <!-- billig stat-->
       <nb-card>
@@ -131,7 +131,7 @@
 
           <div style="display: block">
             <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
-              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)" [colors]='genderColors'>
+              [colors]='genderColors'>
             </canvas>
           </div>
         </nb-card-body>
@@ -144,8 +144,7 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
-              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)" [colors]="roleColors">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType" [colors]="roleColors">
             </canvas>
           </div>
 
@@ -218,7 +217,20 @@
       <!-- Ort END -->
     </div>
 
+    <div class="col-sm-12">
+      <app-table *ngIf="!showUserProcess()" [config]="st_config" (action)="onCustomAction($event)"></app-table>
 
+      <ng-container *ngIf="showUserProcess()">
+        <nb-card>
+          <nb-card-body>
+            {{_i18n.resolve('person_list_component_show_user_process_text')}}
+            <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
+          </nb-card-body>
+        </nb-card>
+        <app-pug-select [data]="selectedPerson"></app-pug-select>
+
+      </ng-container>
+    </div>
   </div>
 </div>
 <div *ngIf="showHelp">
@@ -238,7 +250,7 @@
 <div *ngIf="loading">
 
 
-  <nb-card [nbSpinner]=true nbSpinnerStatus="info" nbSpinnerSize="xxlarge">
+  <nb-card [nbSpinner]="true" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
     <nb-card-body>{{ _i18n.resolve('dashboard_wait') }}</nb-card-body>
   </nb-card>
 

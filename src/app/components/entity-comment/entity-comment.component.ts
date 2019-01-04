@@ -36,8 +36,6 @@ export class EntityCommentComponent implements OnInit {
     initialWarningsIgnore: true
   };
 
-
-
   constructor(private ipc: IpcRendererService, public toastr: ToastrService) {
     this.uniqueName = 'cm_' + new Date().getTime().toString();
   }

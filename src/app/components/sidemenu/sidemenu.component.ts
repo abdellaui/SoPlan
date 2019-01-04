@@ -21,35 +21,15 @@ export class SidemenuComponent implements OnInit {
       icon: 'nb-location',
       children: [
         {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/venue/editor/0',
-        },
-        {
           title: I18n.resolve('menu_list'),
           link: '/logged/venue/list',
         },
         {
           title: I18n.resolve('menu_bedroom'),
-          group: true,
-        },
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/venue/bedroom/editor/0/0',
-        },
-        {
-          title: I18n.resolve('menu_list'),
           link: '/logged/venue/bedroom/list',
         },
         {
           title: I18n.resolve('menu_classroom'),
-          group: true
-        },
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/venue/classroom/editor/0/0',
-        },
-        {
-          title: I18n.resolve('menu_list'),
           link: '/logged/venue/classroom/list',
         }
       ]
@@ -58,30 +38,13 @@ export class SidemenuComponent implements OnInit {
     {
       title: I18n.resolve('menu_person'),
       icon: 'nb-person',
-      children: [
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/person/editor/0',
-          pathMatch: 'partial'
-        },
-        {
-          title: I18n.resolve('menu_list'),
-          link: '/logged/person/list',
-        }]
+      link: '/logged/person/list'
 
     },
     {
       title: I18n.resolve('menu_school'),
       icon: 'nb-home',
-      children: [
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/school/editor/0',
-        },
-        {
-          title: I18n.resolve('menu_list'),
-          link: '/logged/school/list',
-        }]
+      link: '/logged/school/list',
 
     },
     {
@@ -89,35 +52,15 @@ export class SidemenuComponent implements OnInit {
       icon: 'nb-layout-default',
       children: [
         {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/event/editor/0'
-        },
-        {
           title: I18n.resolve('menu_list'),
           link: '/logged/event/list',
         },
         {
           title: I18n.resolve('menu_groups'),
-          group: true
-        },
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/event/group/editor/0/0',
-        },
-        {
-          title: I18n.resolve('menu_list'),
           link: '/logged/event/group/list',
         },
         {
           title: I18n.resolve('menu_participant'),
-          group: true
-        },
-        {
-          title: I18n.resolve('menu_editor'),
-          link: '/logged/event/participant/editor/0/0',
-        },
-        {
-          title: I18n.resolve('menu_list'),
           link: '/logged/event/participant/list',
         }
       ]
@@ -133,7 +76,6 @@ export class SidemenuComponent implements OnInit {
       link: '/login/',
     }
   ];
-
 
   constructor() {
   }
