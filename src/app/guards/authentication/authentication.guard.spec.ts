@@ -20,7 +20,12 @@ describe('AuthenticationGuard', () => {
       ],
       providers: [AuthenticationGuard],
       imports: [
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'login',
+            redirectTo: '/'
+          }
+        ]),
         ToastrModule.forRoot(),
         NgxElectronModule,
         HttpClientModule
@@ -32,8 +37,24 @@ describe('AuthenticationGuard', () => {
     expect(service).toBeTruthy();
   }));
 
-  // TODO: should has no rights
-  it('should has no rights', () => {
-    expect(true).toBe(true);
-  });
+  it('should has no right', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
+    expect(service.hasRight()).toBe(false);
+  }));
+
+  it('should has right', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
+    localStorage.setItem('administrator', JSON.stringify({ username: 'admin', password: 'password' }));
+    localStorage.setItem('databaseConnection', 'true');
+    expect(service.hasRight()).toBe(true);
+  }));
+
+  it('should can load the route', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
+    localStorage.setItem('administrator', JSON.stringify({ username: 'admin', password: 'password' }));
+    localStorage.setItem('databaseConnection', 'true');
+    expect(service.canLoad({ path: '/' })).toBe(true);
+  }));
+
+  it('should can\'t load the route', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
+    expect(service.canLoad({ path: '/' })).toBe(false);
+  }));
+
 });

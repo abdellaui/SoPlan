@@ -28,7 +28,7 @@ describe('DatabaseGuard', () => {
     });
   });
 
-  it('should ...', inject([DatabaseGuard], (service: DatabaseGuard) => {
+  it('should create DatabaseGuard', inject([DatabaseGuard], (service: DatabaseGuard) => {
     expect(service).toBeTruthy();
   }));
 });
