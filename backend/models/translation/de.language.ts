@@ -16,6 +16,10 @@ const de = {
   menu_logout: 'Abmelden',
 
   entity_delete_selected: 'Makierte Löschen',
+  entity_comments: 'Bemerkungen',
+  entity_comment_add: 'Bemerkung hinzufügen',
+  entity_comment_context: 'Inhalt',
+  entity_comment_last_updated: 'Bearbeitet am',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
   communication_phone_warning: 'Es sind nur deutsche Telefonnummern gültig!',
@@ -153,7 +157,7 @@ const de = {
   venue_communication: 'Kommunikation',
   venue_bedrooms: 'Schlafzimmer',
   venue_classlist: 'Klassenliste',
-  venue_success: 'Die Veranstaltung wurde erfolgreich gespeichert.',
+  venue_success: 'Der Veranstaltungort wurde erfolgreich gespeichert.',
   venue_error: 'Es ist ein Fehler aufgetreten.',
   venue_new: 'Neu',
 
