@@ -42,6 +42,8 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   constructor(public ipc: IpcRendererService, public toastr: ToastrService) { }
 
   ngOnInit() {
+    this.maxIndex = this.data.length;
+
     this.ipc.on('put/pdf', (event: any, arg: any) => {
       if (this.actionStatus.channel === 'put/pdf') {
         this.actionStatus.count++;
@@ -77,7 +79,6 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.maxIndex = this.data.length;
     const holder = this.dropArea.nativeElement;
 
     holder.ondragover = () => {
@@ -125,7 +126,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
         hasError: true
       };
 
-      if (copyFileAttr.name && (copyFileAttr.name.toLowerCase().includes('.pug'))) {
+      if (copyFileAttr.name) {
         this.ipc.get('put/pugfiles', copyFileAttr).then(() => {
           this.renderSelectionComp();
         });
@@ -254,6 +255,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     if (this.isProcessingPdf()) { return; }
     const selection = this.getSelection();
     if (selection) {
+      window.scrollTo(0, 0);
       this.actionIsRunning = true;
       this.enableFullscreen = false;
       this.actionStatus = { count: 0, channel: channel };

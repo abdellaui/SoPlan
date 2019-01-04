@@ -80,7 +80,7 @@ export function init() {
         },
         printOptions: _pO_PDF
       }).then((data: Buffer) => {
-        console.log(data);
+
         const mailOptions = {
           from: `SoPlan <noreply@soplan.de>`,
           to: arg.locals.mail, // receiver

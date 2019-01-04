@@ -10,7 +10,7 @@ export class HistoryMemoryService {
   private heightOfStateTree = 0;
   private distanceToCurrentStatePoint = 0;
   private goBackwards = false;
-
+  public enabledBack = true;
   constructor(private router: Router, private location: AngularLocation) {
 
     // listet router changes
@@ -22,6 +22,7 @@ export class HistoryMemoryService {
 
         // direkter klick auf ein link
         if (event.navigationTrigger === 'imperative') {
+          this.enabledBack = true;
           this.distanceToCurrentStatePoint = 0;
           this.heightOfStateTree++; // nach vorne gegangen
         } else if (event.navigationTrigger === 'popstate') {
@@ -61,7 +62,7 @@ export class HistoryMemoryService {
    * prüft und gibt an ob man nach hinten navigieren kann
    */
   public getBackwardState(): boolean {
-    return this.heightOfStateTree > 0;
+    return this.heightOfStateTree > 0 && this.enabledBack;
   }
 
   /**

@@ -32,11 +32,6 @@ export class GroupListeComponent implements OnInit {
     },
     memberList: [
       {
-        prefix: '',
-        schema: GroupSchema,
-        members: ['name', 'capacity']
-      },
-      {
         prefix: 'event@',
         schema: EventSchema,
         members: ['name'],
@@ -45,6 +40,11 @@ export class GroupListeComponent implements OnInit {
             editable: false
           }
         }
+      },
+      {
+        prefix: '',
+        schema: GroupSchema,
+        members: ['name', 'capacity']
       },
       {
         prefix: 'classroom@',

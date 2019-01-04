@@ -4,7 +4,7 @@
 
     <div class="col-sm-6">
       <!-- preview -->
-      <nb-card size="small" [nbSpinner]="showSpinner()">
+      <nb-card size="small" [nbSpinner]="showSpinner()" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
         <nb-card-header>
           <div class="header-container">
             <div class="header-row left">
@@ -101,7 +101,7 @@
     </div>
 
     <div class="col-sm-12" *ngIf="selection_selectedIds.length">
-      <nb-card>
+      <nb-card [nbSpinner]="showSpinner()" nbSpinnerSize="xxlarge" nbSpinnerStatus="success">
         <nb-card-body>
           <div *ngIf="mailSubject">
 
@@ -122,9 +122,12 @@
 
   </ng-container>
   <div class="col-sm-12" *ngIf="actionIsRunning">
-    <nb-card>
+    <nb-card size="large">
       <nb-card-body>
         Ihre Daten werden generiert! Es kann Zeit in Anspruch nehmen, bitte haben Sie Gedult!
+        <div id="loadingArea">
+          <i id="loadingIcon" class="fa fa-clock-o"></i>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

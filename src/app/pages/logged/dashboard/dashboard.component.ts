@@ -131,37 +131,37 @@ export class DashboardComponent implements OnInit {
   /*************COLORS */
   public genderColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#ec0caa', '#06b9ee', '#9f13df']
+      backgroundColor: ['#ec407a', '#81d4fa', '#e0e0e0']
     }
   ];
 
   public roleColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#fdff00', '#ff0000', '#ff861d']
+      backgroundColor: ['#fff176', '#ff8a65', '#ffb74d']
     }
   ];
 
   public ageColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#065535'
+      backgroundColor: '#90a4ae'
     }
   ];
 
   public gradeColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#DAA520'
+      backgroundColor: '#64b5f6'
     }
   ];
 
   public schoolColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#008080'
+      backgroundColor: '#80cbc4'
     }
   ];
 
   public locationColors: Array<any> = [
     {// all colors in order
-      backgroundColor: '#A0DB8E'
+      backgroundColor: '#c5e1a5'
     }
   ];
   /************* */
@@ -240,26 +240,6 @@ export class DashboardComponent implements OnInit {
   }
   //
 
-  /***Chart Related Functions */
-
-  public genderChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public genderChartHovered(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartHovered(e: any): void {
-    console.log(e);
-  }
-  /*********************************** */
-
-
   /*STATISTIC METHODS*/
 
   private initalize_gender_numbers(): void {
@@ -274,23 +254,23 @@ export class DashboardComponent implements OnInit {
     this.participants.forEach(participant => {
       if (participant.role === ParticipantRole.DOZENT) {
         this.stat_num_role_d++;
-      } else
-        if (participant.role === ParticipantRole.SCHUELER) {
-          this.stat_num_role_s++;
-        } else
-          if (participant.role === ParticipantRole.SCHUELERDOZENT) {
-            this.stat_num_role_sd++;
-          }
+      }
+      if (participant.role === ParticipantRole.SCHUELER) {
+        this.stat_num_role_s++;
+      }
+      if (participant.role === ParticipantRole.SCHUELERDOZENT) {
+        this.stat_num_role_sd++;
+      }
 
       if (participant.person.gender === PersonGender.FEMALE) {
         this.stat_num_gender_f++;
-      } else
-        if (participant.person.gender === PersonGender.MALE) {
-          this.stat_num_gender_m++;
-        } else
-          if (participant.person.gender === PersonGender.DIVERSE) {
-            this.stat_num_gender_d++;
-          }
+      }
+      if (participant.person.gender === PersonGender.MALE) {
+        this.stat_num_gender_m++;
+      }
+      if (participant.person.gender === PersonGender.DIVERSE) {
+        this.stat_num_gender_d++;
+      }
     });
   }
   /****************************************************************** */

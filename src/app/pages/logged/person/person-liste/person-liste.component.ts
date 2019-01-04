@@ -5,10 +5,11 @@ import { Participant, ParticipantSchema } from '@entity/participant/participant.
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 enum PersonView { TABLE, PARTICIPANT, PROCESS }
 
@@ -87,7 +88,7 @@ export class PersonListeComponent implements OnInit {
   public rememberReadyStatus = {};
   public readyToSave = false;
 
-  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService) {
+  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService, private history: HistoryMemoryService) {
 
     ipc.on('post/participant', (event: any, result: any) => {
       if (ErrorRequest.hasError(result)) {
@@ -143,6 +144,7 @@ export class PersonListeComponent implements OnInit {
     this.currentView = PersonView.TABLE;
     this.selectedPerson = [];
     this.rememberReadyStatus = {};
+    this.history.enabledBack = true;
   }
 
   /**
@@ -191,9 +193,11 @@ export class PersonListeComponent implements OnInit {
     if (this.currentEventService.getEvent() === null) {
       return window.alert(I18n.resolve('alert_choose_event'));
     } else if (event.action === 'add_participant') {
+      this.history.enabledBack = false;
       this.personToParticipant(event.data);
     }
     if (event.action === 'process_user') {
+      this.history.enabledBack = false;
       this.processUser(event.data);
     }
   }
