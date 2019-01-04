@@ -29,7 +29,7 @@ export class EntityCommentComponent implements OnInit {
   public form_comment: Comment = new Comment();
   public form_commentSchema = CommentSchema;
   public form_commentSettings: FormBuilderSettings = <FormBuilderSettings>{
-    header: 'Bemerkung hinzufügen',
+    header: I18n.resolve('entity_comment_add'),
     buttons: true,
     paddings: { left: 'md-12', right: 'md-12' },
     buttonText: I18n.resolve('button_add'),
@@ -44,11 +44,11 @@ export class EntityCommentComponent implements OnInit {
     selectMode: 'multi',
     columns: {
       content: {
-        title: 'Inhalt',
+        title: I18n.resolve('entity_comment_context'),
         editor: { type: 'textarea' }
       },
       updatedDate: {
-        title: 'Bearbeitet am',
+        title: I18n.resolve('entity_comment_last_updated'),
         type: 'custom',
         renderComponent: DateRendererComponent,
         editable: false

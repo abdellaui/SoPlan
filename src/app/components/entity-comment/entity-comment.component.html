@@ -8,12 +8,12 @@
       <nb-badge text="{{entity.comments.length}}" status="info" position="top right"></nb-badge>
       <div class="header-container">
         <div class="header-row left">
-          Bemerkungen
+          {{_i18n.resolve('entity_comments')}}
         </div>
         <div class="header-row right">
 
           <nb-actions size="medium">
-            <nb-action [disabled]="!selectedData.length" [nbPopover]="_i18n.resolve('enitity_delete_selected')"
+            <nb-action [disabled]="!selectedData.length" [nbPopover]="_i18n.resolve('entity_delete_selected')"
               nbPopoverMode="hover" icon="nb-trash" (click)="selectedData.length  && deleteAllSelected()">
             </nb-action>
           </nb-actions>

@@ -226,37 +226,37 @@ export class DashboardComponent implements OnInit {
   /*************COLORS */
   public genderColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#ec407a', '#81d4fa', '#e0e0e0']
+      backgroundColor: ['#ec0caa', '#06b9ee', '#9f13df']
     }
   ];
 
   public roleColors: Array<any> = [
     { // all colors in order
-      backgroundColor: ['#fff176', '#ff8a65', '#ffb74d']
+      backgroundColor: ['#fdff00', '#ff0000', '#ff861d']
     }
   ];
 
   public ageColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#90a4ae'
+      backgroundColor: '#065535'
     }
   ];
 
   public gradeColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#64b5f6'
+      backgroundColor: '#DAA520'
     }
   ];
 
   public schoolColors: Array<any> = [
     { // all colors in order
-      backgroundColor: '#80cbc4'
+      backgroundColor: '#008080'
     }
   ];
 
   public locationColors: Array<any> = [
     {// all colors in order
-      backgroundColor: '#c5e1a5'
+      backgroundColor: '#A0DB8E'
     }
   ];
   /************* */
@@ -335,6 +335,26 @@ export class DashboardComponent implements OnInit {
   }
   //
 
+  /***Chart Related Functions */
+
+  public genderChartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public genderChartHovered(e: any): void {
+    console.log(e);
+  }
+
+  public roleChartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public roleChartHovered(e: any): void {
+    console.log(e);
+  }
+  /*********************************** */
+
+
   /*STATISTIC METHODS*/
 
   private initalize_gender_numbers(): void {
@@ -349,23 +369,23 @@ export class DashboardComponent implements OnInit {
     this.participants.forEach(participant => {
       if (participant.role === ParticipantRole.DOZENT) {
         this.stat_num_role_d++;
-      }
-      if (participant.role === ParticipantRole.SCHUELER) {
-        this.stat_num_role_s++;
-      }
-      if (participant.role === ParticipantRole.SCHUELERDOZENT) {
-        this.stat_num_role_sd++;
-      }
+      } else
+        if (participant.role === ParticipantRole.SCHUELER) {
+          this.stat_num_role_s++;
+        } else
+          if (participant.role === ParticipantRole.SCHUELERDOZENT) {
+            this.stat_num_role_sd++;
+          }
 
       if (participant.person.gender === PersonGender.FEMALE) {
         this.stat_num_gender_f++;
-      }
-      if (participant.person.gender === PersonGender.MALE) {
-        this.stat_num_gender_m++;
-      }
-      if (participant.person.gender === PersonGender.DIVERSE) {
-        this.stat_num_gender_d++;
-      }
+      } else
+        if (participant.person.gender === PersonGender.MALE) {
+          this.stat_num_gender_m++;
+        } else
+          if (participant.person.gender === PersonGender.DIVERSE) {
+            this.stat_num_gender_d++;
+          }
     });
   }
   /****************************************************************** */
@@ -405,8 +425,6 @@ export class DashboardComponent implements OnInit {
 
 
   }
-
-
 
   /**
    * NbCalendarRangeComponent not support to reject change...

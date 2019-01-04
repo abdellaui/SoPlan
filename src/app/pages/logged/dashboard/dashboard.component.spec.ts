@@ -43,8 +43,8 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should get statistics for charts
-  it('should get statistics for charts', () => {
-    expect(true).toBe(true);
-  })
+  fit('should show help', () => {
+    component.setEvent(null);
+    expect(component.showHelp).toBe(true);
+  });
 });

@@ -16,6 +16,10 @@ const de = {
   menu_logout: 'Abmelden',
 
   entity_delete_selected: 'Makierte Löschen',
+  entity_comments: 'Bemerkungen',
+  entity_comment_add: 'Bemerkung hinzufügen',
+  entity_comment_context: 'Inhalt',
+  entity_comment_last_updated: 'Bearbeitet am',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
   communication_phone_warning: 'Es sind nur deutsche Telefonnummern gültig!',
@@ -153,7 +157,7 @@ const de = {
   venue_communication: 'Kommunikation',
   venue_bedrooms: 'Schlafzimmer',
   venue_classlist: 'Klassenliste',
-  venue_success: 'Die Veranstaltung wurde erfolgreich gespeichert.',
+  venue_success: 'Der Veranstaltungort wurde erfolgreich gespeichert.',
   venue_error: 'Es ist ein Fehler aufgetreten.',
   venue_new: 'Neu',
 
@@ -258,6 +262,20 @@ const de = {
   toastr_username_short: 'Benutzername ist zu kurz.',
   toastr_save_success: 'Erfolgreich gespeichert.',
   toastr_userdata_saved_for_next_session: 'Benutzerdaten sind für die nächste Sitzung gespeichert.',
+
+  pug_preview: 'Vorschau',
+  pug_select_pug_file: 'Wähle PUG Datei aus',
+  pug_files: 'Dateien',
+  pug_file_upload: 'Datei hochladen',
+  pug_send: 'Senden',
+  pug_cancel: 'Abbrechen',
+  pug_create_pdf: 'Erstelle PDF',
+  pug_print: 'Drucken',
+  pug_mail: 'E-Mail',
+  pug_your_data_is_generating_please_be_patient: 'Ihre Daten werden generiert. Haben sie ein wenig Geduld.',
+  pug_update: 'Aktualisieren',
+  pug_new_directory: 'Neuer Ordner',
+
 
 
   Hello: 'Hello',
