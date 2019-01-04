@@ -1,4 +1,4 @@
-<app-table *ngIf="!showUserProcess() && !showUserProcess()" [config]="st_config" (action)="onCustomAction($event)"></app-table>
+<app-table *ngIf="!showUserProcess()" [config]="st_config" (action)="onCustomAction($event)"></app-table>
 
 <ng-container *ngIf="showUserProcess()">
   <nb-card>
