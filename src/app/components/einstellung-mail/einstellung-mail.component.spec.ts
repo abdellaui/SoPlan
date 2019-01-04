@@ -11,6 +11,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { MailConfig } from '@models/configs.class';
+import { I18n } from '@models/translation/i18n.class';
 
 describe('EinstellungMailComponent', () => {
   let component: EinstellungMailComponent;
@@ -103,6 +104,6 @@ describe('EinstellungMailComponent', () => {
     component.setConfig(config);
     component.saveConfig();
 
-    expect(toastr.info).toHaveBeenCalledWith('SMTP-Daten wurde erfolgreich konfiguriert!');
+    expect(toastr.info).toHaveBeenCalledWith(I18n.resolve('toastr_SMTP_success'));
   });
 });

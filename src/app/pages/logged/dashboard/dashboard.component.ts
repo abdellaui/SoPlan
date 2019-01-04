@@ -298,8 +298,6 @@ export class DashboardComponent implements OnInit {
 
 
 
-
-
   constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService) {
 
     this.currentEventService.currentEventChanged.subscribe((newEvent: Event) => {
@@ -327,7 +325,6 @@ export class DashboardComponent implements OnInit {
       I18n.resolve('dashboard_teacher'),
       I18n.resolve('dashboard_student_teacher')];
     /************************************************************* */
-
 
   }
 
@@ -437,7 +434,6 @@ export class DashboardComponent implements OnInit {
       /**************************** */
     } else {
       this.showHelp = true;
-
     }
   }
 
