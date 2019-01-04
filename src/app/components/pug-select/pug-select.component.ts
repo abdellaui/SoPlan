@@ -16,6 +16,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   @ViewChild('selection') selection: EntitySelectComponent;
   @Input() data: any[] = [];
 
+  public _i18n = I18n;
   public actionIsRunning = false;
   public actionStatus = { count: 0, channel: '' };
   public inlineEdit = false;
@@ -35,7 +36,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     getUrl: 'get/pugfiles',
     listNameMembers: ['name'],
     listTitleMembers: ['created'],
-    header: 'Files',
+    header: I18n.resolve('pug_files'),
     maxSelection: 1,
     showCreateButton: false
   };

@@ -263,6 +263,20 @@ const de = {
   toastr_save_success: 'Erfolgreich gespeichert.',
   toastr_userdata_saved_for_next_session: 'Benutzerdaten sind für die nächste Sitzung gespeichert.',
 
+  pug_preview: 'Vorschau',
+  pug_select_pug_file: 'Wähle PUG Datei aus',
+  pug_files: 'Dateien',
+  pug_file_upload: 'Datei hochladen',
+  pug_send: 'Senden',
+  pug_cancel: 'Abbrechen',
+  pug_create_pdf: 'Erstelle PDF',
+  pug_print: 'Drucken',
+  pug_mail: 'E-Mail',
+  pug_your_data_is_generating_please_be_patient: 'Ihre Daten werden generiert. Haben sie ein wenig Geduld.',
+  pug_update: 'Aktualisieren',
+  pug_new_directory: 'Neuer Ordner',
+
+
 
   Hello: 'Hello',
 
