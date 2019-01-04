@@ -131,7 +131,7 @@
 
           <div style="display: block">
             <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType"
-              (chartHover)="genderChartHovered($event)" (chartClick)="genderChartClicked($event)" [colors]='genderColors'>
+              [colors]='genderColors'>
             </canvas>
           </div>
         </nb-card-body>
@@ -144,8 +144,7 @@
         <nb-card-body>
 
           <div style="display: block">
-            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType"
-              (chartHover)="roleChartHovered($event)" (chartClick)="roleChartClicked($event)" [colors]="roleColors">
+            <canvas baseChart [data]="roleChartData" [labels]="roleChartLabels" [chartType]="roleChartType" [colors]="roleColors">
             </canvas>
           </div>
 

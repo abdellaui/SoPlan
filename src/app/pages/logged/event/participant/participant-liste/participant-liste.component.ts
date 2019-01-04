@@ -7,6 +7,7 @@ import { Participant, ParticipantSchema } from '@entity/participant/participant.
 import { Person, PersonSchema } from '@entity/person/person.entity';
 import { SmartTableConfig } from '@models/componentInput.class';
 import { I18n } from '@models/translation/i18n.class';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 
 enum PersonView { TABLE, PROCESS }
 @Component({
@@ -46,11 +47,6 @@ export class ParticipantListeComponent implements OnInit {
         }
       },
       {
-        prefix: '',
-        schema: ParticipantSchema,
-        members: ['role', 'grade']
-      },
-      {
         prefix: 'person@',
         schema: PersonSchema,
         members: ['firstname', 'surname'],
@@ -62,6 +58,11 @@ export class ParticipantListeComponent implements OnInit {
             editable: false
           }
         }
+      },
+      {
+        prefix: '',
+        schema: ParticipantSchema,
+        members: ['role', 'grade']
       },
       {
         prefix: 'group@',
@@ -113,7 +114,7 @@ export class ParticipantListeComponent implements OnInit {
   public selectedPerson: any[] = [];
   public currentView: PersonView;
 
-  constructor() { }
+  constructor(private history: HistoryMemoryService) { }
 
   ngOnInit() {
   }
@@ -122,6 +123,7 @@ export class ParticipantListeComponent implements OnInit {
     return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
   }
   processUser(data: Participant[]): void {
+    this.history.enabledBack = false;
     this.currentView = PersonView.PROCESS;
     this.selectedPerson = data.map((part: Participant) => {
       return Object.assign(part, { mail: part.person.communication.mail });
@@ -131,6 +133,7 @@ export class ParticipantListeComponent implements OnInit {
   backToTableView(): void {
     this.currentView = PersonView.TABLE;
     this.selectedPerson = [];
+    this.history.enabledBack = true;
   }
 
   onCustomAction(event: any): void {
