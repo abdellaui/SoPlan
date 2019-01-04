@@ -66,16 +66,6 @@ describe('DatepickerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should show correct date
-  it('should show correct date', () => {
-    expect(true).toBe(true);
-  });
-
-  // TODO: should emit change
-  it('should emit change', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should transfer empty string to null', () => {
     component.shownValue = '';
     component.outputToType();
