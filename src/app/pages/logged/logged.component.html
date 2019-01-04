@@ -5,14 +5,22 @@
 
   <nb-sidebar right tag="right" state="collapsed">
     <nb-list>
-      <nb-list-item *ngFor="let item of items" [class.selected]="currentItem.id === item.id">
+      <nb-list-item class="clickable" *ngFor="let item of items" [class.selected]="currentItem.id === item.id">
         <nb-user (click)="setCurrentEvent(item)" [name]="item.name" [title]="item.hosting.name">
         </nb-user>
       </nb-list-item>
 
-      <nb-list-item [class.selected]="currentItem === defaultEvent">
+      <nb-list-item class="clickable" [class.selected]="currentItem === defaultEvent">
         <nb-user (click)="setCurrentEvent(null)" name="Keine" title="...">
         </nb-user>
+      </nb-list-item>
+    </nb-list>
+  </nb-sidebar>
+  <nb-sidebar right tag="lang" state="collapsed">
+    <nb-list>
+      <nb-list-item class="clickable" *ngFor="let item of languagesKey" (click)="onChangeLanguage(item)"
+        [class.selected]="language === item">
+        {{languages[item]}}
       </nb-list-item>
     </nb-list>
   </nb-sidebar>
@@ -29,13 +37,12 @@
       </div>
       <div class="header-row right">
 
-        <nb-user [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
+        <button class="clickable" (click)="toggleLang()" id="langB" nbButton outline size="small" shape="round" status="success">{{language}}</button>
+        <nb-user class="clickable" [name]="currentItem.name" [title]="currentItem.hosting.name" (click)="toggleRight()">
         </nb-user>
-        <nb-select shape="semi-round" size="small" outline status="success" placeholder="Sprache" [(selected)]="language"
-          (selectedChange)="onChangeLanguage($event)">
-          <nb-option value="de">deutsch</nb-option>
-          <nb-option value="en">english</nb-option>
-        </nb-select>
+
+
+
       </div>
     </div>
   </nb-layout-header>

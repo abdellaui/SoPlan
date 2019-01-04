@@ -1,5 +1,6 @@
 import { app, shell } from 'electron';
 import { printPug, printPugToPdf } from 'electron-pug-printer';
+import * as Settings from 'electron-settings';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
@@ -104,7 +105,7 @@ export function init() {
       printOptions: {
         silent: true,
         printBackground: false,
-        // deviceName: Settings.get('printer')
+        deviceName: Settings.get('printer')
       }
     }).then(() => {
       send(event, 'put/pdf/print', { input: arg });

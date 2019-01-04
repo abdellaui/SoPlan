@@ -16,7 +16,8 @@ export class LoggedComponent implements OnInit {
 
   defaultEvent = <Event>{ name: I18n.resolve('logged_component_no_event'), hosting: { name: I18n.resolve('logged_component_click') } };
   language: string;
-
+  languages = { de: 'Deutsch', en: 'Englisch' };
+  languagesKey = Object.keys(this.languages);
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,
@@ -58,10 +59,15 @@ export class LoggedComponent implements OnInit {
     return false;
   }
   public toggleRight(): boolean {
+    this.sidebarService.collapse('lang');
     this.sidebarService.toggle(false, 'right');
     return false;
   }
-
+  public toggleLang(): boolean {
+    this.sidebarService.collapse('right');
+    this.sidebarService.toggle(false, 'lang');
+    return false;
+  }
   public canNotGoForward(): boolean {
     return !this.historyMemory.getForwardState();
   }

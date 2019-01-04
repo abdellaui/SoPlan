@@ -39,7 +39,7 @@
 
       <nb-card-body *ngIf="!selectedElements.length"><i>{{ _i18n.resolve('settings_no_entries') }}</i></nb-card-body>
       <nb-list>
-        <nb-list-item *ngFor="let element of selectedElements" (click)="select(element)" class="selected">
+        <nb-list-item *ngFor="let element of selectedElements" (click)="select(element)" class="clickable selected">
           <nb-user [name]="element.name" [title]="element.title">
           </nb-user>
         </nb-list-item>

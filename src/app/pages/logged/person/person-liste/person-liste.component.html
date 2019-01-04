@@ -15,8 +15,8 @@
       <p>
         {{_i18n.resolve('person_list_component_check_everything')}}
       </p>
-      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right" (click)="addParticipants()">{{_i18n.resolve('person_list_component_add')}}</button>
-      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
+      <button [disabled]="!readyToSave" hero status="success" nbButton class="pull-right clickable" (click)="addParticipants()">{{_i18n.resolve('person_list_component_add')}}</button>
+      <button hero status="danger" nbButton class="pull-right clickable" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
     </nb-card-body>
   </nb-card>
 
@@ -30,7 +30,7 @@
   <nb-card>
     <nb-card-body>
       {{_i18n.resolve('person_list_component_show_user_process_text')}}
-      <button hero status="danger" nbButton class="pull-right" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
+      <button hero status="danger" nbButton class="pull-right clickable" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
     </nb-card-body>
   </nb-card>
   <app-pug-select [data]="selectedPerson"></app-pug-select>

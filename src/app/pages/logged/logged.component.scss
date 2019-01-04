@@ -17,7 +17,10 @@
     nb-sidebar /deep/ .scrollable {
         padding: 0rem 1.25rem;
     }
-    nb-select {
-        margin: 0 15px;
+    #langB {
+        margin: 0 0 0 15px;
+    }
+    #langB:focus {
+        color: #2a2a2a !important;
     }
 }

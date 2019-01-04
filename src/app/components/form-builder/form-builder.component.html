@@ -39,7 +39,7 @@
     </div>
 
     <div *ngIf="settings.buttons">
-      <button [disabled]="!hasErrors()" hero status="success" nbButton (click)="save()" class="btn-block">{{this.settings.buttonText}}</button>
+      <button [disabled]="!hasErrors()" hero status="success" nbButton (click)="save()" class="clickable btn-block">{{this.settings.buttonText}}</button>
     </div>
 
   </nb-card-body>

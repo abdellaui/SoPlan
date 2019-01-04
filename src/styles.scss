@@ -112,4 +112,7 @@ body {
     button.btn-hero:not(.btn-block) {
         margin: 0 15px;
     }
+    .clickable {
+        cursor: pointer !important;
+    }
 }

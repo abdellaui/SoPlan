@@ -107,13 +107,13 @@
 
             <input [(ngModel)]="mailSubjectValue" type="text" class="pull-left margin-bottom" nbInput fullWidth status="success"
               placeholder="Betreff">
-            <button hero status="success" nbButton class="pull-right" (click)="actionMail()">Send</button>
-            <button hero status="danger" nbButton class="pull-right" (click)="toggleMailSubject()">Abbrechen</button>
+            <button hero status="success" nbButton class="pull-right clickable" (click)="actionMail()">Send</button>
+            <button hero status="danger" nbButton class="pull-right clickable" (click)="toggleMailSubject()">Abbrechen</button>
           </div>
           <div *ngIf="!mailSubject">
-            <button hero status="success" nbButton class="pull-right" (click)="actionPdf()">Pdf Erstellen</button>
-            <button hero status="success" nbButton class="pull-right" (click)="actionPdfPrint()">Drucken</button>
-            <button hero status="success" nbButton class="pull-right" (click)="toggleMailSubject()">Mail</button>
+            <button hero status="success" nbButton class="pull-right clickable" (click)="actionPdf()">Pdf Erstellen</button>
+            <button hero status="success" nbButton class="pull-right clickable" (click)="actionPdfPrint()">Drucken</button>
+            <button hero status="success" nbButton class="pull-right clickable" (click)="toggleMailSubject()">Mail</button>
 
           </div>
         </nb-card-body>
