@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EntitySelectSettings } from '@models/componentInput.class';
-import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { I18n } from '@models/translation/i18n.class';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 
 @Component({
   selector: 'app-einstellungen',
@@ -11,6 +11,8 @@ import { I18n } from '@models/translation/i18n.class';
 export class EinstellungenComponent implements OnInit {
 
   public selection_selectedIds: string[] = [];
+  public _i18n = I18n;
+
   public selection_settings: EntitySelectSettings = <EntitySelectSettings>{
     getUrl: 'get/printer/all',
     listNameMembers: ['description'],

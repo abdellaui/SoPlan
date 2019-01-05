@@ -7,6 +7,7 @@ import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ElectronService } from 'ngx-electron';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -36,7 +37,7 @@ export class EntityCommentComponent implements OnInit {
     initialWarningsIgnore: true
   };
 
-  constructor(private ipc: IpcRendererService, public toastr: ToastrService) {
+  constructor(private ipc: IpcRendererService, public toastr: ToastrService, private electron: ElectronService) {
     this.uniqueName = 'cm_' + new Date().getTime().toString();
   }
 
@@ -137,7 +138,13 @@ export class EntityCommentComponent implements OnInit {
 
 
   onDeleteConfirm(event: any) {
-    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
+    const remote = (this.electron && this.electron.remote) ? this.electron.remote : null;
+    if (remote && remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      type: 'question',
+      buttons: [I18n.resolve('confirm_yes'), I18n.resolve('confirm_no')],
+      title: I18n.resolve('confirm_title'),
+      message: I18n.resolve('table_delete_entry')
+    }) === 0 && !this.deletedCount) {
       this.deletedCount = 1;
       this.clearDeleteErrors();
       this.ipc.send('delete/comment', this.dataToEntity(event.data));
@@ -220,8 +227,13 @@ export class EntityCommentComponent implements OnInit {
 
 
   deleteAllSelected(): void {
-
-    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
+    const remote = (this.electron && this.electron.remote) ? this.electron.remote : null;
+    if (remote && remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      type: 'question',
+      buttons: [I18n.resolve('confirm_yes'), I18n.resolve('confirm_no')],
+      title: I18n.resolve('confirm_title'),
+      message: I18n.resolve('confirm_delete_entries')
+    }) === 0 && !this.deletedCount) {
       this.deletedCount = this.selectedData.length;
       this.clearDeleteErrors();
       for (const data of this.selectedData) {

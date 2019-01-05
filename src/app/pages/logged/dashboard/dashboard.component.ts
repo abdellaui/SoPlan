@@ -315,13 +315,15 @@ export class DashboardComponent implements OnInit {
       } else {
         this.grade_stats[grade] = this.grade_stats[grade] + 1;
       }
-      const school = participant.person.school.name;
+      console.log(participant.person.school);
+      const school = (participant.person.school) ? participant.person.school.name : I18n.resolve('dashboard_no_school');
       if (!this.school_stats[school]) {
         this.school_stats[school] = 1;
       } else {
         this.school_stats[school]
           = this.school_stats[school] + 1;
       }
+
 
       const location = participant.person.location.city;
       if (!this.location_stats[location]) {
@@ -335,24 +337,6 @@ export class DashboardComponent implements OnInit {
   }
   //
 
-  /***Chart Related Functions */
-
-  public genderChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public genderChartHovered(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public roleChartHovered(e: any): void {
-    console.log(e);
-  }
-  /*********************************** */
 
 
   /*STATISTIC METHODS*/
@@ -400,8 +384,12 @@ export class DashboardComponent implements OnInit {
     this.currentEventService.currentEventChanged.subscribe((newEvent: Event) => {
       this.setEvent(newEvent);
     });
-    this.setEvent(this.currentEventService.getEvent());
+    this.reload();
 
+  }
+
+  reload(): void {
+    this.setEvent(this.currentEventService.getEvent());
   }
 
   ngOnInit() {

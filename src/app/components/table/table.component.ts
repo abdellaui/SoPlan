@@ -8,6 +8,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 import { validate, ValidationError } from 'class-validator';
 import * as Deepmerge from 'deepmerge';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ElectronService } from 'ngx-electron';
 import { ToastrService } from 'ngx-toastr';
 
 import { DateEditorComponent } from './date-editor/date-editor.component';
@@ -58,7 +59,7 @@ export class TableComponent implements OnInit {
 
 
 
-  constructor(private ipc: IpcRendererService, private router: Router, private toastr: ToastrService) {
+  constructor(private ipc: IpcRendererService, private router: Router, private toastr: ToastrService, private electron: ElectronService) {
     this.data = new LocalDataSource();
     this.uniqueName = 'st_' + new Date().getTime().toString();
   }
@@ -277,7 +278,13 @@ export class TableComponent implements OnInit {
    * @param event enthält die zu löschende data
    */
   onDeleteConfirm(event: any) {
-    if (window.confirm(I18n.resolve('table_delete_entry')) && !this.deletedCount) {
+    const remote = (this.electron && this.electron.remote) ? this.electron.remote : null;
+    if (remote && remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      type: 'question',
+      buttons: [I18n.resolve('confirm_yes'), I18n.resolve('confirm_no')],
+      title: I18n.resolve('confirm_title'),
+      message: I18n.resolve('table_delete_entry')
+    }) === 0 && !this.deletedCount) {
       this.deletedCount = 1;
       this.clearDeleteErrors();
       this.ipc.send(this.config.slotUrls.deleteUrl, this.dataToEntity(event.data));
@@ -362,8 +369,13 @@ export class TableComponent implements OnInit {
 
 
   deleteAllSelected(): void {
-
-    if (window.confirm(I18n.resolve('confirm_delete_entries')) && !this.deletedCount) {
+    const remote = (this.electron && this.electron.remote) ? this.electron.remote : null;
+    if (remote && remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      type: 'question',
+      buttons: [I18n.resolve('confirm_yes'), I18n.resolve('confirm_no')],
+      title: I18n.resolve('confirm_title'),
+      message: I18n.resolve('confirm_delete_entries')
+    }) === 0 && !this.deletedCount) {
       this.deletedCount = this.selectedData.length;
       this.clearDeleteErrors();
       for (const data of this.selectedData) {

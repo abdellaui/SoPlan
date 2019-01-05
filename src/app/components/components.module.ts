@@ -111,7 +111,7 @@ const nebularModules = [
     ...declarations
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de' }
+    { provide: LOCALE_ID, useValue: localStorage.getItem('lang') || 'de' }
   ]
 })
 export class ComponentsModule { }
