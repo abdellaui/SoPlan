@@ -16,6 +16,9 @@ enum PersonView { TABLE, PROCESS }
   styleUrls: ['./participant-liste.component.scss']
 })
 export class ParticipantListeComponent implements OnInit {
+  public selectedPerson: any[] = [];
+  public currentView: PersonView;
+
   public st_config: SmartTableConfig = {
     settings: {
       header: I18n.resolve('participants'),
@@ -111,8 +114,6 @@ export class ParticipantListeComponent implements OnInit {
       }
     ]
   };
-  public selectedPerson: any[] = [];
-  public currentView: PersonView;
 
   constructor(private history: HistoryMemoryService) { }
 

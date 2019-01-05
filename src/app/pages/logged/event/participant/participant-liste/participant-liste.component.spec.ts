@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { ParticipantListeComponent } from './participant-liste.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 
 describe('ParticipantListeComponent', () => {
   let component: ParticipantListeComponent;
@@ -11,7 +13,11 @@ describe('ParticipantListeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes([])
+      ],
       declarations: [ParticipantListeComponent],
+      providers: [HistoryMemoryService],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

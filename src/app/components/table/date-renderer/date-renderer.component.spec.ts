@@ -26,8 +26,7 @@ describe('DateRendererComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should render the date
-  fit('should render the date', () => {
+  it('should render the date', () => {
     component.value = new Date().toISOString();
     expect(true).toBe(true);
   });
