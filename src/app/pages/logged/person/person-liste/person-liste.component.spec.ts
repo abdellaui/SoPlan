@@ -1,15 +1,15 @@
 /* tslint:disable:no-unused-variable */
+import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { NgxElectronModule } from 'ngx-electron';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { PersonListeComponent } from './person-liste.component';
-import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
-import { CurrentEventService } from '@services/current-event/current-event.service';
-import { ToastrService, ToastrModule } from 'ngx-toastr';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NgxElectronModule } from 'ngx-electron';
-import { HttpClientModule } from '@angular/common/http';
 
 describe('PersonListeComponent', () => {
   let component: PersonListeComponent;
@@ -21,12 +21,14 @@ describe('PersonListeComponent', () => {
       imports: [
         NgxElectronModule,
         HttpClientModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         IpcRendererService,
         CurrentEventService,
-        ToastrService
+        ToastrService,
+        HistoryMemoryService
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
