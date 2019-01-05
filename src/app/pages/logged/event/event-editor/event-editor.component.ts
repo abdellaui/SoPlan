@@ -178,7 +178,7 @@ export class EventEditorComponent implements OnInit {
 
   reassignEvent(event: Event): void {
     this.form_event = Object.assign(this.form_event, event);
-    this.selection_selectedIds = [this.form_event.hosting.id];
+    this.selection_selectedIds = this.form_event.hosting ? [this.form_event.hosting.id] : [];
 
     const appendingId = (this.form_event.id) ? this.form_event.id : 0;
 

@@ -1,7 +1,7 @@
 <div *ngIf="!showHelp && !loading">
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- allgemeine info-->
       <nb-card id="allgemeineInfo">
         <nb-card-header>{{currentEvent.name}}</nb-card-header>
@@ -24,7 +24,7 @@
       </nb-card>
       <!-- end allgemeine info-->
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!-- kalender info-->
       <nb-calendar-range id="kalender" *ngIf="refreshCalenderRange" [showHeader]="false" size="small" [visibleDate]="rangeObject.start"
         [range]="rangeObject" (rangeChange)="rejectRangeChange()">
@@ -124,7 +124,7 @@
   </div>
   <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-sm-12">
       <!-- GESCHLECHT -->
       <nb-card>
         <nb-card-body>
@@ -138,7 +138,7 @@
       </nb-card>
       <!-- GESCHLECHT ENDE -->
     </div>
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!--ROLLE -->
       <nb-card>
         <nb-card-body>
@@ -157,7 +157,7 @@
 
   <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!--- ALTER -->
       <nb-card>
         <nb-card-body>
@@ -171,7 +171,7 @@
       <!-- ALTER END -->
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!--- GRADE -->
       <nb-card>
         <nb-card-body>
@@ -189,7 +189,7 @@
   </div>
   <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!--- Schule -->
       <nb-card>
         <nb-card-body>
@@ -203,7 +203,7 @@
       <!-- Schule END -->
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-12">
       <!--- Ort -->
       <nb-card>
         <nb-card-body>

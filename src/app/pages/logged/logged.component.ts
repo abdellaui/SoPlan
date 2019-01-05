@@ -21,7 +21,8 @@ export class LoggedComponent implements OnInit {
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,
-    private historyMemory: HistoryMemoryService) {
+    private historyMemory: HistoryMemoryService
+  ) {
 
     this.updateItems();
 
@@ -84,6 +85,9 @@ export class LoggedComponent implements OnInit {
 
   public onChangeLanguage(lang: string): void {
     localStorage.setItem('lang', lang);
-    window.location.reload();
+    this.language = lang;
+    if (window.confirm(I18n.resolve('confirm_language_change'))) {
+      window.location.reload();
+    }
   }
 }

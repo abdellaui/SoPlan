@@ -80,6 +80,7 @@ export class PersonEditorComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.regenarate();
       if (params && params['id'] && params['id'] > 0) {
+
         this.ipc.get('get/person/by/id', { id: params['id'] }).then((result: any) => {
 
           if (!ErrorRequest.hasError(result)) { // result.error has the error
@@ -102,7 +103,7 @@ export class PersonEditorComponent implements OnInit {
     this.form_person = Object.assign(this.form_person, person);
     this.form_com = Object.assign(this.form_com, person.communication);
     this.form_loc = Object.assign(this.form_loc, person.location);
-    this.selection_selectedIds = [this.form_person.school.id];
+    this.selection_selectedIds = this.form_person.school ? [this.form_person.school.id] : [];
   }
 
   public checkFinished(event: any, member: string) {
@@ -128,6 +129,7 @@ export class PersonEditorComponent implements OnInit {
 
     this.ipc.get('post/person', this.form_person).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
+        console.log(result);
         this.toastr.info(I18n.resolve('person_success'));
         this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {

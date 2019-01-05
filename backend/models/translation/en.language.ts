@@ -281,8 +281,10 @@ const en = {
 
   confirm_delete_entries: 'Delete entries?',
 
-  something_went_wrong: 'Unerwarteter Fehler:',
+  something_went_wrong: 'Something went wrong:',
   db_connection_information: 'Information',
   db_connection_warning_info: `Please be sure to got a correct database connection!`,
+
+  confirm_language_change: 'Should the change effect now or after restart? Be sure to save your changes!',
 };
 export { en };

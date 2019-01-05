@@ -85,9 +85,9 @@ function createWindow(): void {
 
   // The following is optional and will open the DevTools:
   // please comment it on compiling to a executable
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   // mainWindow.maximize();
-  require('devtron').install();
+  // require('devtron').install();
   // end devTools
 
   mainWindow.on('closed', () => {

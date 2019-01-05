@@ -4,6 +4,7 @@ import { EntitySelectSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
 import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
+import { ElectronService } from 'ngx-electron';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -40,7 +41,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     maxSelection: 1,
     showCreateButton: false
   };
-  constructor(public ipc: IpcRendererService, public toastr: ToastrService) { }
+  constructor(public ipc: IpcRendererService, public toastr: ToastrService, public electron: ElectronService) { }
 
   ngOnInit() {
     this.maxIndex = this.data.length;
@@ -100,7 +101,13 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
       e.preventDefault();
       this.clearDragArea();
 
+
+      if (this.electron && this.electron.remote) {
+        this.electron.remote.getCurrentWindow().focus();
+      }
+
       if (e.dataTransfer) {
+        window.scrollTo(0, window.pageYOffset - 1); // focus back workaround for rendering list of files
         this.processFiles(e.dataTransfer.files || []);
       }
 
@@ -193,6 +200,7 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   }
 
   renderSelectionComp(): void {
+    console.log('renderSelectionComp');
     this.selection.getElements();
 
   }

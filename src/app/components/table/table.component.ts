@@ -393,7 +393,7 @@ export class TableComponent implements OnInit {
         this.rememberIdOfDeleteError.forEach((id: number) => {
           const indexFromId = dataArray.findIndex(x => x.id === id);
           if (indexFromId > -1) {
-            this.handleDeleteError(indexFromId);
+            this.handleDeleteError(indexFromId + 2);
           }
         });
       });

@@ -92,7 +92,7 @@ export class ClassroomEditorComponent implements OnInit {
   reassignClassroom(classroom: Classroom): void {
     this.form_classroom = Object.assign(this.form_classroom, classroom);
     this.form_room = Object.assign(this.form_room, classroom.room);
-    this.selection_selectedIds = [this.form_classroom.venue.id];
+    this.selection_selectedIds = this.form_classroom ? [this.form_classroom.venue.id] : [];
   }
 
   updateReadyToSave(): void {

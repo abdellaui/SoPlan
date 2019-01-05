@@ -288,5 +288,8 @@ const de = {
   db_connection_information: 'Information',
   db_connection_warning_info: `Sie müssen vorab eine gültige Datenbankverbindung garantieren, um von den
   Vorteilen dieser Anwendung zu profitieren!`,
+
+
+  confirm_language_change: 'Soll die Sprachänderung jetz wirksam sein oder nach dem Neustart? Speichern Sie vorab alle Änderungen!',
 };
 export { de };
