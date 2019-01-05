@@ -88,7 +88,8 @@ export class PersonListeComponent implements OnInit {
   public rememberReadyStatus = {};
   public readyToSave = false;
 
-  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService, private history: HistoryMemoryService) {
+  constructor(private currentEventService: CurrentEventService, private ipc: IpcRendererService, private toastr: ToastrService,
+    private history: HistoryMemoryService) {
 
     ipc.on('post/participant', (event: any, result: any) => {
       if (ErrorRequest.hasError(result)) {

@@ -4,9 +4,9 @@ import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-bedroom-editor',
@@ -125,7 +125,7 @@ export class BedroomEditorComponent implements OnInit {
         this.toastr.info(I18n.resolve('toastr_bedroom_save_success'));
         this.router.navigateByUrl('/logged/venue/bedroom/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Error! ${result.error}`);
+        this.toastr.error(`${I18n.resolve('something_went_wrong')} ${JSON.stringify(result.error)}`);
       }
     });
 

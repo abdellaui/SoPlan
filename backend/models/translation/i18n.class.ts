@@ -15,7 +15,7 @@ export class I18n {
         I18n.setLanguage('de');
       }
     }
-    return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args) + '_i18n';
+    return sprintf(I18n.currentLanguage[phrase] || phrase + ' not found', ...args);
 
   }
 

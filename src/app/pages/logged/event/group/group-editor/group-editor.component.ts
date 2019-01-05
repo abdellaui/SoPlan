@@ -5,9 +5,9 @@ import { Event } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { EntitySelectSettings, FormBuilderSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-group-editor',
@@ -143,7 +143,7 @@ export class GroupEditorComponent implements OnInit {
         this.toastr.info(I18n.resolve('toastr_group_save_success'));
         this.router.navigateByUrl('/logged/event/group/editor/0/' + result.id);
       } else {
-        this.toastr.error(`Error! ${result.error}`);
+        this.toastr.error(`${I18n.resolve('something_went_wrong')} ${JSON.stringify(result.error)}`);
       }
     });
 

@@ -3,8 +3,8 @@
 <ng-container *ngIf="showUserProcess()">
   <nb-card>
     <nb-card-body>
-      bla bla bla
-      <button hero status="danger" nbButton class="pull-right clickable" (click)="backToTableView()">Abbrechen</button>
+      {{_i18n.resolve('person_list_component_show_user_process_text')}}
+      <button hero status="danger" nbButton class="pull-right clickable" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
     </nb-card-body>
   </nb-card>
   <app-pug-select [data]="selectedPerson"></app-pug-select>

@@ -6,10 +6,10 @@ import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { EntitySelectSettings, FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-event-editor',
@@ -217,7 +217,7 @@ export class EventEditorComponent implements OnInit {
         this.currentEventService.refreshEvents();
         this.router.navigateByUrl('/logged/event/editor/' + result.id);
       } else {
-        this.toastr.error(`Error! ${result.error}`);
+        this.toastr.error(`${I18n.resolve('something_went_wrong')} ${JSON.stringify(result.error)}`);
       }
     });
 

@@ -247,8 +247,8 @@ const de = {
   toastr_comment_created: 'Kommentar erstellt.',
   toastr_assignment_fail: 'Zuweisung fehlgeschlagen.',
   toastr_only_PUG: 'Nur PUG-Dateien sind erlaubt',
-  // tslint:disable-next-line:max-line-length
-  toastr_red_boxed_entries_cannot_be_deleted: 'Rot umrahmte Einträge können nicht gelöscht werden. Entfernen Sie davor die Abhängigkeiten der Einträge.',
+  toastr_red_boxed_entries_cannot_be_deleted:
+    `Rot umrahmte Einträge können nicht gelöscht werden.Entfernen Sie davor die Abhängigkeiten der Einträge.`,
   toastr_something_went_wrong: 'Es ist etwas schief gelaufen',
   taostr_configure_database_first: 'Bitte zuerst die Datenbank komfigurieren.',
   toastr_event_susscess_save: 'Veranstaltung erfolgreich gespeichert.',
@@ -284,7 +284,9 @@ const de = {
 
   confirm_delete_entries: 'Einträge wirklich löschen?',
 
-
-  TestWithParams: 'Fehler: %s, Keine Ahnung: %s'
+  something_went_wrong: 'Unerwarteter Fehler:',
+  db_connection_information: 'Information',
+  db_connection_warning_info: `Sie müssen vorab eine gültige Datenbankverbindung garantieren, um von den
+  Vorteilen dieser Anwendung zu profitieren!`,
 };
 export { de };

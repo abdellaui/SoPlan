@@ -3,11 +3,11 @@ import { DateRendererComponent } from '@components/table/date-renderer/date-rend
 import { Comment, CommentSchema } from '@entity/comment/comment.entity';
 import { FormBuilderSettings } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { validate, ValidationError } from 'class-validator';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-entity-comment',
@@ -129,7 +129,7 @@ export class EntityCommentComponent implements OnInit {
           }
         });
       } else {
-        this.toastr.error(`Fehler! ${result.error}`);
+        this.toastr.error(`${I18n.resolve('something_went_wrong')} ${JSON.stringify(result.error)}`);
       }
 
     });

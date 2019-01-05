@@ -21,7 +21,7 @@ export class SidemenuComponent implements OnInit {
       icon: 'nb-location',
       children: [
         {
-          title: I18n.resolve('menu_list'),
+          title: I18n.resolve('menu_location'),
           link: '/logged/venue/list',
         },
         {
@@ -52,7 +52,7 @@ export class SidemenuComponent implements OnInit {
       icon: 'nb-layout-default',
       children: [
         {
-          title: I18n.resolve('menu_list'),
+          title: I18n.resolve('menu_event'),
           link: '/logged/event/list',
         },
         {

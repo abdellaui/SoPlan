@@ -256,10 +256,11 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     if (this.isProcessingPdf()) { return; }
     const selection = this.getSelection();
     if (selection) {
-      window.scrollTo(0, 0);
+
       this.actionIsRunning = true;
       this.enableFullscreen = false;
       this.actionStatus = { count: 0, channel: channel };
+      setTimeout(() => window.scrollTo(0, document.getElementById('loadingArea').offsetTop), 8);
       setTimeout(() => {
         for (const data of this.data) {
           this.ipc.send(channel, { pugname: selection, locals: data, ...optional });
