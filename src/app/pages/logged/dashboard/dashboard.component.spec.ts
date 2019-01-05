@@ -8,6 +8,8 @@ import { ChartsModule } from 'ng2-charts';
 import { ElectronService, NgxElectronModule } from 'ngx-electron';
 
 import { DashboardComponent } from './dashboard.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -22,13 +24,15 @@ describe('DashboardComponent', () => {
         NbCardModule,
         NbCalendarRangeModule,
         ChartsModule,
-        NbSpinnerModule
+        NbSpinnerModule,
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         IpcRendererService,
         CurrentEventService,
         ElectronService
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
   }));
@@ -43,7 +47,7 @@ describe('DashboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should show help', () => {
+  it('should show help', () => {
     component.setEvent(null);
     expect(component.showHelp).toBe(true);
   });
