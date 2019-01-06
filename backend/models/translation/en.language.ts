@@ -238,6 +238,8 @@ const en = {
   dashboard_classrooms: 'Classrooms',
   dashboard_no_grade: 'No grade',
 
+  dashboard_no_school: 'No school',
+
   logged_component_no_event: 'No selected event.',
   logged_component_click: 'Click here to choose an event.',
 
@@ -286,5 +288,10 @@ const en = {
   db_connection_warning_info: `Please be sure to got a correct database connection!`,
 
   confirm_language_change: 'Should the change effect now or after restart? Be sure to save your changes!',
+  confirm_yes: 'Ok',
+  confirm_no: 'Cancle',
+  confirm_title: 'Attention please!',
+
+  thx_to_this_nice_guys: 'Developer Team',
 };
 export { en };

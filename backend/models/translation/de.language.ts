@@ -238,6 +238,8 @@ const de = {
   dashboard_classrooms: 'Klassenräume',
   dashboard_no_grade: 'Keine Klasse',
 
+  dashboard_no_school: 'Keine Schule',
+
   logged_component_no_event: 'Keine Veranstaltung angewählt',
   logged_component_click: 'Hier klicken um eine Veranstaltung zu wählen',
 
@@ -291,5 +293,10 @@ const de = {
 
 
   confirm_language_change: 'Soll die Sprachänderung jetz wirksam sein oder nach dem Neustart? Speichern Sie vorab alle Änderungen!',
+  confirm_yes: 'Ok',
+  confirm_no: 'Abbrechen',
+  confirm_title: 'Achtung!',
+
+  thx_to_this_nice_guys: 'Entwickler Team',
 };
 export { de };

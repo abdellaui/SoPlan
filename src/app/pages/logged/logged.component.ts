@@ -4,6 +4,7 @@ import { I18n } from '@models/translation/i18n.class';
 import { NbSidebarService } from '@nebular/theme';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-logged',
@@ -21,7 +22,8 @@ export class LoggedComponent implements OnInit {
   constructor(
     private sidebarService: NbSidebarService,
     private currentEventsService: CurrentEventService,
-    private historyMemory: HistoryMemoryService
+    private historyMemory: HistoryMemoryService,
+    private electron: ElectronService
   ) {
 
     this.updateItems();
@@ -86,7 +88,13 @@ export class LoggedComponent implements OnInit {
   public onChangeLanguage(lang: string): void {
     localStorage.setItem('lang', lang);
     this.language = lang;
-    if (window.confirm(I18n.resolve('confirm_language_change'))) {
+    const remote = (this.electron && this.electron.remote) ? this.electron.remote : null;
+    if (remote && remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+      type: 'question',
+      buttons: [I18n.resolve('confirm_yes'), I18n.resolve('confirm_no')],
+      title: I18n.resolve('confirm_title'),
+      message: I18n.resolve('confirm_language_change')
+    }) === 0) {
       window.location.reload();
     }
   }

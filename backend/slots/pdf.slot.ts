@@ -7,6 +7,10 @@ import * as path from 'path';
 import { ErrorRequest } from '../models/errorRequest.class';
 import { end, on, send } from '../slots';
 
+function dateToString(date: Date): string {
+  const split = date.toISOString().split('T');
+  return split[0];
+}
 export function init() {
   const appDataPugPath = path.join(app.getPath('userData'), '/pugfiles');
   fs.ensureDir(appDataPugPath);
@@ -70,7 +74,7 @@ export function init() {
       const now = new Date();
 
       const splitPugName = arg.pugname.split('.');
-      const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
+      const pdfFileDir = path.join(appDataPugPath, dateToString(now), splitPugName[0]);
 
       fs.ensureDir(pdfFileDir)
         .then(() => {
@@ -142,7 +146,7 @@ export function init() {
   on('get/pdf/folder', (event: any, arg: { pugname: string }) => {
     const now = new Date();
     const splitPugName = arg.pugname.split('.');
-    const pdfFileDir = path.join(appDataPugPath, [now.getDate(), now.getMonth() + 1, now.getFullYear()].join('-'), splitPugName[0]);
+    const pdfFileDir = path.join(appDataPugPath, dateToString(now), splitPugName[0]);
     shell.openItem(pdfFileDir);
     end(event);
   });

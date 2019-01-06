@@ -192,7 +192,8 @@ export class PersonListeComponent implements OnInit {
    */
   onCustomAction(event: any): void {
     if (this.currentEventService.getEvent() === null) {
-      return window.alert(I18n.resolve('alert_choose_event'));
+      this.toastr.warning(I18n.resolve('alert_choose_event'));
+      return;
     } else if (event.action === 'add_participant') {
       this.history.enabledBack = false;
       this.personToParticipant(event.data);
