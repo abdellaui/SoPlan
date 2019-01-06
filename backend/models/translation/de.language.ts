@@ -26,7 +26,7 @@ const de = {
   communication_mail_warning: 'Ungültige E-Mail Adresse.',
   communication_landline: 'Festnetz',
   communication_mobile: 'Mobilfunk',
-  communication_mail: 'E- Mail',
+  communication_mail: 'E-Mail',
 
   location_TITLE: 'LOCATION ENTITY',
   location_mandatory: 'Pflichtfeld',

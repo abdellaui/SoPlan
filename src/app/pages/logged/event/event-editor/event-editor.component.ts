@@ -50,7 +50,7 @@ export class EventEditorComponent implements OnInit {
     settings: {
       header: 'Gruppen',
       showCreateButton: true,
-      createButtonText: 'Neue Gruppe'
+      createButtonText: I18n.resolve('group_new_group')
     },
     slotUrls: {
       getUrl: 'get/event/groups',
