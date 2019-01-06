@@ -148,8 +148,8 @@ export class ParticipantEditorComponent implements OnInit {
 
     this.event_selectedIds = [this.form_participant.event.id];
     this.person_selectedIds = [this.form_participant.person.id];
-    this.group_selectedIds = [this.form_participant.group.id];
-    this.bedroom_selectedIds = [this.form_participant.bedroom.id];
+    this.group_selectedIds = this.form_participant.group ? [this.form_participant.group.id] : [];
+    this.bedroom_selectedIds = this.form_participant.bedroom ? [this.form_participant.bedroom.id] : [];
     this.participant_selectedIds = this.form_participant.ids_wantsToBeWith || [];
 
     this.selection_group_settings.getParams = { id: this.form_participant.event.id };
@@ -162,8 +162,8 @@ export class ParticipantEditorComponent implements OnInit {
     this.readyToSave = (Object.values(this.rememberReadyStatus).filter(x => !x).length === 0
       && this.form_participant.event.id > 0
       && this.form_participant.person.id > 0
-      && this.form_participant.group.id > 0
-      && this.form_participant.bedroom.id > 0
+      /*&& this.form_participant.group.id > 0
+      && this.form_participant.bedroom.id > 0*/
     );
   }
 
