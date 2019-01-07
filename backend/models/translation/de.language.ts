@@ -292,11 +292,11 @@ const de = {
   Vorteilen dieser Anwendung zu profitieren!`,
 
 
-  confirm_language_change: 'Soll die Sprachänderung jetz wirksam sein oder nach dem Neustart? Speichern Sie vorab alle Änderungen!',
+  confirm_language_change: 'Soll die Sprachänderung jetzt wirksam sein oder erst nach dem Neustart? Speichern Sie vorab alle Änderungen!',
   confirm_yes: 'Ok',
   confirm_no: 'Abbrechen',
   confirm_title: 'Achtung!',
 
-  thx_to_this_nice_guys: 'Entwickler Team',
+  thx_to_this_nice_guys: 'Entwicklerteam',
 };
 export { de };
