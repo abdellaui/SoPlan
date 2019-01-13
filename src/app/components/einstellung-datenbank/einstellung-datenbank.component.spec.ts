@@ -3,19 +3,26 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatabaseConfig } from '@models/configs.class';
 import { NgxElectronModule } from 'ngx-electron';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank.component';
-import { DatabaseConfig } from '@models/configs.class';
 
 describe('EinstellungenDatenbankComponent', () => {
   let component: EinstellungDatenbankComponent;
   let fixture: ComponentFixture<EinstellungDatenbankComponent>;
   let ipc: IpcRendererService;
   let toastr: ToastrService;
-
+  let oldConfig: any;
+  const config: DatabaseConfig = {
+    host: 'localhost',
+    port: '3306',
+    username: 'root',
+    password: '00005252',
+    database: 'angular'
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -43,6 +50,25 @@ describe('EinstellungenDatenbankComponent', () => {
     toastr = TestBed.get(ToastrService);
   }));
 
+  beforeAll(async () => {
+    try {
+      oldConfig = await ipc.get<DatabaseConfig>('get/database/config');
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  });
+  afterAll(async () => {
+
+    try {
+      component.setConfig(oldConfig);
+      await component.saveConfig();
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  });
+
   beforeEach(() => {
     fixture = TestBed.createComponent(EinstellungDatenbankComponent);
     component = fixture.componentInstance;
@@ -54,54 +80,35 @@ describe('EinstellungenDatenbankComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should save config', async () => {
-    const config: DatabaseConfig = {
-      host: 'localhost',
-      port: '3306',
-      username: 'root',
-      password: '00005252',
-      database: 'angular'
-    };
+  it('should save config', async (done) => {
+
 
     component.setConfig(config);
 
-    await component.saveConfig();
+    component.saveConfig();
+    setTimeout(async () => {
+      try {
+        const expectConfig: DatabaseConfig = await ipc.get<DatabaseConfig>('get/database/config');
 
-    try {
-      const expectConfig: DatabaseConfig = await ipc.get<DatabaseConfig>('get/database/config');
+        expect(JSON.stringify(config)).toEqual(JSON.stringify(expectConfig));
+        done();
+      } catch (e) {
+        console.log(e);
+      }
 
-      await expect(config).toEqual(expectConfig);
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-
+    }, 100);
   });
 
   it('should set config', async () => {
-    let config: DatabaseConfig = {
-      host: 'localhost',
-      port: '3306',
-      username: 'root',
-      password: '00005252',
-      database: 'angular'
-    };
-    config = Object.assign(new DatabaseConfig(), config);
 
-    await component.setConfig(config);
+
+    component.setConfig(config);
 
     expect(component.loadingFinished).toBe(true);
-    expect(config).toEqual(component.config);
+    expect(JSON.stringify(config)).toEqual(JSON.stringify(component.config));
   });
 
   it('should show toastr Message', async () => {
-    const config: DatabaseConfig = {
-      host: 'localhost',
-      port: '3306',
-      username: 'root',
-      password: '00005252',
-      database: 'angular'
-    };
 
     await component.setConfig(config);
     await component.saveConfig();

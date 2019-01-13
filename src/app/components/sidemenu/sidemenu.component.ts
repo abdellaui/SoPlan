@@ -39,7 +39,6 @@ export class SidemenuComponent implements OnInit {
       title: I18n.resolve('menu_person'),
       icon: 'nb-person',
       link: '/logged/person/list'
-
     },
     {
       title: I18n.resolve('menu_school'),
@@ -72,7 +71,7 @@ export class SidemenuComponent implements OnInit {
     },
     {
       title: I18n.resolve('menu_logout'),
-      icon: 'nb-close-circled',
+      icon: 'nb-power',
       link: '/login/',
     }
   ];

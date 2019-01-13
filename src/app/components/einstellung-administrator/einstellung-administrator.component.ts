@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
 import { AdminLogin } from '@models/configs.class';
+import { I18n } from '@models/translation/i18n.class';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
-import { I18n } from '@models/translation/i18n.class';
 
 @Component({
   selector: 'app-einstellung-administrator',
@@ -55,7 +55,7 @@ export class EinstellungAdministratorComponent implements OnInit {
       return;
     }
     this.ipc.send('post/administrator', <AdminLogin>{ username: this.username, password: window.btoa(this.newpsw) });
-    this.toastr.info(I18n.resolve('toastr_usderdata_saved_for_next_session'), I18n.resolve('toastr_save_success'));
+    this.toastr.info(I18n.resolve('toastr_userdata_saved_for_next_session'), I18n.resolve('toastr_save_success'));
     this.auth.logout();
   }
 

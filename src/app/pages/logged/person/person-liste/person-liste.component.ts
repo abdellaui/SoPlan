@@ -93,8 +93,7 @@ export class PersonListeComponent implements OnInit {
 
     ipc.on('post/participant', (event: any, result: any) => {
       if (ErrorRequest.hasError(result)) {
-        this.toastr.warning(I18n.resolve('toastr_person_could_not_be_added'));
-        console.log(result.error, result.input);
+        this.toastr.warning(I18n.resolve('toastr_person_could_not_be_added') + JSON.stringify(result.error));
       }
     });
   }

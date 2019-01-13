@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
+import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
 import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
+import { Participant, ParticipantSchema } from '@entity/participant/participant.entity';
+import { Person, PersonSchema } from '@entity/person/person.entity';
 import { EntitySelectSettings, FormBuilderSettings, SmartTableConfig } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
 import { I18n } from '@models/translation/i18n.class';
 import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { ToastrService } from 'ngx-toastr';
 
+enum PersonView { TABLE, PROCESS }
 @Component({
   selector: 'app-event-editor',
   templateUrl: './event-editor.component.html',
@@ -112,45 +117,102 @@ export class EventEditorComponent implements OnInit {
     ]
   };
 
-  /*
   public st_participant_config: SmartTableConfig = {
     settings: {
-      header: 'Teilnehmer',
+      header: I18n.resolve('participants'),
       showCreateButton: true,
-      createButtonText: 'Neue Teilnehmer'
+      createButtonText: I18n.resolve('participant_new_participant')
     },
     slotUrls: {
-      getUrl: 'get/classroom/by/venueId',
-      postUrl: 'post/classroom',
-      deleteUrl: 'delete/classroom',
-      editorUrl: '/logged/venue/classroom/editor/0/',
-      getParam: 0
+      getUrl: 'get/event/participants',
+      postUrl: 'post/participant',
+      deleteUrl: 'delete/participant',
+      editorUrl: '/logged/event/participant/editor/0/',
+      getParam: { id: 10 }
     },
     instanceMap: {
-      '': Classroom.prototype,
-      'room': Room.prototype
+      '': Participant.prototype,
+      'person': Person.prototype,
+      'group': Group.prototype,
+      'bedroom': Bedroom.prototype
     },
     memberList: [
       {
-        prefix: '',
-        schema: ClassroomSchema,
-        members: ['identifier']
+        prefix: 'person@',
+        schema: PersonSchema,
+        members: ['firstname', 'surname'],
+        extendedSettings: {
+          firstname: {
+            editable: false
+          },
+          surname: {
+            editable: false
+          }
+        }
       },
       {
-        prefix: 'room@',
+        prefix: '',
+        schema: ParticipantSchema,
+        members: ['role', 'grade']
+      },
+      {
+        prefix: 'group@',
+        schema: GroupSchema,
+        members: ['name'],
+        extendedSettings: {
+          name: {
+            editable: false
+          }
+        }
+      },
+      {
+        prefix: 'bedroom@',
+        schema: BedroomSchema,
+        members: ['type'],
+        extendedSettings: {
+          type: {
+            editable: false
+          }
+        }
+      }, {
+        prefix: 'bedroom@room@',
         schema: RoomSchema,
-        members: ['floor', 'corridor', 'number', 'name', 'capacity']
+        members: ['floor', 'corridor', 'number', 'name'],
+        extendedSettings: {
+          floor: {
+            editable: false
+          },
+          corridor: {
+            editable: false
+          },
+          number: {
+            editable: false
+          },
+          name: {
+            editable: false
+          }
+        }
+      }
+    ],
+    customActions: [
+      {
+        name: 'process_user',
+        icon: 'nb-email',
+        tooltip: I18n.resolve('person_process')
       }
     ]
   };
-*/
+  public selectedPerson: any[] = [];
+  public currentView: PersonView;
+
 
   constructor(
     private route: ActivatedRoute,
     private ipc: IpcRendererService,
     private toastr: ToastrService,
     private currentEventService: CurrentEventService,
-    private router: Router
+    private router: Router,
+    private history: HistoryMemoryService
   ) { }
 
   ngOnInit() {
@@ -185,8 +247,9 @@ export class EventEditorComponent implements OnInit {
     this.st_group_config.slotUrls.getParam = { id: appendingId };
     this.st_group_config.slotUrls.editorUrl = `/logged/event/group/editor/${appendingId}/`;
 
-    // this.st_participant_config.slotUrls.getParam = { id: appendingId };
-    // this.st_participant_config.slotUrls.editorUrl = `/logged/event/participant/editor/${appendingId}/`;
+    this.st_participant_config.slotUrls.getParam = { id: appendingId };
+    this.st_participant_config.slotUrls.editorUrl = `/logged/event/participant/editor/${appendingId}/`;
+
   }
 
   checkFinished(event: any, member: string) {
@@ -221,5 +284,28 @@ export class EventEditorComponent implements OnInit {
       }
     });
 
+  }
+  showUserProcess(): boolean {
+    return (this.selectedPerson.length > 0 && this.currentView === PersonView.PROCESS);
+  }
+  processUser(data: Participant[]): void {
+    this.history.enabledBack = false;
+    this.currentView = PersonView.PROCESS;
+    this.selectedPerson = data.map((part: Participant) => {
+      return Object.assign(part, { mail: part.person.communication.mail });
+    });
+  }
+
+  backToTableView(): void {
+    this.currentView = PersonView.TABLE;
+    this.selectedPerson = [];
+    this.history.enabledBack = true;
+  }
+
+  onCustomAction(event: any): void {
+
+    if (event.action === 'process_user') {
+      this.processUser(event.data);
+    }
   }
 }

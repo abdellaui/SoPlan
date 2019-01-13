@@ -48,8 +48,8 @@ export class EntityCommentComponent implements OnInit {
         title: I18n.resolve('entity_comment_context'),
         editor: { type: 'textarea' }
       },
-      updatedDate: {
-        title: I18n.resolve('entity_comment_last_updated'),
+      createDate: {
+        title: I18n.resolve('entity_comment_created_date'),
         type: 'custom',
         renderComponent: DateRendererComponent,
         editable: false
@@ -109,7 +109,7 @@ export class EntityCommentComponent implements OnInit {
     this.commentIsAccaptable = event;
   }
 
-  dataToEntity(data): any {
+  dataToEntity(data: any): any {
     return Object.assign(new Comment(), data);
   }
 

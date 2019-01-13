@@ -200,7 +200,6 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
   }
 
   renderSelectionComp(): void {
-    console.log('renderSelectionComp');
     this.selection.getElements();
 
   }

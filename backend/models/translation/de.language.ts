@@ -19,7 +19,7 @@ const de = {
   entity_comments: 'Bemerkungen',
   entity_comment_add: 'Bemerkung hinzufügen',
   entity_comment_context: 'Inhalt',
-  entity_comment_last_updated: 'Bearbeitet am',
+  entity_comment_created_date: 'Erstellt am',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
   communication_phone_warning: 'Es sind nur deutsche Telefonnummern gültig!',
@@ -264,7 +264,7 @@ const de = {
   toastr_username_short: 'Benutzername ist zu kurz.',
   toastr_save_success: 'Erfolgreich gespeichert.',
   toastr_userdata_saved_for_next_session: 'Benutzerdaten sind für die nächste Sitzung gespeichert.',
-
+  toastr_usderdata_saved_for_next_session: '',
   pug_preview: 'Vorschau',
   pug_select_pug_file: 'Wähle PUG Datei aus',
   pug_files: 'Dateien',

@@ -218,6 +218,8 @@
     </div>
 
     <div class="col-sm-12">
+      <app-table [config]="st_group_config"></app-table>
+
       <app-table *ngIf="!showUserProcess()" [config]="st_config" (action)="onCustomAction($event)" (dataChanged)="reload()"></app-table>
 
       <ng-container *ngIf="showUserProcess()">
@@ -231,6 +233,7 @@
 
       </ng-container>
     </div>
+
   </div>
 </div>
 <div *ngIf="showHelp">

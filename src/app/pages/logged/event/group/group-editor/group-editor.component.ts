@@ -47,7 +47,8 @@ export class GroupEditorComponent implements OnInit {
     listTitleMembers: [{ room: ['floor', 'corridor', 'number', 'name'] }],
     header: 'Klassenräume',
     maxSelection: 1,
-    showCreateButton: false,
+    showCreateButton: true,
+    editorUrl: '/logged/venue/classroom/editor/0/',
     getParams: { id: 0 }
   };
 

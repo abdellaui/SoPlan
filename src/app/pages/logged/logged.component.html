@@ -1,9 +1,9 @@
 <nb-layout>
-  <nb-sidebar tag="left" state="compacted">
+  <nb-sidebar left tag="left" state="compacted" start responsive>
     <app-sidemenu></app-sidemenu>
   </nb-sidebar>
 
-  <nb-sidebar right tag="right" state="collapsed">
+  <nb-sidebar right tag="right" state="collapsed" end fixed>
     <nb-list>
       <nb-list-item class="clickable" *ngFor="let item of items" [class.selected]="currentItem.id === item.id">
         <nb-user (click)="setCurrentEvent(item)" [name]="item.name" [title]="item.hosting.name">
@@ -16,7 +16,7 @@
       </nb-list-item>
     </nb-list>
   </nb-sidebar>
-  <nb-sidebar right tag="lang" state="collapsed">
+  <nb-sidebar right tag="lang" state="collapsed" end fixed>
     <nb-list>
       <nb-list-item class="clickable" *ngFor="let item of languagesKey" (click)="onChangeLanguage(item)"
         [class.selected]="language === item">

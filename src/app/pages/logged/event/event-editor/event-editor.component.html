@@ -14,9 +14,24 @@
     <!-- group & participants lists-->
     <div *ngIf="this.form_event.id" class="col-lg-12">
       <app-table [config]="st_group_config"></app-table>
-      <!--
-        <app-table [config]="st_participant_config"></app-table>
-      -->
+
+
+
+
+      <app-table *ngIf="!showUserProcess()" [config]="st_participant_config" (action)="onCustomAction($event)"
+        (dataChanged)="reload()"></app-table>
+
+      <ng-container *ngIf="showUserProcess()">
+        <nb-card>
+          <nb-card-body>
+            {{_i18n.resolve('person_list_component_show_user_process_text')}}
+            <button hero status="danger" nbButton class="pull-right clickable" (click)="backToTableView()">{{_i18n.resolve('person_list_component_cancel')}}</button>
+          </nb-card-body>
+        </nb-card>
+        <app-pug-select [data]="selectedPerson"></app-pug-select>
+
+      </ng-container>
+
     </div>
 
   </div>

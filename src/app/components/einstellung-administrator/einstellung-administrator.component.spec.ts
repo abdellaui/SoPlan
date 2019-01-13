@@ -6,18 +6,19 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
+import { I18n } from '@models/translation/i18n.class';
 import { NgxElectronModule } from 'ngx-electron';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungAdministratorComponent } from './einstellung-administrator.component';
-import { I18n } from '@models/translation/i18n.class';
 
 describe('EinstellungAdministratorComponent', () => {
   let component: EinstellungAdministratorComponent;
   let fixture: ComponentFixture<EinstellungAdministratorComponent>;
   let ipc: IpcRendererService;
   let toastr: ToastrService;
+  let oldConfig: any;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -52,6 +53,25 @@ describe('EinstellungAdministratorComponent', () => {
     toastr = TestBed.get(ToastrService);
   }));
 
+  beforeAll(async () => {
+    try {
+
+      oldConfig = await ipc.get('get/administrator');
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  });
+
+  afterAll(async () => {
+    try {
+      await this.ipc.get('post/administrator', oldConfig);
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  });
+
   beforeEach(() => {
     fixture = TestBed.createComponent(EinstellungAdministratorComponent);
     component = fixture.componentInstance;
@@ -65,7 +85,7 @@ describe('EinstellungAdministratorComponent', () => {
 
   // btoa -> encode String to base64
   // atob -> decode base64 to string
-  it('should save config', async () => {
+  it('should save config', async (done) => {
     const newUsername = 'admin';
     const newPassword = 'password';
     let newConfig: { username: string, password: string };
@@ -78,14 +98,16 @@ describe('EinstellungAdministratorComponent', () => {
       component.newpsw = newPassword;
       component.newpsw2 = newPassword;
 
-      await component.saveConfig();
 
-      await ipc.get('get/administrator').then((res: { username: string, password: string }) => {
-        newConfig = res;
-      });
+      component.saveConfig();
+      setTimeout(async () => {
+        await ipc.get('get/administrator').then((res: { username: string, password: string }) => {
+          newConfig = res;
+          expect(newConfig).toEqual({ password: window.btoa(newPassword), username: newUsername });
+          done();
+        });
+      }, 100);
     });
-
-    await expect(newConfig).toEqual({ password: window.btoa(newPassword), username: newUsername });
   });
 
   it('should check the password', async () => {

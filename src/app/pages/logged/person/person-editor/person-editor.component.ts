@@ -129,7 +129,6 @@ export class PersonEditorComponent implements OnInit {
 
     this.ipc.get('post/person', this.form_person).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
-        console.log(result);
         this.toastr.info(I18n.resolve('person_success'));
         this.router.navigateByUrl('/logged/person/editor/' + result.id);
       } else {

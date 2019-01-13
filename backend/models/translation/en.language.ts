@@ -19,7 +19,7 @@ const en = {
   entity_comments: 'Comment',
   entity_comment_add: 'Add comment',
   entity_comment_context: 'Content',
-  entity_comment_last_updated: 'Last updated.',
+  entity_comment_created_date: 'Created',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
   communication_phone_warning: 'Only german phone numbers are allowed.',

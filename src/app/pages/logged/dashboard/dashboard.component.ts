@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RoomSchema } from '@entity/_room/room.entity';
+import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
-import { Classroom } from '@entity/classroom/classroom.entity';
-import { Event } from '@entity/event/event.entity';
+import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
+import { Event, EventSchema } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { Participant, ParticipantRole, ParticipantSchema } from '@entity/participant/participant.entity';
 import { Person, PersonGender, PersonSchema } from '@entity/person/person.entity';
@@ -24,6 +24,71 @@ enum PersonView { TABLE, PROCESS }
 export class DashboardComponent implements OnInit {
   public _i18n = I18n; // for accessing in html
 
+  public st_group_config: SmartTableConfig = {
+    settings: {
+      header: 'Gruppen',
+      showCreateButton: true,
+      createButtonText: I18n.resolve('group_new_group')
+    },
+    slotUrls: {
+      getUrl: 'get/event/groups',
+      postUrl: 'post/group',
+      deleteUrl: 'delete/group',
+      editorUrl: '/logged/event/group/editor/0/',
+      getParam: { id: 0 }
+    },
+    instanceMap: {
+      '': Group.prototype,
+      'event': Event.prototype,
+      'classroom': Classroom.prototype,
+      'room': Room.prototype,
+    },
+    memberList: [
+      {
+        prefix: '',
+        schema: GroupSchema,
+        members: ['name', 'capacity']
+      },
+      {
+        prefix: 'event@',
+        schema: EventSchema,
+        members: ['name'],
+        extendedSettings: {
+          name: {
+            editable: false
+          }
+        }
+      },
+      {
+        prefix: 'classroom@',
+        schema: ClassroomSchema,
+        members: ['identifier'],
+        extendedSettings: {
+          identifier: {
+            editable: false
+          }
+        }
+      }, {
+        prefix: 'classroom@room@',
+        schema: RoomSchema,
+        members: ['floor', 'corridor', 'number', 'name'],
+        extendedSettings: {
+          floor: {
+            editable: false
+          },
+          corridor: {
+            editable: false
+          },
+          number: {
+            editable: false
+          },
+          name: {
+            editable: false
+          }
+        }
+      }
+    ]
+  };
   public st_config: SmartTableConfig = {
     settings: {
       header: I18n.resolve('participants'),
@@ -315,7 +380,6 @@ export class DashboardComponent implements OnInit {
       } else {
         this.grade_stats[grade] = this.grade_stats[grade] + 1;
       }
-      console.log(participant.person.school);
       const school = (participant.person.school) ? participant.person.school.name : I18n.resolve('dashboard_no_school');
       if (!this.school_stats[school]) {
         this.school_stats[school] = 1;
@@ -426,8 +490,11 @@ export class DashboardComponent implements OnInit {
   setEvent(ev: Event): void {
     if (ev !== null && ev.id != null) {
 
-      this.st_config.slotUrls.editorUrl = '/logged/event/participant/editor/' + ev.id + '/';
+      this.st_group_config.slotUrls.getParam = { id: ev.id };
+      this.st_group_config.slotUrls.editorUrl = `/logged/event/group/editor/${ev.id}/`;
+
       this.st_config.slotUrls.getParam = { id: ev.id };
+      this.st_config.slotUrls.editorUrl = `/logged/event/participant/editor/${ev.id}/`;
 
       this.loading = true;
       this.currentEvent = ev;

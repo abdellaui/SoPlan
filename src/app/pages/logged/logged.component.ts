@@ -49,7 +49,7 @@ export class LoggedComponent implements OnInit {
     }
     if (!initial) {
       this.currentEventsService.setEvent(this.currentItem);
-      // setTimeout(() => this.toggleRight(), 500);
+      this.toggleRight();
 
     }
   }
@@ -57,19 +57,16 @@ export class LoggedComponent implements OnInit {
     this.language = localStorage.getItem('lang') || 'de';
   }
 
-  public toggleLeft(): boolean {
+  public toggleLeft(): void {
     this.sidebarService.toggle(true, 'left');
-    return false;
   }
-  public toggleRight(): boolean {
+  public toggleRight(): void {
     this.sidebarService.collapse('lang');
     this.sidebarService.toggle(false, 'right');
-    return false;
   }
-  public toggleLang(): boolean {
+  public toggleLang(): void {
     this.sidebarService.collapse('right');
     this.sidebarService.toggle(false, 'lang');
-    return false;
   }
   public canNotGoForward(): boolean {
     return !this.historyMemory.getForwardState();

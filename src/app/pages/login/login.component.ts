@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   public _i18n = I18n;
   admin: AdminLogin = new AdminLogin();
-  remember = false;
+  remember = true;
 
   constructor(private auth: AuthenticationGuard) { }
 
