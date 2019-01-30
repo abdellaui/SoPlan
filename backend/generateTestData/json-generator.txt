@@ -1,0 +1,160 @@
+{
+  venue: [
+       '{{repeat(20)}}',
+        {
+          name: '{{company()}} Ort',
+          contactPerson: '{{firstName()}}',
+          communication: {
+            phone: '{{phone("02xx 2xxxxx")}}',
+            mobile:  '{{phone("017x 1xxxxxx")}}',
+            mail: '{{email()}}'
+          },
+          location: {
+            street: '{{street()}}',
+            subThoroughfare: function(tags){return tags.integer(1, 999).toString();},
+            postalcode: function(tags){return tags.integer(10000, 99999).toString();},
+            city: '{{random("Bochum", "Essen", "Gelsenkirchen", "Herne", "Dortmund", "Gladbeck", "Marl")}}'
+          },
+          comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ],
+          bedroom:[
+                '{{repeat(20,30)}}',
+                {
+                  type: '{{random("s", "d", "g")}}',
+                  room: {
+                    floor: function(tags){return tags.integer(1, 999).toString();},
+                    corridor: '{{company().toUpperCase().substr(0,2)}}',
+                    number: '{{integer(1, 999)}}',
+                    name: '{{company().toUpperCase().substr(0,3)}}',
+                    capacity: '{{integer(3, 9)}}'
+                  },
+                            comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ]
+                }
+          ],
+        classroom:[
+              '{{repeat(20,30)}}',
+              {
+                identifier: '{{company().toUpperCase().substr(0,1)}}{{index()}}',
+                room: {
+                  floor: function(tags){return tags.integer(1, 999).toString();},
+                  corridor: '{{company().toUpperCase().substr(0,2)}}',
+                  number: '{{integer(1, 999)}}',
+                  name: '{{company().toUpperCase().substr(0,3)}}',
+                  capacity: '{{integer(3, 9)}}'
+                },
+                          comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ]
+              }
+        ]
+        }
+  ],
+  school: [
+     '{{repeat(15,25)}}',
+    {
+      name: '{{company()}} Schule',
+      location: {
+        street: '{{street()}}',
+        subThoroughfare: function(tags){return tags.integer(1, 999).toString();},
+        postalcode: function(tags){return tags.integer(10000, 99999).toString();},
+        city: '{{random("Bochum", "Essen", "Gelsenkirchen", "Herne", "Dortmund", "Gladbeck", "Marl")}}'
+      },
+                comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ],
+    person: [
+    '{{repeat(10, 20)}}',
+    {
+      firstname: '{{firstName()}}',
+      surname: '{{surname()}}',
+      gender: '{{random("m", "w", "d")}}',
+      birthDate: '{{date(new Date(1995, 0, 1), new Date(2004, 0, 1), "YYYY-MM-ddThh:mm:ss")}}',
+      foodIntolerance: '',
+      communication: {
+        phone: '{{phone("02xx 2xxxxx")}}',
+        mobile:  '{{phone("017x 1xxxxxx")}}',
+        mail: '{{email()}}'
+      },
+      location: {
+        street: '{{street()}}',
+        subThoroughfare: function(tags){return tags.integer(1, 999).toString();},
+        postalcode: function(tags){return tags.integer(10000, 99999).toString();},
+        city: '{{random("Bochum", "Essen", "Gelsenkirchen", "Herne", "Dortmund", "Gladbeck", "Marl")}}'
+      },
+                comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ]
+      }
+  ]
+    }
+
+  ],
+  event: [
+     '{{repeat(10,15)}}',
+     {
+      name: '{{company()}} Akademie',
+      startsDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 20), "YYYY-MM-ddThh:mm:ss")}}',
+      endsDate: '{{date(new Date(2019, 1, 25), new Date(2019, 2, 0), "YYYY-MM-ddThh:mm:ss")}}',
+                      comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ],
+        group: [
+            '{{repeat(10,20)}}',
+            {
+              name: '{{company().toUpperCase().substr(0,3)}}',
+              capacity: '{{integer(3, 9)}}',
+                      comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ]
+            }
+        ],
+        participant: [
+            '{{repeat(70,150)}}',
+            {
+              role: '{{random("s", "d", "x")}}',
+              grade: '{{integer(5, 13)}}',
+                      comments:[
+         '{{repeat(0,5)}}',
+            {
+            content: '{{lorem()}}',
+            createdDate: '{{date(new Date(2019, 0, 1),new Date(2019, 1, 5), "YYYY-MM-ddThh:mm:ss")}}'
+            }
+          ]
+            }
+        ]
+     }
+
+  ]
+}
+

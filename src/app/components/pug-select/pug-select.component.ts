@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PugSelectComponent implements OnInit, AfterViewInit {
   @ViewChild('dropArea') dropArea: ElementRef;
+  @ViewChild('scrollElement') scrollElement: ElementRef;
   @ViewChild('selection') selection: EntitySelectComponent;
   @Input() data: any[] = [];
 
@@ -41,9 +42,14 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
     maxSelection: 1,
     showCreateButton: false
   };
-  constructor(public ipc: IpcRendererService, public toastr: ToastrService, public electron: ElectronService) { }
+
+  public scrollElementOffsetTop: number;
+  constructor(public ipc: IpcRendererService, public toastr: ToastrService, public electron: ElectronService) {
+  }
 
   ngOnInit() {
+    this.scrollElementOffsetTop = this.scrollElement.nativeElement.offsetTop;
+    this.scrollToView();
     this.maxIndex = this.data.length;
 
     this.ipc.on('put/pdf', (event: any, arg: any) => {
@@ -267,12 +273,16 @@ export class PugSelectComponent implements OnInit, AfterViewInit {
       this.actionIsRunning = true;
       this.enableFullscreen = false;
       this.actionStatus = { count: 0, channel: channel };
-      setTimeout(() => window.scrollTo(0, document.getElementById('loadingArea').offsetTop), 8);
+      this.scrollToView();
       setTimeout(() => {
         for (const data of this.data) {
           this.ipc.send(channel, { pugname: selection, locals: data, ...optional });
         }
-      }, 10);
+      }, 200);
     }
+  }
+
+  scrollToView(): void {
+    window.scrollTo(0, this.scrollElementOffsetTop);
   }
 }

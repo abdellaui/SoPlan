@@ -16,8 +16,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./entity-comment.component.scss']
 })
 
-// TODO: die Komponente soll erst auf comments zugreifen, wenn es defined ist !
-
 export class EntityCommentComponent implements OnInit {
   @Input() entity: any;
   @Input() entityPostUrl: string;
@@ -25,7 +23,7 @@ export class EntityCommentComponent implements OnInit {
   commentIsAccaptable = false;
 
   public _i18n = I18n;
-  public uniqueName;
+  public uniqueName: string;
 
   public form_comment: Comment = new Comment();
   public form_commentSchema = CommentSchema;
@@ -62,15 +60,15 @@ export class EntityCommentComponent implements OnInit {
     },
     edit: {
       confirmSave: true,
-      editButtonContent: '<i class="nb-edit" title="Bearbeiten"></i>',
+      editButtonContent: '<i class="nb-edit" title="' + I18n.resolve('table_edit') + '"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
     },
     delete: {
       confirmDelete: true,
-      deleteButtonContent: '<i class="nb-trash" title="Löschen"></i>',
+      deleteButtonContent: '<i class="nb-trash" title="' + I18n.resolve('table_delete') + '"></i>',
     },
-    noDataMessage: 'Keine Daten vorhanden!',
+    noDataMessage: I18n.resolve('table_no_data_warning'),
     pager: {
       display: false  // sonst wählt multi select by all nur die jenigen die auf der seite zusehen sind
     }

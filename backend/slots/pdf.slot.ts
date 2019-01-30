@@ -64,73 +64,85 @@ export function init() {
 
 
   on('put/pdf', (event: any, arg: { pugname: string, locals: Object, filename?: string }) => {
-    printPugToPdf({
-      pugOptions: {
-        filePath: path.join(appDataPugPath, arg.pugname),
-        locals: arg.locals
-      },
-      printOptions: _pO_PDF
-    }).then((data: any) => {
-      const now = new Date();
+    try {
+      printPugToPdf({
+        pugOptions: {
+          filePath: path.join(appDataPugPath, arg.pugname),
+          locals: arg.locals
+        },
+        printOptions: _pO_PDF
+      }).then((data: any) => {
+        const now = new Date();
 
-      const splitPugName = arg.pugname.split('.');
-      const pdfFileDir = path.join(appDataPugPath, dateToString(now), splitPugName[0]);
+        const splitPugName = arg.pugname.split('.');
+        const pdfFileDir = path.join(appDataPugPath, dateToString(now), splitPugName[0]);
 
-      fs.ensureDir(pdfFileDir)
-        .then(() => {
-          const pdfFilePath = (arg.filename)
-            ? path.join(pdfFileDir, arg.filename)
-            : path.join(pdfFileDir, now.getTime().toString() + '.pdf');
+        fs.ensureDir(pdfFileDir)
+          .then(() => {
+            const pdfFilePath = (arg.filename)
+              ? path.join(pdfFileDir, arg.filename)
+              : path.join(pdfFileDir, now.getTime().toString() + '.pdf');
 
-          fs.writeFile(pdfFilePath, data, (error: any) => {
-            if (error) {
-              send(event, 'put/pdf', ErrorRequest.create(error, arg));
-            } else {
-              send(event, 'put/pdf', { file: pdfFilePath, input: arg });
-            }
+            fs.writeFile(pdfFilePath, data, (error: any) => {
+              if (error) {
+                send(event, 'put/pdf', ErrorRequest.create(error, arg));
+              } else {
+                send(event, 'put/pdf', { file: pdfFilePath, input: arg });
+              }
+            });
+          })
+          .catch((error: any) => {
+            send(event, 'put/pdf', ErrorRequest.create(error, arg));
           });
-        })
-        .catch((error: any) => {
-          send(event, 'put/pdf', ErrorRequest.create(error, arg));
-        });
 
 
-    }).catch((error: any) => {
-      send(event, 'put/pdf', ErrorRequest.create(error, arg));
-    });
+      }).catch((error: any) => {
+        send(event, 'put/pdf', ErrorRequest.create(error, arg));
+      });
+    } catch (e) {
+      send(event, 'put/pdf', ErrorRequest.create(e, arg));
+    }
   });
 
   on('put/pdf/print', (event: any, arg: { pugname: string, locals: Object, filename?: string }) => {
-    printPug({
-      pugOptions: {
-        filePath: path.join(appDataPugPath, arg.pugname),
-        locals: arg.locals
-      },
-      printOptions: {
-        silent: true,
-        printBackground: false,
-        deviceName: Settings.get('printer')
-      }
-    }).then(() => {
-      send(event, 'put/pdf/print', { input: arg });
-    }).catch((error: any) => {
-      send(event, 'put/pdf/print', ErrorRequest.create(error, arg));
-    });
+    try {
+      printPug({
+        pugOptions: {
+          filePath: path.join(appDataPugPath, arg.pugname),
+          locals: arg.locals
+        },
+        printOptions: {
+          silent: true,
+          printBackground: false,
+          deviceName: Settings.get('printer')
+        }
+      }).then(() => {
+        send(event, 'put/pdf/print', { input: arg });
+      }).catch((error: any) => {
+        send(event, 'put/pdf/print', ErrorRequest.create(error, arg));
+      });
+    } catch (e) {
+      send(event, 'put/pdf/print', ErrorRequest.create(e, arg));
+    }
   });
 
 
   on('get/pdf/buffer', (event: any, arg: { pugname: string, locals: Object }) => {
-    printPugToPdf({
-      pugOptions: {
-        filePath: path.join(appDataPugPath, arg.pugname),
-        locals: arg.locals
-      },
-      printOptions: _pO_PDF
-    }).then((data: any) => {
-      send(event, 'get/pdf/buffer', { input: arg, buffer: data });
-    }).catch((error: any) => {
-      send(event, 'get/pdf/buffer', ErrorRequest.create(error, arg));
-    });
+    try {
+      printPugToPdf({
+        pugOptions: {
+          filePath: path.join(appDataPugPath, arg.pugname),
+          locals: arg.locals
+        },
+        printOptions: _pO_PDF
+      }).then((data: any) => {
+        send(event, 'get/pdf/buffer', { input: arg, buffer: data });
+      }).catch((error: any) => {
+        send(event, 'get/pdf/buffer', ErrorRequest.create(error, arg));
+      });
+    } catch (e) {
+      send(event, 'put/pdf/buffer', ErrorRequest.create(e, arg));
+    }
   });
 
   on('get/pdf/fullscreen', (event: any, arg: { filename: string }) => {
@@ -138,7 +150,7 @@ export function init() {
     end(event);
   });
 
-  on('get/pugfolder', (event: any, arg: { pugname: string }) => {
+  on('get/pugfolder', (event: any, _: any) => {
     shell.openItem(appDataPugPath);
     end(event);
   });

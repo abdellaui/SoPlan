@@ -293,5 +293,8 @@ const en = {
   confirm_title: 'Attention please!',
 
   thx_to_this_nice_guys: 'Developer Team',
+
+  no_event_selected_name: 'None',
+  no_event_selected_title: ' ',
 };
 export { en };

@@ -19,6 +19,7 @@ export class SidemenuComponent implements OnInit {
     {
       title: I18n.resolve('menu_location'),
       icon: 'nb-location',
+      expanded: true,
       children: [
         {
           title: I18n.resolve('menu_location'),
@@ -49,6 +50,7 @@ export class SidemenuComponent implements OnInit {
     {
       title: I18n.resolve('menu_event'),
       icon: 'nb-layout-default',
+      expanded: true,
       children: [
         {
           title: I18n.resolve('menu_event'),

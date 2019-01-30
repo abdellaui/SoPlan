@@ -5,7 +5,8 @@ import { Participant } from './participant.entity';
 export function init() {
 
   on('get/participant/all', (event: any) => {
-    Participant.find().then((result: Participant[]) => {
+    Participant.findAll().then((result: Participant[]) => {
+      console.log(result);
       send(event, 'get/participant/all', result);
     }).catch(e => {
       send(event, 'get/participant/all', ErrorRequest.create(e));
@@ -13,7 +14,7 @@ export function init() {
   });
 
   on('get/participant/by/id', (event: any, arg: number) => {
-    Participant.findOneOrFail(arg).then((result: Participant) => {
+    Participant.findOnePerformant(arg).then((result: Participant) => {
       send(event, 'get/participant/by/id', result);
     }).catch(e => {
       send(event, 'get/participant/by/id', ErrorRequest.create(e, arg));

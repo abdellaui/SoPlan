@@ -51,7 +51,8 @@ export class Database {
         Group,
         Comment,
       ],
-      synchronize: true
+      synchronize: true,
+      logging: ['error']
     };
 
     createConnection(this.options).then((conn: Connection) => {

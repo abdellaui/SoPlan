@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Room, RoomSchema } from '@entity/_room/room.entity';
 import { Bedroom, BedroomSchema } from '@entity/bedroom/bedroom.entity';
 import { Classroom, ClassroomSchema } from '@entity/classroom/classroom.entity';
-import { Event, EventSchema } from '@entity/event/event.entity';
+import { Event } from '@entity/event/event.entity';
 import { Group, GroupSchema } from '@entity/group/group.entity';
 import { Participant, ParticipantRole, ParticipantSchema } from '@entity/participant/participant.entity';
 import { Person, PersonGender, PersonSchema } from '@entity/person/person.entity';
@@ -48,16 +48,6 @@ export class DashboardComponent implements OnInit {
         prefix: '',
         schema: GroupSchema,
         members: ['name', 'capacity']
-      },
-      {
-        prefix: 'event@',
-        schema: EventSchema,
-        members: ['name'],
-        extendedSettings: {
-          name: {
-            editable: false
-          }
-        }
       },
       {
         prefix: 'classroom@',
@@ -417,23 +407,19 @@ export class DashboardComponent implements OnInit {
     this.participants.forEach(participant => {
       if (participant.role === ParticipantRole.DOZENT) {
         this.stat_num_role_d++;
-      } else
-        if (participant.role === ParticipantRole.SCHUELER) {
-          this.stat_num_role_s++;
-        } else
-          if (participant.role === ParticipantRole.SCHUELERDOZENT) {
-            this.stat_num_role_sd++;
-          }
+      } else if (participant.role === ParticipantRole.SCHUELER) {
+        this.stat_num_role_s++;
+      } else if (participant.role === ParticipantRole.SCHUELERDOZENT) {
+        this.stat_num_role_sd++;
+      }
 
       if (participant.person.gender === PersonGender.FEMALE) {
         this.stat_num_gender_f++;
-      } else
-        if (participant.person.gender === PersonGender.MALE) {
-          this.stat_num_gender_m++;
-        } else
-          if (participant.person.gender === PersonGender.DIVERSE) {
-            this.stat_num_gender_d++;
-          }
+      } else if (participant.person.gender === PersonGender.MALE) {
+        this.stat_num_gender_m++;
+      } else if (participant.person.gender === PersonGender.DIVERSE) {
+        this.stat_num_gender_d++;
+      }
     });
   }
   /****************************************************************** */

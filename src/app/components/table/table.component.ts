@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SmartTableConfig } from '@models/componentInput.class';
 import { ErrorRequest } from '@models/errorRequest.class';
@@ -8,6 +8,7 @@ import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service'
 import { validate, ValidationError } from 'class-validator';
 import * as Deepmerge from 'deepmerge';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Ng2SmartTableComponent } from 'ng2-smart-table/ng2-smart-table.component';
 import { ElectronService } from 'ngx-electron';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,6 +22,7 @@ import { DateRendererComponent } from './date-renderer/date-renderer.component';
 })
 
 export class TableComponent implements OnInit {
+  @ViewChild('table') table: Ng2SmartTableComponent;
   loadedFirstTime = false;
   settings = {
     selectMode: 'multi',
@@ -41,7 +43,8 @@ export class TableComponent implements OnInit {
     },
     noDataMessage: I18n.resolve('table_no_data_warning'),
     pager: {
-      display: false  // sonst wählt multi select by all nur die jenigen die auf der seite zusehen sind
+      display: true,
+      perPage: 10
     }
   };
 
@@ -52,7 +55,7 @@ export class TableComponent implements OnInit {
   public selectedData: any[] = []; // zwischenspeicher für auswahl
   public rememberIdOfDeleteError: number[] = [];
   public deletedCount = 0;
-  public uniqueName;
+  public uniqueName: string;
   @Output() action: EventEmitter<any> = new EventEmitter();
   @Output() dataChanged: EventEmitter<any> = new EventEmitter();
   @Input() config: SmartTableConfig;
@@ -111,6 +114,9 @@ export class TableComponent implements OnInit {
         })).then(() => {
           this.loadedFirstTime = true;
         });
+      } else {
+        this.toastr.error(I18n.resolve('something_went_wrong'));
+        this.loadedFirstTime = true;
       }
     });
 
@@ -358,7 +364,13 @@ export class TableComponent implements OnInit {
    * Auswahl wird intern abgespeichert
    */
   onSelectRow(event: any): void {
-    this.selectedData = event.selected;
+    if (this.table.isAllSelected) {
+      this.data.getAll().then((data: any) => {
+        this.selectedData = data;
+      }).catch((e: Error) => { console.log(e); });
+    } else {
+      this.selectedData = event.selected;
+    }
   }
 
   saveEntity(entity: any): void {

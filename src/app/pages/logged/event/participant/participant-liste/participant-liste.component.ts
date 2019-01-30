@@ -16,6 +16,7 @@ enum PersonView { TABLE, PROCESS }
   styleUrls: ['./participant-liste.component.scss']
 })
 export class ParticipantListeComponent implements OnInit {
+  public _i18n = I18n; // for accessing in html
   public selectedPerson: any[] = [];
   public currentView: PersonView;
 

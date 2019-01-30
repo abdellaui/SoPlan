@@ -141,7 +141,7 @@ export class SelectBox extends Element {
   constructor(options: Option[], readonly?: boolean, placeholder?: string) {
     super(ElementTypes.SelectBox, readonly);
     this.options = options;
-    this.placeholder = (placeholder) ? placeholder : I18n.resolve('form_choose'); // TODO: Localisation fehlt
+    this.placeholder = (placeholder) ? placeholder : I18n.resolve('form_choose');
   }
 
   getOptions(): Option[] {

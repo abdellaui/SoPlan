@@ -298,5 +298,8 @@ const de = {
   confirm_title: 'Achtung!',
 
   thx_to_this_nice_guys: 'Entwicklerteam',
+
+  no_event_selected_name: 'Keine',
+  no_event_selected_title: ' ',
 };
 export { de };

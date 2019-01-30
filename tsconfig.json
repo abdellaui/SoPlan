@@ -31,6 +31,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -44,10 +45,10 @@
   },
   "include": [
     "src/**/*",
-    "backend/**/*.entity.ts"
+    "backend/**/*.entity.ts",
   ],
   "exclude": [
     "node_modules",
-    "**/*.slot.ts",
+    "../**/*.slot.ts",
   ]
 }

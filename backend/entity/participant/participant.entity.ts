@@ -74,26 +74,51 @@ export class Participant extends BaseEntity {
   /**
    * STATIC METHODS
    */
-  static getByBedroom(searchId: number) {
-    // (this as any) fallback
-    return (this as any).find({ where: { bedroom: { id: searchId } } });
+  static getByBedroom(searchId: number): Promise<Participant[]> {
+    return Participant.findAll({ bedroom: { id: searchId } });
   }
 
-  static getByGroup(searchId: number) {
-    // (this as any) fallback
-    return (this as any).find({ where: { group: { id: searchId } } });
+  static getByGroup(searchId: number): Promise<Participant[]> {
+    return Participant.findAll({ group: { id: searchId } });
   }
 
-  static getByEvent(searchId: number) {
-    // (this as any) fallback
-    return (this as any).find({ where: { event: { id: searchId } } });
+  static getByEvent(searchId: number): Promise<Participant[]> {
+    return Participant.findAll({ event: { id: searchId } });
   }
 
-  static getByPerson(searchId: number) {
-    // (this as any) fallback
-    return (this as any).find({ where: { person: { id: searchId } } });
+  static getByPerson(searchId: number): Promise<Participant[]> {
+    return Participant.findAll({ person: { id: searchId } });
   }
 
+  /**
+   *  following methods are manual handwritten, because typeorm was unable
+   *  to create efficient queries for entity with much of eagier loading relations
+   */
+
+  static findAll(where?: any): Promise<Participant[]> {
+    // (this as any) fallback
+    return (this as any).createQueryBuilder('participant')
+      .leftJoinAndSelect('participant.person', 'person')
+      .leftJoinAndSelect('person.school', 'school')
+      .leftJoinAndSelect('participant.group', 'group')
+      .leftJoinAndSelect('participant.bedroom', 'bedroom')
+      .leftJoinAndSelect('participant.event', 'event')
+      .where(where)
+      .getMany();
+  }
+
+  static findOnePerformant(_id: number): Promise<Participant> {
+    // (this as any) fallback
+    return (this as any).createQueryBuilder('participant')
+      .leftJoinAndSelect('participant.comments', 'comment')
+      .leftJoinAndSelect('participant.person', 'person')
+      .leftJoinAndSelect('person.school', 'school')
+      .leftJoinAndSelect('participant.group', 'group')
+      .leftJoinAndSelect('participant.bedroom', 'bedroom')
+      .leftJoinAndSelect('participant.event', 'event')
+      .where({ participant: { id: _id } })
+      .getOne();
+  }
 
 }
 

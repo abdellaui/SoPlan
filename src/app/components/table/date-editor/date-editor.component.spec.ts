@@ -58,7 +58,6 @@ describe('DateEditorComponent', () => {
 
     const dataset = new DataSet([], {});
     component.cell = new Cell(new Date().toISOString(), new Row(0, 0, dataset), new Column('', {}, dataset), dataset);
-    // keine ahnung
     fixture.detectChanges();
   });
 

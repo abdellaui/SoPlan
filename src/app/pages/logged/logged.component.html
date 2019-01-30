@@ -1,5 +1,6 @@
 <nb-layout>
-  <nb-sidebar left tag="left" state="compacted" start responsive>
+  <nb-sidebar (mouseenter)="hoverSideMenu(true)" (mouseleave)="hoverSideMenu(false)" left tag="left" state="compacted"
+    start responsive>
     <app-sidemenu></app-sidemenu>
   </nb-sidebar>
 
@@ -11,7 +12,7 @@
       </nb-list-item>
 
       <nb-list-item class="clickable" [class.selected]="currentItem === defaultEvent">
-        <nb-user (click)="setCurrentEvent(null)" name="Keine" title="...">
+        <nb-user (click)="setCurrentEvent(null)" [name]="_i18n.resolve('no_event_selected_name')" [title]="_i18n.resolve('no_event_selected_title')">
         </nb-user>
       </nb-list-item>
     </nb-list>
@@ -29,8 +30,8 @@
     <div class="header-container">
 
       <div class="header-row left">
+        <img src="/assets/icons/favicon.png" width="40" height="40" alt="rub" class="logoTopHeader img-responsive">
         <nb-actions class="menuActions" size="medium">
-          <nb-action icon="nb-menu" (click)="toggleLeft()"></nb-action>
           <nb-action icon="nb-arrow-left" [disabled]="canNotGoBackward()" (click)="goHistoryBackward()"></nb-action>
           <nb-action icon="nb-arrow-right" [disabled]="canNotGoForward()" (click)="goHistoryForward()"></nb-action>
         </nb-actions>
