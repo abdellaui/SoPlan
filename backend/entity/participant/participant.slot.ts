@@ -6,7 +6,6 @@ export function init() {
 
   on('get/participant/all', (event: any) => {
     Participant.findAll().then((result: Participant[]) => {
-      console.log(result);
       send(event, 'get/participant/all', result);
     }).catch(e => {
       send(event, 'get/participant/all', ErrorRequest.create(e));

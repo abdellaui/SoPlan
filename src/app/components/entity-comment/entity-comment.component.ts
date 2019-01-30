@@ -46,7 +46,7 @@ export class EntityCommentComponent implements OnInit {
         title: I18n.resolve('entity_comment_context'),
         editor: { type: 'textarea' }
       },
-      createDate: {
+      createdDate: {
         title: I18n.resolve('entity_comment_created_date'),
         type: 'custom',
         renderComponent: DateRendererComponent,
