@@ -74,7 +74,7 @@ export class SidemenuComponent implements OnInit {
     {
       title: I18n.resolve('menu_logout'),
       icon: 'nb-power',
-      link: '/login/',
+      link: '/auth/logout',
     }
   ];
 

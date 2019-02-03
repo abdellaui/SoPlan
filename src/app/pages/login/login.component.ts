@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AuthenticationGuard } from '@guards/authentication/authentication.guard';
 import { AdminLogin } from '@models/configs.class';
 import { I18n } from '@models/translation/i18n.class';
@@ -14,9 +15,14 @@ export class LoginComponent implements OnInit {
   admin: AdminLogin = new AdminLogin();
   remember = true;
 
-  constructor(private auth: AuthenticationGuard) { }
+  constructor(private auth: AuthenticationGuard, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if (params && params['method'] && params['method'] === 'logout') {
+        this.auth.logout();
+      }
+    });
   }
 
   toggleRemember() {
