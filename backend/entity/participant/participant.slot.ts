@@ -29,7 +29,6 @@ export function init() {
   });
 
   on('delete/participant', (event: any, arg: any) => {
-    // TODO: maybe check if other participants wants to be with this one
     const instance = Participant.create(arg);
     const _id = instance.id;
     instance.remove().then(() => {
