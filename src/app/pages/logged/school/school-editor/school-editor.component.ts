@@ -91,7 +91,6 @@ export class SchoolEditorComponent implements OnInit {
 
     this.form_school.location = this.form_loc;
 
-
     this.ipc.get('post/school', this.form_school).then((result: any) => {
       if (!ErrorRequest.hasError(result)) { // result.error has the error
         this.toastr.info(I18n.resolve('school_success'));

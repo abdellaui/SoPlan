@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 import { HttpClientModule } from '@angular/common/http';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,6 +19,9 @@ import { I18n } from '@models/translation/i18n.class';
 describe('TableComponent', () => {
   let component: TableComponent;
   let fixture: ComponentFixture<TableComponent>;
+  let toastr: ToastrService;
+  let tableEl: HTMLElement;
+  let tableDe: DebugElement;
   const st_config: SmartTableConfig = {
     settings: {
       header: I18n.resolve('school_list'),
@@ -50,6 +53,7 @@ describe('TableComponent', () => {
       }
     ]
   };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TableComponent],
@@ -76,24 +80,48 @@ describe('TableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
-
+    toastr = TestBed.get(ToastrService);
     component.config = st_config;
-
     fixture.detectChanges();
+    tableDe = fixture.debugElement;
+    tableEl = tableDe.nativeElement;
+    setTimeout(() => {
+      console.log(tableDe);
+      console.log(tableEl);
+    }, 1000);
+    spyOn(toastr, 'error');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should show delete error
+  // should show delete error
   it('should show delete error', () => {
-    expect(true).toBe(true);
+    component.rememberIdOfDeleteError = [6];
+    component.showDeleteErrorToastr();
+    expect(toastr.error).toHaveBeenCalled();
   });
 
-  // TODO: should save the new content
-  it('should save the new content', () => {
-    expect(true).toBe(true);
+  // should save the new content
+  it('should save the new content', async (done) => {
+    let school = new School();
+    school.name = 'Jasmine School';
+    school = Object.assign(school, {
+      location:
+      {
+        street: 'Jasminestreet',
+        subThoroughfare: '12345',
+        postalcode: '12345',
+        city: 'Jasmine City'
+      }
+    });
+    spyOn(toastr, 'info');
+    await component.saveEntity(school);
+    setTimeout(async () => {
+      await expect(toastr.info).toHaveBeenCalled();
+      done();
+    }, 100);
   });
 
   // TODO: should delete selected entity
@@ -105,4 +133,5 @@ describe('TableComponent', () => {
   it('should warn the user with delete confirm', () => {
     expect(true).toBe(true);
   });
+
 });

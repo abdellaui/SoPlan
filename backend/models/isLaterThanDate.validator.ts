@@ -12,7 +12,7 @@ export function IsLaterThanDate(property: string, validationOptions?: Validation
         validate(value: any, args: ValidationArguments) {
           const [relatedPropertyName] = args.constraints;
           const relatedValue = (args.object as any)[relatedPropertyName];
-          return new Promise<boolean>((resolve) => resolve(relatedValue && value && new Date(relatedValue) < new Date(value)));
+          return new Promise<boolean>((resolve) => resolve(relatedValue && value && new Date(relatedValue) <= new Date(value)));
         }
       }
     });

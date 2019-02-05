@@ -49,7 +49,6 @@ describe('EntitySelectComponent', () => {
   });
 
   it('should create', () => {
-    // TODO: sinnvolle Inputwerte zuweisen
     expect(component).toBeTruthy();
   });
 
