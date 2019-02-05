@@ -103,9 +103,9 @@ export class LoggedComponent implements OnInit {
       this.currentSidemenuState = true;
     } else if (this.currentSidemenuState) {
       this.currentSidemenuState = false;
-      setTimeout(() => {
-        this.sidebarService.toggle(true, 'left');
-      }, 200);
+      // setTimeout(() => {
+      this.sidebarService.toggle(true, 'left');
+      // }, 200);
 
     }
   }
