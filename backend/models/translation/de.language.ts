@@ -251,7 +251,7 @@ const de = {
   toastr_assignment_fail: 'Zuweisung fehlgeschlagen.',
   toastr_only_PUG: 'Nur PUG-Dateien sind erlaubt',
   toastr_red_boxed_entries_cannot_be_deleted:
-    `Rot umrahmte Einträge können nicht gelöscht werden.Entfernen Sie davor die Abhängigkeiten der Einträge.`,
+    'Rot umrahmte Einträge können nicht gelöscht werden.Entfernen Sie davor die Abhängigkeiten der Einträge.',
   toastr_something_went_wrong: 'Es ist etwas schief gelaufen',
   taostr_configure_database_first: 'Bitte zuerst die Datenbank komfigurieren.',
   toastr_event_susscess_save: 'Veranstaltung erfolgreich gespeichert.',
