@@ -376,6 +376,7 @@ export class TableComponent implements OnInit {
   saveEntity(entity: any): void {
     this.ipc.get(this.config.slotUrls.postUrl, entity).then(() => {
       this.dataChanged.emit();
+      this.toastr.info(I18n.resolve('toastr_save_success'));
     });
   }
 
