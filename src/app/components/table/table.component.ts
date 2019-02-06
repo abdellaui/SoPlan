@@ -229,9 +229,9 @@ export class TableComponent implements OnInit {
 
     let returnEntity = this.idToEntityMap[column.id];
 
-    const recreateObject = {};
+    let recreateObject = {};
     Object.keys(column).forEach(key => {
-      Object.assign(recreateObject, this.goInsideData(column, key, key.split('@')));
+      recreateObject = Deepmerge(recreateObject, this.goInsideData(column, key, key.split('@')));
     });
 
     returnEntity = Deepmerge(returnEntity, recreateObject);
@@ -256,11 +256,13 @@ export class TableComponent implements OnInit {
    * @param path der pfad zum wert
    */
   goInsideData(data: any, key: string, path: string[]): any {
+
     const returnEntity = {};
     if (path.length === 1) {
       returnEntity[path[0]] = Number(data[key]) || data[key] || null; // fixes validators
     } else {
       returnEntity[path[0]] = this.goInsideData(data, key, path.slice(1));
+
     }
     return returnEntity;
   }
@@ -304,8 +306,11 @@ export class TableComponent implements OnInit {
    * @event enhält im newData Attribut die Änderung
    */
   onSaveConfirm(event: any) {
+    console.log(event);
     const newEntity = this.dataToEntity(event.newData);
+    // console.log(newEntity);
     validate(newEntity).then((errors: ValidationError[]) => {
+      // console.log(errors);
       if (errors.length === 0) {
         this.saveEntity(newEntity);
         event.confirm.resolve();
@@ -408,7 +413,9 @@ export class TableComponent implements OnInit {
   handleDeleteError(indexOfData: number): void {
 
     const rowsOfTable = document.querySelectorAll(`ng2-smart-table#${this.uniqueName} tr`);
-    rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+    if (rowsOfTable[indexOfData]) {
+      rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+    }
   }
 
   showDeleteErrorToastr(): void {
