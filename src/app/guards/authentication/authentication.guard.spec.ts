@@ -22,7 +22,7 @@ describe('AuthenticationGuard', () => {
       imports: [
         RouterTestingModule.withRoutes([
           {
-            path: 'login',
+            path: 'auth',
             redirectTo: '/'
           }
         ]),

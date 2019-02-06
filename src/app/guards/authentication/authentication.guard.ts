@@ -46,7 +46,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
 
   logout(): void {
     localStorage.removeItem('administrator');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   hasRight(): boolean {
@@ -59,7 +59,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     if (this.hasRight()) {
       return true;
     } else {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
       return false;
     }
   }
@@ -72,7 +72,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
     if (this.hasRight()) {
       return true;
     } else {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: route.path } });
+      this.router.navigate(['/auth/login'], { queryParams: { returnUrl: route.path } });
       return false;
     }
   }

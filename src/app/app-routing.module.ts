@@ -14,7 +14,7 @@ const routes: Routes = [
     loadChildren: './pages/logged/logged.module#LoggedModule'
   },
   {
-    path: 'login',
+    path: 'auth/:method',
     component: LoginComponent,
     canActivate: [DatabaseGuard]
   },
