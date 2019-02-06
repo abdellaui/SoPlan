@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Event } from '@entity/event/event.entity';
 import { I18n } from '@models/translation/i18n.class';
-import { NbSidebarService } from '@nebular/theme';
+import { NbSidebarService, NbMenuService } from '@nebular/theme';
 import { CurrentEventService } from '@services/current-event/current-event.service';
 import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 import { ElectronService } from 'ngx-electron';
@@ -14,7 +14,6 @@ import { ElectronService } from 'ngx-electron';
 })
 export class LoggedComponent implements OnInit {
   public _i18n = I18n;
-
   items: Event[];
   currentItem: Event;
   defaultEvent = <Event>{ name: I18n.resolve('logged_component_no_event'), hosting: { name: I18n.resolve('logged_component_click') } };
@@ -97,15 +96,15 @@ export class LoggedComponent implements OnInit {
     }
   }
 
-  hoverSideMenu(enter: boolean): void {
+  public hoverSideMenu(enter: boolean): void {
     if (enter && !this.currentSidemenuState) {
       this.sidebarService.toggle(true, 'left');
       this.currentSidemenuState = true;
-    } else if (this.currentSidemenuState) {
+    } else if (!enter && this.currentSidemenuState) {
+      // mouseleave
+
       this.currentSidemenuState = false;
-      // setTimeout(() => {
       this.sidebarService.toggle(true, 'left');
-      // }, 200);
 
     }
   }
