@@ -15,14 +15,14 @@ const de = {
   menu_settings: 'Einstellungen',
   menu_logout: 'Abmelden',
 
-  entity_delete_selected: 'Makierte Löschen',
+  entity_delete_selected: 'Makierte Einträge löschen',
   entity_comments: 'Bemerkungen',
   entity_comment_add: 'Bemerkung hinzufügen',
   entity_comment_context: 'Inhalt',
   entity_comment_created_date: 'Erstellt am',
 
   communication_TITLE: 'COMMUNICATION ENTITY',
-  communication_phone_warning: 'Es sind nur deutsche Telefonnummern gültig!',
+  communication_phone_warning: 'Die Telefonnumer ist ungültig.',
   communication_mail_warning: 'Ungültige E-Mail Adresse.',
   communication_landline: 'Festnetz',
   communication_mobile: 'Mobilfunk',
@@ -30,8 +30,8 @@ const de = {
 
   location_TITLE: 'LOCATION ENTITY',
   location_mandatory: 'Pflichtfeld',
-  location_postalcode_warning: 'Nur deutsche Postleitzahlen sind zulässing.',
-  location_postalcode_length: 'Eine Postleitzahl besteht aus genau 5 Ziffern.',
+  location_postalcode_warning: 'Dies ist keine Postleitzahl.',
+  location_postalcode_length: 'Dies ist keine Postleitzahl.',
   location_street: 'Straße',
   location_house_number: 'Hausnummer',
   location_postalcode: 'Postleitzahl',
@@ -55,14 +55,14 @@ const de = {
   bedroom_student: 'Schüler',
   bedroom_teacher: 'Dozent',
   bedroom_closed: 'Gesperrt',
-  bedroom_new_bedroom: 'Neues Schlafzimmer erstellen',
-  bedroom_list: 'Schlafzimmerliste',
+  bedroom_new_bedroom: 'Neues Zimmer erstellen',
+  bedroom_list: 'Zimmerliste',
 
   classroom_TITLE: 'CLASSROOM ENTITY + LISTE',
   classroom_name: 'Bezeichnung',
-  classroom_list: 'Klassenraumliste',
-  classroom_new: 'Neuer Klassenraum',
-  classroom: 'Klassenraum',
+  classroom_list: 'Raumliste',
+  classroom_new: 'Neuer Raum',
+  classroom: 'Raum',
   classroom_room: 'Raum',
   classroom_location: 'Ort',
 
@@ -72,7 +72,7 @@ const de = {
 
   event_TITLE: 'EVENT ENTITY',
   event_mandatory: 'Pflichtfeld',
-  event_must_be_later: 'Das Ende muss nach dem Anfang sein.',
+  event_must_be_later: 'Das Ende muss zeitlich nach dem Anfang liegen.',
   event_name: 'Name',
   event_start: 'Beginn',
   event_end: 'Ende',
@@ -91,7 +91,7 @@ const de = {
 
   participant_TITLE: 'PATRICIPANT ENTITY',
   participant_mandatory: 'Pflichtfeld',
-  participant_grade_level_warning: 'Die Klassenstufe muss zwischen 1 und 13 liegen.',
+  participant_grade_level_warning: 'Dies ist keine gültige Klassenstufe.',
   participant_role: 'Rolle',
   participant_student: 'Schüler',
   participant_teacher: 'Dozent',
@@ -113,7 +113,7 @@ const de = {
   person_female: 'Weiblich',
   person_diverse: 'Divers',
   person_birthdate: 'Geburtsdatum',
-  person_allergies: 'Intoleranzen',
+  person_allergies: 'Intoleranzen / Allergien',
   person_about: 'Personendaten',
   person_list: 'Personenliste',
   person_communication: 'Kommunikation',
@@ -121,8 +121,8 @@ const de = {
   person_school: 'Schule',
   person_new_person: 'Neue Person erstellen',
   person_success: 'Die Person wurde erfolgreich angelegt.',
-  person_error: 'Es ist ein Fehler aufgetreten.',
-  person_process: 'Person Process',
+  person_error: 'Es ist ein Fehler aufgetreten. Die Aktion war nicht erfolgreich.',
+  person_process: 'Bescheinigung erstellen',
   person: 'Person',
 
   person_list_component_add_participants: 'Teilnehmer hinzufügen!',
@@ -132,7 +132,7 @@ const de = {
   person_list_component_check_everything: 'Bitte vorab alle Einträge prüfen.',
   person_list_component_add: 'Hinzufügen',
   person_list_component_cancel: 'Abbrechen',
-  person_list_component_show_user_process_text: 'Bla Bla',
+  person_list_component_show_user_process_text: 'Bescheinigung erstellen',
 
   school_TITLE: 'SCHOOL ENTITY + EDITOR',
   school_mandatory: 'Pflichtfeld',
@@ -141,8 +141,8 @@ const de = {
   school_info: 'Informationen',
   school_address: 'Anschrift',
   school_success: 'Die Schule wurde erfolgreich gespeichert.',
-  school_error: 'Fehler',
-  school_new_school: 'Neue Schule',
+  school_error: 'Es ist ein Fehler aufgetreten. Die Aktion war nicht erfolgreich.',
+  school_new_school: 'Neue Schule anlegen',
   school_list: 'Schulliste',
 
   venue_TITLE: 'VENUE ENTITY + EDITOR',
@@ -158,7 +158,7 @@ const de = {
   venue_bedrooms: 'Schlafzimmer',
   venue_classlist: 'Klassenliste',
   venue_success: 'Der Veranstaltungort wurde erfolgreich gespeichert.',
-  venue_error: 'Es ist ein Fehler aufgetreten.',
+  venue_error: 'Es ist ein Fehler aufgetreten. Die Aktion war nicht erfolgreich.',
   venue_new: 'Neu',
 
   login_login: 'Login',
@@ -249,8 +249,7 @@ const de = {
   toastr_comment_created: 'Kommentar erstellt.',
   toastr_assignment_fail: 'Zuweisung fehlgeschlagen.',
   toastr_only_PUG: 'Nur PUG-Dateien sind erlaubt',
-  toastr_red_boxed_entries_cannot_be_deleted:
-    `Rot umrahmte Einträge können nicht gelöscht werden.Entfernen Sie davor die Abhängigkeiten der Einträge.`,
+  toastr_red_boxed_entries_cannot_be_deleted: 'Rot umrahmte Einträge können nicht gelöscht werden.Entfernen Sie davor die Abhängigkeiten der Einträge.',
   toastr_something_went_wrong: 'Es ist etwas schief gelaufen',
   taostr_configure_database_first: 'Bitte zuerst die Datenbank komfigurieren.',
   toastr_event_susscess_save: 'Veranstaltung erfolgreich gespeichert.',
@@ -288,8 +287,7 @@ const de = {
 
   something_went_wrong: 'Unerwarteter Fehler:',
   db_connection_information: 'Information',
-  db_connection_warning_info: `Sie müssen vorab eine gültige Datenbankverbindung garantieren, um von den
-  Vorteilen dieser Anwendung zu profitieren!`,
+  db_connection_warning_info: 'Sie müssen eine gültige Datenbankverbindung eingeben, um von den Vorteilen dieser Anwendung zu profitieren!',
 
 
   confirm_language_change: 'Soll die Sprachänderung jetzt wirksam sein oder erst nach dem Neustart? Speichern Sie vorab alle Änderungen!',
