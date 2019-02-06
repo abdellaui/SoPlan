@@ -132,7 +132,7 @@ const de = {
   person_list_component_check_everything: 'Bitte vorab alle Einträge prüfen.',
   person_list_component_add: 'Hinzufügen',
   person_list_component_cancel: 'Abbrechen',
-  person_list_component_show_user_process_text: 'Bla Bla',
+  person_list_component_show_user_process_text: 'Wird verarbeitet.',
 
   school_TITLE: 'SCHOOL ENTITY + EDITOR',
   school_mandatory: 'Pflichtfeld',
@@ -156,6 +156,7 @@ const de = {
   venue_new_venue: 'Neuer Ort',
   venue_communication: 'Kommunikation',
   venue_bedrooms: 'Schlafzimmer',
+  venue_bedroom: 'Schlafzimmer',
   venue_classlist: 'Klassenliste',
   venue_success: 'Der Veranstaltungort wurde erfolgreich gespeichert.',
   venue_error: 'Es ist ein Fehler aufgetreten.',

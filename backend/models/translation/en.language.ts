@@ -132,7 +132,7 @@ const en = {
   person_list_component_check_everything: 'Please check all entries before.',
   person_list_component_add: 'Add',
   person_list_component_cancel: 'Cancel',
-  person_list_component_show_user_process_text: 'Bla Bla',
+  person_list_component_show_user_process_text: 'User processing.',
 
   school_TITLE: 'SCHOOL ENTITY + EDITOR',
   school_mandatory: 'Mandatory field',
@@ -156,6 +156,7 @@ const en = {
   venue_new_venue: 'New Venue',
   venue_communication: 'Communication',
   venue_bedrooms: 'Bedrooms',
+  venue_bedroom: 'Bedroom',
   venue_classlist: 'Class list',
   venue_success: 'Venue successfully saved.',
   venue_error: 'An error occured.',
