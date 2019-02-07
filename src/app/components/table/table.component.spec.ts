@@ -15,6 +15,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { TableComponent } from './table.component';
 import { I18n } from '@models/translation/i18n.class';
+import { Ng2SmartTableComponent } from 'ng2-smart-table/ng2-smart-table.component';
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -85,10 +86,6 @@ describe('TableComponent', () => {
     fixture.detectChanges();
     tableDe = fixture.debugElement;
     tableEl = tableDe.nativeElement;
-    setTimeout(() => {
-      console.log(tableDe);
-      console.log(tableEl);
-    }, 1000);
     spyOn(toastr, 'error');
   });
 
@@ -96,42 +93,17 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // should show delete error
+  it('should select row', () => {
+    component.table = <Ng2SmartTableComponent>{ isAllSelected: false };
+    const testObject = Object.assign({}, new Comment());
+    component.onSelectRow({ selected: testObject });
+    expect(component.selectedData).toEqual(testObject);
+  });
+
   it('should show delete error', () => {
     component.rememberIdOfDeleteError = [6];
     component.showDeleteErrorToastr();
     expect(toastr.error).toHaveBeenCalled();
-  });
-
-  // should save the new content
-  it('should save the new content', async (done) => {
-    let school = new School();
-    school.name = 'Jasmine School';
-    school = Object.assign(school, {
-      location:
-      {
-        street: 'Jasminestreet',
-        subThoroughfare: '12345',
-        postalcode: '12345',
-        city: 'Jasmine City'
-      }
-    });
-    spyOn(toastr, 'info');
-    await component.saveEntity(school);
-    setTimeout(async () => {
-      await expect(toastr.info).toHaveBeenCalled();
-      done();
-    }, 100);
-  });
-
-  // TODO: should delete selected entity
-  it('should delete selected entity', () => {
-    expect(true).toBe(true);
-  });
-
-  // TODO: should warn the user with delete confirm
-  it('should warn the user with delete confirm', () => {
-    expect(true).toBe(true);
   });
 
 });

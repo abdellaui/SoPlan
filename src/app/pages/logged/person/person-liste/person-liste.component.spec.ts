@@ -11,6 +11,8 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { PersonListeComponent } from './person-liste.component';
 
+enum PersonView { TABLE, PROCESS }
+
 describe('PersonListeComponent', () => {
   let component: PersonListeComponent;
   let fixture: ComponentFixture<PersonListeComponent>;
@@ -43,5 +45,16 @@ describe('PersonListeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should go back to tableview', () => {
+    component.backToTableView();
+
+    expect(component.currentView).toEqual(PersonView.TABLE);
+    expect(component.selectedPerson).toEqual([]);
+  });
+
+  it('should\'nt show Userprocess', () => {
+    expect(component.showUserProcess()).toBe(false);
   });
 });

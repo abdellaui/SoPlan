@@ -9,10 +9,13 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
+import { Person } from '@entity/person/person.entity';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PersonEditorComponent', () => {
   let component: PersonEditorComponent;
   let fixture: ComponentFixture<PersonEditorComponent>;
+  let toastr: ToastrService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,7 +24,8 @@ describe('PersonEditorComponent', () => {
         HttpClientModule,
         ToastrModule.forRoot(),
         NgxElectronModule,
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
+        BrowserAnimationsModule
       ],
       providers: [
         IpcRendererService,
@@ -32,20 +36,31 @@ describe('PersonEditorComponent', () => {
       ]
     })
       .compileComponents();
+
+    toastr = TestBed.get(ToastrService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(toastr, 'info');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save the content
-  it('should save the content', () => {
-    expect(true).toBe(true);
+  it('should\'nt save the content', () => {
+    component.readyToSave = false;
+    component.save();
+    expect(toastr.info).not.toHaveBeenCalled();
+  });
+
+  it('should\'nt reassign blank participant', () => {
+    const oldVal = component.form_person;
+    component.reassignPerson(new Person());
+    expect(component.form_person).toEqual(oldVal);
   });
 });

@@ -9,10 +9,12 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
+import { Venue } from '@entity/venue/venue.entity';
 
 describe('VenueEditorComponent', () => {
   let component: VenueEditorComponent;
   let fixture: ComponentFixture<VenueEditorComponent>;
+  let toastr: ToastrService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,20 +34,31 @@ describe('VenueEditorComponent', () => {
       ]
     })
       .compileComponents();
+
+    toastr = TestBed.get(ToastrService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VenueEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(toastr, 'info');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save the content
-  it('should save the content', () => {
-    expect(true).toBe(true);
+  it('should\'nt save the content', () => {
+    component.readyToSave = false;
+    component.save();
+    expect(toastr.info).not.toHaveBeenCalled();
+  });
+
+  it('should\'nt reassign blank venue', () => {
+    const oldVal = component.form_venue;
+    component.reassignVenue(new Venue());
+    expect(component.form_venue).toEqual(oldVal);
   });
 });

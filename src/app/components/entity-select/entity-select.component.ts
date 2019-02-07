@@ -16,7 +16,7 @@ export class EntitySelectComponent implements OnInit {
   @Input() readonly: boolean;
   @Output() selected: EventEmitter<number[]> = new EventEmitter();
 
-  private initialized = false;
+  public initialized = false;
   public inputValue: string;
   public backUpElements: any[];
   public elements: EntitySelectOption[] = [];
@@ -61,7 +61,7 @@ export class EntitySelectComponent implements OnInit {
     }
   }
 
-  private extractInformation(element: any, props: any): string[] {
+  public extractInformation(element: any, props: any): (string | number)[] {
     let returnArray = [];
     for (const texts of props) {
 
@@ -87,20 +87,20 @@ export class EntitySelectComponent implements OnInit {
     });
   }
 
-  private selectSelectedIds(): void {
+  public selectSelectedIds(): void {
     this.elements
       .filter(el => (this.selectedIds.indexOf(el.id) > -1))
       .forEach(el => this.select(el));
     this.initialized = true;
   }
 
-  private getIndexOfId(element: any): number {
+  public getIndexOfId(element: any): number {
     return this.selectedElements.indexOf(element);
   }
 
 
   // for html
-  private containsId(element: any): boolean {
+  public containsId(element: any): boolean {
     return (this.getIndexOfId(element) > -1);
   }
 

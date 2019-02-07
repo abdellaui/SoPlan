@@ -7,6 +7,8 @@ import { ParticipantListeComponent } from './participant-liste.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
 
+enum PersonView { TABLE, PROCESS }
+
 describe('ParticipantListeComponent', () => {
   let component: ParticipantListeComponent;
   let fixture: ComponentFixture<ParticipantListeComponent>;
@@ -33,8 +35,14 @@ describe('ParticipantListeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should create the table
-  it('should create the table', () => {
-    expect(true).toBe(true);
+  it('should go back to tableview', () => {
+    component.backToTableView();
+
+    expect(component.currentView).toEqual(PersonView.TABLE);
+    expect(component.selectedPerson).toEqual([]);
+  });
+
+  it('should\'nt show Userprocess', () => {
+    expect(component.showUserProcess()).toBe(false);
   });
 });

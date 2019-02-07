@@ -9,10 +9,12 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
+import { Classroom } from '@entity/classroom/classroom.entity';
 
 describe('ClassroomEditorComponent', () => {
   let component: ClassroomEditorComponent;
   let fixture: ComponentFixture<ClassroomEditorComponent>;
+  let toastr: ToastrService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -32,20 +34,31 @@ describe('ClassroomEditorComponent', () => {
       ]
     })
       .compileComponents();
+
+    toastr = TestBed.get(ToastrService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ClassroomEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(toastr, 'info');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save the content
-  it('should save the content', () => {
-    expect(true).toBe(true);
+  it('should\'nt save the content', () => {
+    component.readyToSave = false;
+    component.save();
+    expect(toastr.info).not.toHaveBeenCalled();
+  });
+
+  it('should\'nt reassign blank classroom', () => {
+    const oldVal = component.form_classroom;
+    component.reassignClassroom(new Classroom());
+    expect(component.form_classroom).toEqual(oldVal);
   });
 });

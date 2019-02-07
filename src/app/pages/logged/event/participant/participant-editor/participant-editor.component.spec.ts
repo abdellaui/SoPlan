@@ -9,10 +9,13 @@ import { ToastrService, ToastrModule } from 'ngx-toastr';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxElectronModule } from 'ngx-electron';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Participant } from '@entity/participant/participant.entity';
 
 describe('ParticipantEditorComponent', () => {
   let component: ParticipantEditorComponent;
   let fixture: ComponentFixture<ParticipantEditorComponent>;
+  let toastr: ToastrService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,7 +24,8 @@ describe('ParticipantEditorComponent', () => {
         HttpClientModule,
         RouterTestingModule.withRoutes([]),
         NgxElectronModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule
       ],
       providers: [
         IpcRendererService,
@@ -32,30 +36,32 @@ describe('ParticipantEditorComponent', () => {
       ]
     })
       .compileComponents();
+
+    toastr = TestBed.get(ToastrService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ParticipantEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(toastr, 'info');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save the content
-  it('should save the content', () => {
-    expect(true).toBe(true);
+  it('should\'nt save the content', async () => {
+    component.readyToSave = false;
+    component.save();
+    expect(toastr.info).not.toHaveBeenCalled();
   });
 
-  // TODO: should select group
-  it('should select group', () => {
-    expect(true).toBe(true);
+  it('should\'nt reassign blank participant', () => {
+    const oldVal = component.form_participant;
+    component.reassignParticipant(new Participant());
+    expect(component.form_participant).toEqual(oldVal);
   });
 
-  // TODO: should select bedroom
-  it('should select bedroom', () => {
-    expect(true).toBe(true);
-  });
 });
