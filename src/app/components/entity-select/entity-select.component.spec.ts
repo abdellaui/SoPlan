@@ -49,27 +49,29 @@ describe('EntitySelectComponent', () => {
   });
 
   it('should create', () => {
-    // TODO: sinnvolle Inputwerte zuweisen
     expect(component).toBeTruthy();
   });
 
-  // TODO: should select element
   it('should select element', () => {
-    expect(true).toBe(true);
+    component.selectSelectedIds();
+    expect(component.initialized).toBe(true);
   });
 
-  // TODO: should extract information
   it('should extract information', () => {
-    expect(true).toBe(true);
+    const info = component.extractInformation(
+      { name: 'jasmine', age: 2, ignore: true },
+      ['name', 'age']
+    );
+    expect(info).toEqual(['jasmine', 2]);
   });
 
-  // TODO: should transfer to listitem
-  it('should transfer to listitem', () => {
-    expect(true).toBe(true);
+  it('should get index of ID', () => {
+    const checkIndex = component.getIndexOfId({ doesnot: 'exists' });
+    expect(checkIndex).toEqual(-1);
   });
 
-  // TODO: should get the elements from backend
-  it('should get the elemetns from backend', () => {
-    expect(true).toBe(true);
+  it('should contains Id', () => {
+    const exists = component.containsId(1);
+    expect(exists).toEqual(false);
   });
 });

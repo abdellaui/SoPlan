@@ -15,6 +15,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { TableComponent } from './table.component';
 import { I18n } from '@models/translation/i18n.class';
+import { Ng2SmartTableComponent } from 'ng2-smart-table/ng2-smart-table.component';
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -86,23 +87,10 @@ describe('TableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should show delete error
-  it('should show delete error', () => {
-    expect(true).toBe(true);
-  });
-
-  // TODO: should save the new content
-  it('should save the new content', () => {
-    expect(true).toBe(true);
-  });
-
-  // TODO: should delete selected entity
-  it('should delete selected entity', () => {
-    expect(true).toBe(true);
-  });
-
-  // TODO: should warn the user with delete confirm
-  it('should warn the user with delete confirm', () => {
-    expect(true).toBe(true);
+  it('should select row', () => {
+    component.table = <Ng2SmartTableComponent>{ isAllSelected: false };
+    const testObject = Object.assign({}, new Comment());
+    component.onSelectRow({ selected: testObject });
+    expect(component.selectedData).toEqual(testObject);
   });
 });

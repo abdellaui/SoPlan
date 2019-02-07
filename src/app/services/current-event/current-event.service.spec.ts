@@ -20,7 +20,7 @@ describe('Service: CurrentEvent', () => {
     });
   });
 
-  it('should ...', inject([CurrentEventService], (service: CurrentEventService) => {
+  it('should provide service', inject([CurrentEventService], (service: CurrentEventService) => {
     expect(service).toBeTruthy();
   }));
 });

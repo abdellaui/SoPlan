@@ -9,6 +9,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungDatenbankComponent } from './einstellung-datenbank.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('EinstellungenDatenbankComponent', () => {
   let component: EinstellungDatenbankComponent;
@@ -23,7 +24,7 @@ describe('EinstellungenDatenbankComponent', () => {
     password: '00005252',
     database: 'angular'
   };
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [
         EinstellungDatenbankComponent
@@ -33,7 +34,8 @@ describe('EinstellungenDatenbankComponent', () => {
         HttpClientModule,
         ToastrModule.forRoot(),
         RouterTestingModule.withRoutes([]),
-        FormsModule
+        FormsModule,
+        BrowserAnimationsModule
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -48,9 +50,7 @@ describe('EinstellungenDatenbankComponent', () => {
 
     ipc = TestBed.get(IpcRendererService);
     toastr = TestBed.get(ToastrService);
-  }));
 
-  beforeAll(async () => {
     try {
       oldConfig = await ipc.get<DatabaseConfig>('get/database/config');
     } catch (e) {
@@ -58,8 +58,8 @@ describe('EinstellungenDatenbankComponent', () => {
       return false;
     }
   });
-  afterAll(async () => {
 
+  afterAll(async () => {
     try {
       component.setConfig(oldConfig);
       await component.saveConfig();

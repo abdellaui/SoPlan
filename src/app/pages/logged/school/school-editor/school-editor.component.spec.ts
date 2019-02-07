@@ -8,10 +8,13 @@ import { NgxElectronModule } from 'ngx-electron';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { SchoolEditorComponent } from './school-editor.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { School } from '@entity/school/school.entity';
 
 describe('SchoolEditorComponent', () => {
   let component: SchoolEditorComponent;
   let fixture: ComponentFixture<SchoolEditorComponent>;
+  let toastr: ToastrService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,7 +23,8 @@ describe('SchoolEditorComponent', () => {
         RouterTestingModule.withRoutes([]),
         ToastrModule.forRoot(),
         NgxElectronModule,
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule
       ],
       providers: [
         IpcRendererService,
@@ -29,20 +33,31 @@ describe('SchoolEditorComponent', () => {
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();
+
+    toastr = TestBed.get(ToastrService);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SchoolEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    spyOn(toastr, 'info');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save the content
-  it('should save the content', () => {
-    expect(true).toBe(true);
+  it('should\'nt save the content', () => {
+    component.readyToSave = false;
+    component.save();
+    expect(toastr.info).not.toHaveBeenCalled();
+  });
+
+  it('should\'nt reassign blank school', () => {
+    const oldVal = component.form_school;
+    component.reassignSchool(new School());
+    expect(component.form_school).toEqual(oldVal);
   });
 });

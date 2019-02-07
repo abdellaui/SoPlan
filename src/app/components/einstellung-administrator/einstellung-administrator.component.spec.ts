@@ -12,6 +12,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { IpcRendererService } from '../../services/ipc-renderer/ipc-renderer.service';
 import { EinstellungAdministratorComponent } from './einstellung-administrator.component';
+import { AdminLogin } from '@models/configs.class';
 
 describe('EinstellungAdministratorComponent', () => {
   let component: EinstellungAdministratorComponent;
@@ -19,7 +20,7 @@ describe('EinstellungAdministratorComponent', () => {
   let ipc: IpcRendererService;
   let toastr: ToastrService;
   let oldConfig: any;
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [
         EinstellungAdministratorComponent,
@@ -27,7 +28,7 @@ describe('EinstellungAdministratorComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([
           {
-            path: 'login',
+            path: 'auth/login',
             redirectTo: '/'
           }
         ]),
@@ -51,12 +52,9 @@ describe('EinstellungAdministratorComponent', () => {
 
     ipc = TestBed.get(IpcRendererService);
     toastr = TestBed.get(ToastrService);
-  }));
 
-  beforeAll(async () => {
     try {
-
-      oldConfig = await ipc.get('get/administrator');
+      oldConfig = await ipc.get<AdminLogin>('get/administrator');
     } catch (e) {
       console.log(e);
       return false;
@@ -65,7 +63,8 @@ describe('EinstellungAdministratorComponent', () => {
 
   afterAll(async () => {
     try {
-      await this.ipc.get('post/administrator', oldConfig);
+      component.setConfig(oldConfig);
+      await component.saveConfig();
     } catch (e) {
       console.log(e);
       return false;

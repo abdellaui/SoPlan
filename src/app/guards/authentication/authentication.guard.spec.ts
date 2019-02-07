@@ -33,7 +33,7 @@ describe('AuthenticationGuard', () => {
     });
   });
 
-  it('should ...', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
+  it('should provide service', inject([AuthenticationGuard], (service: AuthenticationGuard) => {
     expect(service).toBeTruthy();
   }));
 

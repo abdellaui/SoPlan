@@ -98,9 +98,7 @@ export class PersonListeComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 
   /**
    * Erstellt ein Lookup Table für jedes Formular um im Nachhinein überprüfen zu können, ob alle Formulare Validierung passieren konnten

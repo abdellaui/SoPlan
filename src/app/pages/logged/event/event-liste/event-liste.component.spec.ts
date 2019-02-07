@@ -38,8 +38,4 @@ describe('EventListeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should create the table
-  it('should create the table', () => {
-    expect(true).toBe(true);
-  });
 });

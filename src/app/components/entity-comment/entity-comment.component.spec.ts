@@ -48,18 +48,20 @@ describe('EntityCommentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO: should save entity
-  it('should save entity', () => {
-    expect(true).toBe(true);
+  it('should\'nt show the CommentComponent', () => {
+    component.entityPostUrl = '';
+    component.entity = false;
+    expect(component.getShow()).toBeFalsy();
   });
 
-  // TODO: should check finished
   it('should check finished', () => {
-    expect(true).toBe(true);
+    component.checkFinished(true);
+    expect(component.commentIsAccaptable).toBe(true);
   });
 
-  // TODO: should delete all selected
-  it('should delete all selected', () => {
-    expect(true).toBe(true);
+  it('should select row', () => {
+    const testObject = Object.assign({}, new Comment());
+    component.onSelectRow({ selected: testObject });
+    expect(component.selectedData).toEqual(testObject);
   });
 });

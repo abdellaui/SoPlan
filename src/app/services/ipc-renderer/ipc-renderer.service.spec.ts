@@ -14,7 +14,7 @@ describe('Service: IpcRenderer', () => {
     });
   });
 
-  it('should ...', inject([IpcRendererService, ElectronService], (service: IpcRendererService) => {
+  it('should provide service', inject([IpcRendererService, ElectronService], (service: IpcRendererService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -19,7 +19,7 @@ describe('Service: HistoryMemory', () => {
     });
   });
 
-  it('should ...', inject([HistoryMemoryService], (service: HistoryMemoryService) => {
+  it('should provide service', inject([HistoryMemoryService], (service: HistoryMemoryService) => {
     expect(service).toBeTruthy();
   }));
 });
