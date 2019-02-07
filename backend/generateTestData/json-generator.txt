@@ -1,6 +1,6 @@
 {
   venue: [
-       '{{repeat(20)}}',
+       '{{repeat(10)}}',
         {
           name: '{{company()}} Ort',
           contactPerson: '{{firstName()}}',
@@ -23,7 +23,7 @@
             }
           ],
           bedroom:[
-                '{{repeat(20,30)}}',
+                '{{repeat(10,20)}}',
                 {
                   type: '{{random("s", "d", "g")}}',
                   room: {
@@ -43,7 +43,7 @@
                 }
           ],
         classroom:[
-              '{{repeat(20,30)}}',
+              '{{repeat(10,20)}}',
               {
                 identifier: '{{company().toUpperCase().substr(0,1)}}{{index()}}',
                 room: {
@@ -65,7 +65,7 @@
         }
   ],
   school: [
-     '{{repeat(15,25)}}',
+     '{{repeat(10,20)}}',
     {
       name: '{{company()}} Schule',
       location: {
@@ -82,7 +82,7 @@
             }
           ],
     person: [
-    '{{repeat(10, 20)}}',
+    '{{repeat(5, 10)}}',
     {
       firstname: '{{firstName()}}',
       surname: '{{surname()}}',
@@ -126,7 +126,7 @@
             }
           ],
         group: [
-            '{{repeat(10,20)}}',
+            '{{repeat(5,10)}}',
             {
               name: '{{company().toUpperCase().substr(0,3)}}',
               capacity: '{{integer(3, 9)}}',
@@ -140,7 +140,7 @@
             }
         ],
         participant: [
-            '{{repeat(70,150)}}',
+            '{{repeat(20,50)}}',
             {
               role: '{{random("s", "d", "x")}}',
               grade: '{{integer(5, 13)}}',

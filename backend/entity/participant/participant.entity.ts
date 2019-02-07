@@ -110,13 +110,13 @@ export class Participant extends BaseEntity {
   static findOnePerformant(_id: number): Promise<Participant> {
     // (this as any) fallback
     return (this as any).createQueryBuilder('participant')
-      .leftJoinAndSelect('participant.comments', 'comment')
+      .where({ participant: { id: _id } })
       .leftJoinAndSelect('participant.person', 'person')
       .leftJoinAndSelect('person.school', 'school')
       .leftJoinAndSelect('participant.group', 'group')
       .leftJoinAndSelect('participant.bedroom', 'bedroom')
       .leftJoinAndSelect('participant.event', 'event')
-      .where({ participant: { id: _id } })
+      .leftJoinAndSelect('participant.comments', 'comment')
       .getOne();
   }
 

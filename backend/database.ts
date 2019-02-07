@@ -52,7 +52,7 @@ export class Database {
         Comment,
       ],
       synchronize: true,
-      logging: ['error']
+      logging: ['error', 'query']
     };
 
     createConnection(this.options).then((conn: Connection) => {
