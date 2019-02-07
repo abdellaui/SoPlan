@@ -86,10 +86,6 @@ describe('TableComponent', () => {
     fixture.detectChanges();
     tableDe = fixture.debugElement;
     tableEl = tableDe.nativeElement;
-    setTimeout(() => {
-      console.log(tableDe);
-      console.log(tableEl);
-    }, 1000);
     spyOn(toastr, 'error');
   });
 
@@ -102,32 +98,31 @@ describe('TableComponent', () => {
     const testObject = Object.assign({}, new Comment());
     component.onSelectRow({ selected: testObject });
     expect(component.selectedData).toEqual(testObject);
-    // should show delete error
-    it('should show delete error', () => {
-      component.rememberIdOfDeleteError = [6];
-      component.showDeleteErrorToastr();
-      expect(toastr.error).toHaveBeenCalled();
-    });
-
-    // should save the new content
-    it('should save the new content', async (done) => {
-      let school = new School();
-      school.name = 'Jasmine School';
-      school = Object.assign(school, {
-        location:
-        {
-          street: 'Jasminestreet',
-          subThoroughfare: '12345',
-          postalcode: '12345',
-          city: 'Jasmine City'
-        }
-      });
-      spyOn(toastr, 'info');
-      await component.saveEntity(school);
-      setTimeout(async () => {
-        await expect(toastr.info).toHaveBeenCalled();
-        done();
-      }, 100);
-    });
-
   });
+
+  it('should show delete error', () => {
+    component.rememberIdOfDeleteError = [6];
+    component.showDeleteErrorToastr();
+    expect(toastr.error).toHaveBeenCalled();
+  });
+
+  it('should save the new content', async (done) => {
+    let school = new School();
+    school.name = 'Jasmine School';
+    school = Object.assign(school, {
+      location:
+      {
+        street: 'Jasminestreet',
+        subThoroughfare: '12345',
+        postalcode: '12345',
+        city: 'Jasmine City'
+      }
+    });
+    spyOn(toastr, 'info');
+    await component.saveEntity(school);
+    setTimeout(async () => {
+      await expect(toastr.info).toHaveBeenCalled();
+      done();
+    }, 100);
+  });
+});
