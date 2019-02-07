@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, resetFakeAsyncZone } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 import { NgxElectronModule } from 'ngx-electron';
@@ -40,6 +40,7 @@ describe('SchoolEditorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SchoolEditorComponent);
     component = fixture.componentInstance;
+    toastr = TestBed.get(ToastrService);
     fixture.detectChanges();
 
     spyOn(toastr, 'info');

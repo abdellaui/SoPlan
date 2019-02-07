@@ -81,8 +81,6 @@ describe('EinstellungenDatenbankComponent', () => {
   });
 
   it('should save config', async (done) => {
-
-
     component.setConfig(config);
 
     component.saveConfig();
@@ -100,8 +98,6 @@ describe('EinstellungenDatenbankComponent', () => {
   });
 
   it('should set config', async () => {
-
-
     component.setConfig(config);
 
     expect(component.loadingFinished).toBe(true);

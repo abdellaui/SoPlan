@@ -251,7 +251,9 @@ export class EntityCommentComponent implements OnInit {
   handleDeleteError(indexOfData: number): void {
 
     const rowsOfTable = document.querySelectorAll(`ng2-smart-table#${this.uniqueName} tr`);
-    rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+    if (rowsOfTable[indexOfData]) {
+      rowsOfTable[indexOfData].classList.add('validationErrorBorder');
+    }
   }
 
   showDeleteErrorToastr(): void {
