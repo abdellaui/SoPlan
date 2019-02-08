@@ -12,7 +12,7 @@ function dateToString(date: Date): string {
   return split[0];
 }
 export function init() {
-  const appDataPugPath = path.join(app.getPath('userData'), '/pugfiles');
+  const appDataPugPath = path.join(app.getPath('userData'), '/pugfiles').replace('\\\\', '\\');
   fs.ensureDir(appDataPugPath);
   const _pO_PDF = {
     marginsType: 0,
@@ -51,7 +51,7 @@ export function init() {
             const newFile = {
               name: splitAttr[1],
               created: new Date(Number(splitAttr[0])).toLocaleString('de-DE'),
-              id: filenname
+              id: filenname.replace('\\\\', '\\')
             };
             newArr.push(newFile);
           }

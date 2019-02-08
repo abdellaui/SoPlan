@@ -19,6 +19,9 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CurrentEventService } from '@services/current-event/current-event.service';
+import { HistoryMemoryService } from '@services/history-memory/history-memory.service';
+import { IpcRendererService } from '@services/ipc-renderer/ipc-renderer.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import { AppComponent } from './app.component';
   providers: [
     ElectronService,
     NbSidebarService,
+    CurrentEventService,
+    HistoryMemoryService,
+    IpcRendererService,
     { provide: APP_BASE_HREF, useValue: '/' },
     { provide: LOCALE_ID, useValue: localStorage.getItem('lang') || 'de' }
   ],

@@ -20,7 +20,7 @@ export class DatabaseGuard implements CanActivate {
         return true;
       } else {
         localStorage.removeItem('databaseConnection');
-        this.toastr.error(I18n.resolve('toastr_configure_database_first'));
+        this.toastr.error(I18n.resolve('taostr_configure_database_first'));
         this.router.navigate(['/databaseConnection'], { queryParams: { returnUrl: state.url } });
         return false;
       }
