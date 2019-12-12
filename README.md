@@ -117,9 +117,9 @@ found 36 vulnerabilities (6 low, 22 moderate, 8 high) in 45411 scanned packages
 
 
 ## some nice screenshots:
-![screen_dashboard.png](./doc/screen_dashboard.png)
-![bescheining.png](./doc/bescheinigung.png)
-![login.png](./doc/login.png)
+![screen_dashboard.png](./_doc/screen_dashboard.png)
+![bescheining.png](./_doc/bescheinigung.png)
+![login.png](./_doc/login.png)
 ![er-model.png](./backend/er-model.png)
 
-for more information check [./doc/presentation.pdf](./doc/presentation.pdf)
+for more information check [./_doc/presentation.pdf](./_doc/presentation.pdf)
